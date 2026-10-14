@@ -542,9 +542,12 @@
       const publicView = document.getElementById('public-view');
 
       document.body.classList.add('loading-state');
-      if (publicView) publicView.classList.remove('visible');
+      if (publicView) {
+        publicView.classList.remove('visible');
+      }
 
       // STAGE 1: Initial Center State (0.0s to 0.9s hold)
+      // Emblem centered & scaled at 2.25x on pristine white canvas. Text block concealed behind.
       container.style.transition = 'none';
       logoWrapper.style.transition = 'none';
       textBlock.style.transition = 'none';
@@ -558,7 +561,7 @@
       logoWrapper.classList.remove('stage-2', 'docked');
       logoWrapper.classList.add('stage-1');
 
-      textBlock.classList.remove('stage-2');
+      textBlock.classList.remove('stage-2', 'docked');
       textBlock.classList.add('stage-1');
 
       void container.offsetWidth;
@@ -569,7 +572,8 @@
       textBlock.style.transition = '';
       headerBar.style.transition = '';
 
-      // STAGE 2: Center Lockup & Text Emergence with Dynamic Shadow (0.9s to 2.0s)
+      // STAGE 2: Center Lockup & Text Emergence with Dynamic Directional Shadow (0.9s – 2.0s)
+      // Logo scales down to 1.0x & shifts left; text smoothly reveals from behind with shadow
       const tStartStage2 = setTimeout(() => {
         logoWrapper.classList.remove('stage-1');
         logoWrapper.classList.add('stage-2');
@@ -579,13 +583,16 @@
       }, 900);
       this.timelineTimeouts.push(tStartStage2);
 
-      // STAGE 3: Dock to Top-Left Header Bar (2.8s to 3.8s)
+      // STAGE 3: Dock to Top-Left Header Bar (2.8s – 3.85s)
+      // Lockup translates smoothly to top-left (scale 0.32), header bar emerges,
+      // and public page body content smoothly fades in
       const tStartStage3 = setTimeout(() => {
         container.classList.remove('centered');
         container.classList.add('docked');
 
         headerBar.classList.add('docked');
         logoWrapper.classList.add('docked');
+        textBlock.classList.add('docked');
 
         // Reveal the public content dynamically
         setTimeout(() => {
@@ -593,7 +600,7 @@
           if (publicView) publicView.classList.add('visible');
           this.hasPlayedIntro = true;
           if (onDockedCallback) onDockedCallback();
-        }, 800);
+        }, 1050);
       }, 2800);
       this.timelineTimeouts.push(tStartStage3);
     },
@@ -624,7 +631,7 @@
       logoWrapper.classList.add('stage-2', 'docked');
 
       textBlock.classList.remove('stage-1');
-      textBlock.classList.add('stage-2');
+      textBlock.classList.add('stage-2', 'docked');
 
       void container.offsetWidth;
 
@@ -1864,7 +1871,20 @@
         });
       }
 
-      // Keyboard replay in public mode
+      // Explicit replay intro button in header
+      const replayBtn = document.getElementById('replay-intro-btn');
+      if (replayBtn) {
+        replayBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (this.currentRoute !== '/login' && this.currentRoute !== '/admin') {
+            IntroMotion.play(() => {
+              PublicRenderer.render(this.currentRoute);
+            });
+          }
+        });
+      }
+
+      // Keyboard replay in public mode (Space or R)
       window.addEventListener('keydown', (e) => {
         if ((e.code === 'Space' || e.key === ' ' || e.key === 'r' || e.key === 'R') &&
             this.currentRoute !== '/login' && this.currentRoute !== '/admin' &&
@@ -1875,6 +1895,13 @@
           });
         }
       });
+
+      // Recalculate metrics once custom fonts (Oswald) are fully rendered
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          IntroMotion.calculateMetrics();
+        });
+      }
 
       // Handle Initial Route
       this.handleRoute(true);

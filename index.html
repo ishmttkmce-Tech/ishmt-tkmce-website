@@ -18,28 +18,18 @@
        PERSISTENT TOP HEADER BAR & LOGO MOTION LOCKUP
        ====================================================================== -->
   <header id="header-bar" class="header-bar" aria-label="Main Navigation Header">
-    <!-- Center-to-Docked Unified Logo & Typography Lockup -->
-    <div id="lockup-container" class="lockup-container" title="Click to replay intro animation">
-      <div id="lockup" class="lockup">
-        <!-- Left Side: Circular Emblem -->
-        <div id="logo-wrapper" class="logo-wrapper">
-          <img id="logo-img" class="logo-img" src="ishmt-logo.jpg" alt="ISHMT RCT Students Chapter TKMCE Emblem">
-        </div>
-
-        <!-- Right Side: 4-Line Left-Aligned Typography Block -->
-        <div id="text-block" class="text-block">
-          <div class="line line-1">INDIAN SOCIETY FOR HEAT AND MASS</div>
-          <div class="line line-2">TRANSFER STUDENTS CHAPTER</div>
-          <div class="line line-3">TKM COLLEGE OF ENGINEERING</div>
-          <div class="line line-4">REGIONAL CHAPTER THIRUVANANTHAPURAM</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right Side Header Items: Dynamic Navigation Menu & Admin Entry -->
+    <!-- Right Side Header Items: Dynamic Navigation Menu & Actions -->
     <div id="header-right" class="header-right">
       <nav id="header-nav" class="header-nav" aria-label="Page links"></nav>
       
+      <!-- Replay Intro Motion Button -->
+      <button id="replay-intro-btn" class="admin-lock-btn replay-btn" title="Replay Cinematic Intro Motion (or press Space / R)" aria-label="Replay Intro Motion">
+        <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+        </svg>
+      </button>
+
       <!-- Discreet Admin Entry Lock -->
       <a href="#/login" id="admin-lock-btn" class="admin-lock-btn" title="Admin Portal Login" aria-label="Admin Portal Login">
         <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,6 +39,24 @@
       </a>
     </div>
   </header>
+
+  <!-- Center-to-Docked Unified Logo & Typography Lockup (Direct Child of Body) -->
+  <div id="lockup-container" class="lockup-container centered" title="Click to replay intro animation">
+    <div id="lockup" class="lockup">
+      <!-- Left Side: Circular Emblem -->
+      <div id="logo-wrapper" class="logo-wrapper stage-1">
+        <img id="logo-img" class="logo-img" src="ishmt-logo.jpg" alt="ISHMT RCT Students Chapter TKMCE Emblem">
+      </div>
+
+      <!-- Right Side: 4-Line Left-Aligned Typography Block -->
+      <div id="text-block" class="text-block stage-1">
+        <div class="line line-1">INDIAN SOCIETY FOR HEAT AND MASS</div>
+        <div class="line line-2">TRANSFER STUDENTS CHAPTER</div>
+        <div class="line line-3">TKM COLLEGE OF ENGINEERING</div>
+        <div class="line line-4">REGIONAL CHAPTER THIRUVANANTHAPURAM</div>
+      </div>
+    </div>
+  </div>
 
   <!-- ======================================================================
        PHASE 1: PUBLIC READ-ONLY USER VIEW
