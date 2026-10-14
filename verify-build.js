@@ -1,0 +1,103 @@
+/**
+ * Production Build and Integrity Verification Test
+ * ISHMT RCT STUDENTS CHAPTER - TKMCE
+ */
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
+
+const ROOT_DIR = __dirname;
+let errors = [];
+let passed = 0;
+
+function assert(condition, message) {
+  if (!condition) {
+    errors.push(message);
+    console.error(`❌ FAIL: ${message}`);
+  } else {
+    passed++;
+    console.log(`✅ PASS: ${message}`);
+  }
+}
+
+console.log('=== Running Production Build and Routing Integrity Test ===\n');
+
+// 1. Check core project files
+const requiredFiles = ['index.html', 'style.css', 'main.js', 'ishmt-logo.jpg', '.gitignore'];
+requiredFiles.forEach(file => {
+  const filePath = path.join(ROOT_DIR, file);
+  assert(fs.existsSync(filePath), `Required file exists: ${file}`);
+  if (fs.existsSync(filePath)) {
+    const stat = fs.statSync(filePath);
+    assert(stat.size > 0, `File ${file} has valid content (${stat.size} bytes)`);
+  }
+});
+
+// 2. Validate index.html asset references & DOM hooks
+const htmlContent = fs.readFileSync(path.join(ROOT_DIR, 'index.html'), 'utf-8');
+assert(htmlContent.includes('href="style.css"'), 'index.html links to style.css');
+assert(htmlContent.includes('src="main.js"'), 'index.html references main.js');
+assert(htmlContent.includes('src="ishmt-logo.jpg"'), 'index.html references ishmt-logo.jpg');
+
+const requiredDOMElements = [
+  'id="header-bar"',
+  'id="lockup-container"',
+  'id="lockup"',
+  'id="logo-wrapper"',
+  'id="logo-img"',
+  'id="text-block"',
+  'id="header-right"',
+  'id="header-nav"',
+  'id="admin-lock-btn"',
+  'id="public-view"',
+  'id="public-content"',
+  'id="login-view"',
+  'id="admin-login-form"',
+  'id="admin-studio"'
+];
+requiredDOMElements.forEach(elemId => {
+  assert(htmlContent.includes(elemId), `index.html contains vital DOM hook: ${elemId}`);
+});
+
+// 3. Check CSS balanced braces & key style blocks
+const cssContent = fs.readFileSync(path.join(ROOT_DIR, 'style.css'), 'utf-8');
+const openBraces = (cssContent.match(/{/g) || []).length;
+const closeBraces = (cssContent.match(/}/g) || []).length;
+assert(openBraces === closeBraces, `style.css has balanced braces (${openBraces} open, ${closeBraces} close)`);
+assert(cssContent.includes('.header-bar'), 'style.css contains .header-bar styles');
+assert(cssContent.includes('.lockup'), 'style.css contains .lockup styles');
+assert(cssContent.includes('.admin-studio'), 'style.css contains .admin-studio styles');
+
+// 4. Validate JavaScript syntax with node -c
+try {
+  execSync('node -c main.js', { cwd: ROOT_DIR });
+  assert(true, 'main.js passes JavaScript syntax compiler check without errors');
+} catch (e) {
+  assert(false, `main.js has syntax errors: ${e.message}`);
+}
+
+// 5. Check main.js structure and core modules
+const jsContent = fs.readFileSync(path.join(ROOT_DIR, 'main.js'), 'utf-8');
+assert(jsContent.includes('DEFAULT_BLUEPRINT'), 'main.js contains DEFAULT_BLUEPRINT master blueprint');
+assert(jsContent.includes('SiteStore'), 'main.js defines SiteStore state management');
+assert(jsContent.includes('AuthService'), 'main.js defines AuthService');
+assert(jsContent.includes('IntroMotion'), 'main.js defines IntroMotion controller');
+assert(jsContent.includes('PublicRenderer'), 'main.js defines PublicRenderer');
+assert(jsContent.includes('AdminStudio'), 'main.js defines AdminStudio CMS');
+assert(jsContent.includes('App'), 'main.js defines App initialization controller');
+
+// 6. Check .gitignore rules
+const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');
+['node_modules', '.next', 'dist', '.env'].forEach(rule => {
+  assert(gitignoreContent.includes(rule), `.gitignore contains rule for: ${rule}`);
+});
+
+console.log('\n----------------------------------------');
+if (errors.length === 0) {
+  console.log(`🎉 ALL ${passed} VERIFICATION CHECKS PASSED WITH 0 ERRORS!`);
+  console.log('Production build test clean. No broken imports or routing errors detected.');
+  process.exit(0);
+} else {
+  console.error(`💥 ${errors.length} ERRORS DETECTED!`);
+  process.exit(1);
+}

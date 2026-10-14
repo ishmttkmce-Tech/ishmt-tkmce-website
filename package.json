@@ -1,0 +1,20 @@
+{
+  "name": "ishmt-tkmce-website",
+  "version": "1.0.0",
+  "description": "Official Web Application & Visual Admin CMS for Indian Society for Heat and Mass Transfer (ISHMT) RCT Students Chapter - TKMCE",
+  "main": "main.js",
+  "scripts": {
+    "test": "node verify-build.js",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "ishmt",
+    "tkmce",
+    "heat-transfer",
+    "fluid-dynamics",
+    "student-chapter",
+    "cms"
+  ],
+  "author": "ISHMT TKMCE Chapter",
+  "license": "MIT"
+}

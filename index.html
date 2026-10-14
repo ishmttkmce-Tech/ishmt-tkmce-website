@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISHMT RCT STUDENTS CHAPTER - TKMCE</title>
+  
+  <!-- Modern Geometric Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading-state">
+
+  <!-- ======================================================================
+       PERSISTENT TOP HEADER BAR & LOGO MOTION LOCKUP
+       ====================================================================== -->
+  <header id="header-bar" class="header-bar" aria-label="Main Navigation Header">
+    <!-- Center-to-Docked Unified Logo & Typography Lockup -->
+    <div id="lockup-container" class="lockup-container" title="Click to replay intro animation">
+      <div id="lockup" class="lockup">
+        <!-- Left Side: Circular Emblem -->
+        <div id="logo-wrapper" class="logo-wrapper">
+          <img id="logo-img" class="logo-img" src="ishmt-logo.jpg" alt="ISHMT RCT Students Chapter TKMCE Emblem">
+        </div>
+
+        <!-- Right Side: 4-Line Left-Aligned Typography Block -->
+        <div id="text-block" class="text-block">
+          <div class="line line-1">INDIAN SOCIETY FOR HEAT AND MASS</div>
+          <div class="line line-2">TRANSFER STUDENTS CHAPTER</div>
+          <div class="line line-3">TKM COLLEGE OF ENGINEERING</div>
+          <div class="line line-4">REGIONAL CHAPTER THIRUVANANTHAPURAM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side Header Items: Dynamic Navigation Menu & Admin Entry -->
+    <div id="header-right" class="header-right">
+      <nav id="header-nav" class="header-nav" aria-label="Page links"></nav>
+      
+      <!-- Discreet Admin Entry Lock -->
+      <a href="#/login" id="admin-lock-btn" class="admin-lock-btn" title="Admin Portal Login" aria-label="Admin Portal Login">
+        <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       PHASE 1: PUBLIC READ-ONLY USER VIEW
+       ====================================================================== -->
+  <main id="public-view" class="public-view" role="main">
+    <!-- Dynamic page body rendered from Master SiteConfig Blueprint -->
+    <div id="public-content" class="public-content"></div>
+  </main>
+
+  <!-- ======================================================================
+       PROTECTED ADMIN AUTHENTICATION VIEW (#/login)
+       ====================================================================== -->
+  <div id="login-view" class="login-view hidden">
+    <div class="login-modal-card">
+      <div class="login-header">
+        <div class="login-badge-wrap">
+          <img src="ishmt-logo.jpg" alt="ISHMT" class="login-badge">
+        </div>
+        <h2 class="login-title">ISHMT Control Studio</h2>
+        <p class="login-subtitle">TKMCE Students Chapter • Master CMS Access</p>
+      </div>
+
+      <form id="admin-login-form" class="login-form">
+        <div class="form-group">
+          <label for="admin-username">Admin Username</label>
+          <input type="text" id="admin-username" class="form-input" placeholder="e.g. admin" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="admin-password">Secure Password</label>
+          <input type="password" id="admin-password" class="form-input" placeholder="••••••••••••" required autocomplete="current-password">
+        </div>
+
+        <div id="login-error-msg" class="login-error hidden">Invalid credentials. Use demo: <strong>admin</strong> / <strong>ishmt2026</strong></div>
+
+        <button type="submit" class="btn btn-primary btn-block">Authenticate & Enter Studio</button>
+        <a href="#/" class="btn btn-ghost btn-block">Return to Public Website</a>
+
+        <div class="login-hint">
+          <span>Demo Credentials:</span> Username: <code>admin</code> • Password: <code>ishmt2026</code>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       PHASE 2: PROTECTED MASTER CONTROL STUDIO (#/admin)
+       ====================================================================== -->
+  <div id="admin-studio" class="admin-studio hidden">
+    <!-- Studio Top Bar -->
+    <header class="studio-topbar">
+      <div class="studio-topbar-left">
+        <div class="studio-branding">
+          <img src="ishmt-logo.jpg" alt="ISHMT" class="studio-logo-mini">
+          <div>
+            <div class="studio-brand-title">ISHMT MASTER STUDIO</div>
+            <div class="studio-brand-sub">Visual Page Builder &amp; Blueprint CMS</div>
+          </div>
+        </div>
+
+        <div class="studio-divider"></div>
+
+        <!-- Active Page Selector -->
+        <div class="page-selector-group">
+          <label for="admin-page-select" class="sr-only">Active Page</label>
+          <select id="admin-page-select" class="studio-select" title="Switch Page to Edit"></select>
+          <button id="btn-quick-new-page" class="btn-icon" title="Create New Page">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+        </div>
+
+        <!-- Device Preview Viewport Toggles -->
+        <div class="device-toggles" role="group" aria-label="Device Preview Controls">
+          <button class="device-btn active" data-device="desktop" title="Desktop Preview (100%)">
+            <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </button>
+          <button class="device-btn" data-device="tablet" title="Tablet Preview (768px)">
+            <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </button>
+          <button class="device-btn" data-device="mobile" title="Mobile Preview (375px)">
+            <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Studio Topbar Right Actions -->
+      <div class="studio-topbar-right">
+        <!-- Live Sync Status Indicator -->
+        <div id="sync-status-indicator" class="sync-indicator synced" title="All edits synced to localStorage blueprint">
+          <span class="status-dot"></span> <span class="status-text">Synced</span>
+        </div>
+
+        <button id="btn-preview-user-mode" class="btn btn-outline" title="View live public site in new tab or mode">
+          <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          Preview as User
+        </button>
+
+        <button id="btn-open-schema-modal" class="btn btn-outline" title="Export or Import Master JSON Blueprint">
+          <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          JSON Blueprint
+        </button>
+
+        <button id="btn-publish-live" class="btn btn-primary" title="Publish live updates to all public viewers">
+          <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Publish Live
+        </button>
+
+        <button id="btn-admin-logout" class="btn-icon" title="Logout of Admin Studio">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Studio Main Body (Sidebar + Preview Canvas) -->
+    <div class="studio-workspace">
+      <!-- Left Control Sidebar -->
+      <aside class="studio-sidebar">
+        <!-- Domain Navigation Tabs -->
+        <div class="sidebar-tabs" role="tablist">
+          <button class="tab-btn active" data-tab="tab-structure" role="tab" title="Structure & Layout Builder">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <span>Structure</span>
+          </button>
+          <button class="tab-btn" data-tab="tab-content" role="tab" title="Content & Media Inspector">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>Content</span>
+          </button>
+          <button class="tab-btn" data-tab="tab-pages" role="tab" title="Pages & Navigation Routing">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <span>Pages</span>
+          </button>
+          <button class="tab-btn" data-tab="tab-theme" role="tab" title="Global Theme & Header Designer">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+            <span>Theme</span>
+          </button>
+        </div>
+
+        <!-- Sidebar Tab Panels -->
+        <div class="sidebar-panels">
+          <!-- DOMAIN 1: Structure & Layout Builder -->
+          <div id="tab-structure" class="tab-panel active">
+            <div class="panel-header">
+              <h3 class="panel-title">Page Sections &amp; Blocks</h3>
+              <p class="panel-desc">Drag or reorder blocks, toggle visibility, and adjust container layouts.</p>
+            </div>
+
+            <!-- Block Library Button -->
+            <button id="btn-open-block-library" class="btn btn-secondary btn-block add-block-btn">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add Section to Page
+            </button>
+
+            <!-- Sections List -->
+            <div id="sections-outline-list" class="sections-outline-list"></div>
+          </div>
+
+          <!-- DOMAIN 2: Content & Media Inspector -->
+          <div id="tab-content" class="tab-panel">
+            <div id="inspector-container" class="inspector-container">
+              <div class="empty-inspector-state">
+                <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="1.5" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="11" y2="17"></line></svg>
+                <h4>Select a Section to Edit</h4>
+                <p>Click on any block in the canvas or choose a section from the Structure tab to customize its content, columns, images, and styling.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- DOMAIN 3: Domain, Page & Navigation Manager -->
+          <div id="tab-pages" class="tab-panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Pages &amp; Navigation</h3>
+              <p class="panel-desc">Manage site routes, create new pages, and reorder header menu links.</p>
+            </div>
+
+            <button id="btn-create-page-modal" class="btn btn-secondary btn-block">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Create New Page
+            </button>
+
+            <div class="panel-subheading">Website Pages &amp; Routes</div>
+            <div id="pages-manager-list" class="pages-manager-list"></div>
+
+            <div class="panel-subheading" style="margin-top: 1.5rem;">Header Navigation Menu</div>
+            <div id="nav-manager-list" class="nav-manager-list"></div>
+          </div>
+
+          <!-- DOMAIN 4: Global Theme & Header Designer -->
+          <div id="tab-theme" class="tab-panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Global Theme Designer</h3>
+              <p class="panel-desc">Live controls for site colors, header gradient, typography, and styling.</p>
+            </div>
+
+            <div class="theme-controls-form">
+              <div class="theme-section-title">Color Palette</div>
+              <div class="color-picker-row">
+                <label for="theme-primary-color">Crimson Accent</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="theme-primary-color" value="#E31E24">
+                  <span id="theme-primary-hex" class="color-hex">#E31E24</span>
+                </div>
+              </div>
+
+              <div class="color-picker-row">
+                <label for="theme-charcoal-color">Charcoal Text</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="theme-charcoal-color" value="#1E1E1E">
+                  <span id="theme-charcoal-hex" class="color-hex">#1E1E1E</span>
+                </div>
+              </div>
+
+              <div class="color-picker-row">
+                <label for="theme-canvas-bg">Canvas Background</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="theme-canvas-bg" value="#FFFFFF">
+                  <span id="theme-canvas-hex" class="color-hex">#FFFFFF</span>
+                </div>
+              </div>
+
+              <div class="theme-section-title">Header Bar Gradient &amp; Border</div>
+              <div class="form-group">
+                <label for="theme-header-gradient">CSS Linear Gradient</label>
+                <textarea id="theme-header-gradient" class="form-textarea" rows="3"></textarea>
+                <div id="theme-gradient-preview" class="gradient-preview-box"></div>
+              </div>
+
+              <div class="color-picker-row">
+                <label for="theme-header-border">Header Border Color</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="theme-header-border" value="#E31E24">
+                  <span id="theme-header-border-hex" class="color-hex">#E31E24</span>
+                </div>
+              </div>
+
+              <div class="theme-section-title">Typography &amp; Scale</div>
+              <div class="form-group">
+                <label for="theme-font-family">Primary Heading Font</label>
+                <select id="theme-font-family" class="form-select">
+                  <option value="'Oswald', sans-serif">Oswald (Geometric Headline)</option>
+                  <option value="'Roboto Condensed', sans-serif">Roboto Condensed</option>
+                  <option value="'Inter', sans-serif">Inter (Modern Clean)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="theme-border-radius">UI Border Radius</label>
+                <select id="theme-border-radius" class="form-select">
+                  <option value="0px">Sharp (0px)</option>
+                  <option value="6px">Subtle (6px)</option>
+                  <option value="12px" selected>Rounded (12px)</option>
+                  <option value="20px">Curved (20px)</option>
+                </select>
+              </div>
+
+              <div class="theme-actions">
+                <button id="btn-save-theme" class="btn btn-primary btn-block">Apply &amp; Save Theme</button>
+                <button id="btn-reset-theme" class="btn btn-ghost btn-block">Reset Default Theme</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center / Right Live Preview Canvas Area -->
+      <main class="studio-canvas-area">
+        <div id="canvas-viewport" class="canvas-viewport desktop">
+          <!-- The live website renders right here inside the studio -->
+          <div id="admin-live-render" class="admin-live-render"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL: BLOCK LIBRARY (Section Templates)
+       ====================================================================== -->
+  <div id="block-library-modal" class="modal-backdrop hidden">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Add Section to Page</h3>
+          <p class="modal-desc">Choose a pre-architected content block to append to this page.</p>
+        </div>
+        <button class="modal-close-btn" data-close="block-library-modal">&times;</button>
+      </div>
+
+      <div class="block-templates-grid">
+        <!-- Hero Block -->
+        <div class="template-card" data-block-type="hero">
+          <div class="template-badge">Core</div>
+          <div class="template-icon">🎯</div>
+          <h4>Hero Showcase</h4>
+          <p>High-impact headline, subtitle, badge, action CTA buttons, and background gradient.</p>
+        </div>
+
+        <!-- Grid Cards -->
+        <div class="template-card" data-block-type="grid-cards">
+          <div class="template-badge">Interactive</div>
+          <div class="template-icon">▦</div>
+          <h4>Grid Cards</h4>
+          <p>Multi-column grid (1 to 4 columns) for research domains, projects, or feature highlights.</p>
+        </div>
+
+        <!-- Split Content -->
+        <div class="template-card" data-block-type="split-content">
+          <div class="template-badge">Narrative</div>
+          <div class="template-icon">◫</div>
+          <h4>Split Content</h4>
+          <p>Side-by-side 2-column layout with textual storytelling and a visual feature card.</p>
+        </div>
+
+        <!-- Stats Banner -->
+        <div class="template-card" data-block-type="stats-banner">
+          <div class="template-badge">Metrics</div>
+          <div class="template-icon">📊</div>
+          <h4>Stats &amp; Impact Banner</h4>
+          <p>Numerical metrics strip (e.g. 500+ Members, 25+ Events, Rank #1 Chapter).</p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="template-card" data-block-type="timeline">
+          <div class="template-badge">History</div>
+          <div class="template-icon">⏳</div>
+          <h4>Timeline &amp; Milestones</h4>
+          <p>Chronological step-by-step track of chapter history, conclaves, and achievements.</p>
+        </div>
+
+        <!-- Image Gallery -->
+        <div class="template-card" data-block-type="image-gallery">
+          <div class="template-badge">Media</div>
+          <div class="template-icon">🖼</div>
+          <h4>Image Gallery</h4>
+          <p>Visual gallery grid for workshop photographs, campus lab photos, and events.</p>
+        </div>
+
+        <!-- Rich Text -->
+        <div class="template-card" data-block-type="rich-text">
+          <div class="template-badge">Typography</div>
+          <div class="template-icon">📝</div>
+          <h4>Rich Text Section</h4>
+          <p>Centered or left-aligned editorial content, headers, body copy, and quotes.</p>
+        </div>
+
+        <!-- Custom Embed / Contact -->
+        <div class="template-card" data-block-type="custom-embed">
+          <div class="template-badge">Special</div>
+          <div class="template-icon">✉️</div>
+          <h4>Contact &amp; Join Form</h4>
+          <p>Contact information, chapter registration card, and custom HTML embed support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL: CREATE NEW PAGE
+       ====================================================================== -->
+  <div id="create-page-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Page / Route</h3>
+        <button class="modal-close-btn" data-close="create-page-modal">&times;</button>
+      </div>
+
+      <form id="create-page-form" class="modal-body">
+        <div class="form-group">
+          <label for="new-page-title">Page Title</label>
+          <input type="text" id="new-page-title" class="form-input" placeholder="e.g. Student Publications" required>
+        </div>
+        <div class="form-group">
+          <label for="new-page-slug">Route URL Slug</label>
+          <input type="text" id="new-page-slug" class="form-input" placeholder="e.g. /publications" required>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="new-page-add-nav" checked>
+            <span>Add link directly to Header Navigation Bar</span>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" data-close="create-page-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Page</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL: MASTER JSON SITE BLUEPRINT (Export / Import / Reset)
+       ====================================================================== -->
+  <div id="schema-modal" class="modal-backdrop hidden">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Master SiteConfig JSON Blueprint</h3>
+          <p class="modal-desc">Export, import, or inspect the complete persistent website data store.</p>
+        </div>
+        <button class="modal-close-btn" data-close="schema-modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <textarea id="json-blueprint-textarea" class="blueprint-textarea" spellcheck="false"></textarea>
+      </div>
+
+      <div class="modal-actions" style="justify-content: space-between;">
+        <div>
+          <button id="btn-reset-default-blueprint" class="btn btn-danger-outline">Reset to Default Blueprint</button>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <button id="btn-copy-blueprint-json" class="btn btn-ghost">Copy JSON</button>
+          <button id="btn-apply-imported-json" class="btn btn-primary">Apply &amp; Save JSON</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Floating Toast Notification -->
+  <div id="toast-notification" class="toast-notification" role="alert" aria-live="polite"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
