@@ -4,6 +4,7 @@
   "description": "Official Web Application & Visual Admin CMS for Indian Society for Heat and Mass Transfer (ISHMT) RCT Students Chapter - TKMCE",
   "main": "main.js",
   "scripts": {
+    "build": "node verify-build.js",
     "test": "node verify-build.js",
     "start": "npx serve ."
   },
