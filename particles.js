@@ -1,237 +1,301 @@
-﻿/**
- * ISHMT TKMCE — Heat & Mass Transfer Background Particle System
- * Floating micro-objects: flames, isotherms, molecules, convection arrows,
- * hex fins, boundary layers, radiation nodes, diffusion curves, diamonds, deltas.
- * 50% opacity | Mouse/touch interactive repulsion | Off-white canvas #F5F2ED
+/**
+ * ISHMT TKMCE – Heat & Mass Transfer Background Particle System v2
+ *
+ * Renders small 3D-shaded floating micro-objects on a full-page canvas
+ * behind all UI content. Objects are science-grounded representations:
+ *   • heat-orb   – glowing thermal gas bubble (convective particle)
+ *   • molecule   – H₂O / CO₂ bonded-atom cluster
+ *   • droplet    – fluid-phase teardrop (phase-change / condensation)
+ *   • ion        – charged species with orbital ring (mass transfer)
+ *   • thermal    – sinusoidal infrared heat-wave front with arrow
+ *
+ * Transparency: ~50% (globalAlpha 0.25–0.52 per particle)
+ * Interaction : repels from mouse & touch pointer (radius 110 px)
+ * Performance : rAF loop, tab-visibility pause, count scales with viewport
  */
 (function () {
   'use strict';
 
-  var CFG = {
-    COUNT: 72,
-    BASE_OPACITY: 0.50,
-    HOVER_RADIUS: 110,
-    HOVER_FORCE: 0.38,
-    DRIFT_MAX: 0.38,
-    SIZE_MIN: 9,
-    SIZE_MAX: 22,
-    WOBBLE_SPEED: 0.008,
-    COLORS: [
-      'rgba(139,13,26,VAL)',
-      'rgba(11,11,11,VAL)',
-      'rgba(180,60,60,VAL)',
-      'rgba(90,20,30,VAL)',
-      'rgba(60,60,80,VAL)'
-    ]
-  };
+  /* ─── Canvas Setup ──────────────────────────────────────────────────────── */
+  const canvas = document.getElementById('hmt-particles-canvas');
+  if (!canvas) return;
 
-  var DRAW_FNS = [
-    drawFlame, drawWave, drawMolecule, drawArrow, drawHex,
-    drawBoundaryLayer, drawRadiation, drawDiffusion, drawDiamond, drawDelta
-  ];
-
-  /* ---------- Canvas setup ---------- */
-  var canvas = document.createElement('canvas');
-  canvas.id = 'hmt-particle-canvas';
-  canvas.setAttribute('aria-hidden', 'true');
-  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;';
-  document.body.insertBefore(canvas, document.body.firstChild);
-
-  var ctx = canvas.getContext('2d');
-  var W = 0, H = 0;
-  var mouse = { x: -9999, y: -9999 };
-  var particles = [];
-  var raf;
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0;
 
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
   }
-  window.addEventListener('resize', resize, { passive: true });
-  resize();
 
-  /* ---------- Pointer tracking ---------- */
-  window.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
-  window.addEventListener('touchmove', function(e) {
-    var t = e.touches[0]; mouse.x = t.clientX; mouse.y = t.clientY;
-  }, { passive: true });
-  window.addEventListener('touchend', function() {
-    setTimeout(function() { mouse.x = -9999; mouse.y = -9999; }, 800);
-  }, { passive: true });
+  /* ─── Pointer Tracking (mouse + touch) ─────────────────────────────────── */
+  const ptr = { x: -9999, y: -9999 };
 
-  /* ---------- Helpers ---------- */
-  function rand(a, b) { return a + Math.random() * (b - a); }
-
-  /* ---------- Particle ---------- */
-  function Particle() { this.reset(true); }
-  Particle.prototype.reset = function(init) {
-    this.x = rand(0, W);
-    this.y = init ? rand(0, H) : (Math.random() < 0.5 ? -30 : H + 30);
-    this.vx = rand(-CFG.DRIFT_MAX, CFG.DRIFT_MAX);
-    this.vy = rand(-CFG.DRIFT_MAX * 0.6, CFG.DRIFT_MAX * 0.6);
-    this.size = rand(CFG.SIZE_MIN, CFG.SIZE_MAX);
-    this.wobble = rand(0, Math.PI * 2);
-    this.wobbleAmp = rand(0.3, 1.1);
-    this.rotation = rand(0, Math.PI * 2);
-    this.rotSpeed = rand(-0.007, 0.007);
-    this.drawFn = DRAW_FNS[Math.floor(Math.random() * DRAW_FNS.length)];
-    var col = CFG.COLORS[Math.floor(Math.random() * CFG.COLORS.length)];
-    var op = Math.min(CFG.BASE_OPACITY * rand(0.7, 1.3), 1);
-    this.color = col.replace('VAL', op.toFixed(2));
-  };
-
-  Particle.prototype.update = function() {
-    this.wobble += CFG.WOBBLE_SPEED;
-    this.x += this.vx + Math.sin(this.wobble) * this.wobbleAmp * 0.3;
-    this.y += this.vy + Math.cos(this.wobble * 0.8) * this.wobbleAmp * 0.2;
-    this.rotation += this.rotSpeed;
-    var dx = this.x - mouse.x, dy = this.y - mouse.y;
-    var dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist < CFG.HOVER_RADIUS && dist > 0.5) {
-      var f = (CFG.HOVER_RADIUS - dist) / CFG.HOVER_RADIUS * CFG.HOVER_FORCE;
-      this.x += (dx / dist) * f * 12;
-      this.y += (dy / dist) * f * 12;
-    }
-    var pad = 40;
-    if (this.x < -pad)   this.x = W + pad;
-    if (this.x > W + pad) this.x = -pad;
-    if (this.y < -pad)   this.y = H + pad;
-    if (this.y > H + pad) this.y = -pad;
-  };
-
-  Particle.prototype.render = function(ctx) {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.rotation);
-    ctx.strokeStyle = this.color;
-    ctx.fillStyle   = this.color;
-    ctx.lineWidth   = Math.max(1, this.size * 0.08);
-    ctx.lineCap     = 'round';
-    ctx.lineJoin    = 'round';
-    this.drawFn(ctx, this.size);
-    ctx.restore();
-  };
-
-  /* ---------- Symbol drawers ---------- */
-  function drawFlame(ctx, s) {
-    ctx.beginPath();
-    ctx.moveTo(0, s);
-    ctx.bezierCurveTo(-s*0.55, s*0.4, -s*0.4, -s*0.2, 0, -s);
-    ctx.bezierCurveTo(s*0.4, -s*0.2, s*0.55, s*0.4, 0, s);
-    ctx.closePath();
-    ctx.globalAlpha = 0.22;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.stroke();
+  function setPtr(e) {
+    const src = e.touches ? e.touches[0] : e;
+    ptr.x = src.clientX;
+    ptr.y = src.clientY;
   }
+  function clearPtr() { ptr.x = -9999; ptr.y = -9999; }
 
-  function drawWave(ctx, s) {
-    for (var i = -1; i <= 1; i++) {
-      var y = i * s * 0.38;
+  window.addEventListener('mousemove',  setPtr,   { passive: true });
+  window.addEventListener('touchmove',  setPtr,   { passive: true });
+  window.addEventListener('mouseleave', clearPtr, { passive: true });
+  window.addEventListener('touchend',   clearPtr, { passive: true });
+
+  /* ─── Helpers ───────────────────────────────────────────────────────────── */
+  function rand(a, b)    { return a + Math.random() * (b - a); }
+  function randInt(a, b) { return Math.floor(rand(a, b + 1)); }
+
+  /* ─── Particle Types ────────────────────────────────────────────────────── */
+  const TYPES = ['heat-orb', 'molecule', 'droplet', 'ion', 'thermal'];
+
+  /* ─── Particle Class ────────────────────────────────────────────────────── */
+  class Particle {
+    constructor(scatter) {
+      this._scatter = scatter;
+      this.init();
+    }
+
+    init() {
+      // Depth gives parallax illusion: closer = larger + faster rise
+      this.depth = rand(0.35, 1.0);
+      this.type  = TYPES[randInt(0, TYPES.length - 1)];
+      this.r     = rand(4, 10) * this.depth;   // radius (mm-scale on screen)
+      this.x     = rand(0, W);
+      this.y     = this._scatter ? rand(0, H) : H + this.r + rand(0, 60);
+      this.vx    = rand(-0.35, 0.35);
+      this.vy    = -rand(0.28, 0.72) * this.depth;  // float upward
+      this.alpha = rand(0.25, 0.52);                 // ≈50% transparency band
+      this.rot   = rand(0, Math.PI * 2);
+      this.rotV  = rand(-0.012, 0.012);
+      this.wob   = rand(0, Math.PI * 2);
+      this.wobV  = rand(0.018, 0.046);
+
+      const hues = {
+        'heat-orb': rand(5,   38),
+        'molecule': rand(12,  32),
+        'droplet':  rand(195, 225),
+        'ion':      rand(270, 310),
+        'thermal':  rand(18,  55),
+      };
+      this.hue    = hues[this.type];
+      this._scatter = false;
+    }
+
+    update() {
+      this.wob += this.wobV;
+      this.rot += this.rotV;
+      this.x   += this.vx + Math.sin(this.wob) * 0.4;
+      this.y   += this.vy;
+
+      // Pointer repulsion
+      const dx   = this.x - ptr.x;
+      const dy   = this.y - ptr.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 110 && dist > 0) {
+        const f = (110 - dist) / 110;
+        this.x += (dx / dist) * f * 2.8;
+        this.y += (dy / dist) * f * 2.8;
+      }
+
+      // Recycle when off-screen
+      if (this.y < -this.r * 3 || this.x < -this.r * 3 || this.x > W + this.r * 3) {
+        this.init();
+      }
+    }
+
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rot);
+      ctx.globalAlpha = this.alpha;
+
+      switch (this.type) {
+        case 'heat-orb': this._drawHeatOrb();  break;
+        case 'molecule': this._drawMolecule(); break;
+        case 'droplet':  this._drawDroplet();  break;
+        case 'ion':      this._drawIon();       break;
+        case 'thermal':  this._drawThermal();  break;
+      }
+      ctx.restore();
+    }
+
+    /* ── Heat Orb: glowing sphere with specular highlight ─────────────────── */
+    _drawHeatOrb() {
+      const r = this.r;
+      const g = ctx.createRadialGradient(-r * 0.3, -r * 0.35, r * 0.05, 0, 0, r);
+      g.addColorStop(0,   `hsla(${this.hue + 45}, 100%, 92%, 0.95)`);
+      g.addColorStop(0.4, `hsla(${this.hue},      100%, 62%, 0.85)`);
+      g.addColorStop(1,   `hsla(${this.hue - 15},  80%, 28%, 0.10)`);
       ctx.beginPath();
-      ctx.moveTo(-s, y);
-      ctx.bezierCurveTo(-s*0.5, y-s*0.28, s*0.5, y+s*0.28, s, y);
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fillStyle  = g;
+      ctx.shadowColor = `hsla(${this.hue}, 100%, 58%, 0.40)`;
+      ctx.shadowBlur  = r * 2.2;
+      ctx.fill();
+      ctx.shadowBlur  = 0;
+    }
+
+    /* ── Molecule: central atom + 2 bonded atoms (H₂O geometry) ──────────── */
+    _drawMolecule() {
+      const r   = this.r * 0.55;
+      const arm = r * 2.4;
+      const sr  = r * 0.72;
+
+      // Central atom
+      const gc = ctx.createRadialGradient(-r * 0.25, -r * 0.25, r * 0.08, 0, 0, r);
+      gc.addColorStop(0, `hsla(${this.hue + 35}, 85%, 88%, 0.92)`);
+      gc.addColorStop(1, `hsla(${this.hue},      75%, 38%, 0.22)`);
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fillStyle = gc;
+      ctx.fill();
+
+      // Bonded atoms at ±104.5° (water-like)
+      [Math.PI * 0.72, -Math.PI * 0.72].forEach(a => {
+        const bx = Math.cos(a) * arm;
+        const by = Math.sin(a) * arm;
+        ctx.strokeStyle = `hsla(${this.hue}, 55%, 55%, 0.55)`;
+        ctx.lineWidth   = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
+        const gs = ctx.createRadialGradient(bx - sr * 0.2, by - sr * 0.2, sr * 0.05, bx, by, sr);
+        gs.addColorStop(0, 'hsla(210, 80%, 90%, 0.92)');
+        gs.addColorStop(1, 'hsla(210, 80%, 42%, 0.18)');
+        ctx.beginPath();
+        ctx.arc(bx, by, sr, 0, Math.PI * 2);
+        ctx.fillStyle = gs;
+        ctx.fill();
+      });
+    }
+
+    /* ── Fluid Droplet: teardrop with specular glint ─────────────────────── */
+    _drawDroplet() {
+      const r = this.r;
+      const g = ctx.createRadialGradient(-r * 0.28, -r * 0.45, r * 0.04, 0, 0, r);
+      g.addColorStop(0,   `hsla(${this.hue}, 65%, 96%, 0.92)`);
+      g.addColorStop(0.5, `hsla(${this.hue}, 75%, 62%, 0.78)`);
+      g.addColorStop(1,   `hsla(${this.hue}, 85%, 30%, 0.15)`);
+      ctx.beginPath();
+      ctx.moveTo(0, -r * 1.45);
+      ctx.bezierCurveTo( r * 0.85, -r * 0.45,  r,  r * 0.42, 0,  r);
+      ctx.bezierCurveTo(-r,         r * 0.42, -r * 0.85, -r * 0.45, 0, -r * 1.45);
+      ctx.fillStyle = g;
+      ctx.fill();
+      // Specular glint
+      ctx.beginPath();
+      ctx.ellipse(-r * 0.2, -r * 0.65, r * 0.14, r * 0.27, -0.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.42)';
+      ctx.fill();
+    }
+
+    /* ── Ion: charged sphere with orbital ring + charge symbol ───────────── */
+    _drawIon() {
+      const r = this.r;
+      const g = ctx.createRadialGradient(-r * 0.3, -r * 0.3, r * 0.04, 0, 0, r);
+      g.addColorStop(0,   `hsla(${this.hue}, 55%, 94%, 0.90)`);
+      g.addColorStop(0.5, `hsla(${this.hue}, 65%, 68%, 0.72)`);
+      g.addColorStop(1,   `hsla(${this.hue}, 75%, 36%, 0.10)`);
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+      // Orbital ring
+      ctx.beginPath();
+      ctx.ellipse(0, 0, r * 1.55, r * 0.55, Math.PI / 5, 0, Math.PI * 2);
+      ctx.strokeStyle = `hsla(${this.hue}, 65%, 60%, 0.28)`;
+      ctx.lineWidth   = 1.0;
+      ctx.stroke();
+      // ± symbol
+      const s = r * 0.38;
+      ctx.strokeStyle = `hsla(${this.hue}, 40%, 28%, 0.62)`;
+      ctx.lineWidth   = 1.5;
+      ctx.lineCap     = 'round';
+      ctx.beginPath();
+      ctx.moveTo(-s, 0); ctx.lineTo(s, 0);
+      ctx.moveTo(0, -s); ctx.lineTo(0, s);
+      ctx.stroke();
+    }
+
+    /* ── Thermal Wave: sinusoidal IR wavefront with direction arrow ───────── */
+    _drawThermal() {
+      const r      = this.r;
+      const steps  = 5;
+      const sw     = r * 0.62;
+      const amp    = r * 0.52;
+      const totalW = steps * sw;
+
+      ctx.strokeStyle = `hsla(${this.hue}, 88%, 58%, 0.80)`;
+      ctx.lineWidth   = 1.8;
+      ctx.lineCap     = 'round';
+      ctx.lineJoin    = 'round';
+      ctx.shadowColor = `hsla(${this.hue}, 90%, 60%, 0.32)`;
+      ctx.shadowBlur  = 4;
+
+      ctx.beginPath();
+      ctx.moveTo(-totalW / 2, 0);
+      for (let i = 0; i < steps; i++) {
+        const cx = -totalW / 2 + i * sw + sw / 2;
+        const cy = (i % 2 === 0) ? -amp : amp;
+        ctx.quadraticCurveTo(cx, cy, -totalW / 2 + (i + 1) * sw, 0);
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Arrowhead indicating propagation direction
+      const ax = totalW / 2 + 3;
+      ctx.strokeStyle = `hsla(${this.hue}, 88%, 58%, 0.58)`;
+      ctx.lineWidth   = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(ax - 5, -3); ctx.lineTo(ax, 0); ctx.lineTo(ax - 5, 3);
       ctx.stroke();
     }
   }
 
-  function drawMolecule(ctx, s) {
-    ctx.beginPath(); ctx.arc(0, 0, s*0.28, 0, Math.PI*2); ctx.stroke();
-    for (var i = 0; i < 3; i++) {
-      var a = (i/3)*Math.PI*2 - Math.PI/6;
-      var ex = Math.cos(a)*s*0.78, ey = Math.sin(a)*s*0.78;
-      ctx.beginPath(); ctx.moveTo(Math.cos(a)*s*0.28, Math.sin(a)*s*0.28); ctx.lineTo(ex, ey); ctx.stroke();
-      ctx.beginPath(); ctx.arc(ex, ey, s*0.18, 0, Math.PI*2); ctx.stroke();
+  /* ─── Pool ──────────────────────────────────────────────────────────────── */
+  let pool = [];
+
+  function buildPool() {
+    pool = [];
+    const count = Math.min(90, Math.max(40, Math.floor(W * H / 10500)));
+    for (let i = 0; i < count; i++) {
+      pool.push(new Particle(true));
     }
   }
 
-  function drawArrow(ctx, s) {
-    ctx.beginPath(); ctx.moveTo(0, s); ctx.lineTo(0, -s*0.55); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(-s*0.32, -s*0.28); ctx.lineTo(0, -s); ctx.lineTo(s*0.32, -s*0.28); ctx.stroke();
-  }
+  /* ─── Animation Loop ────────────────────────────────────────────────────── */
+  let rafId = null;
 
-  function drawHex(ctx, s) {
-    ctx.beginPath();
-    for (var i = 0; i < 6; i++) {
-      var a = (Math.PI/180)*(60*i-30);
-      var px = s*0.85*Math.cos(a), py = s*0.85*Math.sin(a);
-      i===0 ? ctx.moveTo(px,py) : ctx.lineTo(px,py);
-    }
-    ctx.closePath(); ctx.stroke();
-    ctx.beginPath(); ctx.arc(0, 0, s*0.12, 0, Math.PI*2); ctx.fill();
-  }
-
-  function drawBoundaryLayer(ctx, s) {
-    for (var i = 0; i < 4; i++) {
-      var y = -s + (i/3)*s*2;
-      var l = s*(0.4 + (i/3)*0.6);
-      ctx.beginPath(); ctx.moveTo(-l, y); ctx.lineTo(l, y); ctx.stroke();
-    }
-  }
-
-  function drawRadiation(ctx, s) {
-    ctx.beginPath(); ctx.arc(0, 0, s*0.55, 0, Math.PI*2); ctx.stroke();
-    for (var i = 0; i < 4; i++) {
-      var a = (i/4)*Math.PI*2;
-      ctx.beginPath();
-      ctx.moveTo(Math.cos(a)*s*0.6, Math.sin(a)*s*0.6);
-      ctx.lineTo(Math.cos(a)*s, Math.sin(a)*s);
-      ctx.stroke();
-    }
-  }
-
-  function drawDiffusion(ctx, s) {
-    ctx.beginPath();
-    ctx.moveTo(-s, s*0.5);
-    ctx.bezierCurveTo(-s*0.3, s*0.5, s*0.3, -s*0.5, s, -s*0.5);
-    ctx.stroke();
-    for (var i = -1; i <= 1; i++) {
-      var t = (i+1)*0.5;
-      var cx = -s + t*2*s, cy = s*0.5 - t*s;
-      ctx.beginPath(); ctx.moveTo(cx, cy-s*0.22); ctx.lineTo(cx, cy+s*0.22); ctx.stroke();
-    }
-  }
-
-  function drawDiamond(ctx, s) {
-    ctx.beginPath();
-    ctx.moveTo(0,-s); ctx.lineTo(s*0.6,0); ctx.lineTo(0,s); ctx.lineTo(-s*0.6,0);
-    ctx.closePath(); ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(0,-s*0.45); ctx.lineTo(s*0.28,0); ctx.lineTo(0,s*0.45); ctx.lineTo(-s*0.28,0);
-    ctx.closePath(); ctx.stroke();
-  }
-
-  function drawDelta(ctx, s) {
-    ctx.beginPath();
-    ctx.moveTo(0, -s); ctx.lineTo(s*0.85, s*0.6); ctx.lineTo(-s*0.85, s*0.6);
-    ctx.closePath(); ctx.stroke();
-  }
-
-  /* ---------- Animation loop ---------- */
-  function init() {
-    particles = [];
-    for (var i = 0; i < CFG.COUNT; i++) particles.push(new Particle());
-  }
-
-  function animate() {
+  function tick() {
     ctx.clearRect(0, 0, W, H);
-    for (var i = 0; i < particles.length; i++) {
-      particles[i].update();
-      particles[i].render(ctx);
+    for (let i = 0; i < pool.length; i++) {
+      pool[i].update();
+      pool[i].draw();
     }
-    raf = requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(tick);
   }
 
-  function start() { init(); animate(); }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start);
-  } else {
-    start();
+  /* ─── Bootstrap ─────────────────────────────────────────────────────────── */
+  function start() {
+    resize();
+    buildPool();
+    if (rafId) cancelAnimationFrame(rafId);
+    tick();
   }
 
-  document.addEventListener('visibilitychange', function() {
-    if (document.hidden) cancelAnimationFrame(raf);
-    else animate();
+  window.addEventListener('resize', () => { resize(); buildPool(); }, { passive: true });
+
+  // Pause when tab is hidden (saves CPU/battery)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    } else {
+      if (!rafId) tick();
+    }
   });
+
+  start();
 })();
