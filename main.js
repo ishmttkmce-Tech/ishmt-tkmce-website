@@ -14,13 +14,13 @@
   // ==========================================================================
   const DEFAULT_BLUEPRINT = {
     globalTheme: {
-      primaryColor: '#910029',
-      charcoalColor: '#393F4B',
-      secondaryTextColor: '#393F4B',
-      mutedTextColor: '#5A6272',
-      canvasBg: '#ECF4F7',
-      headerGradient: 'linear-gradient(90deg, #ECF4F7 0%, #F5F9FA 45%, rgba(145, 0, 41, 0.08) 78%, rgba(57, 63, 75, 0.06) 100%)',
-      headerBorderColor: 'rgba(145, 0, 41, 0.22)',
+      primaryColor: '#6D001A',
+      charcoalColor: '#000000',
+      secondaryTextColor: '#000000',
+      mutedTextColor: '#555555',
+      canvasBg: '#FFFFFF',
+      headerGradient: 'linear-gradient(90deg, #FFFFFF 0%, #FDF7F8 45%, rgba(109, 0, 26, 0.08) 78%, rgba(0, 0, 0, 0.05) 100%)',
+      headerBorderColor: 'rgba(109, 0, 26, 0.22)',
       fontFamily: "'Oswald', sans-serif",
       borderRadius: '12px'
     },
@@ -373,7 +373,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="contact-info-card" style="background: var(--theme-canvas); border: 2px solid rgba(145, 0, 41, 0.2);">
+                  <div class="contact-info-card" style="background: var(--theme-canvas); border: 2px solid rgba(109, 0, 26, 0.2);">
                     <h3 style="font-family: var(--theme-font-family); font-size: 1.6rem; color: var(--theme-charcoal); margin-bottom: 0.5rem;">Join the Student Chapter</h3>
                     <p style="font-size: 0.95rem; color: var(--theme-muted); margin-bottom: 1.5rem;">Undergraduate & postgraduate engineering students can register for annual chapter membership.</p>
                     <form onsubmit="event.preventDefault(); alert('Thank you for registering! The ISHMT Chapter Secretary will contact you with membership details.');" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -407,8 +407,8 @@
         if (saved) {
           this.blueprint = JSON.parse(saved);
           if (this.blueprint && this.blueprint.globalTheme) {
-            // Automatically upgrade legacy crimson defaults to Burgundy / Charcoal / Alice Blue
-            if (this.blueprint.globalTheme.primaryColor === '#E31E24' || this.blueprint.globalTheme.canvasBg === '#FFFFFF') {
+            // Automatically upgrade stored theme to Burgundy #6D001A / Black #000000 / White #FFFFFF
+            if (this.blueprint.globalTheme.primaryColor !== '#6D001A' || this.blueprint.globalTheme.charcoalColor !== '#000000') {
               this.blueprint.globalTheme.primaryColor = DEFAULT_BLUEPRINT.globalTheme.primaryColor;
               this.blueprint.globalTheme.charcoalColor = DEFAULT_BLUEPRINT.globalTheme.charcoalColor;
               this.blueprint.globalTheme.secondaryTextColor = DEFAULT_BLUEPRINT.globalTheme.secondaryTextColor;
@@ -1076,15 +1076,15 @@
       const radiusSelect = document.getElementById('theme-border-radius');
 
       if (primaryInput) {
-        primaryInput.value = theme.primaryColor || '#910029';
+        primaryInput.value = theme.primaryColor || '#6D001A';
         if (primaryHex) primaryHex.textContent = primaryInput.value;
       }
       if (charcoalInput) {
-        charcoalInput.value = theme.charcoalColor || '#393F4B';
+        charcoalInput.value = theme.charcoalColor || '#000000';
         if (charcoalHex) charcoalHex.textContent = charcoalInput.value;
       }
       if (canvasInput) {
-        canvasInput.value = theme.canvasBg || '#ECF4F7';
+        canvasInput.value = theme.canvasBg || '#FFFFFF';
         if (canvasHex) canvasHex.textContent = canvasInput.value;
       }
       if (gradientInput) {
