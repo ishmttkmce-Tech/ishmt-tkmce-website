@@ -312,20 +312,49 @@ body.loading-state {
   border-radius: 2px;
 }
 
-/* Discreet Admin Entry Lock Button */
+/* Discreet Admin Entry Lock Button (Secret - Hidden by default; Revealed via Ctrl+Shift+CapsLock) */
 .admin-lock-btn {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 38px;
   height: 38px;
   border-radius: 8px;
-  color: #777777;
+  color: var(--theme-charcoal);
   text-decoration: none;
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(139, 13, 26, 0.2);
   cursor: pointer;
   transition: all 0.25s ease;
+}
+
+.admin-lock-btn.admin-hidden {
+  display: none !important;
+}
+
+.admin-lock-btn.admin-visible {
+  display: inline-flex !important;
+  animation: admin-reveal 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes admin-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.65) translateY(-4px);
+  }
+  70% {
+    transform: scale(1.08) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.admin-lock-btn.pulse {
+  box-shadow: 0 0 0 6px rgba(139, 13, 26, 0.25), 0 4px 15px rgba(139, 13, 26, 0.35);
+  border-color: var(--theme-primary);
+  color: var(--theme-primary);
 }
 
 .admin-lock-btn:hover {
@@ -334,11 +363,6 @@ body.loading-state {
   border-color: rgba(139, 13, 26, 0.3);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(139, 13, 26, 0.15);
-}
-
-.admin-lock-btn.replay-btn:hover .lock-icon {
-  transform: rotate(-180deg);
-  transition: transform 0.4s ease;
 }
 
 .lock-icon {

@@ -1889,18 +1889,51 @@
         });
       }
 
-      // Explicit replay intro button in header
-      const replayBtn = document.getElementById('replay-intro-btn');
-      if (replayBtn) {
-        replayBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (this.currentRoute !== '/login' && this.currentRoute !== '/admin') {
-            IntroMotion.play(() => {
-              PublicRenderer.render(this.currentRoute);
-            });
-          }
-        });
+      // Secret Admin Symbol Unlock: Ctrl + Shift + CapsLock
+      let shortcutFired = false;
+      const pressedKeys = new Set();
+
+      function toggleAdminLock() {
+        const adminBtn = document.getElementById('admin-lock-btn');
+        if (!adminBtn) return;
+
+        const isCurrentlyHidden = adminBtn.classList.contains('admin-hidden') || getComputedStyle(adminBtn).display === 'none';
+        if (isCurrentlyHidden) {
+          adminBtn.classList.remove('admin-hidden');
+          adminBtn.classList.add('admin-visible');
+          adminBtn.classList.add('pulse');
+          setTimeout(() => adminBtn.classList.remove('pulse'), 1200);
+          App.showToast('Admin Portal symbol unlocked (Ctrl+Shift+CapsLock)');
+        } else {
+          adminBtn.classList.remove('admin-visible');
+          adminBtn.classList.add('admin-hidden');
+          App.showToast('Admin Portal symbol hidden');
+        }
       }
+
+      window.addEventListener('keydown', (e) => {
+        pressedKeys.add(e.code);
+
+        const isCaps = e.code === 'CapsLock' || e.key === 'CapsLock' || e.keyCode === 20;
+        const hasCtrl = e.ctrlKey || e.metaKey || pressedKeys.has('ControlLeft') || pressedKeys.has('ControlRight');
+        const hasShift = e.shiftKey || pressedKeys.has('ShiftLeft') || pressedKeys.has('ShiftRight');
+
+        if ((isCaps && hasCtrl && hasShift) || (pressedKeys.has('CapsLock') && hasCtrl && hasShift)) {
+          if (!shortcutFired) {
+            shortcutFired = true;
+            setTimeout(() => { shortcutFired = false; }, 800);
+            e.preventDefault();
+            toggleAdminLock();
+          }
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        pressedKeys.delete(e.code);
+        if (e.code === 'CapsLock' || e.key === 'CapsLock' || e.code === 'ControlLeft' || e.code === 'ControlRight' || e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+          shortcutFired = false;
+        }
+      });
 
       // Keyboard replay in public mode (Space or R)
       window.addEventListener('keydown', (e) => {
