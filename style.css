@@ -72,21 +72,6 @@ body.loading-state {
 }
 
 /* ==========================================================================
-   HEAT & MASS TRANSFER BACKGROUND PARTICLE CANVAS
-   Fixed full-viewport layer, z-index 0 (behind header z-50 + content)
-   pointer-events: none ensures it never blocks clicks or nav interactions
-   ========================================================================== */
-#hmt-particles-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-  display: block;
-}
-
-/* ==========================================================================
    HEADER BAR & INTRO MOTION PRESENTATION
    ========================================================================== */
 .header-bar {
