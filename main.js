@@ -25,12 +25,12 @@
       borderRadius: '12px'
     },
     navigation: [
-      { id: 'nav-home', label: 'Home', path: '/', isPublic: true },
-      { id: 'nav-events', label: 'Events & Workshops', path: '/events', isPublic: true },
-      { id: 'nav-research', label: 'Research & Labs', path: '/research', isPublic: true },
-      { id: 'nav-team', label: 'Executive Team', path: '/team', isPublic: true },
-      { id: 'nav-gallery', label: 'Gallery', path: '/gallery', isPublic: true },
-      { id: 'nav-contact', label: 'Contact', path: '/contact', isPublic: true }
+      { id: 'nav-home', label: 'HOME', path: '/', isPublic: true },
+      { id: 'nav-events', label: 'EVENTS & WORKSHOPS', path: '/events', isPublic: true },
+      { id: 'nav-research', label: 'RESEARCH & LABS', path: '/research', isPublic: true },
+      { id: 'nav-team', label: 'EXECUTIVE TEAM', path: '/team', isPublic: true },
+      { id: 'nav-gallery', label: 'GALLERY', path: '/gallery', isPublic: true },
+      { id: 'nav-contact', label: 'CONTACT', path: '/contact', isPublic: true }
     ],
     pages: {
       '/': {
@@ -40,96 +40,17 @@
           {
             id: 'sec-hero',
             type: 'hero',
-            layout: { containerWidth: 'wide', paddingY: 'lg', bgType: 'canvas', alignment: 'left', visible: true },
+            layout: { containerWidth: 'wide', paddingY: 'sm', bgType: 'canvas', alignment: 'left', visible: true },
             content: {
               eyebrow: 'INDIAN SOCIETY FOR HEAT AND MASS TRANSFER',
-              title: 'Empowering Thermal & Fluid Engineering Innovation',
-              subtitle: 'Regional Chapter Thiruvananthapuram (RCT) Students Chapter at TKM College of Engineering, Kollam. Driving hands-on excellence in computational heat transfer, thermodynamics, fluid dynamics, and aerospace thermal protection.',
-              button1Text: 'Explore Technical Events',
-              button1Url: '#/events',
-              button2Text: 'Join Student Chapter',
-              button2Url: '#/contact',
-              cardTitle: 'TKMCE Students Chapter',
-              cardSubtitle: 'Est. 2021 • Department of Mechanical Engineering'
-            }
-          },
-          {
-            id: 'sec-stats',
-            type: 'stats-banner',
-            layout: { containerWidth: 'wide', paddingY: 'sm', bgType: 'crimson-tint', alignment: 'center', visible: true },
-            content: {
-              items: [
-                { id: 'stat-1', number: '500+', label: 'Active Student Members' },
-                { id: 'stat-2', number: '28+', label: 'National Workshops & Conclaves' },
-                { id: 'stat-3', number: '16+', label: 'Research Publications' },
-                { id: 'stat-4', number: 'Rank #1', label: 'Regional Student Chapter' }
-              ]
-            }
-          },
-          {
-            id: 'sec-about',
-            type: 'split-content',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'left', visible: true },
-            content: {
-              eyebrow: 'About Our Chapter',
-              title: 'Bridging Fundamental Thermodynamics & Aerospace Engineering',
-              body: 'The ISHMT RCT Students Chapter at TKMCE was established to foster collaborative research and practical engineering knowledge in heat and mass transfer. Our chapter provides students direct exposure to world-class faculty mentors, ISRO/DRDO scientists, and industry leaders in power generation, EV thermal management, and cryogenics.',
-              buttonText: 'View Executive Council',
-              buttonUrl: '#/team',
-              imageUrl: 'ishmt-logo.jpg',
-              reversed: false
-            }
-          },
-          {
-            id: 'sec-domains',
-            type: 'grid-cards',
-            layout: { columns: 3, containerWidth: 'boxed', paddingY: 'md', bgType: 'subtle', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Core Focus Areas',
-              title: 'Technical Domains & Research Tracks',
-              description: 'Undergraduate and postgraduate students at TKMCE collaborate across multidisciplinary thermal science specializations.',
-              items: [
-                {
-                  id: 'card-1',
-                  tag: 'Simulation',
-                  title: 'Computational Fluid Dynamics (CFD)',
-                  description: 'Turbulence modeling, aerodynamic drag reduction, and multiphase simulations using OpenFOAM and ANSYS Fluent.',
-                  linkText: 'Learn more →',
-                  linkUrl: '#/research'
-                },
-                {
-                  id: 'card-2',
-                  tag: 'Energy',
-                  title: 'Battery Thermal Management (BTMS)',
-                  description: 'Phase change material (PCM) integration and liquid cold plate designs for next-generation electric vehicles.',
-                  linkText: 'Learn more →',
-                  linkUrl: '#/research'
-                },
-                {
-                  id: 'card-3',
-                  tag: 'Aerospace',
-                  title: 'Cryogenics & Rocket Propulsion',
-                  description: 'Thermal boundary layer analysis, regeneratively cooled thrust chambers, and cryogenic propellant heat transfer.',
-                  linkText: 'Learn more →',
-                  linkUrl: '#/research'
-                }
-              ]
-            }
-          },
-          {
-            id: 'sec-timeline',
-            type: 'timeline',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Chapter Journey',
-              title: 'Key Milestones & Achievements',
-              description: 'Tracing our legacy of technical excellence at TKM College of Engineering.',
-              items: [
-                { id: 'time-1', year: '2021', title: 'Charter Inception', description: 'Official inauguration under ISHMT Regional Chapter Thiruvananthapuram.' },
-                { id: 'time-2', year: '2022', title: 'National CFD Conclave', description: 'Over 350 delegates from premier engineering colleges across India.' },
-                { id: 'time-3', year: '2023', title: 'Best Regional Chapter Award', description: 'Honored by National ISHMT Council for technical outreach and innovation.' },
-                { id: 'time-4', year: '2025–26', title: 'Innovation Thermal Lab', description: 'Establishment of dedicated hardware test rigs for microchannel heat sinks.' }
-              ]
+              title: '',
+              subtitle: '',
+              button1Text: '',
+              button1Url: '',
+              button2Text: '',
+              button2Url: '',
+              cardTitle: '',
+              cardSubtitle: ''
             }
           }
         ]
@@ -395,7 +316,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v1';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v2';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -403,6 +324,9 @@
 
     init() {
       try {
+        // Clear legacy v1 cache so old hero sections and stats are never loaded
+        try { localStorage.removeItem('ishmt_site_blueprint_v1'); } catch (e) {}
+
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           this.blueprint = JSON.parse(saved);
@@ -417,6 +341,19 @@
               this.blueprint.globalTheme.headerBorderColor = DEFAULT_BLUEPRINT.globalTheme.headerBorderColor;
               this.save(this.blueprint, false);
             }
+          }
+          // Ensure Home page is cleanly stripped down to the single pill badge only
+          if (this.blueprint && this.blueprint.pages && this.blueprint.pages['/']) {
+            const homeSections = this.blueprint.pages['/'].sections || [];
+            if (homeSections.length > 1 || (homeSections[0] && homeSections[0].content && (homeSections[0].content.title || homeSections[0].content.subtitle))) {
+              this.blueprint.pages['/'] = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT.pages['/']));
+              this.save(this.blueprint, false);
+            }
+          }
+          // Ensure navigation uppercase labels are synced
+          if (this.blueprint && this.blueprint.navigation) {
+            this.blueprint.navigation = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT.navigation));
+            this.save(this.blueprint, false);
           }
         } else {
           this.blueprint = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT));
@@ -687,26 +624,12 @@
         return;
       }
 
+      // Render Clean Sections
       page.sections.forEach(section => {
         if (section.layout && section.layout.visible === false) return;
         const sectionHtml = this.generateBlockHtml(section, false);
         contentEl.insertAdjacentHTML('beforeend', sectionHtml);
       });
-
-      // Render Clean Footer
-      contentEl.insertAdjacentHTML('beforeend', `
-        <footer class="site-footer">
-          <div class="footer-content">
-            <div>
-              <div class="footer-brand">ISHMT RCT STUDENTS CHAPTER • TKMCE</div>
-              <p style="font-size: 0.85rem; margin-top: 0.35rem; color: #64748B;">Department of Mechanical Engineering, TKM College of Engineering, Kollam, Kerala.</p>
-            </div>
-            <div style="font-size: 0.85rem;">
-              © ${new Date().getFullYear()} ISHMT RCT Chapter TKMCE. All rights reserved.
-            </div>
-          </div>
-        </footer>
-      `);
     },
 
     renderNav(navItems, currentRoute) {
@@ -734,28 +657,46 @@
 
       switch (type) {
         case 'hero':
-          innerContent = `
-            <div class="hero-block">
-              <div class="hero-grid">
-                <div>
-                  ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
-                  <h1 class="section-heading">${this.escapeHtml(content.title || '')}</h1>
-                  ${content.subtitle ? `<p class="section-desc">${this.escapeHtml(content.subtitle)}</p>` : ''}
-                  <div class="block-actions">
-                    ${content.button1Text ? `<a href="${content.button1Url || '#'}" class="btn btn-primary">${this.escapeHtml(content.button1Text)}</a>` : ''}
-                    ${content.button2Text ? `<a href="${content.button2Url || '#'}" class="btn btn-outline">${this.escapeHtml(content.button2Text)}</a>` : ''}
+          const hasHeroCard = Boolean(content.cardTitle || content.cardSubtitle);
+          const hasActions = Boolean(content.button1Text || content.button2Text);
+          const hasTitle = Boolean(content.title && content.title.trim());
+          const hasSubtitle = Boolean(content.subtitle && content.subtitle.trim());
+
+          if (!hasHeroCard && !hasTitle && !hasSubtitle && !hasActions) {
+            // Clean minimal pill badge layout
+            innerContent = `
+              <div class="hero-block">
+                ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
+              </div>
+            `;
+          } else {
+            innerContent = `
+              <div class="hero-block ${!hasHeroCard ? 'full-width-text' : ''}">
+                <div class="hero-grid">
+                  <div>
+                    ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
+                    ${hasTitle ? `<h1 class="section-heading">${this.escapeHtml(content.title)}</h1>` : ''}
+                    ${hasSubtitle ? `<p class="section-desc">${this.escapeHtml(content.subtitle)}</p>` : ''}
+                    ${hasActions ? `
+                      <div class="block-actions">
+                        ${content.button1Text ? `<a href="${content.button1Url || '#'}" class="btn btn-primary">${this.escapeHtml(content.button1Text)}</a>` : ''}
+                        ${content.button2Text ? `<a href="${content.button2Url || '#'}" class="btn btn-outline">${this.escapeHtml(content.button2Text)}</a>` : ''}
+                      </div>
+                    ` : ''}
                   </div>
-                </div>
-                <div class="hero-visual-card">
-                  <div class="hero-emblem-halo">
-                    <img src="ishmt-logo.jpg" alt="ISHMT Emblem">
-                  </div>
-                  <div class="hero-card-meta">${this.escapeHtml(content.cardTitle || 'TKMCE Students Chapter')}</div>
-                  <div class="hero-card-sub">${this.escapeHtml(content.cardSubtitle || 'Affiliated to ISHMT National Council')}</div>
+                  ${hasHeroCard ? `
+                    <div class="hero-visual-card">
+                      <div class="hero-emblem-halo">
+                        <img src="ishmt-logo.jpg" alt="ISHMT Emblem">
+                      </div>
+                      <div class="hero-card-meta">${this.escapeHtml(content.cardTitle || 'TKMCE Students Chapter')}</div>
+                      <div class="hero-card-sub">${this.escapeHtml(content.cardSubtitle || 'Affiliated to ISHMT National Council')}</div>
+                    </div>
+                  ` : ''}
                 </div>
               </div>
-            </div>
-          `;
+            `;
+          }
           break;
 
         case 'stats-banner':

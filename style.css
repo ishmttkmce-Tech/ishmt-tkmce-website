@@ -280,15 +280,15 @@ body.loading-state {
 
 .nav-link {
   font-family: var(--theme-font-family);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   text-transform: uppercase;
-  color: var(--theme-charcoal);
+  color: #0B0B0B;
   text-decoration: none;
   padding: 0.5rem 0.9rem;
   border-radius: 6px;
   position: relative;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
@@ -298,7 +298,7 @@ body.loading-state {
 }
 
 .nav-link.active {
-  color: var(--theme-primary);
+  color: #8B0D1A;
 }
 
 .nav-link.active::after {
@@ -308,7 +308,7 @@ body.loading-state {
   left: 0.9rem;
   right: 0.9rem;
   height: 2.5px;
-  background-color: var(--theme-primary);
+  background-color: #8B0D1A;
   border-radius: 2px;
 }
 
@@ -434,16 +434,17 @@ body.loading-state {
   align-items: center;
   gap: 0.5rem;
   font-family: var(--theme-font-family);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--theme-primary);
+  letter-spacing: 0.08em;
+  color: #8B0D1A;
   background-color: rgba(139, 13, 26, 0.08);
-  padding: 0.4rem 1rem;
+  padding: 0.45rem 1.15rem;
   border-radius: 999px;
-  border: 1px solid rgba(139, 13, 26, 0.2);
-  margin-bottom: 1.25rem;
+  border: 1px solid rgba(139, 13, 26, 0.22);
+  margin-bottom: 0;
+  box-shadow: 0 1px 3px rgba(139, 13, 26, 0.05);
 }
 
 .bg-dark .badge-eyebrow {
