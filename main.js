@@ -192,7 +192,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v6_academic';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v7_academic';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -210,7 +210,8 @@
           'ishmt_site_blueprint_2026_27_live',
           'ishmt_site_blueprint_2026_27_minimal',
           'ishmt_site_blueprint_v4_minimal',
-          'ishmt_site_blueprint_v5_academic'
+          'ishmt_site_blueprint_v5_academic',
+          'ishmt_site_blueprint_v6_academic'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -845,7 +846,7 @@
 
               <!-- CTA Buttons Row -->
               <div class="academic-cta-row">
-                <a href="#/contact" class="academic-btn-primary">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="academic-btn-primary">
                   <span>Become a Member</span>
                   <svg class="academic-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -888,7 +889,7 @@
                   The Indian Society for Heat and Mass Transfer (ISHMT) is India’s foremost professional body dedicated to disseminating science and engineering across heat transfer, mass transport, thermodynamics, and energy systems. Affiliated regionally with ISHMT-RCT (Trivandrum), the student chapter at TKM College of Engineering serves as a technical hub bridging foundational engineering coursework with modern research and industrial applications.
                 </p>
                 <p>
-                  We nurture a collaborative culture where students engage directly with peer researchers, faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC, national laboratories, and academic institutions. Our focus spans from fundamental convective and radiative transport to high-performance computing, clean fuels, and thermal management for next-generation mobility.
+                  We nurture a collaborative culture where students engage directly with peer researchers, faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC, national laboratories, and academic institutions.
                 </p>
               </div>
             </div>

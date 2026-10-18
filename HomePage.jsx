@@ -111,7 +111,9 @@ export default function HomePage() {
           {/* CTA Buttons Row */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="#/contact"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#8B1014] hover:bg-[#720c0f] text-white font-medium text-base rounded-md shadow-md hover:shadow-lg transition-all duration-200 group"
             >
               <span>Become a Member</span>
@@ -169,9 +171,7 @@ export default function HomePage() {
           <p>
             We nurture a collaborative culture where students engage directly with peer researchers,
             faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC,
-            national laboratories, and academic institutions. Our focus spans from fundamental
-            convective and radiative transport to high-performance computing, clean fuels, and thermal
-            management for next-generation mobility.
+            national laboratories, and academic institutions.
           </p>
         </div>
       </section>
