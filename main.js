@@ -128,61 +128,10 @@
         slug: '/contact',
         sections: [
           {
-            id: 'sec-contact-hero',
-            type: 'hero',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'crimson-tint', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Connect With Us',
-              title: 'Join ISHMT RCT Students Chapter TKMCE',
-              subtitle: 'Reach out for chapter membership, research collaborations, workshop registrations, or sponsorships.'
-            }
-          },
-          {
-            id: 'sec-contact-embed',
-            type: 'custom-embed',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'left', visible: true },
-            content: {
-              heading: 'Chapter Headquarters & Inquiries',
-              html: `
-                <div class="contact-grid">
-                  <div class="contact-info-card">
-                    <h3 style="font-family: var(--theme-font-family); font-size: 1.6rem; color: var(--theme-charcoal); margin-bottom: 1.25rem;">Secretariat Office</h3>
-                    <div class="info-item">
-                      <div class="info-icon">📍</div>
-                      <div>
-                        <strong>Department of Mechanical Engineering</strong><br>
-                        TKM College of Engineering, Karicode<br>
-                        Kollam, Kerala, India - 691005
-                      </div>
-                    </div>
-                    <div class="info-item">
-                      <div class="info-icon">✉️</div>
-                      <div>
-                        <strong>Email Address</strong><br>
-                        <a href="mailto:ishmt.chapter@tkmce.ac.in" style="color: var(--theme-primary); text-decoration: none; font-weight: 600;">ishmt.chapter@tkmce.ac.in</a>
-                      </div>
-                    </div>
-                    <div class="info-item">
-                      <div class="info-icon">🌐</div>
-                      <div>
-                        <strong>Affiliations</strong><br>
-                        National ISHMT Council • ISHMT Regional Chapter Thiruvananthapuram (RCT)
-                      </div>
-                    </div>
-                  </div>
-                  <div class="contact-info-card" style="background: var(--theme-canvas); border: 2px solid rgba(139, 13, 26, 0.2);">
-                    <h3 style="font-family: var(--theme-font-family); font-size: 1.6rem; color: var(--theme-charcoal); margin-bottom: 0.5rem;">Join the Student Chapter</h3>
-                    <p style="font-size: 0.95rem; color: var(--theme-muted); margin-bottom: 1.5rem;">Undergraduate & postgraduate engineering students can register for annual chapter membership.</p>
-                    <form onsubmit="event.preventDefault(); alert('Thank you for registering! The ISHMT Chapter Secretary will contact you with membership details.');" style="display: flex; flex-direction: column; gap: 1rem;">
-                      <input type="text" placeholder="Full Student Name" required style="padding: 0.75rem; border-radius: 8px; border: 1px solid #D1D5DB; font-family: inherit;">
-                      <input type="email" placeholder="Institutional Email (@tkmce.ac.in)" required style="padding: 0.75rem; border-radius: 8px; border: 1px solid #D1D5DB; font-family: inherit;">
-                      <input type="text" placeholder="Branch & Semester (e.g. S6 Mechanical)" required style="padding: 0.75rem; border-radius: 8px; border: 1px solid #D1D5DB; font-family: inherit;">
-                      <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">Submit Membership Application</button>
-                    </form>
-                  </div>
-                </div>
-              `
-            }
+            id: 'sec-academic-contact',
+            type: 'academic-contact',
+            layout: { containerWidth: 'full', paddingY: 'none', bgType: 'canvas', visible: true },
+            content: {}
           }
         ]
       }
@@ -192,7 +141,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v7_academic';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v8_contact_footer';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -211,7 +160,8 @@
           'ishmt_site_blueprint_2026_27_minimal',
           'ishmt_site_blueprint_v4_minimal',
           'ishmt_site_blueprint_v5_academic',
-          'ishmt_site_blueprint_v6_academic'
+          'ishmt_site_blueprint_v6_academic',
+          'ishmt_site_blueprint_v7_academic'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -567,8 +517,10 @@
       // Render Dynamic Sections
       contentEl.innerHTML = '';
       if (!page.sections || page.sections.length === 0) {
-        // If Admin leaves the body empty, keep the canvas completely blank white (#FFFFFF)
-        contentEl.innerHTML = '<div style="height: 100vh; background: var(--theme-canvas);"></div>';
+        // If Admin leaves the body empty, keep the canvas completely blank white (#FFFFFF) with global footer
+        contentEl.innerHTML = '<div style="min-height: 70vh; background: var(--theme-canvas);"></div>';
+        contentEl.insertAdjacentHTML('beforeend', this.generateGlobalFooterHtml());
+        this.initGlobalFooterInteractivity(contentEl);
         return;
       }
 
@@ -579,9 +531,14 @@
         contentEl.insertAdjacentHTML('beforeend', sectionHtml);
       });
 
-      // Initialize interactive widgets for Execom Directory & Academic Home
+      // Render Global Academic Footer
+      contentEl.insertAdjacentHTML('beforeend', this.generateGlobalFooterHtml());
+
+      // Initialize interactive widgets for Execom Directory, Academic Home, Contact & Global Footer
       this.initExecomInteractivity(contentEl);
       this.initAcademicHomeInteractivity(contentEl);
+      this.initAcademicContactInteractivity(contentEl);
+      this.initGlobalFooterInteractivity(contentEl);
     },
 
     renderNav(navItems, currentRoute) {
@@ -602,6 +559,9 @@
       const { id, type, layout = {}, content = {} } = section;
       if (type === 'academic-home') {
         return this.generateAcademicHomeHtml();
+      }
+      if (type === 'academic-contact') {
+        return this.generateAcademicContactHtml();
       }
 
       const widthClass = layout.containerWidth || 'boxed';
@@ -972,6 +932,333 @@
             </div>
           </section>
         </div>
+      `;
+    },
+
+    initAcademicContactInteractivity(contentEl) {
+      if (!contentEl) return;
+      const form = contentEl.querySelector('#academic-contact-form');
+      const feedback = contentEl.querySelector('#contact-form-feedback');
+      const submitBtn = contentEl.querySelector('#contact-form-submit-btn');
+
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (submitBtn) submitBtn.disabled = true;
+          if (feedback) feedback.style.display = 'flex';
+          form.reset();
+          setTimeout(() => {
+            if (submitBtn) submitBtn.disabled = false;
+          }, 1500);
+          setTimeout(() => {
+            if (feedback) feedback.style.display = 'none';
+          }, 7000);
+        });
+      }
+
+      // Map toggle buttons
+      const tabTkmce = contentEl.querySelector('#tab-map-tkmce');
+      const tabRct = contentEl.querySelector('#tab-map-rct');
+      const iframe = contentEl.querySelector('#academic-map-iframe');
+      const caption = contentEl.querySelector('#map-caption');
+      const extLink = contentEl.querySelector('#map-external-link');
+
+      if (tabTkmce && tabRct && iframe) {
+        tabTkmce.addEventListener('click', () => {
+          tabTkmce.classList.add('active');
+          tabRct.classList.remove('active');
+          iframe.src = 'https://maps.google.com/maps?q=TKM+College+of+Engineering+Karicode+Kollam+Kerala+691005&t=&z=15&ie=UTF8&iwloc=&output=embed';
+          if (caption) caption.textContent = 'Showing: TKM College of Engineering, Karicode, Kollam';
+          if (extLink) extLink.href = 'https://maps.google.com/?q=TKM+College+of+Engineering+Kollam';
+        });
+
+        tabRct.addEventListener('click', () => {
+          tabRct.classList.add('active');
+          tabTkmce.classList.remove('active');
+          iframe.src = 'https://maps.google.com/maps?q=Liquid+Propulsion+Systems+Centre+Valiamala+Thiruvananthapuram+Kerala+695547&t=&z=14&ie=UTF8&iwloc=&output=embed';
+          if (caption) caption.textContent = 'Showing: Liquid Propulsion Systems Centre (LPSC), Valiamala, Trivandrum';
+          if (extLink) extLink.href = 'https://maps.google.com/?q=Liquid+Propulsion+Systems+Centre+Valiamala+Trivandrum';
+        });
+      }
+    },
+
+    initGlobalFooterInteractivity(contentEl) {
+      if (!contentEl) return;
+      const scrollBtn = contentEl.querySelector('#global-scroll-top-btn');
+      if (scrollBtn) {
+        const checkScroll = () => {
+          if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+          } else {
+            scrollBtn.classList.remove('visible');
+          }
+        };
+
+        if (window.__ishmt_footer_scroll_fn) {
+          window.removeEventListener('scroll', window.__ishmt_footer_scroll_fn);
+        }
+        window.__ishmt_footer_scroll_fn = checkScroll;
+        window.addEventListener('scroll', checkScroll);
+        checkScroll();
+
+        scrollBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    },
+
+    generateAcademicContactHtml() {
+      return `
+        <div class="academic-contact-wrapper">
+          <!-- 1. PAGE TITLE BANNER -->
+          <section class="contact-page-banner">
+            <h1 class="contact-banner-title">Contact Us</h1>
+            <p class="contact-banner-sub">
+              Indian Society for Heat and Mass Transfer • TKMCE Student Chapter &amp; Regional Secretariat
+            </p>
+          </section>
+
+          <!-- 2. MAIN TWO-COLUMN CONTACT SECTION -->
+          <section class="contact-main-grid">
+            <!-- Left Column: Minimalist Contact Form -->
+            <div>
+              <h2 class="contact-section-title">Send an Inquiry</h2>
+              <div class="contact-accent-bar"></div>
+              <p style="font-size: 0.9rem; color: #4B5563; margin-bottom: 2rem; line-height: 1.6;">
+                Connect with our faculty coordinators, executive council, or regional liaisons for student membership, academic partnerships, or workshop inquiries.
+              </p>
+
+              <div id="contact-form-feedback" class="contact-success-msg" style="display: none;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Thank you! Your inquiry has been sent to the ISHMT Secretariat. We will respond shortly.</span>
+              </div>
+
+              <form id="academic-contact-form">
+                <div class="contact-minimal-field">
+                  <input type="text" id="form-name" class="contact-minimal-input" placeholder="Name *" required />
+                </div>
+                <div class="contact-minimal-field">
+                  <input type="email" id="form-email" class="contact-minimal-input" placeholder="Email *" required />
+                </div>
+                <div class="contact-minimal-field">
+                  <input type="tel" id="form-telephone" class="contact-minimal-input" placeholder="Telephone" />
+                </div>
+                <div class="contact-minimal-field">
+                  <input type="text" id="form-subject" class="contact-minimal-input" placeholder="Subject *" required />
+                </div>
+                <div class="contact-minimal-field">
+                  <textarea id="form-message" class="contact-minimal-input" rows="5" placeholder="Message... *" required style="resize: vertical;"></textarea>
+                </div>
+                <button type="submit" class="contact-submit-btn" id="contact-form-submit-btn">
+                  <span>Submit</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </form>
+            </div>
+
+            <!-- Right Column: Secretariat Addresses + Interactive Map -->
+            <div>
+              <h2 class="contact-section-title">Secretariat Addresses</h2>
+              <div class="contact-accent-bar"></div>
+
+              <div class="address-cards-row">
+                <!-- Student Chapter (TKMCE) -->
+                <div class="address-info-card">
+                  <div class="address-card-badge">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>Student Chapter Base</span>
+                  </div>
+                  <h3 class="address-card-title">ISHMT Student Chapter – TKMCE</h3>
+                  <address class="address-card-lines">
+                    Department of Mechanical Engineering,<br>
+                    TKM College of Engineering,<br>
+                    Karicode, Kollam, Kerala – 691 005
+                  </address>
+                </div>
+
+                <!-- Parent Regional Chapter (ISHMT-RCT) -->
+                <div class="address-info-card">
+                  <div class="address-card-badge">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                      <path d="M9 22v-4h6v4"></path>
+                      <line x1="8" y1="6" x2="8.01" y2="6"></line>
+                      <line x1="16" y1="6" x2="16.01" y2="6"></line>
+                      <line x1="8" y1="10" x2="8.01" y2="10"></line>
+                      <line x1="16" y1="10" x2="16.01" y2="10"></line>
+                      <line x1="8" y1="14" x2="8.01" y2="14"></line>
+                      <line x1="16" y1="14" x2="16.01" y2="14"></line>
+                    </svg>
+                    <span>Regional Parent Chapter</span>
+                  </div>
+                  <h3 class="address-card-title">ISHMT - Regional Chapter, Trivandrum</h3>
+                  <address class="address-card-lines">
+                    PRS Entity, LPSC, Valiamala,<br>
+                    Trivandrum, Kerala – 695 547<br>
+                    <span style="display: block; margin-top: 0.35rem;">
+                      <strong>Email: </strong><a href="mailto:ishmtkerala@gmail.com" style="color: #8B1014; text-decoration: underline;">ishmtkerala@gmail.com</a>
+                    </span>
+                  </address>
+                </div>
+              </div>
+
+              <!-- Map Embed with Toggle Tabs -->
+              <div class="map-wrapper">
+                <div class="map-header-bar">
+                  <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #4B5563;">
+                    Interactive Geo-Location
+                  </span>
+                  <div class="map-tabs-group">
+                    <button type="button" class="map-tab-btn active" id="tab-map-tkmce">TKMCE (Kollam)</button>
+                    <button type="button" class="map-tab-btn" id="tab-map-rct">LPSC (Trivandrum)</button>
+                  </div>
+                </div>
+
+                <div class="map-frame-container">
+                  <iframe
+                    id="academic-map-iframe"
+                    title="ISHMT Location Map"
+                    src="https://maps.google.com/maps?q=TKM+College+of+Engineering+Karicode+Kollam+Kerala+691005&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    loading="lazy"
+                    allowfullscreen=""
+                    referrerpolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #6B7280; margin-top: 0.5rem;">
+                  <span id="map-caption">Showing: TKM College of Engineering, Karicode, Kollam</span>
+                  <a
+                    id="map-external-link"
+                    href="https://maps.google.com/?q=TKM+College+of+Engineering+Kollam"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="color: #8B1014; text-decoration: underline;"
+                  >
+                    Open in Google Maps ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      `;
+    },
+
+    generateGlobalFooterHtml() {
+      return `
+        <footer class="global-footer-section">
+          <div class="global-footer-inner">
+            <div class="global-footer-grid">
+              <!-- Column 1: Dual/Triple Emblem & Chapter Identity -->
+              <div>
+                <div class="footer-emblems-row">
+                  <div class="footer-emblem-badge" title="National ISHMT Emblem">
+                    <img src="ishmt-logo.jpg" alt="ISHMT Logo" class="footer-emblem-img" />
+                  </div>
+                  <div class="footer-emblem-badge" title="Regional Chapter Trivandrum">
+                    <span style="font-size: 0.55rem; font-weight: 800; color: #8B1014; line-height: 1.1;">ISHMT</span>
+                    <span style="font-size: 0.45rem; font-weight: 700; color: #111827;">RCT</span>
+                    <span style="font-size: 0.38rem; color: #6B7280;">TVM</span>
+                  </div>
+                  <div class="footer-emblem-badge" title="TKM College of Engineering">
+                    <span style="font-size: 0.55rem; font-weight: 800; color: #111827; line-height: 1.1;">TKMCE</span>
+                    <span style="font-size: 0.45rem; font-weight: 700; color: #8B1014;">MECH</span>
+                    <span style="font-size: 0.38rem; color: #6B7280;">KOLLAM</span>
+                  </div>
+                </div>
+
+                <h3 class="footer-column-title" style="font-size: 1.05rem; margin-bottom: 0.25rem;">
+                  Indian Society for Heat and Mass Transfer (ISHMT)
+                </h3>
+                <p style="font-weight: 700; font-size: 0.85rem; color: #1F2937; margin: 0 0 0.25rem 0;">
+                  Students Chapter – TKM College of Engineering, Kollam
+                </p>
+                <p style="font-size: 0.78rem; color: #6B7280; margin: 0 0 1rem 0;">
+                  Affiliated with ISHMT Regional Chapter, Trivandrum
+                </p>
+                <p style="font-size: 0.8rem; color: #4B5563; line-height: 1.6; margin: 0;">
+                  Promoting scientific inquiry, thermal engineering education, computational fluid dynamics, and national aerospace collaborations across Kerala.
+                </p>
+              </div>
+
+              <!-- Column 2: Useful Links -->
+              <div>
+                <h3 class="footer-column-title">Useful Links</h3>
+                <ul class="footer-links-list">
+                  <li><a href="#/"><span class="footer-link-dot"></span>Home</a></li>
+                  <li><a href="#/"><span class="footer-link-dot"></span>About Us</a></li>
+                  <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer"><span class="footer-link-dot"></span>Membership</a></li>
+                  <li><a href="#/events"><span class="footer-link-dot"></span>News &amp; Events</a></li>
+                  <li><a href="#/"><span class="footer-link-dot"></span>MoA &amp; By-Laws</a></li>
+                  <li><a href="#/"><span class="footer-link-dot"></span>Terms &amp; Conditions</a></li>
+                  <li><a href="#/"><span class="footer-link-dot"></span>Disclaimer</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 3: Official Contact & Registration Info -->
+              <div>
+                <h3 class="footer-column-title">Contact Us</h3>
+
+                <div class="footer-contact-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <div>
+                    <strong style="color: #111827;">Campus Secretariat:</strong><br>
+                    Department of Mechanical Engineering, TKM College of Engineering, Kollam – 691 005
+                  </div>
+                </div>
+
+                <div class="footer-contact-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                    <path d="M9 22v-4h6v4"></path>
+                  </svg>
+                  <div>
+                    <strong style="color: #111827;">Regional Headquarters:</strong><br>
+                    Indian Society for Heat and Mass Transfer, Regional Chapter, Trivandrum<br>
+                    <span style="font-size: 0.75rem; color: #6B7280;">Reg. No. TVM/TC/614/2016</span><br>
+                    PRS Entity, Liquid Propulsion Systems Centre (LPSC), Thiruvananthapuram – 695 547
+                  </div>
+                </div>
+
+                <div class="footer-contact-item" style="align-items: center;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  <a href="mailto:ishmtkerala@gmail.com" style="color: #4B5563; text-decoration: none; font-weight: 500;">
+                    ishmtkerala@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Copyright Bar & Scroll to Top -->
+            <div class="footer-bottom-bar">
+              <p>© 2026 ISHMT Student Chapter TKMCE. All Rights Reserved.</p>
+              <p>Affiliated to ISHMT National Council &amp; ISHMT-RCT (Trivandrum)</p>
+            </div>
+          </div>
+
+          <!-- Floating Scroll-to-Top Button -->
+          <button type="button" id="global-scroll-top-btn" class="scroll-top-button" aria-label="Scroll to top" title="Scroll to top">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="19" x2="12" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+          </button>
+        </footer>
       `;
     },
 
