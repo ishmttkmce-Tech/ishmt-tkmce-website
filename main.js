@@ -188,9 +188,9 @@
             type: 'hero',
             layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'crimson-tint', alignment: 'center', visible: true },
             content: {
-              eyebrow: 'Leadership & Mentorship',
-              title: 'Executive Council 2025–2026',
-              subtitle: 'Meet the faculty advisors and student leaders steering the ISHMT RCT Students Chapter at TKM College of Engineering.'
+              eyebrow: 'Affiliated Chapter • Mentored by Regional Chapter Trivandrum',
+              title: 'Executive Committee (2026–2027)',
+              subtitle: 'The appointed Senior and Junior Executive members will steer the technical events, regional seminars, computational workshops, and chapter operations under the direct mentorship of the ISHMT Trivandrum Regional Chapter for the 2026–2027 academic session.'
             }
           },
           {
@@ -198,16 +198,41 @@
             type: 'grid-cards',
             layout: { columns: 3, containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'center', visible: true },
             content: {
-              eyebrow: 'Council Members',
-              title: 'Faculty Mentors & Student Office Bearers',
-              description: 'Dedicated to upholding high technical standards and fostering professional growth.',
+              eyebrow: 'Tier 1 • Senior Execom Leadership',
+              title: 'Senior Executive Committee (13 Positions)',
+              description: 'Executive officers and functional leads appointed under the official constitution dated 23 September 2026.',
               items: [
-                { id: 'team-1', tag: 'Faculty Advisor', title: 'Dr. K. E. Reby Roy', description: 'Professor, Department of Mechanical Engineering, TKMCE. Expert in advanced thermal sciences.' },
-                { id: 'team-2', tag: 'Chapter Mentor', title: 'Dr. S. Jose', description: 'Thermal Engineering Specialist & Senior Member, National ISHMT Council.' },
-                { id: 'team-3', tag: 'Student Chairperson', title: 'Arjun S. Nair', description: 'Final Year Mechanical Engineering. Leading chapter outreach and national conclaves.' },
-                { id: 'team-4', tag: 'Technical Secretary', title: 'Ananya M. Pillai', description: 'Head of Technical Operations, Workshop Curriculums, and CFD training.' },
-                { id: 'team-5', tag: 'Research Lead', title: 'Devanand K.', description: 'Coordinator for student research papers and experimental test bench setups.' },
-                { id: 'team-6', tag: 'Outreach & Media', title: 'Sneha R.', description: 'Managing institutional partnerships, industry visits, and digital communications.' }
+                { id: 'team-1', tag: 'Core Leadership', title: 'Pranav R', description: 'Chairperson / President • B.Tech Mechanical Engineering S7. Steering chapter governance and ISHMT RCT coordination.' },
+                { id: 'team-2', tag: 'Core Leadership', title: 'Rohit Mangalassery', description: 'Vice Chairperson / Vice President • B.Tech Mechanical Engineering S5. Assisting chapter operations and workshop oversight.' },
+                { id: 'team-3', tag: 'Core Leadership', title: 'Parthiv J Prasad', description: 'General Secretary • 2026–27 Session. Managing institutional correspondence, council records, and logistics.' },
+                { id: 'team-4', tag: 'Technical Lead', title: 'Amal S', description: 'Technical Team Lead • B.Tech Mechanical Engineering S7. Head of simulation toolkits, CFD masterclasses, and thermal hardware.' },
+                { id: 'team-5', tag: 'Technical Member', title: 'Afnan', description: 'Technical Team Member • B.Tech Mechanical Engineering S5. Supporting computational fluid simulations and code troubleshooting.' },
+                { id: 'team-6', tag: 'PC Lead', title: 'Amrutha R', description: 'Program Coordination Lead • B.Tech Mechanical Engineering S5. Directing event scheduling, conclaves, and venue execution.' },
+                { id: 'team-7', tag: 'PC Member', title: 'Aafiya Junide', description: 'Program Coordination Member • B.Tech Chemical Engineering S3. Coordinating attendee check-ins and delegate hospitality.' },
+                { id: 'team-8', tag: 'PC Nominee', title: 'M.Tech Nominee', description: '+1 Nominee (M.Tech Representative) • 2026–27 Session. Postgraduate liaison bringing advanced research synchronization.' },
+                { id: 'team-9', tag: 'Media Lead', title: 'Arjun R', description: 'Media & Design Lead • 2026–27 Session. Art direction, technical infographics, poster design, and event branding.' },
+                { id: 'team-10', tag: 'Media Member', title: 'Abhinav K', description: 'Media & Design Member • B.Tech Mechanical Engineering S5. Video production, motion graphics, and digital media.' },
+                { id: 'team-11', tag: 'PR Lead', title: 'Vinayak V', description: 'Public Relations Lead • 2026–27 Session. Chapter outreach, industry liaison with ISRO/DRDO mentors, and press briefs.' },
+                { id: 'team-12', tag: 'PR Member', title: 'Anugraha Asok', description: 'Public Relations Member • B.Tech Chemical Engineering S3. Student delegate relations and inter-college outreach drives.' },
+                { id: 'team-13', tag: 'Finance Lead', title: 'Ashwa', description: 'Finance & Documentation Lead • 2026–27 Session. Overseeing budget allocations, voucher audits, and financial registry.' }
+              ]
+            }
+          },
+          {
+            id: 'sec-team-junior',
+            type: 'grid-cards',
+            layout: { columns: 3, containerWidth: 'boxed', paddingY: 'md', bgType: 'subtle', alignment: 'center', visible: true },
+            content: {
+              eyebrow: 'Tier 2 • Junior Execom Tracks',
+              title: 'Junior Executive Committee (6 Appointed)',
+              description: 'Operational leads spearheading simulation toolkits, stage management, venue logistics, and audit archival.',
+              items: [
+                { id: 'jun-1', tag: 'Technical Track', title: 'Amal Sebastian', description: 'Simulation Toolkits & Lab Support • B.Tech Mechanical Engineering S3.' },
+                { id: 'jun-2', tag: 'Technical Track', title: 'Kashinathan M P', description: 'Hands-on Setup & Code Troubleshooting • B.Tech Mechanical Engineering S5.' },
+                { id: 'jun-3', tag: 'PC Track', title: 'Meenakshi D R', description: 'Venue Logistics & Attendee Check-In • B.Tech Mechanical Engineering S3.' },
+                { id: 'jun-4', tag: 'PC Track', title: 'Nidhin Sabu', description: 'Stage Management & Event Operations • B.Tech Mechanical Engineering S5.' },
+                { id: 'jun-5', tag: 'Dual PC / PR', title: 'Denny J Mangalathu', description: 'Cross-Functional Operations & Outreach • B.Tech Mechanical Engineering S3.' },
+                { id: 'jun-6', tag: 'Finance Track', title: 'Nithin Sunil Mathews', description: 'Audit Archival, Vouchers & Registry • B.Tech Chemical Engineering S3.' }
               ]
             }
           }
