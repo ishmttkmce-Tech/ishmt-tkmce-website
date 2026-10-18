@@ -52,12 +52,6 @@
               cardTitle: '',
               cardSubtitle: ''
             }
-          },
-          {
-            id: 'sec-home-execom',
-            type: 'execom-directory',
-            layout: { containerWidth: 'wide', paddingY: 'sm', bgType: 'canvas', alignment: 'center', visible: true },
-            content: {}
           }
         ]
       },
@@ -300,7 +294,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_2026_27_live';
+  const STORAGE_KEY = 'ishmt_site_blueprint_2026_27_minimal';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -314,7 +308,8 @@
           'ishmt_site_blueprint_v2',
           'ishmt_site_blueprint_v3',
           'ishmt_site_blueprint_2026',
-          'ishmt_site_blueprint_2026_27_v1'
+          'ishmt_site_blueprint_2026_27_v1',
+          'ishmt_site_blueprint_2026_27_live'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -903,47 +898,44 @@
 
       return `
         <div class="execom-section">
-          <!-- A. Header & Mandate Banner -->
+          <!-- A. Minimalist Header & Mandate Callout -->
           <div class="execom-header">
-            <div class="execom-badge-sub">🔥 ${this.escapeHtml(data.meta.department)} • TKMCE</div>
-            <h1 class="execom-title">
-              ISHMT TKMCE Student Chapter
-              <span class="execom-title-gradient">Executive Committee & Members (2026–27)</span>
-            </h1>
+            <div class="execom-badge-sub">${this.escapeHtml(data.meta.department)} • TKMCE</div>
+            <h1 class="execom-title">Executive Committee &amp; Chapter Members</h1>
             <p class="execom-subtitle">
-              ${this.escapeHtml(data.meta.department)}, ${this.escapeHtml(data.meta.institution)}. Mentored by Regional Chapter Trivandrum (RCT).
+              Session 2026–27 • ${this.escapeHtml(data.meta.institution)} • Mentored by Regional Chapter Thiruvananthapuram (RCT)
             </p>
 
-            <!-- Sleek Glassmorphic Mandate Card -->
+            <!-- Minimalist Mandate Notice -->
             <div class="execom-mandate-card">
               <div class="execom-mandate-header">
-                <span class="execom-mandate-tag">Official Constitution Mandate • ${this.escapeHtml(data.meta.notificationDate)}</span>
+                <span class="execom-mandate-tag">Official Mandate • ${this.escapeHtml(data.meta.notificationDate)}</span>
                 <span class="execom-mandate-ref">REF: ISHMT-TKMCE-2026</span>
               </div>
               <p class="execom-mandate-text">"${this.escapeHtml(data.meta.mandate)}"</p>
             </div>
 
-            <!-- Metric Counter Row -->
+            <!-- Minimalist 4-Metric Grid -->
             <div class="execom-metrics-row">
               <div class="execom-metric-box">
-                <div class="execom-metric-val">13</div>
+                <div class="execom-metric-val crimson">13</div>
                 <div class="execom-metric-lbl">Senior Execom</div>
               </div>
               <div class="execom-metric-box">
-                <div class="execom-metric-val" style="color: #06B6D4;">6</div>
+                <div class="execom-metric-val black">6</div>
                 <div class="execom-metric-lbl">Junior Execom</div>
               </div>
               <div class="execom-metric-box">
-                <div class="execom-metric-val" style="color: #F59E0B;">48</div>
+                <div class="execom-metric-val crimson">48</div>
                 <div class="execom-metric-lbl">Roster Members</div>
               </div>
               <div class="execom-metric-box">
-                <div class="execom-metric-val" style="color: #10B981;">100%</div>
+                <div class="execom-metric-val black">100%</div>
                 <div class="execom-metric-lbl">Peer Verified</div>
               </div>
             </div>
 
-            <!-- Navigation Jump Tabs -->
+            <!-- Minimalist Navigation Tabs -->
             <div class="execom-tabs">
               <button type="button" class="execom-tab-btn active" data-tab="all">All Sections View</button>
               <button type="button" class="execom-tab-btn" data-tab="senior">Senior Execom (13)</button>
@@ -953,29 +945,27 @@
           </div>
 
           <!-- B. Tier 1: Senior Executive Committee -->
-          <div id="section-senior" style="margin-bottom: 4rem;">
+          <div id="section-senior" class="execom-tier-wrap">
             <div class="execom-tier-header">
               <div>
-                <div class="execom-tier-tag">Tier 1 • Primary Spotlight</div>
-                <h2 class="execom-tier-h2">Senior Executive Committee (Execom)</h2>
-                <div class="execom-tier-desc">13 Executive Positions across Core Presidency, Technical, Coordination, Media, PR, and Finance.</div>
+                <div class="execom-tier-tag">Tier 1 • Senior Execom</div>
+                <h2 class="execom-tier-h2">Senior Executive Leadership</h2>
+                <div class="execom-tier-desc">13 appointed executive positions across Core Leadership and Functional Tracks.</div>
               </div>
-              <div class="execom-mandate-ref" style="align-self: flex-start;">13 Appointed Positions</div>
+              <div class="execom-mandate-ref">13 Appointed Positions</div>
             </div>
 
-            <!-- Top 3 Leadership Spotlight -->
+            <!-- Core Leadership Spotlight -->
             <div class="execom-core-grid">
               ${coreLeaders.map(l => `
                 <div class="execom-leader-card">
                   <div>
                     <div class="execom-leader-top">
-                      <span class="execom-lead-pill">★ Executive Lead</span>
-                      <span style="font-family: monospace; font-size: 0.72rem; color: #94A3B8;">Tier 1 Core</span>
+                      <span class="execom-lead-pill">Executive Leadership</span>
+                      <span class="execom-tier-sub">Core</span>
                     </div>
                     <div class="execom-avatar-wrap">
-                      <div class="execom-avatar-ring">
-                        <div class="execom-avatar-inner">${l.avatar}</div>
-                      </div>
+                      <div class="execom-avatar-inner">${l.avatar}</div>
                       <div>
                         <h3 class="execom-leader-name">${this.escapeHtml(l.name)}</h3>
                         <div class="execom-leader-role">${this.escapeHtml(l.role)}</div>
@@ -984,7 +974,7 @@
                     <p class="execom-leader-bio">${this.escapeHtml(l.bio)}</p>
                   </div>
                   <div class="execom-card-footer">
-                    <span>🎓 ${this.escapeHtml(l.badge)}</span>
+                    <span>${this.escapeHtml(l.badge)}</span>
                   </div>
                 </div>
               `).join('')}
@@ -997,16 +987,16 @@
                   <div>
                     <div class="execom-func-top">
                       <span class="execom-func-team">${this.escapeHtml(m.team)}</span>
-                      ${m.isLead ? `<span class="execom-lead-tag">TEAM LEAD</span>` : `<span style="font-size: 0.65rem; color: #94A3B8;">Member</span>`}
+                      <span class="execom-lead-tag">${m.isLead ? 'Lead' : 'Member'}</span>
                     </div>
                     <div class="execom-func-mid">
-                      <div class="execom-mini-avatar" ${m.isLead ? 'style="background: linear-gradient(135deg, #06B6D4, #F59E0B);"' : ''}>${m.avatar}</div>
+                      <div class="execom-mini-avatar">${m.avatar}</div>
                       <div>
                         <h4 class="execom-func-name">${this.escapeHtml(m.name)}</h4>
                         <div class="execom-func-role">${this.escapeHtml(m.role)}</div>
                       </div>
                     </div>
-                    <p style="font-size: 0.75rem; color: #94A3B8; line-height: 1.45; margin-bottom: 0.75rem;">${this.escapeHtml(m.bio)}</p>
+                    <p class="execom-func-bio">${this.escapeHtml(m.bio)}</p>
                   </div>
                   <div class="execom-func-badge">${this.escapeHtml(m.badge)}</div>
                 </div>
@@ -1015,36 +1005,36 @@
           </div>
 
           <!-- C. Tier 2: Junior Executive Committee -->
-          <div id="section-junior" style="margin-bottom: 4rem;">
+          <div id="section-junior" class="execom-tier-wrap">
             <div class="execom-tier-header">
               <div>
-                <div class="execom-tier-tag" style="color: #06B6D4;">Tier 2 • Operational Tracks</div>
-                <h2 class="execom-tier-h2">Junior Executive Committee (Junior Execom)</h2>
-                <div class="execom-tier-desc">6 Appointed Junior Executives dedicated to technical simulation toolkits, stage ops, venue logistics, and audit archival.</div>
+                <div class="execom-tier-tag">Tier 2 • Junior Execom</div>
+                <h2 class="execom-tier-h2">Junior Executive Operational Tracks</h2>
+                <div class="execom-tier-desc">6 appointed junior executives dedicated to technical simulation toolkits, stage ops, venue logistics, and audit archival.</div>
               </div>
-              <div class="execom-mandate-ref" style="align-self: flex-start; color: #06B6D4; border-color: rgba(6, 182, 212, 0.4);">6 Appointed Members</div>
+              <div class="execom-mandate-ref">6 Appointed Members</div>
             </div>
 
             <div class="execom-junior-grid">
               ${data.juniorExecom.map(j => `
                 <div class="execom-junior-card">
                   <div>
-                    <span class="execom-track-pill ${j.color}">💼 ${this.escapeHtml(j.track)}</span>
-                    <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.75rem;">
-                      <div class="execom-mini-avatar" style="background: linear-gradient(135deg, #06B6D4, #3B82F6); font-size: 0.95rem;">${j.avatar}</div>
+                    <span class="execom-track-pill">${this.escapeHtml(j.track)}</span>
+                    <div class="execom-junior-mid">
+                      <div class="execom-mini-avatar">${j.avatar}</div>
                       <div>
-                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #FFFFFF;">${this.escapeHtml(j.name)}</h4>
-                        <div style="font-family: monospace; font-size: 0.75rem; color: #94A3B8;">${this.escapeHtml(j.badge)}</div>
+                        <h4 class="execom-junior-name">${this.escapeHtml(j.name)}</h4>
+                        <div class="execom-junior-badge">${this.escapeHtml(j.badge)}</div>
                       </div>
                     </div>
                     <div class="execom-focus-box">
-                      <span class="execom-focus-lbl">Key Operational Focus:</span>
-                      <strong>${this.escapeHtml(j.focus)}</strong>
+                      <span class="execom-focus-lbl">Operational Focus:</span>
+                      ${this.escapeHtml(j.focus)}
                     </div>
                   </div>
-                  <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.75rem; color: #06B6D4; display: flex; justify-content: space-between;">
+                  <div class="execom-junior-footer">
                     <span>Mentored by Senior Leads</span>
-                    <span>Active 2026–27 &rarr;</span>
+                    <span>Session 2026–27</span>
                   </div>
                 </div>
               `).join('')}
@@ -1052,37 +1042,37 @@
           </div>
 
           <!-- D. Tier 3: Student Chapter Directory -->
-          <div id="section-roster">
+          <div id="section-roster" class="execom-tier-wrap">
             <div class="execom-tier-header">
               <div>
-                <div class="execom-tier-tag" style="color: #10B981;">Tier 3 • Complete Chapter Directory</div>
+                <div class="execom-tier-tag">Tier 3 • Directory</div>
                 <h2 class="execom-tier-h2">Student Chapter Members Roster</h2>
                 <div class="execom-tier-desc">Complete cross-referenced registry of 48 registered undergraduate & postgraduate members.</div>
               </div>
-              <div id="execom-live-count" class="execom-mandate-ref" style="color: #10B981; border-color: rgba(16, 185, 129, 0.4); font-weight: 700;">
+              <div id="execom-live-count" class="execom-mandate-ref execom-mandate-crimson">
                 Showing 34 General Members
               </div>
             </div>
 
-            <!-- Interactive Control Panel -->
+            <!-- Interactive Minimalist Control Panel -->
             <div class="execom-ctrl-panel">
               <div class="execom-ctrl-row-1">
-                <input type="text" id="execom-search" class="execom-search-input" placeholder="🔍 Search by student name, semester, department..." />
+                <input type="text" id="execom-search" class="execom-search-input" placeholder="Search by student name, semester, department..." />
                 
                 <div class="execom-toggle-group">
                   <button type="button" class="execom-toggle-btn active" data-filter="general">General Members Only (${generalCount})</button>
                   <button type="button" class="execom-toggle-btn" data-filter="all">Show All Members (${totalCount})</button>
                 </div>
 
-                <div style="display: flex; gap: 0.35rem;">
-                  <button type="button" class="execom-view-btn execom-pill-btn active" data-mode="grid" title="Grid View">Grid</button>
-                  <button type="button" class="execom-view-btn execom-pill-btn" data-mode="table" title="Table View">Table</button>
+                <div class="execom-view-btns">
+                  <button type="button" class="execom-view-btn execom-pill-btn active" data-mode="grid">Grid</button>
+                  <button type="button" class="execom-view-btn execom-pill-btn" data-mode="table">Table</button>
                 </div>
               </div>
 
               <div class="execom-ctrl-row-2">
                 <div class="execom-filter-pills">
-                  <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748B;">Semester:</span>
+                  <span class="execom-filter-lbl">Semester:</span>
                   <button type="button" class="execom-pill-btn active" data-sem="All">All</button>
                   <button type="button" class="execom-pill-btn" data-sem="Ph.D.">Ph.D.</button>
                   <button type="button" class="execom-pill-btn" data-sem="S7">S7</button>
@@ -1090,8 +1080,8 @@
                   <button type="button" class="execom-pill-btn" data-sem="S3">S3</button>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                  <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748B;">Dept:</span>
+                <div class="execom-dept-wrap">
+                  <span class="execom-filter-lbl">Department:</span>
                   <select id="execom-dept-select" class="execom-dept-select">
                     <option value="All">All Departments</option>
                     <option value="Mechanical Engineering">Mechanical Engineering (44)</option>
@@ -1156,10 +1146,9 @@
 
         if (filtered.length === 0) {
           displayEl.innerHTML = `
-            <div style="text-align: center; padding: 3rem 1rem; color: #64748B; background: #FFFFFF; border: 1px dashed #CBD5E1; border-radius: 12px; width: 100%;">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
-              <h4 style="font-weight: 700; color: #1E293B; margin-bottom: 0.25rem;">No members match your criteria</h4>
-              <p style="font-size: 0.8rem;">Try clearing search keywords or selecting 'All' in semester and department filters.</p>
+            <div class="execom-empty-box">
+              <h4 class="execom-empty-title">No members match your criteria</h4>
+              <p class="execom-empty-desc">Try clearing search keywords or selecting 'All' in semester and department filters.</p>
             </div>
           `;
           return;
@@ -1174,8 +1163,8 @@
                   <span class="execom-sem-tag">${m.semester}</span>
                   ${m.isExecom ? `<span class="execom-exe-status">${m.execomTier === 'senior' ? 'Senior Execom' : 'Junior Execom'}</span>` : ''}
                 </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                  <div style="width: 38px; height: 38px; border-radius: 8px; background: #1E293B; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 0.8rem; font-weight: 800; flex-shrink: 0;">
+                <div class="execom-student-info-row">
+                  <div class="execom-student-monogram">
                     ${m.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                   </div>
                   <div style="min-width: 0;">
@@ -1184,7 +1173,7 @@
                   </div>
                 </div>
               </div>
-              ${m.isExecom ? `<div class="execom-role-ribbon">★ ${PublicRenderer.escapeHtml(m.execomRole)}</div>` : ''}
+              ${m.isExecom ? `<div class="execom-role-ribbon">${PublicRenderer.escapeHtml(m.execomRole)}</div>` : ''}
             </div>
           `).join('');
         } else {
@@ -1204,15 +1193,15 @@
               <tbody>
                 ${filtered.map((m, idx) => `
                   <tr class="${m.isExecom ? 'is-execom' : ''}">
-                    <td style="font-family: monospace; color: #64748B;">${idx + 1}</td>
-                    <td style="font-weight: 700; color: #0F172A;">${PublicRenderer.escapeHtml(m.name)}</td>
+                    <td class="execom-td-num">${idx + 1}</td>
+                    <td class="execom-td-name">${PublicRenderer.escapeHtml(m.name)}</td>
                     <td>${PublicRenderer.escapeHtml(m.programme)}</td>
                     <td>${PublicRenderer.escapeHtml(m.department)}</td>
                     <td style="text-align: center;"><span class="execom-sem-tag">${m.semester}</span></td>
                     <td>
                       ${m.isExecom
-                        ? `<span class="execom-exe-status">✓ ${PublicRenderer.escapeHtml(m.execomRole)}</span>`
-                        : `<span style="color: #64748B; font-size: 0.78rem;">General Member</span>`}
+                        ? `<span class="execom-exe-status">${PublicRenderer.escapeHtml(m.execomRole)}</span>`
+                        : `<span class="execom-general-status">General Member</span>`}
                     </td>
                   </tr>
                 `).join('')}

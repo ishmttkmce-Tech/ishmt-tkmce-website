@@ -1748,31 +1748,31 @@ body.loading-state {
 }
 
 /* ==========================================================================
-   EXECUTIVE COMMITTEE & CLUB MEMBERS DIRECTORY (2026–27)
+   EXECUTIVE COMMITTEE & CLUB MEMBERS DIRECTORY (2026–27) - MINIMALIST
+   Theme: Primary: Crimson Red (#8B0D1A) | Secondary: Black (#0B0B0B) | Background: Off White (#F5F2ED)
    ========================================================================== */
 .execom-section {
   width: 100%;
-  max-width: 1320px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 3rem 1.5rem 5rem;
-  color: #E2E8F0;
+  color: #0B0B0B;
+  background-color: transparent;
 }
 
 .execom-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.75rem;
 }
 
 .execom-badge-sub {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 1.25rem;
-  border-radius: 9999px;
-  background: rgba(139, 13, 26, 0.12);
-  border: 1px solid rgba(139, 13, 26, 0.35);
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 4px;
+  background: rgba(139, 13, 26, 0.08);
+  border: 1px solid rgba(139, 13, 26, 0.25);
   color: #8B0D1A;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1781,56 +1781,39 @@ body.loading-state {
 
 .execom-title {
   font-family: var(--theme-font-family);
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
   font-weight: 700;
-  color: var(--theme-charcoal);
+  color: #0B0B0B;
   text-transform: uppercase;
   line-height: 1.15;
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
-}
-
-.execom-title-gradient {
-  background: linear-gradient(135deg, #8B0D1A 0%, #B91C1C 40%, #06B6D4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: block;
+  margin-bottom: 0.65rem;
+  letter-spacing: -0.01em;
 }
 
 .execom-subtitle {
-  font-size: 0.95rem;
-  color: var(--theme-muted);
-  max-width: 720px;
-  margin: 0 auto 2rem;
+  font-size: 0.88rem;
+  color: #555555;
+  max-width: 680px;
+  margin: 0 auto 1.75rem;
   line-height: 1.6;
 }
 
-/* Glassmorphic Mandate Callout */
+/* Minimalist Mandate Notice Card */
 .execom-mandate-card {
   position: relative;
-  background: #0E131F;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1.75rem 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(20px);
-  overflow: hidden;
+  background: #FFFFFF;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-left: 3px solid #8B0D1A;
+  border-radius: 8px;
+  padding: 1.25rem 1.75rem;
   text-align: left;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem;
+  max-width: 860px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  color: #CBD5E1;
-}
-
-.execom-mandate-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 5px;
-  height: 100%;
-  background: linear-gradient(180deg, #8B0D1A 0%, #F59E0B 50%, #06B6D4 100%);
+  gap: 0.75rem;
+  color: #0B0B0B;
+  box-shadow: 0 2px 8px rgba(11, 11, 11, 0.02);
 }
 
 .execom-mandate-header {
@@ -1842,103 +1825,120 @@ body.loading-state {
 }
 
 .execom-mandate-tag {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #F59E0B;
+  letter-spacing: 0.06em;
+  color: #8B0D1A;
 }
 
 .execom-mandate-ref {
   font-family: monospace;
-  font-size: 0.75rem;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 0.25rem 0.65rem;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #38BDF8;
+  font-size: 0.72rem;
+  background: #F5F2ED;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  color: #0B0B0B;
+}
+
+.execom-mandate-crimson {
+  color: #8B0D1A;
+  border-color: rgba(139, 13, 26, 0.3);
+  background: rgba(139, 13, 26, 0.04);
 }
 
 .execom-mandate-text {
-  font-size: 0.92rem;
-  line-height: 1.65;
-  font-style: italic;
-  color: #E2E8F0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #0B0B0B;
 }
 
-/* Metric Counter Row */
+/* Minimalist 4-Metric Grid */
 .execom-metrics-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  margin-bottom: 2.5rem;
+  margin: 0 auto 2.5rem;
+  max-width: 860px;
 }
 
 .execom-metric-box {
   background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  padding: 1.25rem 1rem;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-radius: 8px;
+  padding: 1.1rem 0.75rem;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px rgba(11, 11, 11, 0.02);
 }
 
 .execom-metric-val {
   font-family: monospace;
-  font-size: 2rem;
+  font-size: 1.85rem;
   font-weight: 800;
-  color: var(--theme-charcoal);
   line-height: 1;
 }
 
-.execom-metric-lbl {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--theme-muted);
-  letter-spacing: 0.05em;
-  margin-top: 0.5rem;
+.execom-metric-val.crimson {
+  color: #8B0D1A;
 }
 
-/* Section Tabs */
+.execom-metric-val.black {
+  color: #0B0B0B;
+}
+
+.execom-metric-lbl {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #555555;
+  letter-spacing: 0.06em;
+  margin-top: 0.45rem;
+}
+
+/* Minimalist Navigation Jump Tabs */
 .execom-tabs {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
   flex-wrap: wrap;
-  margin-bottom: 3rem;
+  margin-bottom: 2.75rem;
 }
 
 .execom-tab-btn {
-  padding: 0.6rem 1.25rem;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  font-weight: 700;
+  padding: 0.5rem 1.15rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(11, 11, 11, 0.12);
   background: #FFFFFF;
-  color: var(--theme-muted);
-  transition: all 0.2s ease;
+  color: #0B0B0B;
+  transition: all 0.15s ease;
 }
 
 .execom-tab-btn:hover {
-  background: #FAF7F2;
-  color: var(--theme-charcoal);
+  background: #FAF8F5;
+  border-color: #8B0D1A;
+  color: #8B0D1A;
 }
 
 .execom-tab-btn.active {
   background: #8B0D1A;
   color: #FFFFFF;
   border-color: #8B0D1A;
-  box-shadow: 0 4px 15px rgba(139, 13, 26, 0.25);
 }
 
-/* Tier Header */
+/* Tier Section Wrappers & Headers */
+.execom-tier-wrap {
+  margin-bottom: 3.5rem;
+}
+
 .execom-tier-header {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.06);
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(11, 11, 11, 0.08);
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.75rem;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -1947,133 +1947,131 @@ body.loading-state {
 }
 
 .execom-tier-tag {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #8B0D1A;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.25rem;
 }
 
 .execom-tier-h2 {
   font-family: var(--theme-font-family);
-  font-size: 1.85rem;
+  font-size: 1.5rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--theme-charcoal);
+  color: #0B0B0B;
   letter-spacing: -0.01em;
 }
 
 .execom-tier-desc {
-  font-size: 0.88rem;
-  color: var(--theme-muted);
-  margin-top: 0.25rem;
+  font-size: 0.82rem;
+  color: #555555;
+  margin-top: 0.2rem;
 }
 
-/* Top 3 Core Leadership */
+/* Tier 1: Core Leadership (Top 3/5) */
 .execom-core-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .execom-leader-card {
-  position: relative;
-  background: #0E131F;
-  border: 2px solid rgba(245, 158, 11, 0.35);
-  border-radius: 18px;
-  padding: 1.75rem;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+  background: #FFFFFF;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-top: 2px solid #8B0D1A;
+  border-radius: 8px;
+  padding: 1.35rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  color: #F8FAFC;
+  box-shadow: 0 1px 4px rgba(11, 11, 11, 0.02);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .execom-leader-card:hover {
-  transform: translateY(-4px);
-  border-color: #F59E0B;
-  box-shadow: 0 20px 44px rgba(245, 158, 11, 0.18);
+  border-color: rgba(139, 13, 26, 0.4);
+  box-shadow: 0 4px 12px rgba(11, 11, 11, 0.06);
 }
 
 .execom-leader-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .execom-lead-pill {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.25rem 0.65rem;
-  border-radius: 9999px;
-  background: rgba(245, 158, 11, 0.18);
-  border: 1px solid rgba(245, 158, 11, 0.4);
-  color: #FBBF24;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(139, 13, 26, 0.06);
+  border: 1px solid rgba(139, 13, 26, 0.2);
+  color: #8B0D1A;
+}
+
+.execom-tier-sub {
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: #555555;
 }
 
 .execom-avatar-wrap {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.execom-avatar-ring {
-  width: 58px;
-  height: 58px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #F59E0B 0%, #8B0D1A 60%, #06B6D4 100%);
-  padding: 2px;
-  flex-shrink: 0;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
 }
 
 .execom-avatar-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  background: #090D16;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: #0B0B0B;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: monospace;
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   font-weight: 800;
   color: #FFFFFF;
+  flex-shrink: 0;
 }
 
 .execom-leader-name {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #0B0B0B;
   line-height: 1.25;
 }
 
 .execom-leader-role {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: #F59E0B;
-  margin-top: 0.2rem;
+  color: #8B0D1A;
+  margin-top: 0.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .execom-leader-bio {
-  font-size: 0.82rem;
-  color: #94A3B8;
+  font-size: 0.78rem;
+  color: #555555;
   line-height: 1.55;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.15rem;
 }
 
 .execom-card-footer {
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(11, 11, 11, 0.06);
   font-family: monospace;
-  font-size: 0.78rem;
-  color: #38BDF8;
+  font-size: 0.72rem;
+  color: #555555;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2083,246 +2081,260 @@ body.loading-state {
 .execom-func-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 4rem;
+  gap: 1rem;
 }
 
 .execom-func-card {
-  background: #0E131F;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 1.25rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-radius: 8px;
+  padding: 1.15rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.25s ease;
-  color: #F1F5F9;
+  box-shadow: 0 1px 3px rgba(11, 11, 11, 0.02);
+  transition: border-color 0.2s ease;
 }
 
 .execom-func-card.is-lead {
-  border: 2px solid rgba(6, 182, 212, 0.45);
-  box-shadow: 0 8px 24px rgba(6, 182, 212, 0.1);
+  border-left: 2px solid #8B0D1A;
 }
 
 .execom-func-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(6, 182, 212, 0.8);
+  border-color: rgba(139, 13, 26, 0.4);
 }
 
 .execom-func-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
 }
 
 .execom-func-team {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: #94A3B8;
+  color: #8B0D1A;
   letter-spacing: 0.05em;
 }
 
 .execom-lead-tag {
-  font-size: 0.65rem;
-  font-weight: 800;
+  font-size: 0.62rem;
+  font-weight: 700;
   text-transform: uppercase;
-  padding: 0.2rem 0.5rem;
-  border-radius: 9999px;
-  background: rgba(6, 182, 212, 0.18);
-  border: 1px solid rgba(6, 182, 212, 0.4);
-  color: #22D3EE;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: #F5F2ED;
+  border: 1px solid rgba(11, 11, 11, 0.1);
+  color: #0B0B0B;
 }
 
 .execom-func-mid {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
 }
 
 .execom-mini-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: #1E293B;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: #0B0B0B;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: monospace;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #FFFFFF;
   flex-shrink: 0;
 }
 
 .execom-func-name {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #0B0B0B;
   line-height: 1.2;
 }
 
 .execom-func-role {
-  font-size: 0.78rem;
-  color: #94A3B8;
+  font-size: 0.72rem;
+  color: #555555;
   margin-top: 0.15rem;
+}
+
+.execom-func-bio {
+  font-size: 0.75rem;
+  color: #555555;
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
 }
 
 .execom-func-badge {
   font-family: monospace;
-  font-size: 0.72rem;
-  color: #CBD5E1;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.68rem;
+  color: #555555;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(11, 11, 11, 0.06);
 }
 
-/* Junior Execom Grid */
+/* Tier 2: Junior Execom Grid */
 .execom-junior-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-  margin-bottom: 4rem;
+  gap: 1rem;
 }
 
 .execom-junior-card {
-  background: #0E131F;
-  border: 1px solid rgba(6, 182, 212, 0.25);
-  border-radius: 16px;
-  padding: 1.5rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-radius: 8px;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.25s ease;
-  color: #F8FAFC;
+  box-shadow: 0 1px 3px rgba(11, 11, 11, 0.02);
+  transition: border-color 0.2s ease;
 }
 
 .execom-junior-card:hover {
-  transform: translateY(-3px);
-  border-color: #06B6D4;
-  box-shadow: 0 12px 28px rgba(6, 182, 212, 0.12);
+  border-color: rgba(139, 13, 26, 0.35);
 }
 
 .execom-track-pill {
   display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: 0.68rem;
+  font-weight: 700;
   text-transform: uppercase;
-  padding: 0.25rem 0.65rem;
-  border-radius: 9999px;
-  margin-bottom: 1rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: #F5F2ED;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  color: #0B0B0B;
+  margin-bottom: 0.85rem;
 }
 
-.execom-track-pill.cyan {
-  background: rgba(6, 182, 212, 0.15);
-  border: 1px solid rgba(6, 182, 212, 0.35);
-  color: #38BDF8;
+.execom-junior-mid {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
 }
 
-.execom-track-pill.rose {
-  background: rgba(244, 63, 94, 0.15);
-  border: 1px solid rgba(244, 63, 94, 0.35);
-  color: #FB7185;
+.execom-junior-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0B0B0B;
 }
 
-.execom-track-pill.amber {
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  color: #FBBF24;
-}
-
-.execom-track-pill.emerald {
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  color: #34D399;
+.execom-junior-badge {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #555555;
+  margin-top: 0.15rem;
 }
 
 .execom-focus-box {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
-  padding: 0.75rem 0.85rem;
-  margin-top: 1rem;
-  font-size: 0.78rem;
-  color: #CBD5E1;
+  background: #F5F2ED;
+  border-left: 2px solid #8B0D1A;
+  border-radius: 0 4px 4px 0;
+  padding: 0.65rem 0.75rem;
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: #0B0B0B;
+  line-height: 1.45;
 }
 
 .execom-focus-lbl {
   display: block;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: #94A3B8;
-  margin-bottom: 0.25rem;
+  color: #555555;
+  margin-bottom: 0.2rem;
 }
 
-/* Directory Interactive Control Panel */
+.execom-junior-footer {
+  margin-top: 0.85rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(11, 11, 11, 0.06);
+  font-size: 0.7rem;
+  color: #555555;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Tier 3: Directory Control Panel */
 .execom-ctrl-panel {
   background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-radius: 8px;
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 1px 3px rgba(11, 11, 11, 0.02);
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .execom-ctrl-row-1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.85rem;
   flex-wrap: wrap;
 }
 
 .execom-search-input {
   flex: 1;
-  min-width: 260px;
-  padding: 0.7rem 1rem;
-  background: #F8FAFC;
-  border: 1px solid #CBD5E1;
-  border-radius: 10px;
-  font-size: 0.88rem;
-  color: #0F172A;
+  min-width: 240px;
+  padding: 0.6rem 0.9rem;
+  background: #F5F2ED;
+  border: 1px solid rgba(11, 11, 11, 0.12);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: #0B0B0B;
   font-family: inherit;
   outline: none;
-  transition: all 0.2s ease;
+  transition: border-color 0.15s ease;
 }
 
 .execom-search-input:focus {
   border-color: #8B0D1A;
-  box-shadow: 0 0 0 3px rgba(139, 13, 26, 0.1);
   background: #FFFFFF;
 }
 
 .execom-toggle-group {
   display: flex;
   align-items: center;
-  background: #F1F5F9;
-  padding: 0.25rem;
-  border-radius: 10px;
-  border: 1px solid #E2E8F0;
+  background: #F5F2ED;
+  padding: 0.2rem;
+  border-radius: 6px;
+  border: 1px solid rgba(11, 11, 11, 0.08);
 }
 
 .execom-toggle-btn {
-  padding: 0.5rem 0.9rem;
-  border-radius: 8px;
-  font-size: 0.78rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
   font-weight: 700;
   border: none;
   background: transparent;
-  color: #64748B;
+  color: #555555;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .execom-toggle-btn.active {
   background: #8B0D1A;
   color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(139, 13, 26, 0.2);
+}
+
+.execom-view-btns {
+  display: flex;
+  gap: 0.35rem;
 }
 
 .execom-ctrl-row-2 {
@@ -2331,132 +2343,180 @@ body.loading-state {
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
-  padding-top: 1rem;
-  border-top: 1px solid #F1F5F9;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(11, 11, 11, 0.06);
 }
 
 .execom-filter-pills {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   flex-wrap: wrap;
 }
 
+.execom-filter-lbl {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #555555;
+  margin-right: 0.2rem;
+}
+
 .execom-pill-btn {
-  padding: 0.35rem 0.75rem;
-  border-radius: 8px;
-  font-size: 0.78rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
   font-weight: 600;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  color: #64748B;
+  background: #F5F2ED;
+  border: 1px solid rgba(11, 11, 11, 0.1);
+  color: #0B0B0B;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+}
+
+.execom-pill-btn:hover {
+  background: #FFFFFF;
+  border-color: #8B0D1A;
+  color: #8B0D1A;
 }
 
 .execom-pill-btn.active {
-  background: rgba(6, 182, 212, 0.15);
-  border-color: #06B6D4;
-  color: #0891B2;
+  background: #8B0D1A;
+  border-color: #8B0D1A;
+  color: #FFFFFF;
   font-weight: 700;
 }
 
+.execom-dept-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .execom-dept-select {
-  padding: 0.45rem 0.85rem;
-  background: #F8FAFC;
-  border: 1px solid #CBD5E1;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  color: #0F172A;
+  padding: 0.4rem 0.75rem;
+  background: #F5F2ED;
+  border: 1px solid rgba(11, 11, 11, 0.12);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #0B0B0B;
   font-family: inherit;
   outline: none;
+}
+
+.execom-dept-select:focus {
+  border-color: #8B0D1A;
 }
 
 /* Roster Members Grid View */
 .execom-roster-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.85rem;
   margin-bottom: 3rem;
 }
 
 .execom-student-card {
   background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 1.15rem;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-radius: 8px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(11, 11, 11, 0.02);
+  transition: border-color 0.15s ease;
 }
 
 .execom-student-card.is-execom {
-  background: #FFFBEB;
-  border-color: #FCD34D;
+  border-left: 3px solid #8B0D1A;
+  background: #FAF8F5;
 }
 
 .execom-student-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  border-color: rgba(139, 13, 26, 0.35);
 }
 
 .execom-card-top-sem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
 }
 
 .execom-sem-tag {
   font-family: monospace;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  background: #F1F5F9;
-  padding: 0.15rem 0.5rem;
-  border-radius: 6px;
-  color: #0F172A;
+  background: #F5F2ED;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  color: #0B0B0B;
 }
 
 .execom-exe-status {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 800;
   text-transform: uppercase;
-  padding: 0.15rem 0.5rem;
-  border-radius: 9999px;
-  background: rgba(245, 158, 11, 0.2);
-  color: #B45309;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(139, 13, 26, 0.08);
+  border: 1px solid rgba(139, 13, 26, 0.2);
+  color: #8B0D1A;
+}
+
+.execom-student-info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.execom-student-monogram {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  background: #0B0B0B;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
 }
 
 .execom-student-name {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  color: #0F172A;
+  color: #0B0B0B;
 }
 
 .execom-student-meta {
-  font-size: 0.78rem;
-  color: #64748B;
-  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  color: #555555;
+  margin-top: 0.1rem;
 }
 
 .execom-role-ribbon {
-  margin-top: 0.75rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  font-size: 0.72rem;
+  margin-top: 0.65rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(11, 11, 11, 0.06);
+  font-size: 0.7rem;
   font-weight: 700;
-  color: #B45309;
+  color: #8B0D1A;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 /* Roster Table View */
 .execom-table-wrap {
   background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 14px;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-radius: 8px;
   overflow-x: auto;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px rgba(11, 11, 11, 0.02);
   margin-bottom: 3rem;
 }
 
@@ -2464,32 +2524,70 @@ body.loading-state {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
 }
 
 .execom-table th {
-  background: #F8FAFC;
-  padding: 0.9rem 1rem;
+  background: #F5F2ED;
+  padding: 0.75rem 0.9rem;
   font-weight: 700;
-  color: #475569;
+  color: #0B0B0B;
   text-transform: uppercase;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   letter-spacing: 0.05em;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid rgba(11, 11, 11, 0.1);
 }
 
 .execom-table td {
-  padding: 0.85rem 1rem;
-  border-bottom: 1px solid #F1F5F9;
-  color: #1E293B;
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid rgba(11, 11, 11, 0.05);
+  color: #0B0B0B;
+}
+
+.execom-td-num {
+  font-family: monospace;
+  color: #555555;
+}
+
+.execom-td-name {
+  font-weight: 700;
+  color: #0B0B0B;
+}
+
+.execom-general-status {
+  color: #555555;
+  font-size: 0.72rem;
 }
 
 .execom-table tr:hover {
-  background: #F8FAFC;
+  background: #FAF8F5;
 }
 
 .execom-table tr.is-execom {
-  background: #FFFDF5;
+  background: #FAF8F5;
+  border-left: 3px solid #8B0D1A;
+}
+
+/* Empty State */
+.execom-empty-box {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #555555;
+  background: #FFFFFF;
+  border: 1px dashed rgba(11, 11, 11, 0.15);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.execom-empty-title {
+  font-weight: 700;
+  color: #0B0B0B;
+  margin-bottom: 0.25rem;
+}
+
+.execom-empty-desc {
+  font-size: 0.78rem;
+  color: #555555;
 }
 
 /* Responsive Queries for Execom */
@@ -2504,3 +2602,4 @@ body.loading-state {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
