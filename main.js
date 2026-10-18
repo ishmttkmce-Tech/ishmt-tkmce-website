@@ -4,13 +4,217 @@
  * 1. Master SiteConfig JSON Blueprint (Interconnected Store & Cross-Tab Sync)
  * 2. Public Read-Only User Phase with 3-Stage Logo Motion & Header Docking
  * 3. Protected Admin Login (#/login) & Master Control Studio (#/admin)
+ * 4. Powerful Direct Click-to-Edit WYSIWYG & Full Page Content Customization
  */
 
 (function () {
   'use strict';
 
   // ==========================================================================
-  // 1. MASTER SITEDEFAULT BLUEPRINT SCHEMA
+  // 1. DEFAULT DATA OBJECTS & SCHEMAS
+  // ==========================================================================
+
+  const DEFAULT_EXECOM_DATA = {
+    meta: {
+      chapterName: "Indian Society for Heat and Mass Transfer (ISHMT)",
+      institution: "TKM College of Engineering, Kollam",
+      department: "Department of Mechanical Engineering",
+      session: "2026–27",
+      notificationDate: "23 September 2026",
+      mandate: "The appointed Senior and Junior Executive members will steer the technical events, regional seminars, computational workshops, and chapter operations under the direct mentorship of the ISHMT Trivandrum Regional Chapter for the 2026–2027 academic session."
+    },
+    seniorExecom: [
+      { id: "sen-1", name: "Pranav R", role: "Chairperson / President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S7", avatar: "PR", bio: "Steering chapter governance, ISHMT RCT coordination, and strategic academic initiatives for the 2026–27 tenure." },
+      { id: "sen-2", name: "Rohit Mangalassery", role: "Vice Chairperson / Vice President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S5", avatar: "RM", bio: "Assisting chapter operations, inter-departmental synergies, and workshop oversight." },
+      { id: "sen-3", name: "Parthiv J Prasad", role: "General Secretary", team: "Executive Leadership", isLead: true, isCore: true, badge: "2026–27 Session", avatar: "PP", bio: "Managing institutional correspondence, council records, and general chapter logistics." },
+      { id: "sen-4", name: "Amal S", role: "Technical Team Lead", team: "Technical Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S7", avatar: "AS", bio: "Head of simulation toolkits, CFD masterclasses, and thermal hardware bench investigations." },
+      { id: "sen-5", name: "Afnan", role: "Technical Team Member", team: "Technical Team", isLead: false, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AN", bio: "Supporting computational fluid simulations, code troubleshooting, and lab test rigs." },
+      { id: "sen-6", name: "Amrutha R", role: "Program Coordination Lead", team: "Program Coordination Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AR", bio: "Directing event scheduling, conclaves, guest lecture curation, and venue execution." },
+      { id: "sen-7", name: "Aafiya Junide", role: "Program Coordination Member", team: "Program Coordination Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AJ", bio: "Coordinating attendee check-ins, registration pipelines, and delegate hospitality." },
+      { id: "sen-8", name: "M.Tech Nominee", role: "+1 Nominee (M.Tech Representative)", team: "Program Coordination Team", isLead: false, isCore: false, badge: "M.Tech Nominee • 2026–27 Session", avatar: "MT", bio: "Postgraduate liaison bringing advanced research synchronization to chapter programs." },
+      { id: "sen-9", name: "Arjun R", role: "Media & Design Lead", team: "Media & Design Team", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "AR", bio: "Art direction, technical infographics, poster design, and digital event branding." },
+      { id: "sen-10", name: "Abhinav K", role: "Media & Design Member", team: "Media & Design Team", isLead: false, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AK", bio: "Video production, motion graphics, and chapter social media creative assets." },
+      { id: "sen-11", name: "Vinayak V", role: "Public Relations Lead", team: "Public Relations (PR) Team", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "VV", bio: "Spearheading chapter outreach, industry liaison with ISRO/DRDO mentors, and press briefs." },
+      { id: "sen-12", name: "Anugraha Asok", role: "Public Relations Member", team: "Public Relations (PR) Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AA", bio: "Student delegate relations, inter-college invitations, and chapter promotion drives." },
+      { id: "sen-13", name: "Ashwa", role: "Finance & Documentation Lead", team: "Finance & Documentation", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "AS", bio: "Overseeing budget allocations, voucher audits, annual chapter reports, and financial registry." }
+    ],
+    juniorExecom: [
+      { id: "jun-1", name: "Amal Sebastian", track: "Technical Track", focus: "Simulation Toolkits & Lab Support", badge: "B.Tech • Mechanical Engineering • S3", avatar: "AS", color: "cyan" },
+      { id: "jun-2", name: "Kashinathan M P", track: "Technical Track", focus: "Hands-on Setup & Code Troubleshooting", badge: "B.Tech • Mechanical Engineering • S5", avatar: "KM", color: "cyan" },
+      { id: "jun-3", name: "Meenakshi D R", track: "Program Coordination (PC) Track", focus: "Venue Logistics & Attendee Check-In", badge: "B.Tech • Mechanical Engineering • S3", avatar: "MD", color: "rose" },
+      { id: "jun-4", name: "Nidhin Sabu", track: "Program Coordination (PC) Track", focus: "Stage Management & Event Operations", badge: "B.Tech • Mechanical Engineering • S5", avatar: "NS", color: "rose" },
+      { id: "jun-5", name: "Denny J Mangalathu", track: "Dual PC / Public Relations", focus: "Cross-Functional Operations & Outreach", badge: "B.Tech • Mechanical Engineering • S3", avatar: "DM", color: "amber" },
+      { id: "jun-6", name: "Nithin Sunil Mathews", track: "Finance & Documentation Track", focus: "Audit Archival, Vouchers & Registry", badge: "B.Tech • Chemical Engineering • S3", avatar: "NM", color: "emerald" }
+    ],
+    roster: [
+      { id: 1,  name: "Denny J Mangalathu",       programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (Dual PC / PR Track)", execomTier: "junior" },
+      { id: 2,  name: "Akash S S",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 3,  name: "Mohamed jalib P I",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 4,  name: "Pranav R",                 programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: true,  execomRole: "Chairperson / President", execomTier: "senior" },
+      { id: 5,  name: "Nithin Sunil Mathews",     programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "Junior Execom (Finance & Docs Track)", execomTier: "junior" },
+      { id: 6,  name: "Samson V Philipose",       programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 7,  name: "Adithyan M Rajesh",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 8,  name: "Meenakshi D R",            programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (PC Track)", execomTier: "junior" },
+      { id: 9,  name: "Aravindkishore S",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 10, name: "Amal Sebastian",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (Technical Track)", execomTier: "junior" },
+      { id: 11, name: "Ajay B",                   programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 12, name: "Ajmi Midhlaj",             programme: "Ph.D.",  department: "Mechanical Engineering", semester: "Ph.D.", isExecom: false, execomRole: null, execomTier: null },
+      { id: 13, name: "Abin Das Y",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 14, name: "Sreeenivas Prasad Prabhu", programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 15, name: "Gokul Krishna k",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 16, name: "Faris Rahman A P",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 17, name: "Anex Antony C",            programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 18, name: "Alby Sunu Joseph",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 19, name: "Muhammad Asif Ansari",     programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 20, name: "Nafih Jidan K M",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 21, name: "Pranav P",                 programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 22, name: "A K Rohit",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 23, name: "Aamy Baiju",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 24, name: "Sravan J N",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 25, name: "Arwyn Saju",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 26, name: "Abhirami S",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 27, name: "Agasree Gopindran",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 28, name: "Amrutha R",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Program Coordination Lead", execomTier: "senior" },
+      { id: 29, name: "Krishnaja S",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 30, name: "Abhinav k",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Media & Design Member", execomTier: "senior" },
+      { id: 31, name: "Abhijith S Das",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 32, name: "Adhil Backer A",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 33, name: "Noora Fathima B S",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 34, name: "Aseel K",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 35, name: "Kiran J Sebastian",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 36, name: "Aarif Nazar",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 37, name: "Arjun S",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 38, name: "Nidhin Sabu",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Junior Execom (PC Track)", execomTier: "junior" },
+      { id: 39, name: "Kasinathan M P",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Junior Execom (Technical Track)", execomTier: "junior" },
+      { id: 40, name: "Aafiya Junide",            programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "Program Coordination Member", execomTier: "senior" },
+      { id: 41, name: "Anugraha Asok",            programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "PR Team Member", execomTier: "senior" },
+      { id: 42, name: "Riya Biju",                programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 43, name: "Amal S",                   programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: true,  execomRole: "Technical Team Lead", execomTier: "senior" },
+      { id: 44, name: "Rohit D Mangalassery",     programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Vice Chairperson / Vice President", execomTier: "senior" },
+      { id: 45, name: "Anna Roman",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: false, execomRole: null, execomTier: null },
+      { id: 46, name: "Afnan N",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Technical Team Member", execomTier: "senior" },
+      { id: 47, name: "Suryajith Sunil",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 48, name: "Karthik Troy",             programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null }
+    ]
+  };
+
+  const EXECOM_ROSTER_DATA = DEFAULT_EXECOM_DATA;
+
+  const DEFAULT_HOME_DATA = {
+    eyebrowBadge: "WELCOME TO ISHMT-TKMCE STUDENT CHAPTER",
+    heroHeading: "Welcome to the ISHMT Student Chapter at TKM College of Engineering",
+    heroBody: "We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.",
+    primaryBtnText: "Become a Member",
+    primaryBtnUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog",
+    secondaryBtnText: "About Us",
+    stats: [
+      { id: "stat-1", value: "50+", label: "Student Members & Alumni" },
+      { id: "stat-2", value: "1973", label: "National ISHMT Scientific Legacy" }
+    ],
+    aboutHeading: "About the Chapter",
+    aboutP1: "The Indian Society for Heat and Mass Transfer (ISHMT) is India’s foremost professional body dedicated to disseminating science and engineering across heat transfer, mass transport, thermodynamics, and energy systems. Affiliated regionally with ISHMT-RCT (Trivandrum), the student chapter at TKM College of Engineering serves as a technical hub bridging foundational engineering coursework with modern research and industrial applications.",
+    aboutP2: "We nurture a collaborative culture where students engage directly with peer researchers, faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC, national laboratories, and academic institutions.",
+    offersHeading: "What We Offer",
+    offers: [
+      {
+        id: "offer-1",
+        icon: "lecture",
+        title: "Distinguished Lecture Series",
+        desc: "Expert technical seminars led by ISHMT fellows, aerospace scientists, and industry leaders."
+      },
+      {
+        id: "offer-2",
+        icon: "bootcamp",
+        title: "Simulation & Tool Bootcamps",
+        desc: "Practical training in OpenFOAM, ANSYS Fluent, meshing, and numerical heat transfer."
+      },
+      {
+        id: "offer-3",
+        icon: "hardware",
+        title: "Hardware & R&D Projects",
+        desc: "Prototyping heat pipes, phase-change thermal storage units, and solar collectors in TKMCE labs."
+      },
+      {
+        id: "offer-4",
+        icon: "mentorship",
+        title: "Conference Mentorship",
+        desc: "Guidance for publishing papers and participating in the biennial ISHMT-ASTFE International Conference (IHMTC)."
+      }
+    ]
+  };
+
+  const DEFAULT_CONTACT_DATA = {
+    bannerTitle: "Contact Us",
+    bannerSubtitle: "Indian Society for Heat and Mass Transfer • TKMCE Student Chapter & Regional Chapter",
+    formTitle: "Send an Inquiry",
+    formSubtitle: "Connect with our faculty coordinators, executive council, or regional liaisons for student membership, academic partnerships, or workshop inquiries.",
+    studentChapter: {
+      badge: "Student Chapter Base",
+      title: "ISHMT Student Chapter – TKMCE",
+      line1: "Department of Mechanical Engineering,",
+      line2: "TKM College of Engineering,",
+      line3: "Karicode, Kollam, Kerala – 691 005"
+    },
+    regionalChapter: {
+      badge: "Regional Parent Chapter",
+      title: "ISHMT - Regional Chapter, Trivandrum",
+      line1: "PRS Entity, LPSC, Valiamala,",
+      line2: "Trivandrum, Kerala – 695 547",
+      email: "ishmtkerala@gmail.com"
+    }
+  };
+
+  // Helper Functions for Deep Operations
+  function deepClone(obj) {
+    if (obj === undefined) return undefined;
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  function deepMerge(target, source) {
+    if (!source || typeof source !== 'object') return target;
+    for (const key of Object.keys(source)) {
+      if (source[key] !== undefined) {
+        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+          if (!target[key] || typeof target[key] !== 'object' || Array.isArray(target[key])) {
+            target[key] = {};
+          }
+          deepMerge(target[key], source[key]);
+        } else {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  }
+
+  function getDeepValue(obj, path) {
+    if (!obj || !path) return undefined;
+    const parts = path.split('.');
+    let cur = obj;
+    for (let i = 0; i < parts.length; i++) {
+      if (cur == null) return undefined;
+      cur = cur[parts[i]];
+    }
+    return cur;
+  }
+
+  function setDeepValue(obj, path, val) {
+    if (!obj || !path) return false;
+    const parts = path.split('.');
+    let cur = obj;
+    for (let i = 0; i < parts.length - 1; i++) {
+      const p = parts[i];
+      if (cur[p] === undefined || cur[p] === null || typeof cur[p] !== 'object') {
+        cur[p] = /^\\d+$/.test(parts[i + 1]) ? [] : {};
+      }
+      cur = cur[p];
+    }
+    cur[parts[parts.length - 1]] = val;
+    return true;
+  }
+
+  // ==========================================================================
+  // 2. MASTER SITE DEFAULT BLUEPRINT SCHEMA
   // ==========================================================================
   const DEFAULT_BLUEPRINT = {
     globalTheme: {
@@ -31,6 +235,10 @@
       { id: 'nav-gallery', label: 'GALLERY', path: '/gallery', isPublic: true },
       { id: 'nav-contact', label: 'CONTACT', path: '/contact', isPublic: true }
     ],
+    execomData: DEFAULT_EXECOM_DATA,
+    homeData: DEFAULT_HOME_DATA,
+    contactData: DEFAULT_CONTACT_DATA,
+    inlineOverrides: {},
     pages: {
       '/': {
         title: 'Home',
@@ -139,9 +347,9 @@
   };
 
   // ==========================================================================
-  // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
+  // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v9_rct_logo';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v10_studio';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -149,31 +357,34 @@
 
     init() {
       try {
-        // Complete purge of all previous cache keys
+        // Complete purge of older stale cache keys
         const staleKeys = [
-          'ishmt_site_blueprint_v1',
-          'ishmt_site_blueprint_v2',
-          'ishmt_site_blueprint_v3',
-          'ishmt_site_blueprint_2026',
-          'ishmt_site_blueprint_2026_27_v1',
-          'ishmt_site_blueprint_2026_27_live',
-          'ishmt_site_blueprint_2026_27_minimal',
-          'ishmt_site_blueprint_v4_minimal',
-          'ishmt_site_blueprint_v5_academic',
-          'ishmt_site_blueprint_v6_academic',
-          'ishmt_site_blueprint_v7_academic',
-          'ishmt_site_blueprint_v8_contact_footer'
+          'ishmt_site_blueprint_v1', 'ishmt_site_blueprint_v2', 'ishmt_site_blueprint_v3',
+          'ishmt_site_blueprint_2026', 'ishmt_site_blueprint_2026_27_v1', 'ishmt_site_blueprint_2026_27_live',
+          'ishmt_site_blueprint_2026_27_minimal', 'ishmt_site_blueprint_v4_minimal', 'ishmt_site_blueprint_v5_academic',
+          'ishmt_site_blueprint_v6_academic', 'ishmt_site_blueprint_v7_academic', 'ishmt_site_blueprint_v8_contact_footer',
+          'ishmt_site_blueprint_v9_rct_logo'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
         });
 
-        // Always load and enforce fresh 2026-27 Executive Committee & Club Members blueprint
-        this.blueprint = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT));
-        this.save(this.blueprint, false);
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            this.blueprint = deepMerge(deepClone(DEFAULT_BLUEPRINT), parsed);
+          } catch (e) {
+            console.warn('Could not parse stored blueprint, resetting to default:', e);
+            this.blueprint = deepClone(DEFAULT_BLUEPRINT);
+          }
+        } else {
+          this.blueprint = deepClone(DEFAULT_BLUEPRINT);
+          this.save(this.blueprint, false);
+        }
       } catch (e) {
         console.warn('Error initializing SiteStore, using default blueprint:', e);
-        this.blueprint = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT));
+        this.blueprint = deepClone(DEFAULT_BLUEPRINT);
       }
 
       this.applyThemeVariables();
@@ -194,7 +405,7 @@
     },
 
     get() {
-      return this.blueprint;
+      return this.blueprint || DEFAULT_BLUEPRINT;
     },
 
     save(newConfig, notify = true) {
@@ -211,7 +422,7 @@
     },
 
     resetToDefault() {
-      this.blueprint = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT));
+      this.blueprint = deepClone(DEFAULT_BLUEPRINT);
       this.save(this.blueprint, true);
     },
 
@@ -237,7 +448,7 @@
   };
 
   // ==========================================================================
-  // 3. AUTHENTICATION SERVICE (#/login)
+  // 4. AUTHENTICATION SERVICE (#/login)
   // ==========================================================================
   const AuthService = {
     isAuthenticated() {
@@ -259,144 +470,133 @@
   };
 
   // ==========================================================================
-  // 4. MOTION CONTROLLER (3-Stage Intro Animation)
+  // 5. INTRO MOTION CONTROLLER (3-STAGE LOGO MOTION & HEADER DOCKING)
   // ==========================================================================
   const IntroMotion = {
     hasPlayedIntro: false,
-    timelineTimeouts: [],
+    headerHeight: 96,
+    headerLeftOffset: 32,
+    lockupMetrics: { scale: 0.65, initialX: 0, initialY: 0, targetX: 0, targetY: 0 },
 
     calculateMetrics() {
+      const container = document.getElementById('lockup-container');
       const lockup = document.getElementById('lockup');
-      const logoWrapper = document.getElementById('logo-wrapper');
-      if (!lockup || !logoWrapper) return;
+      if (!container || !lockup) return;
 
-      const lockupWidth = lockup.offsetWidth;
-      const lockupHeight = lockup.offsetHeight;
-      const logoWidth = logoWrapper.offsetWidth;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
 
-      const viewportW = window.innerWidth;
-      const viewportH = window.innerHeight;
+      const isMobile = viewportWidth < 768;
+      const isTablet = viewportWidth >= 768 && viewportWidth < 1024;
 
-      const dockLeft = 32;
-      const dockTop = 16;
+      this.headerHeight = isMobile ? 80 : 96;
+      this.headerLeftOffset = isMobile ? 16 : 32;
 
-      const targetCenterX = viewportW / 2;
-      const targetCenterY = viewportH / 2;
+      const rect = lockup.getBoundingClientRect();
+      const lockupWidth = rect.width || 360;
+      const lockupHeight = rect.height || 180;
 
-      const centerTx = targetCenterX - (lockupWidth / 2) - dockLeft;
-      const centerTy = targetCenterY - (lockupHeight / 2) - dockTop;
-      const logoShift = (lockupWidth / 2) - (logoWidth / 2);
+      const stage1X = (viewportWidth / 2) - (lockupWidth / 2);
+      const stage1Y = (viewportHeight / 2) - (lockupHeight / 2);
 
-      document.documentElement.style.setProperty('--center-tx', `${Math.round(centerTx)}px`);
-      document.documentElement.style.setProperty('--center-ty', `${Math.round(centerTy)}px`);
-      document.documentElement.style.setProperty('--logo-shift', `${Math.round(logoShift)}px`);
-      document.documentElement.style.setProperty('--dock-scale', '0.32');
+      let targetScale = 0.62;
+      if (isMobile) targetScale = 0.48;
+      else if (isTablet) targetScale = 0.55;
+
+      const stage3X = this.headerLeftOffset;
+      const stage3Y = (this.headerHeight / 2) - ((lockupHeight * targetScale) / 2);
+
+      this.lockupMetrics = {
+        scale: targetScale,
+        stage1X, stage1Y,
+        stage3X, stage3Y,
+        deltaX: stage3X - stage1X,
+        deltaY: stage3Y - stage1Y
+      };
     },
 
-    clearTimeline() {
-      this.timelineTimeouts.forEach(t => clearTimeout(t));
-      this.timelineTimeouts = [];
-    },
-
-    play(onDockedCallback) {
-      this.clearTimeline();
-      this.calculateMetrics();
-
+    play(callback) {
       const container = document.getElementById('lockup-container');
       const logoWrapper = document.getElementById('logo-wrapper');
       const textBlock = document.getElementById('text-block');
       const headerBar = document.getElementById('header-bar');
       const publicView = document.getElementById('public-view');
 
-      document.body.classList.add('loading-state');
-      if (publicView) {
-        publicView.classList.remove('visible');
+      if (!container || !logoWrapper || !textBlock || !headerBar) {
+        if (callback) callback();
+        return;
       }
 
-      // STAGE 1: Initial Center State (0.0s to 0.9s hold)
-      // Emblem centered & scaled at 2.25x on pristine white canvas. Text block concealed behind.
-      container.style.transition = 'none';
-      logoWrapper.style.transition = 'none';
-      textBlock.style.transition = 'none';
-      headerBar.style.transition = 'none';
+      this.calculateMetrics();
 
       container.classList.remove('docked');
-      container.classList.add('centered');
-
-      headerBar.classList.remove('docked');
-
       logoWrapper.classList.remove('stage-2', 'docked');
-      logoWrapper.classList.add('stage-1');
-
       textBlock.classList.remove('stage-2', 'docked');
-      textBlock.classList.add('stage-1');
+      headerBar.classList.remove('visible');
+
+      container.style.transition = 'none';
+      container.style.transform = 'translate(0px, 0px) scale(1)';
+      logoWrapper.style.transition = 'none';
+      logoWrapper.style.transform = 'none';
+      textBlock.style.transition = 'none';
+      textBlock.style.opacity = '0';
 
       void container.offsetWidth;
-      void logoWrapper.offsetWidth;
 
       container.style.transition = '';
       logoWrapper.style.transition = '';
       textBlock.style.transition = '';
-      headerBar.style.transition = '';
 
-      // STAGE 2: Center Lockup & Text Emergence with Dynamic Directional Shadow (0.9s – 2.0s)
-      // Logo scales down to 1.0x & shifts left; text smoothly reveals from behind with shadow
-      const tStartStage2 = setTimeout(() => {
-        logoWrapper.classList.remove('stage-1');
+      container.classList.add('stage-1');
+      logoWrapper.classList.add('stage-1');
+      textBlock.classList.add('stage-1');
+
+      setTimeout(() => {
         logoWrapper.classList.add('stage-2');
-
-        textBlock.classList.remove('stage-1');
         textBlock.classList.add('stage-2');
-      }, 900);
-      this.timelineTimeouts.push(tStartStage2);
+      }, 700);
 
-      // STAGE 3: Dock to Top-Left Header Bar (2.8s – 3.85s)
-      // Lockup translates smoothly to top-left (scale 0.32), header bar emerges,
-      // and public page body content smoothly fades in
-      const tStartStage3 = setTimeout(() => {
-        container.classList.remove('centered');
+      setTimeout(() => {
         container.classList.add('docked');
-
-        headerBar.classList.add('docked');
         logoWrapper.classList.add('docked');
         textBlock.classList.add('docked');
+        headerBar.classList.add('visible');
 
-        // Reveal the public content dynamically
-        setTimeout(() => {
-          document.body.classList.remove('loading-state');
-          if (publicView) publicView.classList.add('visible');
-          this.hasPlayedIntro = true;
-          if (onDockedCallback) onDockedCallback();
-        }, 1050);
-      }, 2800);
-      this.timelineTimeouts.push(tStartStage3);
+        const { deltaX, deltaY, scale } = this.lockupMetrics;
+        container.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+
+        if (publicView) {
+          publicView.classList.add('visible');
+        }
+        this.hasPlayedIntro = true;
+        if (callback) callback();
+      }, 1500);
     },
 
     setInstantDocked() {
-      this.clearTimeline();
-      this.calculateMetrics();
-
       const container = document.getElementById('lockup-container');
       const logoWrapper = document.getElementById('logo-wrapper');
       const textBlock = document.getElementById('text-block');
       const headerBar = document.getElementById('header-bar');
       const publicView = document.getElementById('public-view');
 
-      document.body.classList.remove('loading-state');
+      if (!container || !logoWrapper || !textBlock || !headerBar) return;
+
+      this.calculateMetrics();
 
       container.style.transition = 'none';
       logoWrapper.style.transition = 'none';
       textBlock.style.transition = 'none';
       headerBar.style.transition = 'none';
 
-      container.classList.remove('centered');
       container.classList.add('docked');
+      headerBar.classList.add('visible');
 
-      headerBar.classList.add('docked');
+      const { deltaX, deltaY, scale } = this.lockupMetrics;
+      container.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
 
       logoWrapper.classList.remove('stage-1');
       logoWrapper.classList.add('stage-2', 'docked');
-
       textBlock.classList.remove('stage-1');
       textBlock.classList.add('stage-2', 'docked');
 
@@ -413,94 +613,7 @@
   };
 
   // ==========================================================================
-  // 5. OFFICIAL 2026–27 EXECUTIVE COMMITTEE & STUDENT CHAPTER ROSTER
-  // ==========================================================================
-  const EXECOM_ROSTER_DATA = {
-    meta: {
-      chapterName: "Indian Society for Heat and Mass Transfer (ISHMT)",
-      institution: "TKM College of Engineering, Kollam",
-      department: "Department of Mechanical Engineering",
-      session: "2026–27",
-      notificationDate: "23 September 2026",
-      mandate: "The appointed Senior and Junior Executive members will steer the technical events, regional seminars, computational workshops, and chapter operations under the direct mentorship of the ISHMT Trivandrum Regional Chapter for the 2026–2027 academic session."
-    },
-    seniorExecom: [
-      { id: "sen-1", name: "Pranav R", role: "Chairperson / President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S7", avatar: "PR", bio: "Steering chapter governance, ISHMT RCT coordination, and strategic academic initiatives for the 2026–27 tenure." },
-      { id: "sen-2", name: "Rohit Mangalassery", role: "Vice Chairperson / Vice President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S5", avatar: "RM", bio: "Assisting chapter operations, inter-departmental synergies, and workshop oversight." },
-      { id: "sen-3", name: "Parthiv J Prasad", role: "General Secretary", team: "Executive Leadership", isLead: true, isCore: true, badge: "2026–27 Session", avatar: "PP", bio: "Managing institutional correspondence, council records, and general chapter logistics." },
-      { id: "sen-4", name: "Amal S", role: "Technical Team Lead", team: "Technical Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S7", avatar: "AS", bio: "Head of simulation toolkits, CFD masterclasses, and thermal hardware bench investigations." },
-      { id: "sen-5", name: "Afnan", role: "Technical Team Member", team: "Technical Team", isLead: false, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AN", bio: "Supporting computational fluid simulations, code troubleshooting, and lab test rigs." },
-      { id: "sen-6", name: "Amrutha R", role: "Program Coordination Lead", team: "Program Coordination Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AR", bio: "Directing event scheduling, conclaves, guest lecture curation, and venue execution." },
-      { id: "sen-7", name: "Aafiya Junide", role: "Program Coordination Member", team: "Program Coordination Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AJ", bio: "Coordinating attendee check-ins, registration pipelines, and delegate hospitality." },
-      { id: "sen-8", name: "M.Tech Nominee", role: "+1 Nominee (M.Tech Representative)", team: "Program Coordination Team", isLead: false, isCore: false, badge: "M.Tech Nominee • 2026–27 Session", avatar: "MT", bio: "Postgraduate liaison bringing advanced research synchronization to chapter programs." },
-      { id: "sen-9", name: "Arjun R", role: "Media & Design Lead", team: "Media & Design Team", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "AR", bio: "Art direction, technical infographics, poster design, and digital event branding." },
-      { id: "sen-10", name: "Abhinav K", role: "Media & Design Member", team: "Media & Design Team", isLead: false, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AK", bio: "Video production, motion graphics, and chapter social media creative assets." },
-      { id: "sen-11", name: "Vinayak V", role: "Public Relations Lead", team: "Public Relations (PR) Team", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "VV", bio: "Spearheading chapter outreach, industry liaison with ISRO/DRDO mentors, and press briefs." },
-      { id: "sen-12", name: "Anugraha Asok", role: "Public Relations Member", team: "Public Relations (PR) Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AA", bio: "Student delegate relations, inter-college invitations, and chapter promotion drives." },
-      { id: "sen-13", name: "Ashwa", role: "Finance & Documentation Lead", team: "Finance & Documentation", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "AS", bio: "Overseeing budget allocations, voucher audits, annual chapter reports, and financial registry." }
-    ],
-    juniorExecom: [
-      { id: "jun-1", name: "Amal Sebastian", track: "Technical Track", focus: "Simulation Toolkits & Lab Support", badge: "B.Tech • Mechanical Engineering • S3", avatar: "AS", color: "cyan" },
-      { id: "jun-2", name: "Kashinathan M P", track: "Technical Track", focus: "Hands-on Setup & Code Troubleshooting", badge: "B.Tech • Mechanical Engineering • S5", avatar: "KM", color: "cyan" },
-      { id: "jun-3", name: "Meenakshi D R", track: "Program Coordination (PC) Track", focus: "Venue Logistics & Attendee Check-In", badge: "B.Tech • Mechanical Engineering • S3", avatar: "MD", color: "rose" },
-      { id: "jun-4", name: "Nidhin Sabu", track: "Program Coordination (PC) Track", focus: "Stage Management & Event Operations", badge: "B.Tech • Mechanical Engineering • S5", avatar: "NS", color: "rose" },
-      { id: "jun-5", name: "Denny J Mangalathu", track: "Dual PC / Public Relations", focus: "Cross-Functional Operations & Outreach", badge: "B.Tech • Mechanical Engineering • S3", avatar: "DM", color: "amber" },
-      { id: "jun-6", name: "Nithin Sunil Mathews", track: "Finance & Documentation Track", focus: "Audit Archival, Vouchers & Registry", badge: "B.Tech • Chemical Engineering • S3", avatar: "NM", color: "emerald" }
-    ],
-    roster: [
-      { id: 1,  name: "Denny J Mangalathu",       programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (Dual PC / PR Track)", execomTier: "junior" },
-      { id: 2,  name: "Akash S S",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 3,  name: "Mohamed jalib P I",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 4,  name: "Pranav R",                 programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: true,  execomRole: "Chairperson / President", execomTier: "senior" },
-      { id: 5,  name: "Nithin Sunil Mathews",     programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "Junior Execom (Finance & Docs Track)", execomTier: "junior" },
-      { id: 6,  name: "Samson V Philipose",       programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 7,  name: "Adithyan M Rajesh",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 8,  name: "Meenakshi D R",            programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (PC Track)", execomTier: "junior" },
-      { id: 9,  name: "Aravindkishore S",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 10, name: "Amal Sebastian",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (Technical Track)", execomTier: "junior" },
-      { id: 11, name: "Ajay B",                   programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 12, name: "Ajmi Midhlaj",             programme: "Ph.D.",  department: "Mechanical Engineering", semester: "Ph.D.", isExecom: false, execomRole: null, execomTier: null },
-      { id: 13, name: "Abin Das Y",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 14, name: "Sreeenivas Prasad Prabhu", programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 15, name: "Gokul Krishna k",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 16, name: "Faris Rahman A P",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 17, name: "Anex Antony C",            programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 18, name: "Alby Sunu Joseph",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 19, name: "Muhammad Asif Ansari",     programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 20, name: "Nafih Jidan K M",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 21, name: "Pranav P",                 programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 22, name: "A K Rohit",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 23, name: "Aamy Baiju",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 24, name: "Sravan J N",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 25, name: "Arwyn Saju",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 26, name: "Abhirami S",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 27, name: "Agasree Gopindran",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 28, name: "Amrutha R",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Program Coordination Lead", execomTier: "senior" },
-      { id: 29, name: "Krishnaja S",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 30, name: "Abhinav k",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Media & Design Member", execomTier: "senior" },
-      { id: 31, name: "Abhijith S Das",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 32, name: "Adhil Backer A",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 33, name: "Noora Fathima B S",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 34, name: "Aseel K",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 35, name: "Kiran J Sebastian",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 36, name: "Aarif Nazar",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 37, name: "Arjun S",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 38, name: "Nidhin Sabu",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Junior Execom (PC Track)", execomTier: "junior" },
-      { id: 39, name: "Kasinathan M P",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Junior Execom (Technical Track)", execomTier: "junior" },
-      { id: 40, name: "Aafiya Junide",            programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "Program Coordination Member", execomTier: "senior" },
-      { id: 41, name: "Anugraha Asok",            programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "PR Team Member", execomTier: "senior" },
-      { id: 42, name: "Riya Biju",                programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: false, execomRole: null, execomTier: null },
-      { id: 43, name: "Amal S",                   programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: true,  execomRole: "Technical Team Lead", execomTier: "senior" },
-      { id: 44, name: "Rohit D Mangalassery",     programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Vice Chairperson / Vice President", execomTier: "senior" },
-      { id: 45, name: "Anna Roman",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: false, execomRole: null, execomTier: null },
-      { id: 46, name: "Afnan N",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Technical Team Member", execomTier: "senior" },
-      { id: 47, name: "Suryajith Sunil",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
-      { id: 48, name: "Karthik Troy",             programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null }
-    ]
-  };
-
-  // ==========================================================================
-  // 6. PUBLIC VIEW RENDERER (Phase 1: 100% Read-Only)
+  // 6. PUBLIC & STUDIO VIEW RENDERER (Supports Direct Edit & Public Views)
   // ==========================================================================
   const PublicRenderer = {
     render(currentRoute = '/') {
@@ -518,7 +631,6 @@
       // Render Dynamic Sections
       contentEl.innerHTML = '';
       if (!page.sections || page.sections.length === 0) {
-        // If Admin leaves the body empty, keep the canvas completely blank white (#FFFFFF) with global footer
         contentEl.innerHTML = '<div style="min-height: 70vh; background: var(--theme-canvas);"></div>';
         contentEl.insertAdjacentHTML('beforeend', this.generateGlobalFooterHtml());
         this.initGlobalFooterInteractivity(contentEl);
@@ -528,14 +640,14 @@
       // Render Clean Sections
       page.sections.forEach(section => {
         if (section.layout && section.layout.visible === false) return;
-        const sectionHtml = this.generateBlockHtml(section, false);
+        const sectionHtml = this.generateBlockHtml(section, false, currentRoute);
         contentEl.insertAdjacentHTML('beforeend', sectionHtml);
       });
 
       // Render Global Academic Footer
       contentEl.insertAdjacentHTML('beforeend', this.generateGlobalFooterHtml());
 
-      // Initialize interactive widgets for Execom Directory, Academic Home, Contact & Global Footer
+      // Initialize interactive widgets
       this.initExecomInteractivity(contentEl);
       this.initAcademicHomeInteractivity(contentEl);
       this.initAcademicContactInteractivity(contentEl);
@@ -556,52 +668,43 @@
         .join('');
     },
 
-    generateBlockHtml(section, isAdminMode = false) {
+    generateBlockHtml(section, isAdminMode = false, pageSlug = '/') {
       const { id, type, layout = {}, content = {} } = section;
-      if (type === 'academic-home') {
-        return this.generateAcademicHomeHtml();
-      }
-      if (type === 'academic-contact') {
-        return this.generateAcademicContactHtml();
-      }
-
-      const widthClass = layout.containerWidth || 'boxed';
-      const padClass = `pad-${layout.paddingY || 'md'}`;
-      const bgClass = `bg-${layout.bgType || 'canvas'}`;
-      const alignClass = `align-${layout.alignment || 'left'}`;
 
       let innerContent = '';
 
-      switch (type) {
-        case 'execom-directory':
-          innerContent = this.generateExecomHtml();
-          break;
+      if (type === 'academic-home') {
+        innerContent = this.generateAcademicHomeHtml(isAdminMode);
+      } else if (type === 'academic-contact') {
+        innerContent = this.generateAcademicContactHtml(isAdminMode);
+      } else if (type === 'execom-directory') {
+        innerContent = this.generateExecomHtml(isAdminMode);
+      } else {
+        const widthClass = layout.containerWidth || 'boxed';
+        const padClass = `pad-${layout.paddingY || 'md'}`;
+        const bgClass = `bg-${layout.bgType || 'canvas'}`;
+        const alignClass = `align-${layout.alignment || 'left'}`;
 
-        case 'hero':
-          const hasHeroCard = Boolean(content.cardTitle || content.cardSubtitle);
-          const hasActions = Boolean(content.button1Text || content.button2Text);
-          const hasTitle = Boolean(content.title && content.title.trim());
-          const hasSubtitle = Boolean(content.subtitle && content.subtitle.trim());
+        const secPath = `pages.${pageSlug}.sections.${id}.content`;
 
-          if (!hasHeroCard && !hasTitle && !hasSubtitle && !hasActions) {
-            // Clean minimal pill badge layout
-            innerContent = `
-              <div class="hero-block">
-                ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
-              </div>
-            `;
-          } else {
+        switch (type) {
+          case 'hero':
+            const hasHeroCard = Boolean(content.cardTitle || content.cardSubtitle);
+            const hasActions = Boolean(content.button1Text || content.button2Text);
+            const hasTitle = Boolean(content.title && content.title.trim());
+            const hasSubtitle = Boolean(content.subtitle && content.subtitle.trim());
+
             innerContent = `
               <div class="hero-block ${!hasHeroCard ? 'full-width-text' : ''}">
                 <div class="hero-grid">
                   <div>
-                    ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
-                    ${hasTitle ? `<h1 class="section-heading">${this.escapeHtml(content.title)}</h1>` : ''}
-                    ${hasSubtitle ? `<p class="section-desc">${this.escapeHtml(content.subtitle)}</p>` : ''}
-                    ${hasActions ? `
+                    ${content.eyebrow || isAdminMode ? `<div class="badge-eyebrow" ${isAdminMode ? `data-edit-path="${secPath}.eyebrow" title="Click to edit badge"` : ''}>${this.escapeHtml(content.eyebrow || (isAdminMode ? 'Add Eyebrow Badge' : ''))}</div>` : ''}
+                    ${hasTitle || isAdminMode ? `<h1 class="section-heading" ${isAdminMode ? `data-edit-path="${secPath}.title" title="Click to edit title"` : ''}>${this.escapeHtml(content.title || (isAdminMode ? 'Click to Add Heading' : ''))}</h1>` : ''}
+                    ${hasSubtitle || isAdminMode ? `<p class="section-desc" ${isAdminMode ? `data-edit-path="${secPath}.subtitle" title="Click to edit description"` : ''}>${this.escapeHtml(content.subtitle || (isAdminMode ? 'Click to add detailed subtitle description...' : ''))}</p>` : ''}
+                    ${hasActions || isAdminMode ? `
                       <div class="block-actions">
-                        ${content.button1Text ? `<a href="${content.button1Url || '#'}" class="btn btn-primary">${this.escapeHtml(content.button1Text)}</a>` : ''}
-                        ${content.button2Text ? `<a href="${content.button2Url || '#'}" class="btn btn-outline">${this.escapeHtml(content.button2Text)}</a>` : ''}
+                        ${content.button1Text || isAdminMode ? `<a href="${content.button1Url || '#'}" class="btn btn-primary"><span ${isAdminMode ? `data-edit-path="${secPath}.button1Text" title="Click to edit button"` : ''}>${this.escapeHtml(content.button1Text || 'Button 1')}</span></a>` : ''}
+                        ${content.button2Text || isAdminMode ? `<a href="${content.button2Url || '#'}" class="btn btn-outline"><span ${isAdminMode ? `data-edit-path="${secPath}.button2Text" title="Click to edit button"` : ''}>${this.escapeHtml(content.button2Text || 'Button 2')}</span></a>` : ''}
                       </div>
                     ` : ''}
                   </div>
@@ -617,115 +720,43 @@
                 </div>
               </div>
             `;
-          }
-          break;
+            break;
 
-        case 'stats-banner':
-          innerContent = `
-            <div class="stats-banner-grid">
-              ${(content.items || []).map(stat => `
-                <div class="stat-item">
-                  <span class="stat-number">${this.escapeHtml(stat.number || '')}</span>
-                  <span class="stat-label">${this.escapeHtml(stat.label || '')}</span>
-                </div>
-              `).join('')}
-            </div>
-          `;
-          break;
-
-        case 'split-content':
-          innerContent = `
-            <div class="split-grid ${content.reversed ? 'reversed' : ''}">
-              <div>
-                ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
-                <h2 class="section-heading">${this.escapeHtml(content.title || '')}</h2>
-                <p class="section-desc">${this.escapeHtml(content.body || '')}</p>
-                ${content.buttonText ? `<a href="${content.buttonUrl || '#'}" class="btn btn-primary">${this.escapeHtml(content.buttonText)}</a>` : ''}
-              </div>
-              <div class="split-image-card">
-                <img src="${content.imageUrl || 'ishmt-logo.jpg'}" alt="${this.escapeHtml(content.title || 'ISHMT')}">
-              </div>
-            </div>
-          `;
-          break;
-
-        case 'grid-cards':
-          innerContent = `
-            ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
-            <h2 class="section-heading">${this.escapeHtml(content.title || '')}</h2>
-            ${content.description ? `<p class="section-desc">${this.escapeHtml(content.description)}</p>` : ''}
-            <div class="cards-grid cols-${layout.columns || 3}" style="margin-top: 2rem;">
-              ${(content.items || []).map(card => `
-                <div class="card-item">
-                  <div>
-                    ${card.tag ? `<span class="card-tag">${this.escapeHtml(card.tag)}</span>` : ''}
-                    <h3 class="card-title">${this.escapeHtml(card.title || '')}</h3>
-                    <p class="card-desc">${this.escapeHtml(card.description || '')}</p>
+          case 'grid-cards':
+            innerContent = `
+              ${content.eyebrow || isAdminMode ? `<div class="badge-eyebrow" ${isAdminMode ? `data-edit-path="${secPath}.eyebrow" title="Click to edit eyebrow"` : ''}>${this.escapeHtml(content.eyebrow || '')}</div>` : ''}
+              <h2 class="section-heading" ${isAdminMode ? `data-edit-path="${secPath}.title" title="Click to edit heading"` : ''}>${this.escapeHtml(content.title || '')}</h2>
+              <p class="section-desc" ${isAdminMode ? `data-edit-path="${secPath}.description" title="Click to edit description"` : ''}>${this.escapeHtml(content.description || '')}</p>
+              <div class="cards-grid cols-${layout.columns || 2}" style="margin-top: 2rem;">
+                ${(content.items || []).map((card, idx) => `
+                  <div class="card-item ${isAdminMode ? 'studio-card-wrapper' : ''}">
+                    ${isAdminMode ? `
+                      <div class="studio-card-actions">
+                        <button type="button" class="studio-card-btn btn-card-dup" data-card-type="event" data-section-id="${id}" data-card-id="${card.id}" title="Duplicate Card">❐ Duplicate</button>
+                        <button type="button" class="studio-card-btn btn-card-delete" data-card-type="event" data-section-id="${id}" data-card-id="${card.id}" title="Delete Card">🗑 Delete</button>
+                      </div>
+                    ` : ''}
+                    <div>
+                      ${card.tag || isAdminMode ? `<span class="card-tag" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.tag" title="Click to edit tag"` : ''}>${this.escapeHtml(card.tag || 'Tag')}</span>` : ''}
+                      <h3 class="card-title" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.title" title="Click to edit title"` : ''}>${this.escapeHtml(card.title || '')}</h3>
+                      <p class="card-desc" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.description" title="Click to edit description"` : ''}>${this.escapeHtml(card.description || '')}</p>
+                    </div>
+                    ${card.linkText || isAdminMode ? `<a href="${card.linkUrl || '#'}" class="card-link"><span ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.linkText" title="Click to edit link"` : ''}>${this.escapeHtml(card.linkText || 'Details →')}</span></a>` : ''}
                   </div>
-                  ${card.linkText ? `<a href="${card.linkUrl || '#'}" class="card-link">${this.escapeHtml(card.linkText)}</a>` : ''}
-                </div>
-              `).join('')}
-            </div>
-          `;
-          break;
-
-        case 'timeline':
-          innerContent = `
-            ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
-            <h2 class="section-heading">${this.escapeHtml(content.title || '')}</h2>
-            ${content.description ? `<p class="section-desc">${this.escapeHtml(content.description)}</p>` : ''}
-            <div class="timeline-track" style="margin-top: 2.5rem;">
-              ${(content.items || []).map(node => `
-                <div class="timeline-node">
-                  <div class="timeline-year">${this.escapeHtml(node.year || '')}</div>
-                  <h3 class="timeline-title">${this.escapeHtml(node.title || '')}</h3>
-                  <p class="section-desc" style="margin-bottom: 0;">${this.escapeHtml(node.description || '')}</p>
-                </div>
-              `).join('')}
-            </div>
-          `;
-          break;
-
-        case 'image-gallery':
-          innerContent = `
-            ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
-            <h2 class="section-heading">${this.escapeHtml(content.title || '')}</h2>
-            ${content.description ? `<p class="section-desc">${this.escapeHtml(content.description)}</p>` : ''}
-            <div class="gallery-grid" style="margin-top: 2rem;">
-              ${(content.items || []).map(item => `
-                <div class="gallery-card">
-                  <img src="${item.imageUrl || 'ishmt-logo.jpg'}" alt="${this.escapeHtml(item.title || '')}">
-                  <div class="gallery-overlay">
-                    <div class="gallery-title">${this.escapeHtml(item.title || '')}</div>
-                    <div class="gallery-caption">${this.escapeHtml(item.caption || '')}</div>
+                `).join('')}
+                ${isAdminMode ? `
+                  <div class="studio-add-card-placeholder" data-action="add-event-card" data-section-id="${id}">
+                    <span style="font-size: 1.4rem; font-weight: 700; color: #8B1014;">+ Add New Event Card</span>
+                    <span style="font-size: 0.85rem; color: #6B7280; margin-top: 4px;">Click to append a workshop, seminar, or competition card</span>
                   </div>
-                </div>
-              `).join('')}
-            </div>
-          `;
-          break;
+                ` : ''}
+              </div>
+            `;
+            break;
 
-        case 'rich-text':
-          innerContent = `
-            ${content.eyebrow ? `<div class="badge-eyebrow">${this.escapeHtml(content.eyebrow)}</div>` : ''}
-            <h2 class="section-heading">${this.escapeHtml(content.title || '')}</h2>
-            <div class="section-desc" style="font-size: 1.15rem; line-height: 1.8;">
-              ${(content.body || '').split('\n').map(p => `<p style="margin-bottom: 1.25rem;">${this.escapeHtml(p)}</p>`).join('')}
-            </div>
-          `;
-          break;
-
-        case 'custom-embed':
-          innerContent = `
-            ${content.heading ? `<h2 class="section-heading" style="margin-bottom: 1.5rem;">${this.escapeHtml(content.heading)}</h2>` : ''}
-            <div class="custom-embed-wrap">
-              ${content.html || ''}
-            </div>
-          `;
-          break;
-
-        default:
-          innerContent = `<div>Unknown block type: ${this.escapeHtml(type)}</div>`;
+          default:
+            innerContent = `<div class="section-desc">Custom section: ${this.escapeHtml(type)}</div>`;
+        }
       }
 
       if (isAdminMode) {
@@ -735,26 +766,16 @@
               <span class="canvas-toolbar-btn" style="color: #9CA3AF;">[${type}]</span>
               <button class="canvas-toolbar-btn btn-action-move-up" data-section-id="${id}" title="Move Up">▲</button>
               <button class="canvas-toolbar-btn btn-action-move-down" data-section-id="${id}" title="Move Down">▼</button>
-              <button class="canvas-toolbar-btn btn-action-edit" data-section-id="${id}" title="Edit in Inspector">✎ Edit</button>
-              <button class="canvas-toolbar-btn btn-action-duplicate" data-section-id="${id}" title="Duplicate">❐</button>
-              <button class="canvas-toolbar-btn btn-delete btn-action-delete" data-section-id="${id}" title="Delete">🗑</button>
+              <button class="canvas-toolbar-btn btn-action-edit" data-section-id="${id}" title="Edit in Inspector">✎ Inspector</button>
+              <button class="canvas-toolbar-btn btn-action-duplicate" data-section-id="${id}" title="Duplicate Section">❐</button>
+              <button class="canvas-toolbar-btn btn-delete btn-action-delete" data-section-id="${id}" title="Delete Section">🗑</button>
             </div>
-            <section class="block-section ${padClass} ${bgClass} ${alignClass}">
-              <div class="block-container ${widthClass}">
-                ${innerContent}
-              </div>
-            </section>
+            ${innerContent}
           </div>
         `;
       }
 
-      return `
-        <section id="${id}" class="block-section ${padClass} ${bgClass} ${alignClass}">
-          <div class="block-container ${widthClass}">
-            ${innerContent}
-          </div>
-        </section>
-      `;
+      return innerContent;
     },
 
     initAcademicHomeInteractivity(contentEl) {
@@ -771,14 +792,14 @@
       }
     },
 
-    generateAcademicHomeHtml() {
+    generateAcademicHomeHtml(isAdminMode = false) {
+      const blueprint = SiteStore.get();
+      const home = blueprint.homeData || DEFAULT_HOME_DATA;
+
       return `
         <div class="academic-home-wrapper">
-          <!-- =====================================================================
-               SECTION A: HERO SECTION (FULL-WIDTH VIEWPORT WITH 40% BUILDING OPACITY)
-               ===================================================================== -->
+          <!-- SECTION A: HERO SECTION (FULL-WIDTH VIEWPORT WITH 40% BUILDING OPACITY) -->
           <section class="academic-hero-section">
-            <!-- Isolated Architectural Background Layer (Exactly 40% Opacity) -->
             <div class="academic-hero-bg">
               <img
                 src="tkmce-building.jpg"
@@ -788,147 +809,107 @@
               />
             </div>
 
-            <!-- Centered Floating Welcome Card (Unaffected by Background Opacity) -->
+            <!-- Centered Floating Welcome Card -->
             <div class="academic-hero-card">
-              <!-- Eyebrow Badge with Crimson Underline -->
-              <div class="academic-eyebrow-badge">
-                <span>WELCOME TO ISHMT-TKMCE STUDENT CHAPTER</span>
+              <!-- Eyebrow Badge -->
+              <div class="academic-eyebrow-badge" ${isAdminMode ? 'data-edit-path="homeData.eyebrowBadge" title="Click to edit badge"' : ''}>
+                <span>${this.escapeHtml(home.eyebrowBadge)}</span>
               </div>
 
               <!-- Main Serif Heading -->
-              <h1 class="academic-hero-heading">
-                Welcome to the ISHMT Student Chapter at TKM College of Engineering
+              <h1 class="academic-hero-heading" ${isAdminMode ? 'data-edit-path="homeData.heroHeading" title="Click to edit heading"' : ''}>
+                ${this.escapeHtml(home.heroHeading)}
               </h1>
 
               <!-- Academic Body Description -->
-              <p class="academic-hero-body">
-                We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.
+              <p class="academic-hero-body" ${isAdminMode ? 'data-edit-path="homeData.heroBody" title="Click to edit body text"' : ''}>
+                ${this.escapeHtml(home.heroBody)}
               </p>
 
               <!-- CTA Buttons Row -->
               <div class="academic-cta-row">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="academic-btn-primary">
-                  <span>Become a Member</span>
+                <a href="${home.primaryBtnUrl}" target="_blank" rel="noopener noreferrer" class="academic-btn-primary">
+                  <span ${isAdminMode ? 'data-edit-path="homeData.primaryBtnText" title="Click to edit button label"' : ''}>${this.escapeHtml(home.primaryBtnText)}</span>
                   <svg class="academic-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
                 </a>
-                <button type="button" class="academic-btn-outline" id="academic-about-btn">
-                  About Us
+                <button type="button" class="academic-btn-outline" id="academic-about-btn" ${isAdminMode ? 'data-edit-path="homeData.secondaryBtnText" title="Click to edit button label"' : ''}>
+                  ${this.escapeHtml(home.secondaryBtnText)}
                 </button>
               </div>
             </div>
           </section>
 
-          <!-- =====================================================================
-               SECTION B: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER)
-               ===================================================================== -->
+          <!-- SECTION B: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER) -->
           <section class="academic-stats-banner">
             <div class="academic-stats-container">
-              <div class="academic-stat-item">
-                <div class="academic-stat-value">50+</div>
-                <div class="academic-stat-label">Student Members &amp; Alumni</div>
-              </div>
-              <div class="academic-stat-item">
-                <div class="academic-stat-value">1973</div>
-                <div class="academic-stat-label">National ISHMT Scientific Legacy</div>
-              </div>
+              ${(home.stats || []).map((s, idx) => `
+                <div class="academic-stat-item ${isAdminMode ? 'studio-card-wrapper' : ''}">
+                  ${isAdminMode ? `
+                    <div class="studio-card-actions">
+                      <button type="button" class="studio-card-btn btn-card-dup" data-card-type="stat" data-card-id="${s.id}" title="Duplicate Stat">❐</button>
+                      <button type="button" class="studio-card-btn btn-card-delete" data-card-type="stat" data-card-id="${s.id}" title="Delete Stat">🗑</button>
+                    </div>
+                  ` : ''}
+                  <div class="academic-stat-value" ${isAdminMode ? `data-edit-path="homeData.stats.${idx}.value" title="Click to edit number"` : ''}>${this.escapeHtml(s.value)}</div>
+                  <div class="academic-stat-label" ${isAdminMode ? `data-edit-path="homeData.stats.${idx}.label" title="Click to edit label"` : ''}>${this.escapeHtml(s.label)}</div>
+                </div>
+              `).join('')}
+              ${isAdminMode ? `
+                <div class="studio-add-card-placeholder" data-action="add-stat" style="min-height: 80px; padding: 0.8rem 1.5rem; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); color: #FFFFFF;">
+                  <span style="font-weight: 700; font-size: 0.9rem;">+ Add Milestone Stat</span>
+                </div>
+              ` : ''}
             </div>
           </section>
 
-          <!-- =====================================================================
-               SECTION C: ABOUT THE CHAPTER SECTION (EDITORIAL CONTAINER)
-               ===================================================================== -->
+          <!-- SECTION C: ABOUT THE CHAPTER SECTION (EDITORIAL CONTAINER) -->
           <section id="about" class="academic-about-section">
             <div class="academic-about-container">
-              <h2 class="academic-section-heading">About the Chapter</h2>
-              <!-- Crimson Accent Bar -->
+              <h2 class="academic-section-heading" ${isAdminMode ? 'data-edit-path="homeData.aboutHeading" title="Click to edit heading"' : ''}>${this.escapeHtml(home.aboutHeading)}</h2>
               <div class="academic-crimson-bar"></div>
               <div class="academic-about-text">
-                <p>
-                  The Indian Society for Heat and Mass Transfer (ISHMT) is India’s foremost professional body dedicated to disseminating science and engineering across heat transfer, mass transport, thermodynamics, and energy systems. Affiliated regionally with ISHMT-RCT (Trivandrum), the student chapter at TKM College of Engineering serves as a technical hub bridging foundational engineering coursework with modern research and industrial applications.
-                </p>
-                <p>
-                  We nurture a collaborative culture where students engage directly with peer researchers, faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC, national laboratories, and academic institutions.
-                </p>
+                <p ${isAdminMode ? 'data-edit-path="homeData.aboutP1" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP1)}</p>
+                <p ${isAdminMode ? 'data-edit-path="homeData.aboutP2" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP2)}</p>
               </div>
             </div>
           </section>
 
-          <!-- =====================================================================
-               SECTION D: WHAT WE OFFER SECTION (FEATURE CARDS GRID)
-               ===================================================================== -->
+          <!-- SECTION D: WHAT WE OFFER SECTION (FEATURE CARDS GRID) -->
           <section class="academic-offer-section">
             <div class="academic-offer-container">
               <div class="academic-offer-header">
-                <h2 class="academic-section-heading">What We Offer</h2>
+                <h2 class="academic-section-heading" ${isAdminMode ? 'data-edit-path="homeData.offersHeading" title="Click to edit heading"' : ''}>${this.escapeHtml(home.offersHeading)}</h2>
                 <div class="academic-crimson-bar mx-auto"></div>
               </div>
 
               <div class="academic-offer-grid">
-                <!-- Card 1: Distinguished Lecture Series -->
-                <div class="academic-card">
-                  <div class="academic-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                    </svg>
+                ${(home.offers || []).map((o, idx) => `
+                  <div class="academic-card ${isAdminMode ? 'studio-card-wrapper' : ''}">
+                    ${isAdminMode ? `
+                      <div class="studio-card-actions">
+                        <button type="button" class="studio-card-btn btn-card-dup" data-card-type="offer" data-card-id="${o.id}" title="Duplicate Card">❐ Copy</button>
+                        <button type="button" class="studio-card-btn btn-card-delete" data-card-type="offer" data-card-id="${o.id}" title="Delete Card">🗑 Del</button>
+                      </div>
+                    ` : ''}
+                    <div class="academic-card-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                      </svg>
+                    </div>
+                    <h3 class="academic-card-title" ${isAdminMode ? `data-edit-path="homeData.offers.${idx}.title" title="Click to edit card title"` : ''}>${this.escapeHtml(o.title)}</h3>
+                    <p class="academic-card-desc" ${isAdminMode ? `data-edit-path="homeData.offers.${idx}.desc" title="Click to edit card description"` : ''}>${this.escapeHtml(o.desc)}</p>
                   </div>
-                  <h3 class="academic-card-title">Distinguished Lecture Series</h3>
-                  <p class="academic-card-desc">
-                    Expert technical seminars led by ISHMT fellows, aerospace scientists, and industry leaders.
-                  </p>
-                </div>
-
-                <!-- Card 2: Simulation & Tool Bootcamps -->
-                <div class="academic-card">
-                  <div class="academic-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                      <rect x="9" y="9" width="6" height="6"></rect>
-                      <line x1="9" y1="1" x2="9" y2="4"></line>
-                      <line x1="15" y1="1" x2="15" y2="4"></line>
-                      <line x1="9" y1="20" x2="9" y2="23"></line>
-                      <line x1="15" y1="20" x2="15" y2="23"></line>
-                      <line x1="20" y1="9" x2="23" y2="9"></line>
-                      <line x1="20" y1="14" x2="23" y2="14"></line>
-                      <line x1="1" y1="9" x2="4" y2="9"></line>
-                      <line x1="1" y1="14" x2="4" y2="14"></line>
-                    </svg>
+                `).join('')}
+                ${isAdminMode ? `
+                  <div class="studio-add-card-placeholder" data-action="add-offer">
+                    <span style="font-size: 1.4rem; font-weight: 700; color: #8B1014;">+ Add Initiative Card</span>
+                    <span style="font-size: 0.85rem; color: #6B7280; margin-top: 4px;">Click to append a new offering / activity card</span>
                   </div>
-                  <h3 class="academic-card-title">Simulation &amp; Tool Bootcamps</h3>
-                  <p class="academic-card-desc">
-                    Practical training in OpenFOAM, ANSYS Fluent, meshing, and numerical heat transfer.
-                  </p>
-                </div>
-
-                <!-- Card 3: Hardware & R&D Projects -->
-                <div class="academic-card">
-                  <div class="academic-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
-                    </svg>
-                  </div>
-                  <h3 class="academic-card-title">Hardware &amp; R&amp;D Projects</h3>
-                  <p class="academic-card-desc">
-                    Prototyping heat pipes, phase-change thermal storage units, and solar collectors in TKMCE labs.
-                  </p>
-                </div>
-
-                <!-- Card 4: Conference Mentorship -->
-                <div class="academic-card">
-                  <div class="academic-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="8" r="6"></circle>
-                      <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
-                    </svg>
-                  </div>
-                  <h3 class="academic-card-title">Conference Mentorship</h3>
-                  <p class="academic-card-desc">
-                    Guidance for publishing papers and participating in the biennial ISHMT-ASTFE International Conference (IHMTC).
-                  </p>
-                </div>
+                ` : ''}
               </div>
             </div>
           </section>
@@ -1008,25 +989,28 @@
       }
     },
 
-    generateAcademicContactHtml() {
+    generateAcademicContactHtml(isAdminMode = false) {
+      const blueprint = SiteStore.get();
+      const contact = blueprint.contactData || DEFAULT_CONTACT_DATA;
+      const s = contact.studentChapter || DEFAULT_CONTACT_DATA.studentChapter;
+      const r = contact.regionalChapter || DEFAULT_CONTACT_DATA.regionalChapter;
+
       return `
         <div class="academic-contact-wrapper">
           <!-- 1. PAGE TITLE BANNER -->
           <section class="contact-page-banner">
-            <h1 class="contact-banner-title">Contact Us</h1>
-            <p class="contact-banner-sub">
-              Indian Society for Heat and Mass Transfer • TKMCE Student Chapter &amp; Regional Chapter
-            </p>
+            <h1 class="contact-banner-title" ${isAdminMode ? 'data-edit-path="contactData.bannerTitle" title="Click to edit title"' : ''}>${this.escapeHtml(contact.bannerTitle)}</h1>
+            <p class="contact-banner-sub" ${isAdminMode ? 'data-edit-path="contactData.bannerSubtitle" title="Click to edit subtitle"' : ''}>${this.escapeHtml(contact.bannerSubtitle)}</p>
           </section>
 
           <!-- 2. MAIN TWO-COLUMN CONTACT SECTION -->
           <section class="contact-main-grid">
             <!-- Left Column: Minimalist Contact Form -->
             <div>
-              <h2 class="contact-section-title">Send an Inquiry</h2>
+              <h2 class="contact-section-title" ${isAdminMode ? 'data-edit-path="contactData.formTitle" title="Click to edit heading"' : ''}>${this.escapeHtml(contact.formTitle)}</h2>
               <div class="contact-accent-bar"></div>
-              <p style="font-size: 0.9rem; color: #4B5563; margin-bottom: 2rem; line-height: 1.6;">
-                Connect with our faculty coordinators, executive council, or regional liaisons for student membership, academic partnerships, or workshop inquiries.
+              <p style="font-size: 0.9rem; color: #4B5563; margin-bottom: 2rem; line-height: 1.6;" ${isAdminMode ? 'data-edit-path="contactData.formSubtitle" title="Click to edit description"' : ''}>
+                ${this.escapeHtml(contact.formSubtitle)}
               </p>
 
               <div id="contact-form-feedback" class="contact-success-msg" style="display: none;">
@@ -1076,13 +1060,13 @@
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                       <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    <span>Student Chapter Base</span>
+                    <span ${isAdminMode ? 'data-edit-path="contactData.studentChapter.badge"' : ''}>${this.escapeHtml(s.badge)}</span>
                   </div>
-                  <h3 class="address-card-title">ISHMT Student Chapter – TKMCE</h3>
+                  <h3 class="address-card-title" ${isAdminMode ? 'data-edit-path="contactData.studentChapter.title"' : ''}>${this.escapeHtml(s.title)}</h3>
                   <address class="address-card-lines">
-                    Department of Mechanical Engineering,<br>
-                    TKM College of Engineering,<br>
-                    Karicode, Kollam, Kerala – 691 005
+                    <span ${isAdminMode ? 'data-edit-path="contactData.studentChapter.line1"' : ''}>${this.escapeHtml(s.line1)}</span><br>
+                    <span ${isAdminMode ? 'data-edit-path="contactData.studentChapter.line2"' : ''}>${this.escapeHtml(s.line2)}</span><br>
+                    <span ${isAdminMode ? 'data-edit-path="contactData.studentChapter.line3"' : ''}>${this.escapeHtml(s.line3)}</span>
                   </address>
                 </div>
 
@@ -1092,21 +1076,15 @@
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
                       <path d="M9 22v-4h6v4"></path>
-                      <line x1="8" y1="6" x2="8.01" y2="6"></line>
-                      <line x1="16" y1="6" x2="16.01" y2="6"></line>
-                      <line x1="8" y1="10" x2="8.01" y2="10"></line>
-                      <line x1="16" y1="10" x2="16.01" y2="10"></line>
-                      <line x1="8" y1="14" x2="8.01" y2="14"></line>
-                      <line x1="16" y1="14" x2="16.01" y2="14"></line>
                     </svg>
-                    <span>Regional Parent Chapter</span>
+                    <span ${isAdminMode ? 'data-edit-path="contactData.regionalChapter.badge"' : ''}>${this.escapeHtml(r.badge)}</span>
                   </div>
-                  <h3 class="address-card-title">ISHMT - Regional Chapter, Trivandrum</h3>
+                  <h3 class="address-card-title" ${isAdminMode ? 'data-edit-path="contactData.regionalChapter.title"' : ''}>${this.escapeHtml(r.title)}</h3>
                   <address class="address-card-lines">
-                    PRS Entity, LPSC, Valiamala,<br>
-                    Trivandrum, Kerala – 695 547<br>
+                    <span ${isAdminMode ? 'data-edit-path="contactData.regionalChapter.line1"' : ''}>${this.escapeHtml(r.line1)}</span><br>
+                    <span ${isAdminMode ? 'data-edit-path="contactData.regionalChapter.line2"' : ''}>${this.escapeHtml(r.line2)}</span><br>
                     <span style="display: block; margin-top: 0.35rem;">
-                      <strong>Email: </strong><a href="mailto:ishmtkerala@gmail.com" style="color: #8B1014; text-decoration: underline;">ishmtkerala@gmail.com</a>
+                      <strong>Email: </strong><a href="mailto:${r.email}" style="color: #8B1014; text-decoration: underline;" ${isAdminMode ? 'data-edit-path="contactData.regionalChapter.email"' : ''}>${this.escapeHtml(r.email)}</a>
                     </span>
                   </address>
                 </div>
@@ -1178,127 +1156,147 @@
                 <h3 class="footer-column-title" style="font-size: 1.05rem; margin-bottom: 0.25rem;">
                   Indian Society for Heat and Mass Transfer (ISHMT)
                 </h3>
-                <p style="font-weight: 700; font-size: 0.85rem; color: #1F2937; margin: 0 0 0.25rem 0;">
-                  Students Chapter – TKM College of Engineering, Kollam
+                <div class="footer-meta-badge">TKMCE Student Chapter • Est. 2026</div>
+
+                <p class="footer-desc-p">
+                  Affiliated regionally with the ISHMT Trivandrum Regional Chapter (ISHMT-RCT) and anchored within the Department of Mechanical Engineering at Thangal Kunju Musaliar College of Engineering.
                 </p>
-                <p style="font-size: 0.78rem; color: #6B7280; margin: 0 0 1rem 0;">
-                  Affiliated with ISHMT Regional Chapter, Trivandrum
-                </p>
-                <p style="font-size: 0.8rem; color: #4B5563; line-height: 1.6; margin: 0;">
-                  Promoting scientific inquiry, thermal engineering education, computational fluid dynamics, and national aerospace collaborations across Kerala.
-                </p>
+
+                <div class="footer-contact-item">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <a href="mailto:ishmt@tkmce.ac.in" class="footer-link">ishmt@tkmce.ac.in</a>
+                </div>
+                <div class="footer-contact-item">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Karicode, Kollam — 691005, Kerala, India</span>
+                </div>
               </div>
 
-              <!-- Column 2: Useful Links -->
+              <!-- Column 2: Quick Links & Academic Navigation -->
               <div>
-                <h3 class="footer-column-title">Useful Links</h3>
+                <h4 class="footer-col-heading">Chapter Navigation</h4>
+                <div class="footer-accent-line"></div>
                 <ul class="footer-links-list">
-                  <li><a href="#/"><span class="footer-link-dot"></span>Home</a></li>
-                  <li><a href="#/"><span class="footer-link-dot"></span>About Us</a></li>
-                  <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer"><span class="footer-link-dot"></span>Membership</a></li>
-                  <li><a href="#/events"><span class="footer-link-dot"></span>News &amp; Events</a></li>
-                  <li><a href="#/"><span class="footer-link-dot"></span>MoA &amp; By-Laws</a></li>
-                  <li><a href="#/"><span class="footer-link-dot"></span>Terms &amp; Conditions</a></li>
-                  <li><a href="#/"><span class="footer-link-dot"></span>Disclaimer</a></li>
+                  <li><a href="#/" class="footer-link">Home &amp; Welcome</a></li>
+                  <li><a href="#/events" class="footer-link">Colloquiums &amp; Workshops</a></li>
+                  <li><a href="#/team" class="footer-link">Executive Committee 2026–27</a></li>
+                  <li><a href="#/gallery" class="footer-link">Chapter Gallery</a></li>
+                  <li><a href="#/contact" class="footer-link">Contact &amp; Inquiries</a></li>
+                  <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="footer-link" style="color: #8B1014; font-weight: 700;">Join as Student Member ↗</a></li>
                 </ul>
               </div>
 
-              <!-- Column 3: Official Contact & Registration Info -->
+              <!-- Column 3: Institutional Affiliations & Parent Bodies -->
               <div>
-                <h3 class="footer-column-title">Contact Us</h3>
+                <h4 class="footer-col-heading">Institutional Affiliations</h4>
+                <div class="footer-accent-line"></div>
+                <ul class="footer-links-list">
+                  <li>
+                    <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>ISHMT-RCT Portal:</strong> Official Regional Site ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://tkmce.ac.in" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>TKMCE Kollam:</strong> Parent Institution Portal ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://tkmce.ac.in/department/mechanical-engineering/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>Dept. of Mechanical Engg:</strong> Host Department ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://www.ishmt.org" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>ISHMT National:</strong> National Council Body ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://astfe.org" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>ASTFE:</strong> Thermal &amp; Fluids Partner ↗
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
-                <div class="footer-contact-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <div>
-                    <strong style="color: #111827;">Campus Location:</strong><br>
-                    Department of Mechanical Engineering, TKM College of Engineering, Kollam – 691 005
-                  </div>
-                </div>
-
-                <div class="footer-contact-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-                    <path d="M9 22v-4h6v4"></path>
-                  </svg>
-                  <div>
-                    <strong style="color: #111827;">Regional Headquarters:</strong><br>
-                    Indian Society for Heat and Mass Transfer, Regional Chapter, Trivandrum<br>
-                    <span style="font-size: 0.75rem; color: #6B7280;">Reg. No. TVM/TC/614/2016</span><br>
-                    PRS Entity, Liquid Propulsion Systems Centre (LPSC), Thiruvananthapuram – 695 547
-                  </div>
-                </div>
-
-                <div class="footer-contact-item" style="align-items: center;">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                  </svg>
-                  <a href="mailto:ishmtkerala@gmail.com" style="color: #4B5563; text-decoration: none; font-weight: 500;">
-                    ishmtkerala@gmail.com
-                  </a>
+              <!-- Column 4: Parent Chapter Regional Office Address -->
+              <div>
+                <h4 class="footer-col-heading">Regional Parent Chapter</h4>
+                <div class="footer-accent-line"></div>
+                <div class="footer-rct-box">
+                  <div class="footer-rct-tag">REGIONAL CHAPTER TRIVANDRUM (RCT)</div>
+                  <p class="footer-rct-address">
+                    Indian Society for Heat and Mass Transfer<br />
+                    PRS Entity, LPSC, Valiamala<br />
+                    Thiruvananthapuram, Kerala — 695 547
+                  </p>
+                  <p class="footer-rct-portal">
+                    Official Regional Chapter Portal:<br />
+                    <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="footer-rct-link">
+                      https://www.ishmtkerala.in/ ↗
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
 
-            <!-- Bottom Copyright Bar & Scroll to Top -->
+            <!-- Global Bottom Copyright Bar -->
             <div class="footer-bottom-bar">
-              <p>© 2026 ISHMT Student Chapter TKMCE. All Rights Reserved.</p>
-              <p>Affiliated to ISHMT National Council &amp; ISHMT-RCT (Trivandrum)</p>
+              <div class="footer-copy-text">
+                &copy; 2026–2027 ISHMT Students Chapter, TKM College of Engineering, Kollam. Affiliated to ISHMT Regional Chapter Trivandrum.
+              </div>
+              <div class="footer-bottom-actions">
+                <a href="#/login" class="footer-admin-link">Staff &amp; Admin Access</a>
+                <button type="button" id="global-scroll-top-btn" class="footer-scroll-top" title="Back to Top">
+                  <span>Back to Top</span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                </button>
+              </div>
             </div>
           </div>
-
-          <!-- Floating Scroll-to-Top Button -->
-          <button type="button" id="global-scroll-top-btn" class="scroll-top-button" aria-label="Scroll to top" title="Scroll to top">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="19" x2="12" y2="5"></line>
-              <polyline points="5 12 12 5 19 12"></polyline>
-            </svg>
-          </button>
         </footer>
       `;
     },
 
-    generateExecomHtml() {
-      const data = EXECOM_ROSTER_DATA;
+    generateExecomHtml(isAdminMode = false) {
+      const blueprint = SiteStore.get();
+      const data = blueprint.execomData || DEFAULT_EXECOM_DATA;
       const coreLeaders = data.seniorExecom.filter(m => m.isCore);
       const functionalMembers = data.seniorExecom.filter(m => !m.isCore);
-      const generalCount = data.roster.filter(m => !m.isExecom).length;
-      const totalCount = data.roster.length;
+      const generalCount = (data.roster || []).filter(m => !m.isExecom).length;
+      const totalCount = (data.roster || []).length;
 
       return `
         <div class="execom-section">
           <!-- A. Minimalist Header & Mandate Callout -->
           <div class="execom-header">
-            <div class="execom-badge-sub">${this.escapeHtml(data.meta.department)} • TKMCE</div>
-            <h1 class="execom-title">Executive Committee &amp; Chapter Members</h1>
+            <div class="execom-badge-sub" ${isAdminMode ? 'data-edit-path="execomData.meta.department"' : ''}>${this.escapeHtml(data.meta.department)} • TKMCE</div>
+            <h1 class="execom-title" ${isAdminMode ? 'data-edit-path="execomData.meta.chapterName"' : ''}>${this.escapeHtml(data.meta.chapterName)}</h1>
             <p class="execom-subtitle">
-              Session 2026–27 • ${this.escapeHtml(data.meta.institution)} • Mentored by Regional Chapter Thiruvananthapuram (RCT)
+              Session ${this.escapeHtml(data.meta.session)} • ${this.escapeHtml(data.meta.institution)} • Mentored by Regional Chapter Thiruvananthapuram (RCT)
             </p>
 
             <!-- Minimalist Mandate Notice -->
             <div class="execom-mandate-card">
               <div class="execom-mandate-header">
-                <span class="execom-mandate-tag">Official Mandate • ${this.escapeHtml(data.meta.notificationDate)}</span>
+                <span class="execom-mandate-tag" ${isAdminMode ? 'data-edit-path="execomData.meta.notificationDate"' : ''}>Official Mandate • ${this.escapeHtml(data.meta.notificationDate)}</span>
                 <span class="execom-mandate-ref">REF: ISHMT-TKMCE-2026</span>
               </div>
-              <p class="execom-mandate-text">"${this.escapeHtml(data.meta.mandate)}"</p>
+              <p class="execom-mandate-text" ${isAdminMode ? 'data-edit-path="execomData.meta.mandate" title="Click to edit mandate text"' : ''}>"${this.escapeHtml(data.meta.mandate)}"</p>
             </div>
 
             <!-- Minimalist 4-Metric Grid -->
             <div class="execom-metrics-row">
               <div class="execom-metric-box">
-                <div class="execom-metric-val crimson">13</div>
+                <div class="execom-metric-val crimson">${data.seniorExecom.length}</div>
                 <div class="execom-metric-lbl">Senior Execom</div>
               </div>
               <div class="execom-metric-box">
-                <div class="execom-metric-val black">6</div>
+                <div class="execom-metric-val black">${data.juniorExecom.length}</div>
                 <div class="execom-metric-lbl">Junior Execom</div>
               </div>
               <div class="execom-metric-box">
-                <div class="execom-metric-val crimson">48</div>
+                <div class="execom-metric-val crimson">${totalCount}</div>
                 <div class="execom-metric-lbl">Roster Members</div>
               </div>
               <div class="execom-metric-box">
@@ -1310,9 +1308,9 @@
             <!-- Minimalist Navigation Tabs -->
             <div class="execom-tabs">
               <button type="button" class="execom-tab-btn active" data-tab="all">All Sections View</button>
-              <button type="button" class="execom-tab-btn" data-tab="senior">Senior Execom (13)</button>
-              <button type="button" class="execom-tab-btn" data-tab="junior">Junior Execom (6)</button>
-              <button type="button" class="execom-tab-btn" data-tab="roster">Chapter Roster (48)</button>
+              <button type="button" class="execom-tab-btn" data-tab="senior">Senior Execom (${data.seniorExecom.length})</button>
+              <button type="button" class="execom-tab-btn" data-tab="junior">Junior Execom (${data.juniorExecom.length})</button>
+              <button type="button" class="execom-tab-btn" data-tab="roster">Chapter Roster (${totalCount})</button>
             </div>
           </div>
 
@@ -1322,58 +1320,83 @@
               <div>
                 <div class="execom-tier-tag">Tier 1 • Senior Execom</div>
                 <h2 class="execom-tier-h2">Senior Executive Leadership</h2>
-                <div class="execom-tier-desc">13 appointed executive positions across Core Leadership and Functional Tracks.</div>
+                <div class="execom-tier-desc">${data.seniorExecom.length} appointed executive positions across Core Leadership and Functional Tracks.</div>
               </div>
-              <div class="execom-mandate-ref">13 Appointed Positions</div>
+              <div class="execom-mandate-ref">${data.seniorExecom.length} Appointed Positions</div>
             </div>
 
             <!-- Core Leadership Spotlight -->
             <div class="execom-core-grid">
-              ${coreLeaders.map(l => `
-                <div class="execom-leader-card">
-                  <div>
-                    <div class="execom-leader-top">
-                      <span class="execom-lead-pill">Executive Leadership</span>
-                      <span class="execom-tier-sub">Core</span>
-                    </div>
-                    <div class="execom-avatar-wrap">
-                      <div class="execom-avatar-inner">${l.avatar}</div>
-                      <div>
-                        <h3 class="execom-leader-name">${this.escapeHtml(l.name)}</h3>
-                        <div class="execom-leader-role">${this.escapeHtml(l.role)}</div>
+              ${coreLeaders.map(l => {
+                const fullIdx = data.seniorExecom.findIndex(m => m.id === l.id);
+                return `
+                  <div class="execom-leader-card ${isAdminMode ? 'studio-card-wrapper' : ''}">
+                    ${isAdminMode ? `
+                      <div class="studio-card-actions">
+                        <button type="button" class="studio-card-btn btn-card-dup" data-card-type="senior" data-card-id="${l.id}" title="Duplicate Member">❐ Copy</button>
+                        <button type="button" class="studio-card-btn btn-card-delete" data-card-type="senior" data-card-id="${l.id}" title="Delete Member">🗑 Del</button>
                       </div>
+                    ` : ''}
+                    <div>
+                      <div class="execom-leader-top">
+                        <span class="execom-lead-pill" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.team"` : ''}>${this.escapeHtml(l.team)}</span>
+                        <span class="execom-tier-sub">Core</span>
+                      </div>
+                      <div class="execom-avatar-wrap">
+                        <div class="execom-avatar-inner">${l.avatar}</div>
+                        <div>
+                          <h3 class="execom-leader-name" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.name" title="Click to edit name"` : ''}>${this.escapeHtml(l.name)}</h3>
+                          <div class="execom-leader-role" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.role" title="Click to edit role"` : ''}>${this.escapeHtml(l.role)}</div>
+                        </div>
+                      </div>
+                      <p class="execom-leader-bio" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.bio" title="Click to edit bio"` : ''}>${this.escapeHtml(l.bio)}</p>
                     </div>
-                    <p class="execom-leader-bio">${this.escapeHtml(l.bio)}</p>
+                    <div class="execom-card-footer">
+                      <span ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.badge"` : ''}>${this.escapeHtml(l.badge)}</span>
+                    </div>
                   </div>
-                  <div class="execom-card-footer">
-                    <span>${this.escapeHtml(l.badge)}</span>
-                  </div>
-                </div>
-              `).join('')}
+                `;
+              }).join('')}
             </div>
 
             <!-- Functional Teams Grid -->
             <div class="execom-func-grid">
-              ${functionalMembers.map(m => `
-                <div class="execom-func-card ${m.isLead ? 'is-lead' : ''}">
-                  <div>
-                    <div class="execom-func-top">
-                      <span class="execom-func-team">${this.escapeHtml(m.team)}</span>
-                      <span class="execom-lead-tag">${m.isLead ? 'Lead' : 'Member'}</span>
-                    </div>
-                    <div class="execom-func-mid">
-                      <div class="execom-mini-avatar">${m.avatar}</div>
-                      <div>
-                        <h4 class="execom-func-name">${this.escapeHtml(m.name)}</h4>
-                        <div class="execom-func-role">${this.escapeHtml(m.role)}</div>
+              ${functionalMembers.map(m => {
+                const fullIdx = data.seniorExecom.findIndex(item => item.id === m.id);
+                return `
+                  <div class="execom-func-card ${m.isLead ? 'is-lead' : ''} ${isAdminMode ? 'studio-card-wrapper' : ''}">
+                    ${isAdminMode ? `
+                      <div class="studio-card-actions">
+                        <button type="button" class="studio-card-btn btn-card-dup" data-card-type="senior" data-card-id="${m.id}" title="Duplicate Member">❐ Copy</button>
+                        <button type="button" class="studio-card-btn btn-card-delete" data-card-type="senior" data-card-id="${m.id}" title="Delete Member">🗑 Del</button>
                       </div>
+                    ` : ''}
+                    <div>
+                      <div class="execom-func-top">
+                        <span class="execom-func-team" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.team"` : ''}>${this.escapeHtml(m.team)}</span>
+                        <span class="execom-lead-tag">${m.isLead ? 'Lead' : 'Member'}</span>
+                      </div>
+                      <div class="execom-func-mid">
+                        <div class="execom-mini-avatar">${m.avatar}</div>
+                        <div>
+                          <h4 class="execom-func-name" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.name" title="Click to edit name"` : ''}>${this.escapeHtml(m.name)}</h4>
+                          <div class="execom-func-role" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.role" title="Click to edit role"` : ''}>${this.escapeHtml(m.role)}</div>
+                        </div>
+                      </div>
+                      <p class="execom-func-bio" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.bio" title="Click to edit bio"` : ''}>${this.escapeHtml(m.bio)}</p>
                     </div>
-                    <p class="execom-func-bio">${this.escapeHtml(m.bio)}</p>
+                    <div class="execom-func-badge" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.badge"` : ''}>${this.escapeHtml(m.badge)}</div>
                   </div>
-                  <div class="execom-func-badge">${this.escapeHtml(m.badge)}</div>
-                </div>
-              `).join('')}
+                `;
+              }).join('')}
             </div>
+
+            ${isAdminMode ? `
+              <div class="studio-add-card-placeholder" data-action="add-senior-member" style="margin-top: 1.5rem;">
+                <span style="font-size: 1.3rem; font-weight: 700; color: #8B1014;">+ Add Senior Executive Member</span>
+                <span style="font-size: 0.85rem; color: #6B7280; margin-top: 4px;">Click to append a new appointed senior member to this roster</span>
+              </div>
+            ` : ''}
           </div>
 
           <!-- C. Tier 2: Junior Executive Committee -->
@@ -1382,26 +1405,32 @@
               <div>
                 <div class="execom-tier-tag">Tier 2 • Junior Execom</div>
                 <h2 class="execom-tier-h2">Junior Executive Operational Tracks</h2>
-                <div class="execom-tier-desc">6 appointed junior executives dedicated to technical simulation toolkits, stage ops, venue logistics, and audit archival.</div>
+                <div class="execom-tier-desc">${data.juniorExecom.length} appointed junior executives dedicated to technical simulation toolkits, stage ops, venue logistics, and audit archival.</div>
               </div>
-              <div class="execom-mandate-ref">6 Appointed Members</div>
+              <div class="execom-mandate-ref">${data.juniorExecom.length} Appointed Members</div>
             </div>
 
             <div class="execom-junior-grid">
-              ${data.juniorExecom.map(j => `
-                <div class="execom-junior-card">
+              ${data.juniorExecom.map((j, idx) => `
+                <div class="execom-junior-card ${isAdminMode ? 'studio-card-wrapper' : ''}">
+                  ${isAdminMode ? `
+                    <div class="studio-card-actions">
+                      <button type="button" class="studio-card-btn btn-card-dup" data-card-type="junior" data-card-id="${j.id}" title="Duplicate Track">❐ Copy</button>
+                      <button type="button" class="studio-card-btn btn-card-delete" data-card-type="junior" data-card-id="${j.id}" title="Delete Track">🗑 Del</button>
+                    </div>
+                  ` : ''}
                   <div>
-                    <span class="execom-track-pill">${this.escapeHtml(j.track)}</span>
+                    <span class="execom-track-pill" ${isAdminMode ? `data-edit-path="execomData.juniorExecom.${idx}.track" title="Click to edit track"` : ''}>${this.escapeHtml(j.track)}</span>
                     <div class="execom-junior-mid">
                       <div class="execom-mini-avatar">${j.avatar}</div>
                       <div>
-                        <h4 class="execom-junior-name">${this.escapeHtml(j.name)}</h4>
-                        <div class="execom-junior-badge">${this.escapeHtml(j.badge)}</div>
+                        <h4 class="execom-junior-name" ${isAdminMode ? `data-edit-path="execomData.juniorExecom.${idx}.name" title="Click to edit name"` : ''}>${this.escapeHtml(j.name)}</h4>
+                        <div class="execom-junior-badge" ${isAdminMode ? `data-edit-path="execomData.juniorExecom.${idx}.badge" title="Click to edit badge"` : ''}>${this.escapeHtml(j.badge)}</div>
                       </div>
                     </div>
                     <div class="execom-focus-box">
                       <span class="execom-focus-lbl">Operational Focus:</span>
-                      ${this.escapeHtml(j.focus)}
+                      <span ${isAdminMode ? `data-edit-path="execomData.juniorExecom.${idx}.focus" title="Click to edit operational focus"` : ''}>${this.escapeHtml(j.focus)}</span>
                     </div>
                   </div>
                   <div class="execom-junior-footer">
@@ -1411,6 +1440,13 @@
                 </div>
               `).join('')}
             </div>
+
+            ${isAdminMode ? `
+              <div class="studio-add-card-placeholder" data-action="add-junior-member" style="margin-top: 1.5rem;">
+                <span style="font-size: 1.3rem; font-weight: 700; color: #8B1014;">+ Add Junior Operational Track</span>
+                <span style="font-size: 0.85rem; color: #6B7280; margin-top: 4px;">Click to append a new junior executive track card</span>
+              </div>
+            ` : ''}
           </div>
 
           <!-- D. Tier 3: Student Chapter Directory -->
@@ -1419,10 +1455,10 @@
               <div>
                 <div class="execom-tier-tag">Tier 3 • Directory</div>
                 <h2 class="execom-tier-h2">Student Chapter Members Roster</h2>
-                <div class="execom-tier-desc">Complete cross-referenced registry of 48 registered undergraduate & postgraduate members.</div>
+                <div class="execom-tier-desc">Complete cross-referenced registry of ${totalCount} registered undergraduate & postgraduate members.</div>
               </div>
               <div id="execom-live-count" class="execom-mandate-ref execom-mandate-crimson">
-                Showing 34 General Members
+                Showing ${generalCount} General Members
               </div>
             </div>
 
@@ -1463,22 +1499,24 @@
               </div>
             </div>
 
-            <!-- Dynamic Members List Container -->
-            <div id="execom-members-display" class="execom-roster-grid"></div>
+            <!-- Dynamic Roster Container -->
+            <div id="execom-roster-display" class="execom-grid-wrap"></div>
           </div>
         </div>
       `;
     },
 
     initExecomInteractivity(container) {
+      if (!container) return;
+
       const searchInput = container.querySelector('#execom-search');
       const deptSelect = container.querySelector('#execom-dept-select');
-      const displayEl = container.querySelector('#execom-members-display');
-      const countEl = container.querySelector('#execom-live-count');
       const toggleBtns = container.querySelectorAll('.execom-toggle-btn');
-      const pillBtns = container.querySelectorAll('.execom-pill-btn');
+      const pillBtns = container.querySelectorAll('.execom-pill-btn[data-sem]');
+      const viewModeBtns = container.querySelectorAll('.execom-view-btn[data-mode]');
       const tabBtns = container.querySelectorAll('.execom-tab-btn');
-      const viewModeBtns = container.querySelectorAll('.execom-view-btn');
+      const displayEl = container.querySelector('#execom-roster-display');
+      const countEl = container.querySelector('#execom-live-count');
 
       if (!displayEl) return;
 
@@ -1492,7 +1530,11 @@
       };
 
       const renderRoster = () => {
-        const filtered = EXECOM_ROSTER_DATA.roster.filter(m => {
+        const blueprint = SiteStore.get();
+        const activeData = blueprint.execomData || DEFAULT_EXECOM_DATA;
+        const rosterList = activeData.roster || [];
+
+        const filtered = rosterList.filter(m => {
           if (!state.showAll && m.isExecom) return false;
           if (state.query) {
             const q = state.query.toLowerCase();
@@ -1518,34 +1560,31 @@
 
         if (filtered.length === 0) {
           displayEl.innerHTML = `
-            <div class="execom-empty-box">
-              <h4 class="execom-empty-title">No members match your criteria</h4>
-              <p class="execom-empty-desc">Try clearing search keywords or selecting 'All' in semester and department filters.</p>
+            <div class="execom-empty-state">
+              <div class="execom-empty-icon">🔍</div>
+              <h4 class="execom-empty-title">No matching student records found</h4>
+              <p class="execom-empty-desc">Try clearing search terms or resetting the department/semester filter.</p>
             </div>
           `;
           return;
         }
 
         if (state.viewMode === 'grid') {
-          displayEl.className = 'execom-roster-grid';
+          displayEl.className = 'execom-grid-wrap';
           displayEl.innerHTML = filtered.map(m => `
-            <div class="execom-student-card ${m.isExecom ? 'is-execom' : ''}">
-              <div>
-                <div class="execom-card-top-sem">
-                  <span class="execom-sem-tag">${m.semester}</span>
-                  ${m.isExecom ? `<span class="execom-exe-status">${m.execomTier === 'senior' ? 'Senior Execom' : 'Junior Execom'}</span>` : ''}
-                </div>
-                <div class="execom-student-info-row">
-                  <div class="execom-student-monogram">
-                    ${m.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
-                  </div>
-                  <div style="min-width: 0;">
-                    <div class="execom-student-name" title="${PublicRenderer.escapeHtml(m.name)}">${PublicRenderer.escapeHtml(m.name)}</div>
-                    <div class="execom-student-meta">${PublicRenderer.escapeHtml(m.programme)} • ${PublicRenderer.escapeHtml(m.department)}</div>
-                  </div>
-                </div>
+            <div class="execom-roster-card ${m.isExecom ? 'is-execom' : ''}">
+              <div class="execom-roster-top">
+                <span class="execom-roster-dept">${PublicRenderer.escapeHtml(m.department)}</span>
+                <span class="execom-sem-tag">${m.semester}</span>
               </div>
-              ${m.isExecom ? `<div class="execom-role-ribbon">${PublicRenderer.escapeHtml(m.execomRole)}</div>` : ''}
+              <h4 class="execom-roster-name">${PublicRenderer.escapeHtml(m.name)}</h4>
+              <div class="execom-roster-prog">${PublicRenderer.escapeHtml(m.programme)}</div>
+              ${m.isExecom ? `
+                <div class="execom-badge-flag">
+                  <span class="execom-dot"></span>
+                  ${PublicRenderer.escapeHtml(m.execomRole)}
+                </div>
+              ` : ''}
             </div>
           `).join('');
         } else {
@@ -1583,7 +1622,6 @@
         }
       };
 
-      // Search event
       if (searchInput) {
         searchInput.addEventListener('input', (e) => {
           state.query = e.target.value.trim();
@@ -1591,7 +1629,6 @@
         });
       }
 
-      // Dept event
       if (deptSelect) {
         deptSelect.addEventListener('change', (e) => {
           state.dept = e.target.value;
@@ -1599,7 +1636,6 @@
         });
       }
 
-      // General / All toggle
       toggleBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           toggleBtns.forEach(b => b.classList.remove('active'));
@@ -1609,7 +1645,6 @@
         });
       });
 
-      // Semester pills
       pillBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           pillBtns.forEach(b => b.classList.remove('active'));
@@ -1619,7 +1654,6 @@
         });
       });
 
-      // View mode (grid vs table)
       viewModeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           viewModeBtns.forEach(b => b.classList.remove('active'));
@@ -1629,7 +1663,6 @@
         });
       });
 
-      // Section Jump Tabs
       tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           tabBtns.forEach(b => b.classList.remove('active'));
@@ -1645,7 +1678,6 @@
         });
       });
 
-      // Initial roster render
       renderRoster();
     },
 
@@ -1661,14 +1693,17 @@
   };
 
   // ==========================================================================
-  // 6. PHASE 2: PROTECTED MASTER CONTROL STUDIO (#/admin)
+  // 7. PHASE 2: PROTECTED MASTER CONTROL STUDIO (#/admin)
   // ==========================================================================
   const AdminStudio = {
     activePageSlug: '/',
     activeSectionId: null,
+    saveDebounceTimer: null,
+    activeEditingEl: null,
 
     init() {
       this.bindEvents();
+      this.bindInlineEditor();
     },
 
     open() {
@@ -1677,19 +1712,10 @@
         this.activePageSlug = Object.keys(blueprint.pages)[0] || '/';
       }
 
-      // Populate Page Switcher Dropdown
       this.populatePageSelect();
-
-      // Render Sidebar Sections Outline
       this.renderSectionsOutline();
-
-      // Render Pages & Nav in Domain 3
       this.renderPagesManager();
-
-      // Populate Theme Controls
       this.populateThemeForm();
-
-      // Render Live Canvas
       this.renderLiveCanvas();
     },
 
@@ -1713,27 +1739,423 @@
       const page = blueprint.pages[this.activePageSlug] || { sections: [] };
 
       renderEl.innerHTML = '';
+
+      // Direct Click-to-Edit Visual Guide Banner at the top of canvas
+      renderEl.insertAdjacentHTML('beforeend', `
+        <div class="studio-guide-banner">
+          <div class="guide-banner-text">
+            <span class="guide-banner-icon">⚡</span>
+            <span><strong>Direct Click-to-Edit Mode:</strong> Click directly on ANY text or card on this preview canvas to edit words instantly. Hover over cards to duplicate or delete.</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span class="sync-indicator synced" id="canvas-sync-status"><span class="status-dot"></span> Synced</span>
+          </div>
+        </div>
+      `);
+
       if (!page.sections || page.sections.length === 0) {
-        renderEl.innerHTML = `
+        renderEl.insertAdjacentHTML('beforeend', `
           <div style="padding: 6rem 2rem; text-align: center; color: #94A3B8;">
             <div style="font-size: 3rem; margin-bottom: 1rem;">📄</div>
             <h3 style="font-size: 1.4rem; color: #1E293B; margin-bottom: 0.5rem;">This page has no sections</h3>
             <p style="font-size: 0.95rem; margin-bottom: 1.5rem;">Click below or use the sidebar to add your first content block.</p>
             <button class="btn btn-primary" onclick="document.getElementById('btn-open-block-library').click()">+ Add Block</button>
           </div>
-        `;
+        `);
         return;
       }
 
       page.sections.forEach(section => {
-        const html = PublicRenderer.generateBlockHtml(section, true);
+        const html = PublicRenderer.generateBlockHtml(section, true, this.activePageSlug);
         renderEl.insertAdjacentHTML('beforeend', html);
       });
 
-      // Highlight active section if any
+      // Highlight active section if selected
       if (this.activeSectionId) {
         const activeBlock = renderEl.querySelector(`[data-section-id="${this.activeSectionId}"]`);
         if (activeBlock) activeBlock.classList.add('active-editing');
+      }
+
+      // Re-initialize widgets inside admin canvas preview
+      PublicRenderer.initExecomInteractivity(renderEl);
+      PublicRenderer.initAcademicHomeInteractivity(renderEl);
+      PublicRenderer.initAcademicContactInteractivity(renderEl);
+    },
+
+    bindInlineEditor() {
+      // Ensure floating inline formatting toolbar exists in DOM
+      let toolbar = document.getElementById('studio-inline-toolbar');
+      if (!toolbar) {
+        toolbar = document.createElement('div');
+        toolbar.id = 'studio-inline-toolbar';
+        toolbar.className = 'studio-inline-toolbar';
+        toolbar.innerHTML = `
+          <button type="button" class="studio-tb-btn" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+          <button type="button" class="studio-tb-btn" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>
+          <button type="button" class="studio-tb-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+          <button type="button" class="studio-tb-btn" data-cmd="crimson" title="Brand Crimson Red" style="color: #8B1014; font-weight: 800;">● Red</button>
+          <button type="button" class="studio-tb-btn" data-cmd="createLink" title="Insert Link">🔗</button>
+          <button type="button" class="studio-tb-btn" data-cmd="removeFormat" title="Clear Formatting">✕</button>
+          <button type="button" class="studio-tb-btn btn-save-inline" data-cmd="done" title="Finish Editing">✓ Done</button>
+        `;
+        document.body.appendChild(toolbar);
+      }
+
+      // Handle Toolbar Button Clicks
+      toolbar.addEventListener('mousedown', (e) => {
+        e.preventDefault(); // Prevent blur of the active editing element
+        const btn = e.target.closest('.studio-tb-btn');
+        if (!btn) return;
+
+        const cmd = btn.getAttribute('data-cmd');
+        if (cmd === 'bold' || cmd === 'italic' || cmd === 'underline' || cmd === 'removeFormat') {
+          document.execCommand(cmd, false, null);
+        } else if (cmd === 'crimson') {
+          document.execCommand('foreColor', false, '#8B1014');
+        } else if (cmd === 'createLink') {
+          const url = prompt('Enter destination link URL:', 'https://');
+          if (url) document.execCommand('createLink', false, url);
+        } else if (cmd === 'done') {
+          if (this.activeEditingEl) {
+            this.activeEditingEl.blur();
+          }
+        }
+      });
+
+      const updateSyncStatus = (status) => {
+        const topbarIndicator = document.getElementById('sync-status-indicator');
+        const canvasIndicator = document.getElementById('canvas-sync-status');
+        const text = status === 'saving' ? 'Saving...' : 'Synced';
+        const cls = status === 'saving' ? 'sync-indicator saving' : 'sync-indicator synced';
+
+        if (topbarIndicator) {
+          topbarIndicator.className = cls;
+          const label = topbarIndicator.querySelector('.status-text');
+          if (label) label.textContent = text;
+        }
+        if (canvasIndicator) {
+          canvasIndicator.className = cls;
+          canvasIndicator.innerHTML = `<span class="status-dot"></span> ${text}`;
+        }
+      };
+
+      // Click-to-edit listener inside #admin-live-render
+      const renderEl = document.getElementById('admin-live-render');
+      if (!renderEl) return;
+
+      renderEl.addEventListener('click', (e) => {
+        // 1. Direct editable text click
+        const editEl = e.target.closest('[data-edit-path]');
+        if (editEl) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (this.activeEditingEl && this.activeEditingEl !== editEl) {
+            this.activeEditingEl.removeAttribute('contenteditable');
+            this.activeEditingEl.classList.remove('studio-active-editing');
+          }
+
+          this.activeEditingEl = editEl;
+          editEl.setAttribute('contenteditable', 'true');
+          editEl.classList.add('studio-active-editing');
+          editEl.focus();
+
+          // Position floating toolbar above the element
+          const rect = editEl.getBoundingClientRect();
+          toolbar.classList.add('visible');
+          const tbTop = Math.max(10, rect.top - 46);
+          const tbLeft = Math.max(10, Math.min(window.innerWidth - 300, rect.left));
+          toolbar.style.top = `${tbTop}px`;
+          toolbar.style.left = `${tbLeft}px`;
+          return;
+        }
+
+        // 2. Duplicate Card Button
+        const dupBtn = e.target.closest('.btn-card-dup');
+        if (dupBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const cardType = dupBtn.getAttribute('data-card-type');
+          const cardId = dupBtn.getAttribute('data-card-id');
+          const blueprint = SiteStore.get();
+
+          if (cardType === 'senior') {
+            const list = blueprint.execomData.seniorExecom;
+            const idx = list.findIndex(m => m.id === cardId);
+            if (idx !== -1) {
+              const orig = list[idx];
+              const dup = { ...deepClone(orig), id: `sen-${Date.now()}`, name: `${orig.name} (Copy)` };
+              list.splice(idx + 1, 0, dup);
+              SiteStore.save(blueprint, true);
+              App.showToast(`Duplicated member "${orig.name}".`);
+              this.renderLiveCanvas();
+            }
+          } else if (cardType === 'junior') {
+            const list = blueprint.execomData.juniorExecom;
+            const idx = list.findIndex(m => m.id === cardId);
+            if (idx !== -1) {
+              const orig = list[idx];
+              const dup = { ...deepClone(orig), id: `jun-${Date.now()}`, name: `${orig.name} (Copy)` };
+              list.splice(idx + 1, 0, dup);
+              SiteStore.save(blueprint, true);
+              App.showToast(`Duplicated junior track "${orig.name}".`);
+              this.renderLiveCanvas();
+            }
+          } else if (cardType === 'event') {
+            const secId = dupBtn.getAttribute('data-section-id');
+            const page = blueprint.pages[this.activePageSlug];
+            const sec = (page.sections || []).find(s => s.id === secId);
+            if (sec && sec.content && sec.content.items) {
+              const idx = sec.content.items.findIndex(i => i.id === cardId);
+              if (idx !== -1) {
+                const orig = sec.content.items[idx];
+                const dup = { ...deepClone(orig), id: `ev-${Date.now()}`, title: `${orig.title} (Copy)` };
+                sec.content.items.splice(idx + 1, 0, dup);
+                SiteStore.save(blueprint, true);
+                App.showToast('Event card duplicated.');
+                this.renderLiveCanvas();
+              }
+            }
+          } else if (cardType === 'offer') {
+            const list = blueprint.homeData.offers;
+            const idx = list.findIndex(o => o.id === cardId);
+            if (idx !== -1) {
+              const orig = list[idx];
+              const dup = { ...deepClone(orig), id: `offer-${Date.now()}`, title: `${orig.title} (Copy)` };
+              list.splice(idx + 1, 0, dup);
+              SiteStore.save(blueprint, true);
+              App.showToast('Initiative card duplicated.');
+              this.renderLiveCanvas();
+            }
+          } else if (cardType === 'stat') {
+            const list = blueprint.homeData.stats;
+            const idx = list.findIndex(s => s.id === cardId);
+            if (idx !== -1) {
+              const orig = list[idx];
+              const dup = { ...deepClone(orig), id: `stat-${Date.now()}` };
+              list.splice(idx + 1, 0, dup);
+              SiteStore.save(blueprint, true);
+              App.showToast('Milestone stat duplicated.');
+              this.renderLiveCanvas();
+            }
+          }
+          return;
+        }
+
+        // 3. Delete Card Button
+        const delBtn = e.target.closest('.btn-card-delete');
+        if (delBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const cardType = delBtn.getAttribute('data-card-type');
+          const cardId = delBtn.getAttribute('data-card-id');
+          if (!confirm('Are you sure you want to delete this card?')) return;
+
+          const blueprint = SiteStore.get();
+          if (cardType === 'senior') {
+            blueprint.execomData.seniorExecom = blueprint.execomData.seniorExecom.filter(m => m.id !== cardId);
+            SiteStore.save(blueprint, true);
+            App.showToast('Senior member deleted.');
+          } else if (cardType === 'junior') {
+            blueprint.execomData.juniorExecom = blueprint.execomData.juniorExecom.filter(m => m.id !== cardId);
+            SiteStore.save(blueprint, true);
+            App.showToast('Junior track deleted.');
+          } else if (cardType === 'event') {
+            const secId = delBtn.getAttribute('data-section-id');
+            const page = blueprint.pages[this.activePageSlug];
+            const sec = (page.sections || []).find(s => s.id === secId);
+            if (sec && sec.content && sec.content.items) {
+              sec.content.items = sec.content.items.filter(i => i.id !== cardId);
+              SiteStore.save(blueprint, true);
+              App.showToast('Event card deleted.');
+            }
+          } else if (cardType === 'offer') {
+            blueprint.homeData.offers = blueprint.homeData.offers.filter(o => o.id !== cardId);
+            SiteStore.save(blueprint, true);
+            App.showToast('Card deleted.');
+          } else if (cardType === 'stat') {
+            blueprint.homeData.stats = blueprint.homeData.stats.filter(s => s.id !== cardId);
+            SiteStore.save(blueprint, true);
+            App.showToast('Stat item deleted.');
+          }
+          this.renderLiveCanvas();
+          return;
+        }
+
+        // 4. Add Card Placeholders
+        const addPlaceholder = e.target.closest('.studio-add-card-placeholder');
+        if (addPlaceholder) {
+          e.preventDefault();
+          e.stopPropagation();
+          const action = addPlaceholder.getAttribute('data-action');
+          const blueprint = SiteStore.get();
+
+          if (action === 'add-senior-member') {
+            const newId = `sen-${Date.now()}`;
+            blueprint.execomData.seniorExecom.push({
+              id: newId,
+              name: 'New Appointed Member',
+              role: 'Executive Member',
+              team: 'Functional Team',
+              isLead: false,
+              isCore: false,
+              badge: 'B.Tech • 2026–27 Session',
+              avatar: 'NM',
+              bio: 'Click and type to edit operational focus, research background, and responsibilities.'
+            });
+            SiteStore.save(blueprint, true);
+            App.showToast('New senior member added. Click to edit!');
+            this.renderLiveCanvas();
+            setTimeout(() => {
+              const idx = blueprint.execomData.seniorExecom.length - 1;
+              const el = document.querySelector(`[data-edit-path="execomData.seniorExecom.${idx}.name"]`);
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.click();
+              }
+            }, 120);
+          } else if (action === 'add-junior-member') {
+            const newId = `jun-${Date.now()}`;
+            blueprint.execomData.juniorExecom.push({
+              id: newId,
+              name: 'New Junior Executive',
+              track: 'Operational Track',
+              focus: 'Click and type to customize operational duties and mentorship scope.',
+              badge: 'B.Tech • S3',
+              avatar: 'JE',
+              color: 'cyan'
+            });
+            SiteStore.save(blueprint, true);
+            App.showToast('New junior track added. Click to edit!');
+            this.renderLiveCanvas();
+            setTimeout(() => {
+              const idx = blueprint.execomData.juniorExecom.length - 1;
+              const el = document.querySelector(`[data-edit-path="execomData.juniorExecom.${idx}.name"]`);
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.click();
+              }
+            }, 120);
+          } else if (action === 'add-offer') {
+            const newId = `offer-${Date.now()}`;
+            if (!blueprint.homeData.offers) blueprint.homeData.offers = [];
+            blueprint.homeData.offers.push({
+              id: newId,
+              icon: 'bootcamp',
+              title: 'New Chapter Initiative',
+              desc: 'Click and type to describe this workshop, lecture series, or hands-on R&D initiative.'
+            });
+            SiteStore.save(blueprint, true);
+            App.showToast('New initiative card added.');
+            this.renderLiveCanvas();
+            setTimeout(() => {
+              const idx = blueprint.homeData.offers.length - 1;
+              const el = document.querySelector(`[data-edit-path="homeData.offers.${idx}.title"]`);
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.click();
+              }
+            }, 120);
+          } else if (action === 'add-stat') {
+            const newId = `stat-${Date.now()}`;
+            if (!blueprint.homeData.stats) blueprint.homeData.stats = [];
+            blueprint.homeData.stats.push({
+              id: newId,
+              value: '100%',
+              label: 'New Chapter Milestone'
+            });
+            SiteStore.save(blueprint, true);
+            App.showToast('New milestone stat added.');
+            this.renderLiveCanvas();
+          } else if (action === 'add-event-card') {
+            const secId = addPlaceholder.getAttribute('data-section-id');
+            const page = blueprint.pages[this.activePageSlug];
+            const sec = (page.sections || []).find(s => s.id === secId);
+            if (sec && sec.content) {
+              if (!sec.content.items) sec.content.items = [];
+              const newId = `ev-${Date.now()}`;
+              sec.content.items.push({
+                id: newId,
+                tag: 'Workshop',
+                title: 'New Technical Colloquium',
+                description: 'Click and type to detail the workshop schedule, guest speakers, and registration instructions.',
+                linkText: 'Register Now →',
+                linkUrl: '#/contact'
+              });
+              SiteStore.save(blueprint, true);
+              App.showToast('New event card added.');
+              this.renderLiveCanvas();
+              setTimeout(() => {
+                const idx = sec.content.items.length - 1;
+                const secPath = `pages.${this.activePageSlug}.sections.${secId}.content`;
+                const el = document.querySelector(`[data-edit-path="${secPath}.items.${idx}.title"]`);
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  el.click();
+                }
+              }, 120);
+            }
+          }
+        }
+      });
+
+      // Typing (input) event in editable elements
+      renderEl.addEventListener('input', (e) => {
+        const editEl = e.target.closest('[data-edit-path]');
+        if (!editEl) return;
+
+        updateSyncStatus('saving');
+        clearTimeout(this.saveDebounceTimer);
+
+        this.saveDebounceTimer = setTimeout(() => {
+          const path = editEl.getAttribute('data-edit-path');
+          if (!path) return;
+
+          let val;
+          if (editEl.children.length === 0 || editEl.tagName === 'SPAN' || editEl.tagName === 'H1' || editEl.tagName === 'H2' || editEl.tagName === 'H3' || editEl.tagName === 'H4') {
+            val = editEl.innerText.trim();
+          } else {
+            val = editEl.innerHTML;
+          }
+
+          const blueprint = SiteStore.get();
+          setDeepValue(blueprint, path, val);
+          SiteStore.save(blueprint, false);
+          updateSyncStatus('synced');
+
+          // Two-way sync to Inspector input if visible
+          this.syncInspectorField(path, val);
+        }, 200);
+      });
+
+      // Blur event on editable elements
+      renderEl.addEventListener('focusout', (e) => {
+        const editEl = e.target.closest('[data-edit-path]');
+        if (!editEl) return;
+
+        setTimeout(() => {
+          if (document.activeElement !== editEl && !toolbar.contains(document.activeElement)) {
+            editEl.removeAttribute('contenteditable');
+            editEl.classList.remove('studio-active-editing');
+            toolbar.classList.remove('visible');
+
+            const path = editEl.getAttribute('data-edit-path');
+            if (path) {
+              const val = (editEl.children.length === 0) ? editEl.innerText.trim() : editEl.innerHTML;
+              const blueprint = SiteStore.get();
+              setDeepValue(blueprint, path, val);
+              SiteStore.save(blueprint, false);
+              updateSyncStatus('synced');
+            }
+          }
+        }, 150);
+      });
+    },
+
+    syncInspectorField(path, value) {
+      const input = document.querySelector(`[data-inspector-path="${path}"]`);
+      if (input && input !== document.activeElement) {
+        input.value = value;
       }
     },
 
@@ -1761,10 +2183,11 @@
               <span class="outline-title" title="${PublicRenderer.escapeHtml(titlePreview)}">${PublicRenderer.escapeHtml(titlePreview)}</span>
             </div>
             <div class="outline-actions">
+              <button class="outline-btn btn-action-toggle-vis" data-section-id="${section.id}" title="Toggle Visibility">${isVisible ? '👁' : '🚫'}</button>
               <button class="outline-btn btn-action-move-up" data-section-id="${section.id}" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3;"' : ''}>▲</button>
               <button class="outline-btn btn-action-move-down" data-section-id="${section.id}" title="Move Down" ${index === page.sections.length - 1 ? 'disabled style="opacity:0.3;"' : ''}>▼</button>
-              <button class="outline-btn btn-action-toggle-vis" data-section-id="${section.id}" title="${isVisible ? 'Hide Section' : 'Show Section'}">${isVisible ? '👁' : '🚫'}</button>
-              <button class="outline-btn btn-action-delete" data-section-id="${section.id}" title="Delete" style="color: #EF4444;">✕</button>
+              <button class="outline-btn btn-action-duplicate" data-section-id="${section.id}" title="Duplicate Section">❐</button>
+              <button class="outline-btn btn-delete btn-action-delete" data-section-id="${section.id}" title="Delete Section">🗑</button>
             </div>
           </div>
         `;
@@ -1778,20 +2201,19 @@
 
       const blueprint = SiteStore.get();
 
-      // Pages list
+      // Pages List
       pagesListEl.innerHTML = Object.keys(blueprint.pages).map(slug => {
         const page = blueprint.pages[slug];
-        const count = (page.sections && page.sections.length) || 0;
-        const isHome = slug === '/';
+        const isActive = slug === this.activePageSlug;
         return `
-          <div class="section-outline-item" style="cursor: default;">
+          <div class="section-outline-item ${isActive ? 'selected' : ''}">
             <div>
-              <strong style="color: #FFFFFF; font-size: 0.95rem;">${PublicRenderer.escapeHtml(page.title)}</strong>
-              <div style="font-size: 0.75rem; color: var(--studio-text-muted);">${slug} • ${count} sections</div>
+              <strong style="color: #FFFFFF; font-size: 0.9rem;">${PublicRenderer.escapeHtml(page.title)}</strong>
+              <div style="font-size: 0.75rem; color: var(--studio-text-muted);">${slug} • ${(page.sections || []).length} Sections</div>
             </div>
             <div class="outline-actions">
-              <button class="outline-btn btn-switch-page" data-page-slug="${slug}" title="Edit this page">✎</button>
-              ${!isHome ? `<button class="outline-btn btn-delete-page" data-page-slug="${slug}" title="Delete page" style="color: #EF4444;">🗑</button>` : ''}
+              <button class="outline-btn btn-switch-page" data-page-slug="${slug}" title="Edit this Page">✎ Edit</button>
+              ${slug !== '/' ? `<button class="outline-btn btn-delete btn-delete-page" data-page-slug="${slug}" title="Delete Page">🗑</button>` : ''}
             </div>
           </div>
         `;
@@ -1865,14 +2287,14 @@
       if (!containerEl) return;
 
       const blueprint = SiteStore.get();
-      const page = blueprint.pages[this.activePageSlug];
+      const page = blueprint.pages[this.activePageSlug] || { sections: [] };
       const section = (page.sections || []).find(s => s.id === sectionId);
 
       if (!section) {
         containerEl.innerHTML = `
           <div class="empty-inspector-state">
-            <h4>Section Not Found</h4>
-            <p>Please select another section from the Structure tab.</p>
+            <h4>Select a Section to Customize</h4>
+            <p>Click on any section card in the Structure tab to open detailed properties.</p>
           </div>
         `;
         return;
@@ -1880,6 +2302,157 @@
 
       const { type, layout = {}, content = {} } = section;
 
+      // 1. EXECUTIVE TEAM INSPECTOR
+      if (type === 'execom-directory') {
+        const data = blueprint.execomData || DEFAULT_EXECOM_DATA;
+        containerEl.innerHTML = `
+          <div class="inspector-card">
+            <div class="inspector-card-title">Executive Committee &amp; Roster Controls</div>
+            <div style="font-size: 0.82rem; color: #9CA3AF; margin-bottom: 1.25rem;">
+              Direct dual-sync controls for official chapter mandate and appointed execom tiers.
+            </div>
+
+            <div class="form-group">
+              <label>Chapter Institution / Session</label>
+              <input type="text" class="form-input" data-inspector-path="execomData.meta.session" value="${PublicRenderer.escapeHtml(data.meta.session)}">
+            </div>
+
+            <div class="form-group">
+              <label>Notification Reference / Date</label>
+              <input type="text" class="form-input" data-inspector-path="execomData.meta.notificationDate" value="${PublicRenderer.escapeHtml(data.meta.notificationDate)}">
+            </div>
+
+            <div class="form-group">
+              <label>Official Mandate Text</label>
+              <textarea class="form-textarea" rows="4" data-inspector-path="execomData.meta.mandate">${PublicRenderer.escapeHtml(data.meta.mandate)}</textarea>
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-top: 1rem;">
+              <button type="button" class="btn btn-primary btn-block" onclick="document.querySelector('[data-action=\\'add-senior-member\\']').click()">+ Add Senior Member</button>
+              <button type="button" class="btn btn-secondary btn-block" onclick="document.querySelector('[data-action=\\'add-junior-member\\']').click()">+ Add Junior Track</button>
+            </div>
+          </div>
+
+          <div class="inspector-card">
+            <div class="inspector-card-title">Senior Execom Roster (${data.seniorExecom.length})</div>
+            <div style="max-height: 380px; overflow-y: auto; padding-right: 4px;">
+              ${data.seniorExecom.map((m, idx) => `
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 8px 0;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <strong style="color: #FFFFFF; font-size: 0.85rem;">#${idx + 1} ${PublicRenderer.escapeHtml(m.name)}</strong>
+                    <span style="font-size: 0.72rem; color: #8B1014; font-weight: 700;">${PublicRenderer.escapeHtml(m.role)}</span>
+                  </div>
+                  <input type="text" class="form-input" style="margin-bottom: 4px; font-size: 0.8rem;" data-inspector-path="execomData.seniorExecom.${idx}.name" value="${PublicRenderer.escapeHtml(m.name)}" placeholder="Member Name">
+                  <input type="text" class="form-input" style="font-size: 0.8rem;" data-inspector-path="execomData.seniorExecom.${idx}.role" value="${PublicRenderer.escapeHtml(m.role)}" placeholder="Executive Role">
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        this.bindInspectorSync(containerEl);
+        return;
+      }
+
+      // 2. ACADEMIC HOME INSPECTOR
+      if (type === 'academic-home') {
+        const home = blueprint.homeData || DEFAULT_HOME_DATA;
+        containerEl.innerHTML = `
+          <div class="inspector-card">
+            <div class="inspector-card-title">Academic Home Showcase</div>
+
+            <div class="form-group">
+              <label>Eyebrow Badge</label>
+              <input type="text" class="form-input" data-inspector-path="homeData.eyebrowBadge" value="${PublicRenderer.escapeHtml(home.eyebrowBadge)}">
+            </div>
+
+            <div class="form-group">
+              <label>Hero Heading</label>
+              <input type="text" class="form-input" data-inspector-path="homeData.heroHeading" value="${PublicRenderer.escapeHtml(home.heroHeading)}">
+            </div>
+
+            <div class="form-group">
+              <label>Hero Body Description</label>
+              <textarea class="form-textarea" rows="4" data-inspector-path="homeData.heroBody">${PublicRenderer.escapeHtml(home.heroBody)}</textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Primary Button Label</label>
+              <input type="text" class="form-input" data-inspector-path="homeData.primaryBtnText" value="${PublicRenderer.escapeHtml(home.primaryBtnText)}">
+            </div>
+
+            <div class="form-group">
+              <label>Primary Button Link URL</label>
+              <input type="text" class="form-input" data-inspector-path="homeData.primaryBtnUrl" value="${PublicRenderer.escapeHtml(home.primaryBtnUrl)}">
+            </div>
+
+            <div class="form-group">
+              <label>Secondary Button Label</label>
+              <input type="text" class="form-input" data-inspector-path="homeData.secondaryBtnText" value="${PublicRenderer.escapeHtml(home.secondaryBtnText)}">
+            </div>
+          </div>
+
+          <div class="inspector-card">
+            <div class="inspector-card-title">Chapter Statistics &amp; Editorial</div>
+
+            <div class="form-group">
+              <label>About Heading</label>
+              <input type="text" class="form-input" data-inspector-path="homeData.aboutHeading" value="${PublicRenderer.escapeHtml(home.aboutHeading)}">
+            </div>
+
+            <div class="form-group">
+              <label>About Paragraph 1</label>
+              <textarea class="form-textarea" rows="3" data-inspector-path="homeData.aboutP1">${PublicRenderer.escapeHtml(home.aboutP1)}</textarea>
+            </div>
+
+            <div class="form-group">
+              <label>About Paragraph 2</label>
+              <textarea class="form-textarea" rows="3" data-inspector-path="homeData.aboutP2">${PublicRenderer.escapeHtml(home.aboutP2)}</textarea>
+            </div>
+          </div>
+        `;
+        this.bindInspectorSync(containerEl);
+        return;
+      }
+
+      // 3. ACADEMIC CONTACT INSPECTOR
+      if (type === 'academic-contact') {
+        const contact = blueprint.contactData || DEFAULT_CONTACT_DATA;
+        containerEl.innerHTML = `
+          <div class="inspector-card">
+            <div class="inspector-card-title">Contact Us &amp; Addresses</div>
+
+            <div class="form-group">
+              <label>Page Title</label>
+              <input type="text" class="form-input" data-inspector-path="contactData.bannerTitle" value="${PublicRenderer.escapeHtml(contact.bannerTitle)}">
+            </div>
+
+            <div class="form-group">
+              <label>Page Subtitle</label>
+              <input type="text" class="form-input" data-inspector-path="contactData.bannerSubtitle" value="${PublicRenderer.escapeHtml(contact.bannerSubtitle)}">
+            </div>
+
+            <div class="form-group">
+              <label>Form Heading</label>
+              <input type="text" class="form-input" data-inspector-path="contactData.formTitle" value="${PublicRenderer.escapeHtml(contact.formTitle)}">
+            </div>
+
+            <div class="form-group">
+              <label>Form Subtitle</label>
+              <textarea class="form-textarea" rows="2" data-inspector-path="contactData.formSubtitle">${PublicRenderer.escapeHtml(contact.formSubtitle)}</textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Regional Chapter Email</label>
+              <input type="email" class="form-input" data-inspector-path="contactData.regionalChapter.email" value="${PublicRenderer.escapeHtml(contact.regionalChapter.email)}">
+            </div>
+          </div>
+        `;
+        this.bindInspectorSync(containerEl);
+        return;
+      }
+
+      // 4. GENERIC HERO / GRID BLOCKS INSPECTOR
+      const secPath = `pages.${this.activePageSlug}.sections.${sectionId}.content`;
       containerEl.innerHTML = `
         <div class="inspector-card">
           <div class="inspector-card-title">Layout &amp; Structure (${type.toUpperCase()})</div>
@@ -1912,167 +2485,49 @@
               <option value="dark" ${layout.bgType === 'dark' ? 'selected' : ''}>Dark Slate / Charcoal</option>
             </select>
           </div>
-
-          <div class="form-group">
-            <label>Alignment</label>
-            <select class="form-select" id="insp-layout-align">
-              <option value="left" ${layout.alignment === 'left' ? 'selected' : ''}>Left Aligned</option>
-              <option value="center" ${layout.alignment === 'center' ? 'selected' : ''}>Centered</option>
-            </select>
-          </div>
-
-          ${(type === 'grid-cards') ? `
-            <div class="form-group">
-              <label>Columns (1 to 4)</label>
-              <select class="form-select" id="insp-layout-cols">
-                <option value="1" ${layout.columns === 1 ? 'selected' : ''}>1 Column</option>
-                <option value="2" ${layout.columns === 2 ? 'selected' : ''}>2 Columns</option>
-                <option value="3" ${layout.columns === 3 ? 'selected' : ''}>3 Columns</option>
-                <option value="4" ${layout.columns === 4 ? 'selected' : ''}>4 Columns</option>
-              </select>
-            </div>
-          ` : ''}
         </div>
 
         <div class="inspector-card">
           <div class="inspector-card-title">Content &amp; Text Editor</div>
           
-          ${content.eyebrow !== undefined ? `
-            <div class="form-group">
-              <label>Eyebrow Badge Text</label>
-              <input type="text" class="form-input" id="insp-content-eyebrow" value="${PublicRenderer.escapeHtml(content.eyebrow || '')}">
-            </div>
-          ` : ''}
+          <div class="form-group">
+            <label>Eyebrow Badge Text</label>
+            <input type="text" class="form-input" data-inspector-path="${secPath}.eyebrow" value="${PublicRenderer.escapeHtml(content.eyebrow || '')}">
+          </div>
 
-          ${content.title !== undefined ? `
-            <div class="form-group">
-              <label>Main Heading</label>
-              <input type="text" class="form-input" id="insp-content-title" value="${PublicRenderer.escapeHtml(content.title || '')}">
-            </div>
-          ` : ''}
+          <div class="form-group">
+            <label>Main Heading</label>
+            <input type="text" class="form-input" data-inspector-path="${secPath}.title" value="${PublicRenderer.escapeHtml(content.title || '')}">
+          </div>
 
-          ${content.subtitle !== undefined ? `
-            <div class="form-group">
-              <label>Subtitle / Lead</label>
-              <textarea class="form-textarea" rows="3" id="insp-content-subtitle">${PublicRenderer.escapeHtml(content.subtitle || '')}</textarea>
-            </div>
-          ` : ''}
-
-          ${content.body !== undefined ? `
-            <div class="form-group">
-              <label>Body Description</label>
-              <textarea class="form-textarea" rows="4" id="insp-content-body">${PublicRenderer.escapeHtml(content.body || '')}</textarea>
-            </div>
-          ` : ''}
-
-          ${content.description !== undefined ? `
-            <div class="form-group">
-              <label>Section Description</label>
-              <textarea class="form-textarea" rows="2" id="insp-content-desc">${PublicRenderer.escapeHtml(content.description || '')}</textarea>
-            </div>
-          ` : ''}
-
-          ${content.button1Text !== undefined ? `
-            <div class="form-group">
-              <label>Primary Button Label</label>
-              <input type="text" class="form-input" id="insp-content-btn1-text" value="${PublicRenderer.escapeHtml(content.button1Text || '')}">
-            </div>
-            <div class="form-group">
-              <label>Primary Button Link URL</label>
-              <input type="text" class="form-input" id="insp-content-btn1-url" value="${PublicRenderer.escapeHtml(content.button1Url || '')}">
-            </div>
-          ` : ''}
-
-          ${content.button2Text !== undefined ? `
-            <div class="form-group">
-              <label>Secondary Button Label</label>
-              <input type="text" class="form-input" id="insp-content-btn2-text" value="${PublicRenderer.escapeHtml(content.button2Text || '')}">
-            </div>
-            <div class="form-group">
-              <label>Secondary Button Link URL</label>
-              <input type="text" class="form-input" id="insp-content-btn2-url" value="${PublicRenderer.escapeHtml(content.button2Url || '')}">
-            </div>
-          ` : ''}
-
-          ${content.imageUrl !== undefined ? `
-            <div class="form-group">
-              <label>Featured Image URL</label>
-              <input type="text" class="form-input" id="insp-content-img" value="${PublicRenderer.escapeHtml(content.imageUrl || '')}">
-            </div>
-          ` : ''}
-
-          ${content.html !== undefined ? `
-            <div class="form-group">
-              <label>Custom HTML / Embed Snippet</label>
-              <textarea class="form-textarea" rows="6" id="insp-content-html">${PublicRenderer.escapeHtml(content.html || '')}</textarea>
-            </div>
-          ` : ''}
-
-          <button id="btn-save-inspector-content" class="btn btn-primary btn-block" style="margin-top: 1rem;">Apply Changes</button>
+          <div class="form-group">
+            <label>Description / Subtitle</label>
+            <textarea class="form-textarea" rows="3" data-inspector-path="${secPath}.subtitle">${PublicRenderer.escapeHtml(content.subtitle || content.description || '')}</textarea>
+          </div>
         </div>
       `;
 
-      // Attach apply handler
-      document.getElementById('btn-save-inspector-content').addEventListener('click', () => {
-        this.saveInspectorChanges(sectionId);
-      });
+      this.bindInspectorSync(containerEl);
     },
 
-    saveInspectorChanges(sectionId) {
-      const blueprint = SiteStore.get();
-      const page = blueprint.pages[this.activePageSlug];
-      const section = (page.sections || []).find(s => s.id === sectionId);
-      if (!section) return;
+    bindInspectorSync(containerEl) {
+      containerEl.addEventListener('input', (e) => {
+        const input = e.target;
+        const path = input.getAttribute('data-inspector-path');
+        if (!path) return;
 
-      const getVal = (id) => {
-        const el = document.getElementById(id);
-        return el ? el.value : null;
-      };
+        const val = input.value;
+        const blueprint = SiteStore.get();
+        setDeepValue(blueprint, path, val);
+        SiteStore.save(blueprint, false);
 
-      // Update layout
-      if (!section.layout) section.layout = {};
-      const width = getVal('insp-layout-width');
-      const pad = getVal('insp-layout-pad');
-      const bg = getVal('insp-layout-bg');
-      const align = getVal('insp-layout-align');
-      const cols = getVal('insp-layout-cols');
-
-      if (width) section.layout.containerWidth = width;
-      if (pad) section.layout.paddingY = pad;
-      if (bg) section.layout.bgType = bg;
-      if (align) section.layout.alignment = align;
-      if (cols) section.layout.columns = parseInt(cols, 10);
-
-      // Update content
-      if (!section.content) section.content = {};
-      const eyebrow = getVal('insp-content-eyebrow');
-      const title = getVal('insp-content-title');
-      const subtitle = getVal('insp-content-subtitle');
-      const body = getVal('insp-content-body');
-      const desc = getVal('insp-content-desc');
-      const btn1Text = getVal('insp-content-btn1-text');
-      const btn1Url = getVal('insp-content-btn1-url');
-      const btn2Text = getVal('insp-content-btn2-text');
-      const btn2Url = getVal('insp-content-btn2-url');
-      const img = getVal('insp-content-img');
-      const html = getVal('insp-content-html');
-
-      if (eyebrow !== null) section.content.eyebrow = eyebrow;
-      if (title !== null) section.content.title = title;
-      if (subtitle !== null) section.content.subtitle = subtitle;
-      if (body !== null) section.content.body = body;
-      if (desc !== null) section.content.description = desc;
-      if (btn1Text !== null) section.content.button1Text = btn1Text;
-      if (btn1Url !== null) section.content.button1Url = btn1Url;
-      if (btn2Text !== null) section.content.button2Text = btn2Text;
-      if (btn2Url !== null) section.content.button2Url = btn2Url;
-      if (img !== null) section.content.imageUrl = img;
-      if (html !== null) section.content.html = html;
-
-      SiteStore.save(blueprint, true);
-      App.showToast('Section updated successfully.');
-      this.renderSectionsOutline();
-      this.renderLiveCanvas();
+        // Update canvas in real-time
+        const liveEl = document.querySelector(`.admin-live-render [data-edit-path="${path}"]`);
+        if (liveEl) {
+          if (liveEl.children.length === 0) liveEl.innerText = val;
+          else liveEl.innerHTML = val;
+        }
+      });
     },
 
     bindEvents() {
@@ -2147,58 +2602,6 @@
         });
       });
 
-      // Create Page Form Submission
-      const createPageForm = document.getElementById('create-page-form');
-      if (createPageForm) {
-        createPageForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const title = document.getElementById('new-page-title').value.trim();
-          let slug = document.getElementById('new-page-slug').value.trim();
-          if (!slug.startsWith('/')) slug = '/' + slug;
-          const addToNav = document.getElementById('new-page-add-nav').checked;
-
-          const blueprint = SiteStore.get();
-          if (blueprint.pages[slug]) {
-            alert('A page with this slug already exists.');
-            return;
-          }
-
-          blueprint.pages[slug] = {
-            title: title,
-            slug: slug,
-            sections: [
-              {
-                id: `sec-${Date.now()}`,
-                type: 'hero',
-                layout: { containerWidth: 'boxed', paddingY: 'lg', bgType: 'canvas', alignment: 'center', visible: true },
-                content: {
-                  eyebrow: 'New Chapter Page',
-                  title: title,
-                  subtitle: `Welcome to the ${title} section of the ISHMT RCT Students Chapter at TKMCE.`
-                }
-              }
-            ]
-          };
-
-          if (addToNav) {
-            blueprint.navigation.push({
-              id: `nav-${Date.now()}`,
-              label: title,
-              path: slug,
-              isPublic: true
-            });
-          }
-
-          SiteStore.save(blueprint, true);
-          document.getElementById('create-page-modal').classList.add('hidden');
-          createPageForm.reset();
-
-          this.activePageSlug = slug;
-          this.open();
-          App.showToast(`Page "${title}" created successfully.`);
-        });
-      }
-
       // JSON Blueprint Modal
       const schemaModalBtn = document.getElementById('btn-open-schema-modal');
       const schemaModal = document.getElementById('schema-modal');
@@ -2228,7 +2631,7 @@
         });
 
         document.getElementById('btn-reset-default-blueprint').addEventListener('click', () => {
-          if (confirm('Reset site blueprint to default ISHMT TKMCE structure? Custom pages and edits will be restored.')) {
+          if (confirm('Reset site blueprint to default ISHMT TKMCE structure? Custom edits will be restored to defaults.')) {
             SiteStore.resetToDefault();
             schemaModal.classList.add('hidden');
             this.activePageSlug = '/';
@@ -2265,7 +2668,7 @@
         });
       }
 
-      // Global Theme Form Controls
+      // Theme Form Controls
       const themeForm = document.querySelector('.theme-controls-form');
       if (themeForm) {
         ['theme-primary-color', 'theme-charcoal-color', 'theme-canvas-bg'].forEach(id => {
@@ -2294,7 +2697,6 @@
           blueprint.globalTheme.charcoalColor = document.getElementById('theme-charcoal-color').value;
           blueprint.globalTheme.canvasBg = document.getElementById('theme-canvas-bg').value;
           blueprint.globalTheme.headerGradient = document.getElementById('theme-header-gradient').value;
-          blueprint.globalTheme.headerBorderColor = document.getElementById('theme-header-border').value;
           blueprint.globalTheme.fontFamily = document.getElementById('theme-font-family').value;
           blueprint.globalTheme.borderRadius = document.getElementById('theme-border-radius').value;
 
@@ -2304,7 +2706,7 @@
 
         document.getElementById('btn-reset-theme').addEventListener('click', () => {
           const blueprint = SiteStore.get();
-          blueprint.globalTheme = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT.globalTheme));
+          blueprint.globalTheme = deepClone(DEFAULT_BLUEPRINT.globalTheme);
           SiteStore.save(blueprint, true);
           this.populateThemeForm();
           App.showToast('Theme reset to default brand palette.');
@@ -2337,7 +2739,7 @@
           return;
         }
 
-        // Duplicate
+        // Duplicate Section
         const dupBtn = e.target.closest('.btn-action-duplicate');
         if (dupBtn) {
           e.stopPropagation();
@@ -2345,7 +2747,7 @@
           return;
         }
 
-        // Delete
+        // Delete Section
         const delBtn = e.target.closest('.btn-action-delete');
         if (delBtn) {
           e.stopPropagation();
@@ -2369,10 +2771,13 @@
           return;
         }
 
-        // Canvas Block Click
+        // Canvas Block Click (Only if NOT clicking text or card action)
         const canvasBlock = e.target.closest('.canvas-block-wrapper');
-        if (canvasBlock && !e.target.closest('.block-hover-toolbar')) {
-          this.selectSection(canvasBlock.getAttribute('data-section-id'));
+        if (canvasBlock && !e.target.closest('.block-hover-toolbar') && !e.target.closest('[data-edit-path]') && !e.target.closest('.studio-card-actions') && !e.target.closest('.studio-add-card-placeholder')) {
+          const sId = canvasBlock.getAttribute('data-section-id');
+          if (sId && sId !== this.activeSectionId) {
+            this.selectSection(sId);
+          }
           return;
         }
 
@@ -2385,13 +2790,6 @@
         const navDownBtn = e.target.closest('.btn-nav-down');
         if (navDownBtn) {
           this.moveNav(parseInt(navDownBtn.getAttribute('data-nav-idx'), 10), 1);
-          return;
-        }
-
-        // Delete Page
-        const delPageBtn = e.target.closest('.btn-delete-page');
-        if (delPageBtn) {
-          this.deletePage(delPageBtn.getAttribute('data-page-slug'));
           return;
         }
 
@@ -2418,107 +2816,43 @@
       let newSection = {
         id: newId,
         type: type,
-        layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'center', visible: true },
-        content: {}
+        layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'left', visible: true },
+        content: {
+          eyebrow: 'New Section',
+          title: 'Section Headline',
+          subtitle: 'Click directly on this text in the preview canvas to edit words.'
+        }
       };
 
-      // Populate default content based on block type
-      switch (type) {
-        case 'hero':
-          newSection.content = {
-            eyebrow: 'ISHMT RCT STUDENTS CHAPTER',
-            title: 'New Section Headline',
-            subtitle: 'Add an inspiring description highlighting engineering initiatives at TKM College of Engineering.',
-            button1Text: 'Primary Action',
-            button1Url: '#/'
-          };
-          break;
-        case 'grid-cards':
-          newSection.layout.columns = 3;
-          newSection.content = {
-            eyebrow: 'Domain Focus',
-            title: 'New Card Grid',
-            description: 'Explore the key specializations and workshop initiatives.',
-            items: [
-              { id: 'c-1', tag: 'Core', title: 'Card Item 1', description: 'Description of key topic.' },
-              { id: 'c-2', tag: 'Lab', title: 'Card Item 2', description: 'Description of key topic.' },
-              { id: 'c-3', tag: 'Research', title: 'Card Item 3', description: 'Description of key topic.' }
-            ]
-          };
-          break;
-        case 'stats-banner':
-          newSection.layout.bgType = 'crimson-tint';
-          newSection.content = {
-            items: [
-              { id: 's-1', number: '100+', label: 'Participants' },
-              { id: 's-2', number: '12+', label: 'Sessions' },
-              { id: 's-3', number: '100%', label: 'Hands-on Learning' }
-            ]
-          };
-          break;
-        case 'split-content':
-          newSection.content = {
-            eyebrow: 'Highlight',
-            title: 'Detailed Story & Visual',
-            body: 'Detailed narrative description of thermal and fluid investigations conducted at TKMCE.',
-            buttonText: 'Read Report',
-            buttonUrl: '#/',
-            imageUrl: 'ishmt-logo.jpg'
-          };
-          break;
-        case 'timeline':
-          newSection.content = {
-            eyebrow: 'Roadmap',
-            title: 'Chapter Milestones',
-            items: [
-              { id: 't-1', year: 'Phase 1', title: 'Initial Phase', description: 'Launch of technical curriculum.' },
-              { id: 't-2', year: 'Phase 2', title: 'Conclave Execution', description: 'Hands-on practical execution.' }
-            ]
-          };
-          break;
-        case 'image-gallery':
-          newSection.content = {
-            eyebrow: 'Media',
-            title: 'Event Photography',
-            items: [
-              { id: 'g-1', title: 'Session Memory', caption: 'Student delegates', imageUrl: 'ishmt-logo.jpg' },
-              { id: 'g-2', title: 'Lab Setup', caption: 'Experimental apparatus', imageUrl: 'ishmt-logo.jpg' }
-            ]
-          };
-          break;
-        case 'rich-text':
-          newSection.content = {
-            eyebrow: 'Publication',
-            title: 'Editorial Overview',
-            body: 'Detailed documentation and research guidelines for student engineers.'
-          };
-          break;
-        case 'custom-embed':
-          newSection.content = {
-            heading: 'Custom Information Widget',
-            html: '<div style="padding: 2rem; background: #F8FAFC; border-radius: 8px; text-align: center;">Custom HTML / Form Widget</div>'
-          };
-          break;
+      if (type === 'grid-cards') {
+        newSection.content.items = [
+          { id: `ev-${Date.now()}`, tag: 'Featured', title: 'New Item Card', description: 'Click to customize card details.', linkText: 'Learn More →', linkUrl: '#/contact' }
+        ];
       }
 
       page.sections.push(newSection);
       SiteStore.save(blueprint, true);
-      this.selectSection(newId);
-      App.showToast(`New [${type}] section added.`);
+      this.activeSectionId = newId;
+      this.renderSectionsOutline();
+      this.renderLiveCanvas();
+      this.renderInspector(newId);
+      App.showToast(`Added ${type} block to page.`);
     },
 
-    moveSection(sectionId, delta) {
+    moveSection(sectionId, dir) {
       const blueprint = SiteStore.get();
       const page = blueprint.pages[this.activePageSlug];
+      if (!page || !page.sections) return;
+
       const idx = page.sections.findIndex(s => s.id === sectionId);
       if (idx === -1) return;
 
-      const targetIdx = idx + delta;
-      if (targetIdx < 0 || targetIdx >= page.sections.length) return;
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= page.sections.length) return;
 
       const temp = page.sections[idx];
-      page.sections[idx] = page.sections[targetIdx];
-      page.sections[targetIdx] = temp;
+      page.sections[idx] = page.sections[newIdx];
+      page.sections[newIdx] = temp;
 
       SiteStore.save(blueprint, true);
       this.renderSectionsOutline();
@@ -2528,95 +2862,73 @@
     duplicateSection(sectionId) {
       const blueprint = SiteStore.get();
       const page = blueprint.pages[this.activePageSlug];
-      const section = page.sections.find(s => s.id === sectionId);
-      if (!section) return;
+      if (!page || !page.sections) return;
 
-      const cloned = JSON.parse(JSON.stringify(section));
-      cloned.id = `sec-${cloned.type}-${Date.now()}`;
-      if (cloned.content && cloned.content.title) cloned.content.title += ' (Copy)';
+      const idx = page.sections.findIndex(s => s.id === sectionId);
+      if (idx === -1) return;
 
-      const idx = page.sections.indexOf(section);
-      page.sections.splice(idx + 1, 0, cloned);
+      const orig = page.sections[idx];
+      const dup = deepClone(orig);
+      dup.id = `sec-${orig.type}-${Date.now()}`;
 
+      page.sections.splice(idx + 1, 0, dup);
       SiteStore.save(blueprint, true);
-      this.selectSection(cloned.id);
+      this.activeSectionId = dup.id;
+      this.renderSectionsOutline();
+      this.renderLiveCanvas();
+      this.renderInspector(dup.id);
       App.showToast('Section duplicated.');
     },
 
     deleteSection(sectionId) {
       if (!confirm('Are you sure you want to delete this section?')) return;
-
       const blueprint = SiteStore.get();
       const page = blueprint.pages[this.activePageSlug];
-      page.sections = page.sections.filter(s => s.id !== sectionId);
+      if (!page || !page.sections) return;
 
-      if (this.activeSectionId === sectionId) {
-        this.activeSectionId = null;
-        const inspectorEl = document.getElementById('inspector-container');
-        if (inspectorEl) {
-          inspectorEl.innerHTML = `
-            <div class="empty-inspector-state">
-              <h4>Select a Section to Edit</h4>
-              <p>Click on any block in the canvas or choose a section from the Structure tab.</p>
-            </div>
-          `;
-        }
-      }
+      page.sections = page.sections.filter(s => s.id !== sectionId);
+      if (this.activeSectionId === sectionId) this.activeSectionId = null;
 
       SiteStore.save(blueprint, true);
       this.renderSectionsOutline();
       this.renderLiveCanvas();
-      App.showToast('Section deleted.');
+      this.renderInspector(null);
+      App.showToast('Section removed.');
     },
 
     toggleSectionVisibility(sectionId) {
       const blueprint = SiteStore.get();
       const page = blueprint.pages[this.activePageSlug];
-      const section = page.sections.find(s => s.id === sectionId);
-      if (!section) return;
+      if (!page || !page.sections) return;
 
-      if (!section.layout) section.layout = {};
-      section.layout.visible = section.layout.visible === false ? true : false;
+      const sec = page.sections.find(s => s.id === sectionId);
+      if (!sec) return;
+
+      if (!sec.layout) sec.layout = {};
+      sec.layout.visible = (sec.layout.visible === false) ? true : false;
 
       SiteStore.save(blueprint, true);
       this.renderSectionsOutline();
       this.renderLiveCanvas();
     },
 
-    moveNav(idx, delta) {
+    moveNav(idx, dir) {
       const blueprint = SiteStore.get();
-      const targetIdx = idx + delta;
-      if (targetIdx < 0 || targetIdx >= blueprint.navigation.length) return;
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= blueprint.navigation.length) return;
 
       const temp = blueprint.navigation[idx];
-      blueprint.navigation[idx] = blueprint.navigation[targetIdx];
-      blueprint.navigation[targetIdx] = temp;
+      blueprint.navigation[idx] = blueprint.navigation[newIdx];
+      blueprint.navigation[newIdx] = temp;
 
       SiteStore.save(blueprint, true);
       this.renderPagesManager();
-      App.showToast('Navigation reordered.');
-    },
-
-    deletePage(slug) {
-      if (slug === '/') {
-        alert('Home page cannot be deleted.');
-        return;
-      }
-      if (!confirm(`Permanently delete page "${slug}"?`)) return;
-
-      const blueprint = SiteStore.get();
-      delete blueprint.pages[slug];
-      blueprint.navigation = blueprint.navigation.filter(item => item.path !== slug);
-
-      SiteStore.save(blueprint, true);
-      this.activePageSlug = '/';
-      this.open();
-      App.showToast(`Page "${slug}" deleted.`);
+      App.showToast('Header navigation reordered.');
     }
   };
 
   // ==========================================================================
-  // 7. ROUTER & APPLICATION ORCHESTRATOR
+  // 8. ROUTER & APPLICATION ORCHESTRATOR
   // ==========================================================================
   const App = {
     currentRoute: '/',
@@ -2761,10 +3073,8 @@
       PublicRenderer.render(route);
 
       if (isInitial && !IntroMotion.hasPlayedIntro) {
-        // Run full 3-stage intro motion on initial visit
         IntroMotion.play();
       } else {
-        // Instant docked mode when navigating between sub-pages
         IntroMotion.setInstantDocked();
       }
 
