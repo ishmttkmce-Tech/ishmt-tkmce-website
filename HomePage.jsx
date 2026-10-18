@@ -27,19 +27,9 @@ export default function HomePage() {
 
   const stats = [
     {
-      stat: '450+',
+      stat: '50+',
       label: 'Student Members & Alumni',
       icon: Users
-    },
-    {
-      stat: '20+',
-      label: 'Hands-On Workshops & Seminars',
-      icon: Calendar
-    },
-    {
-      stat: '15+',
-      label: 'Research Projects & Test Rigs',
-      icon: Layers
     },
     {
       stat: '1973',
@@ -142,7 +132,7 @@ export default function HomePage() {
           SECTION B: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER)
           ===================================================================== */}
       <section className="bg-[#8B1014] text-white py-8 px-6 shadow-inner">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 text-center">
           {stats.map((item, index) => (
             <div key={index} className="flex flex-col items-center justify-center p-2">
               <span className="font-serif text-3xl md:text-4xl font-bold tracking-tight">

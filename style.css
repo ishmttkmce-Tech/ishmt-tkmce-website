@@ -2789,17 +2789,18 @@ body.loading-state {
 }
 
 .academic-stats-container {
-  max-width: 72rem;
+  max-width: 44rem;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 3rem;
   text-align: center;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 600px) {
   .academic-stats-container {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
   }
 }
 

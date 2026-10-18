@@ -192,7 +192,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v5_academic';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v6_academic';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -209,7 +209,8 @@
           'ishmt_site_blueprint_2026_27_v1',
           'ishmt_site_blueprint_2026_27_live',
           'ishmt_site_blueprint_2026_27_minimal',
-          'ishmt_site_blueprint_v4_minimal'
+          'ishmt_site_blueprint_v4_minimal',
+          'ishmt_site_blueprint_v5_academic'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -864,16 +865,8 @@
           <section class="academic-stats-banner">
             <div class="academic-stats-container">
               <div class="academic-stat-item">
-                <div class="academic-stat-value">450+</div>
+                <div class="academic-stat-value">50+</div>
                 <div class="academic-stat-label">Student Members &amp; Alumni</div>
-              </div>
-              <div class="academic-stat-item">
-                <div class="academic-stat-value">20+</div>
-                <div class="academic-stat-label">Hands-On Workshops &amp; Seminars</div>
-              </div>
-              <div class="academic-stat-item">
-                <div class="academic-stat-value">15+</div>
-                <div class="academic-stat-label">Research Projects &amp; Test Rigs</div>
               </div>
               <div class="academic-stat-item">
                 <div class="academic-stat-value">1973</div>
