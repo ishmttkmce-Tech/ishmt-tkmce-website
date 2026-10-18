@@ -52,6 +52,12 @@
               cardTitle: '',
               cardSubtitle: ''
             }
+          },
+          {
+            id: 'sec-home-execom',
+            type: 'execom-directory',
+            layout: { containerWidth: 'wide', paddingY: 'sm', bgType: 'canvas', alignment: 'center', visible: true },
+            content: {}
           }
         ]
       },
@@ -184,57 +190,10 @@
         slug: '/team',
         sections: [
           {
-            id: 'sec-team-hero',
-            type: 'hero',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'crimson-tint', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Affiliated Chapter • Mentored by Regional Chapter Trivandrum',
-              title: 'Executive Committee (2026–2027)',
-              subtitle: 'The appointed Senior and Junior Executive members will steer the technical events, regional seminars, computational workshops, and chapter operations under the direct mentorship of the ISHMT Trivandrum Regional Chapter for the 2026–2027 academic session.'
-            }
-          },
-          {
-            id: 'sec-team-grid',
-            type: 'grid-cards',
-            layout: { columns: 3, containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Tier 1 • Senior Execom Leadership',
-              title: 'Senior Executive Committee (13 Positions)',
-              description: 'Executive officers and functional leads appointed under the official constitution dated 23 September 2026.',
-              items: [
-                { id: 'team-1', tag: 'Core Leadership', title: 'Pranav R', description: 'Chairperson / President • B.Tech Mechanical Engineering S7. Steering chapter governance and ISHMT RCT coordination.' },
-                { id: 'team-2', tag: 'Core Leadership', title: 'Rohit Mangalassery', description: 'Vice Chairperson / Vice President • B.Tech Mechanical Engineering S5. Assisting chapter operations and workshop oversight.' },
-                { id: 'team-3', tag: 'Core Leadership', title: 'Parthiv J Prasad', description: 'General Secretary • 2026–27 Session. Managing institutional correspondence, council records, and logistics.' },
-                { id: 'team-4', tag: 'Technical Lead', title: 'Amal S', description: 'Technical Team Lead • B.Tech Mechanical Engineering S7. Head of simulation toolkits, CFD masterclasses, and thermal hardware.' },
-                { id: 'team-5', tag: 'Technical Member', title: 'Afnan', description: 'Technical Team Member • B.Tech Mechanical Engineering S5. Supporting computational fluid simulations and code troubleshooting.' },
-                { id: 'team-6', tag: 'PC Lead', title: 'Amrutha R', description: 'Program Coordination Lead • B.Tech Mechanical Engineering S5. Directing event scheduling, conclaves, and venue execution.' },
-                { id: 'team-7', tag: 'PC Member', title: 'Aafiya Junide', description: 'Program Coordination Member • B.Tech Chemical Engineering S3. Coordinating attendee check-ins and delegate hospitality.' },
-                { id: 'team-8', tag: 'PC Nominee', title: 'M.Tech Nominee', description: '+1 Nominee (M.Tech Representative) • 2026–27 Session. Postgraduate liaison bringing advanced research synchronization.' },
-                { id: 'team-9', tag: 'Media Lead', title: 'Arjun R', description: 'Media & Design Lead • 2026–27 Session. Art direction, technical infographics, poster design, and event branding.' },
-                { id: 'team-10', tag: 'Media Member', title: 'Abhinav K', description: 'Media & Design Member • B.Tech Mechanical Engineering S5. Video production, motion graphics, and digital media.' },
-                { id: 'team-11', tag: 'PR Lead', title: 'Vinayak V', description: 'Public Relations Lead • 2026–27 Session. Chapter outreach, industry liaison with ISRO/DRDO mentors, and press briefs.' },
-                { id: 'team-12', tag: 'PR Member', title: 'Anugraha Asok', description: 'Public Relations Member • B.Tech Chemical Engineering S3. Student delegate relations and inter-college outreach drives.' },
-                { id: 'team-13', tag: 'Finance Lead', title: 'Ashwa', description: 'Finance & Documentation Lead • 2026–27 Session. Overseeing budget allocations, voucher audits, and financial registry.' }
-              ]
-            }
-          },
-          {
-            id: 'sec-team-junior',
-            type: 'grid-cards',
-            layout: { columns: 3, containerWidth: 'boxed', paddingY: 'md', bgType: 'subtle', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Tier 2 • Junior Execom Tracks',
-              title: 'Junior Executive Committee (6 Appointed)',
-              description: 'Operational leads spearheading simulation toolkits, stage management, venue logistics, and audit archival.',
-              items: [
-                { id: 'jun-1', tag: 'Technical Track', title: 'Amal Sebastian', description: 'Simulation Toolkits & Lab Support • B.Tech Mechanical Engineering S3.' },
-                { id: 'jun-2', tag: 'Technical Track', title: 'Kashinathan M P', description: 'Hands-on Setup & Code Troubleshooting • B.Tech Mechanical Engineering S5.' },
-                { id: 'jun-3', tag: 'PC Track', title: 'Meenakshi D R', description: 'Venue Logistics & Attendee Check-In • B.Tech Mechanical Engineering S3.' },
-                { id: 'jun-4', tag: 'PC Track', title: 'Nidhin Sabu', description: 'Stage Management & Event Operations • B.Tech Mechanical Engineering S5.' },
-                { id: 'jun-5', tag: 'Dual PC / PR', title: 'Denny J Mangalathu', description: 'Cross-Functional Operations & Outreach • B.Tech Mechanical Engineering S3.' },
-                { id: 'jun-6', tag: 'Finance Track', title: 'Nithin Sunil Mathews', description: 'Audit Archival, Vouchers & Registry • B.Tech Chemical Engineering S3.' }
-              ]
-            }
+            id: 'sec-execom-main',
+            type: 'execom-directory',
+            layout: { containerWidth: 'wide', paddingY: 'sm', bgType: 'canvas', alignment: 'center', visible: true },
+            content: {}
           }
         ]
       },
@@ -341,7 +300,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v2';
+  const STORAGE_KEY = 'ishmt_site_blueprint_2026_27_live';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -349,43 +308,23 @@
 
     init() {
       try {
-        // Clear legacy v1 cache so old hero sections and stats are never loaded
-        try { localStorage.removeItem('ishmt_site_blueprint_v1'); } catch (e) {}
+        // Complete purge of all previous cache keys
+        const staleKeys = [
+          'ishmt_site_blueprint_v1',
+          'ishmt_site_blueprint_v2',
+          'ishmt_site_blueprint_v3',
+          'ishmt_site_blueprint_2026',
+          'ishmt_site_blueprint_2026_27_v1'
+        ];
+        staleKeys.forEach(k => {
+          try { localStorage.removeItem(k); } catch (e) {}
+        });
 
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          this.blueprint = JSON.parse(saved);
-          if (this.blueprint && this.blueprint.globalTheme) {
-            // Automatically upgrade stored theme to Crimson Red #8B0D1A / Black #0B0B0B / Off White #F5F2ED
-            if (this.blueprint.globalTheme.primaryColor !== '#8B0D1A' || this.blueprint.globalTheme.charcoalColor !== '#0B0B0B' || this.blueprint.globalTheme.canvasBg !== '#F5F2ED') {
-              this.blueprint.globalTheme.primaryColor = DEFAULT_BLUEPRINT.globalTheme.primaryColor;
-              this.blueprint.globalTheme.charcoalColor = DEFAULT_BLUEPRINT.globalTheme.charcoalColor;
-              this.blueprint.globalTheme.secondaryTextColor = DEFAULT_BLUEPRINT.globalTheme.secondaryTextColor;
-              this.blueprint.globalTheme.canvasBg = DEFAULT_BLUEPRINT.globalTheme.canvasBg;
-              this.blueprint.globalTheme.headerGradient = DEFAULT_BLUEPRINT.globalTheme.headerGradient;
-              this.blueprint.globalTheme.headerBorderColor = DEFAULT_BLUEPRINT.globalTheme.headerBorderColor;
-              this.save(this.blueprint, false);
-            }
-          }
-          // Ensure Home page is cleanly stripped down to the single pill badge only
-          if (this.blueprint && this.blueprint.pages && this.blueprint.pages['/']) {
-            const homeSections = this.blueprint.pages['/'].sections || [];
-            if (homeSections.length > 1 || (homeSections[0] && homeSections[0].content && (homeSections[0].content.title || homeSections[0].content.subtitle))) {
-              this.blueprint.pages['/'] = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT.pages['/']));
-              this.save(this.blueprint, false);
-            }
-          }
-          // Ensure navigation uppercase labels are synced
-          if (this.blueprint && this.blueprint.navigation) {
-            this.blueprint.navigation = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT.navigation));
-            this.save(this.blueprint, false);
-          }
-        } else {
-          this.blueprint = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT));
-          this.save(this.blueprint, false);
-        }
+        // Always load and enforce fresh 2026-27 Executive Committee & Club Members blueprint
+        this.blueprint = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT));
+        this.save(this.blueprint, false);
       } catch (e) {
-        console.warn('Error reading from localStorage, using default blueprint:', e);
+        console.warn('Error initializing SiteStore, using default blueprint:', e);
         this.blueprint = JSON.parse(JSON.stringify(DEFAULT_BLUEPRINT));
       }
 
@@ -626,7 +565,94 @@
   };
 
   // ==========================================================================
-  // 5. PUBLIC VIEW RENDERER (Phase 1: 100% Read-Only)
+  // 5. OFFICIAL 2026–27 EXECUTIVE COMMITTEE & STUDENT CHAPTER ROSTER
+  // ==========================================================================
+  const EXECOM_ROSTER_DATA = {
+    meta: {
+      chapterName: "Indian Society for Heat and Mass Transfer (ISHMT)",
+      institution: "TKM College of Engineering, Kollam",
+      department: "Department of Mechanical Engineering",
+      session: "2026–27",
+      notificationDate: "23 September 2026",
+      mandate: "The appointed Senior and Junior Executive members will steer the technical events, regional seminars, computational workshops, and chapter operations under the direct mentorship of the ISHMT Trivandrum Regional Chapter for the 2026–2027 academic session."
+    },
+    seniorExecom: [
+      { id: "sen-1", name: "Pranav R", role: "Chairperson / President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S7", avatar: "PR", bio: "Steering chapter governance, ISHMT RCT coordination, and strategic academic initiatives for the 2026–27 tenure." },
+      { id: "sen-2", name: "Rohit Mangalassery", role: "Vice Chairperson / Vice President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S5", avatar: "RM", bio: "Assisting chapter operations, inter-departmental synergies, and workshop oversight." },
+      { id: "sen-3", name: "Parthiv J Prasad", role: "General Secretary", team: "Executive Leadership", isLead: true, isCore: true, badge: "2026–27 Session", avatar: "PP", bio: "Managing institutional correspondence, council records, and general chapter logistics." },
+      { id: "sen-4", name: "Amal S", role: "Technical Team Lead", team: "Technical Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S7", avatar: "AS", bio: "Head of simulation toolkits, CFD masterclasses, and thermal hardware bench investigations." },
+      { id: "sen-5", name: "Afnan", role: "Technical Team Member", team: "Technical Team", isLead: false, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AN", bio: "Supporting computational fluid simulations, code troubleshooting, and lab test rigs." },
+      { id: "sen-6", name: "Amrutha R", role: "Program Coordination Lead", team: "Program Coordination Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AR", bio: "Directing event scheduling, conclaves, guest lecture curation, and venue execution." },
+      { id: "sen-7", name: "Aafiya Junide", role: "Program Coordination Member", team: "Program Coordination Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AJ", bio: "Coordinating attendee check-ins, registration pipelines, and delegate hospitality." },
+      { id: "sen-8", name: "M.Tech Nominee", role: "+1 Nominee (M.Tech Representative)", team: "Program Coordination Team", isLead: false, isCore: false, badge: "M.Tech Nominee • 2026–27 Session", avatar: "MT", bio: "Postgraduate liaison bringing advanced research synchronization to chapter programs." },
+      { id: "sen-9", name: "Arjun R", role: "Media & Design Lead", team: "Media & Design Team", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "AR", bio: "Art direction, technical infographics, poster design, and digital event branding." },
+      { id: "sen-10", name: "Abhinav K", role: "Media & Design Member", team: "Media & Design Team", isLead: false, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AK", bio: "Video production, motion graphics, and chapter social media creative assets." },
+      { id: "sen-11", name: "Vinayak V", role: "Public Relations Lead", team: "Public Relations (PR) Team", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "VV", bio: "Spearheading chapter outreach, industry liaison with ISRO/DRDO mentors, and press briefs." },
+      { id: "sen-12", name: "Anugraha Asok", role: "Public Relations Member", team: "Public Relations (PR) Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AA", bio: "Student delegate relations, inter-college invitations, and chapter promotion drives." },
+      { id: "sen-13", name: "Ashwa", role: "Finance & Documentation Lead", team: "Finance & Documentation", isLead: true, isCore: false, badge: "2026–27 Session", avatar: "AS", bio: "Overseeing budget allocations, voucher audits, annual chapter reports, and financial registry." }
+    ],
+    juniorExecom: [
+      { id: "jun-1", name: "Amal Sebastian", track: "Technical Track", focus: "Simulation Toolkits & Lab Support", badge: "B.Tech • Mechanical Engineering • S3", avatar: "AS", color: "cyan" },
+      { id: "jun-2", name: "Kashinathan M P", track: "Technical Track", focus: "Hands-on Setup & Code Troubleshooting", badge: "B.Tech • Mechanical Engineering • S5", avatar: "KM", color: "cyan" },
+      { id: "jun-3", name: "Meenakshi D R", track: "Program Coordination (PC) Track", focus: "Venue Logistics & Attendee Check-In", badge: "B.Tech • Mechanical Engineering • S3", avatar: "MD", color: "rose" },
+      { id: "jun-4", name: "Nidhin Sabu", track: "Program Coordination (PC) Track", focus: "Stage Management & Event Operations", badge: "B.Tech • Mechanical Engineering • S5", avatar: "NS", color: "rose" },
+      { id: "jun-5", name: "Denny J Mangalathu", track: "Dual PC / Public Relations", focus: "Cross-Functional Operations & Outreach", badge: "B.Tech • Mechanical Engineering • S3", avatar: "DM", color: "amber" },
+      { id: "jun-6", name: "Nithin Sunil Mathews", track: "Finance & Documentation Track", focus: "Audit Archival, Vouchers & Registry", badge: "B.Tech • Chemical Engineering • S3", avatar: "NM", color: "emerald" }
+    ],
+    roster: [
+      { id: 1,  name: "Denny J Mangalathu",       programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (Dual PC / PR Track)", execomTier: "junior" },
+      { id: 2,  name: "Akash S S",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 3,  name: "Mohamed jalib P I",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 4,  name: "Pranav R",                 programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: true,  execomRole: "Chairperson / President", execomTier: "senior" },
+      { id: 5,  name: "Nithin Sunil Mathews",     programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "Junior Execom (Finance & Docs Track)", execomTier: "junior" },
+      { id: 6,  name: "Samson V Philipose",       programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 7,  name: "Adithyan M Rajesh",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 8,  name: "Meenakshi D R",            programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (PC Track)", execomTier: "junior" },
+      { id: 9,  name: "Aravindkishore S",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 10, name: "Amal Sebastian",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: true,  execomRole: "Junior Execom (Technical Track)", execomTier: "junior" },
+      { id: 11, name: "Ajay B",                   programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 12, name: "Ajmi Midhlaj",             programme: "Ph.D.",  department: "Mechanical Engineering", semester: "Ph.D.", isExecom: false, execomRole: null, execomTier: null },
+      { id: 13, name: "Abin Das Y",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 14, name: "Sreeenivas Prasad Prabhu", programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 15, name: "Gokul Krishna k",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 16, name: "Faris Rahman A P",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 17, name: "Anex Antony C",            programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 18, name: "Alby Sunu Joseph",         programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 19, name: "Muhammad Asif Ansari",     programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 20, name: "Nafih Jidan K M",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 21, name: "Pranav P",                 programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 22, name: "A K Rohit",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 23, name: "Aamy Baiju",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 24, name: "Sravan J N",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 25, name: "Arwyn Saju",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 26, name: "Abhirami S",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 27, name: "Agasree Gopindran",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 28, name: "Amrutha R",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Program Coordination Lead", execomTier: "senior" },
+      { id: 29, name: "Krishnaja S",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 30, name: "Abhinav k",                programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Media & Design Member", execomTier: "senior" },
+      { id: 31, name: "Abhijith S Das",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 32, name: "Adhil Backer A",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 33, name: "Noora Fathima B S",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 34, name: "Aseel K",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 35, name: "Kiran J Sebastian",        programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 36, name: "Aarif Nazar",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 37, name: "Arjun S",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 38, name: "Nidhin Sabu",              programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Junior Execom (PC Track)", execomTier: "junior" },
+      { id: 39, name: "Kasinathan M P",           programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Junior Execom (Technical Track)", execomTier: "junior" },
+      { id: 40, name: "Aafiya Junide",            programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "Program Coordination Member", execomTier: "senior" },
+      { id: 41, name: "Anugraha Asok",            programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: true,  execomRole: "PR Team Member", execomTier: "senior" },
+      { id: 42, name: "Riya Biju",                programme: "B.Tech", department: "Chemical Engineering",   semester: "S3", isExecom: false, execomRole: null, execomTier: null },
+      { id: 43, name: "Amal S",                   programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: true,  execomRole: "Technical Team Lead", execomTier: "senior" },
+      { id: 44, name: "Rohit D Mangalassery",     programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Vice Chairperson / Vice President", execomTier: "senior" },
+      { id: 45, name: "Anna Roman",               programme: "B.Tech", department: "Mechanical Engineering", semester: "S7", isExecom: false, execomRole: null, execomTier: null },
+      { id: 46, name: "Afnan N",                  programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: true,  execomRole: "Technical Team Member", execomTier: "senior" },
+      { id: 47, name: "Suryajith Sunil",          programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null },
+      { id: 48, name: "Karthik Troy",             programme: "B.Tech", department: "Mechanical Engineering", semester: "S5", isExecom: false, execomRole: null, execomTier: null }
+    ]
+  };
+
+  // ==========================================================================
+  // 6. PUBLIC VIEW RENDERER (Phase 1: 100% Read-Only)
   // ==========================================================================
   const PublicRenderer = {
     render(currentRoute = '/') {
@@ -655,6 +681,9 @@
         const sectionHtml = this.generateBlockHtml(section, false);
         contentEl.insertAdjacentHTML('beforeend', sectionHtml);
       });
+
+      // Initialize interactive widgets for Execom Directory
+      this.initExecomInteractivity(contentEl);
     },
 
     renderNav(navItems, currentRoute) {
@@ -681,6 +710,10 @@
       let innerContent = '';
 
       switch (type) {
+        case 'execom-directory':
+          innerContent = this.generateExecomHtml();
+          break;
+
         case 'hero':
           const hasHeroCard = Boolean(content.cardTitle || content.cardSubtitle);
           const hasActions = Boolean(content.button1Text || content.button2Text);
@@ -859,6 +892,400 @@
           </div>
         </section>
       `;
+    },
+
+    generateExecomHtml() {
+      const data = EXECOM_ROSTER_DATA;
+      const coreLeaders = data.seniorExecom.filter(m => m.isCore);
+      const functionalMembers = data.seniorExecom.filter(m => !m.isCore);
+      const generalCount = data.roster.filter(m => !m.isExecom).length;
+      const totalCount = data.roster.length;
+
+      return `
+        <div class="execom-section">
+          <!-- A. Header & Mandate Banner -->
+          <div class="execom-header">
+            <div class="execom-badge-sub">🔥 ${this.escapeHtml(data.meta.department)} • TKMCE</div>
+            <h1 class="execom-title">
+              ISHMT TKMCE Student Chapter
+              <span class="execom-title-gradient">Executive Committee & Members (2026–27)</span>
+            </h1>
+            <p class="execom-subtitle">
+              ${this.escapeHtml(data.meta.department)}, ${this.escapeHtml(data.meta.institution)}. Mentored by Regional Chapter Trivandrum (RCT).
+            </p>
+
+            <!-- Sleek Glassmorphic Mandate Card -->
+            <div class="execom-mandate-card">
+              <div class="execom-mandate-header">
+                <span class="execom-mandate-tag">Official Constitution Mandate • ${this.escapeHtml(data.meta.notificationDate)}</span>
+                <span class="execom-mandate-ref">REF: ISHMT-TKMCE-2026</span>
+              </div>
+              <p class="execom-mandate-text">"${this.escapeHtml(data.meta.mandate)}"</p>
+            </div>
+
+            <!-- Metric Counter Row -->
+            <div class="execom-metrics-row">
+              <div class="execom-metric-box">
+                <div class="execom-metric-val">13</div>
+                <div class="execom-metric-lbl">Senior Execom</div>
+              </div>
+              <div class="execom-metric-box">
+                <div class="execom-metric-val" style="color: #06B6D4;">6</div>
+                <div class="execom-metric-lbl">Junior Execom</div>
+              </div>
+              <div class="execom-metric-box">
+                <div class="execom-metric-val" style="color: #F59E0B;">48</div>
+                <div class="execom-metric-lbl">Roster Members</div>
+              </div>
+              <div class="execom-metric-box">
+                <div class="execom-metric-val" style="color: #10B981;">100%</div>
+                <div class="execom-metric-lbl">Peer Verified</div>
+              </div>
+            </div>
+
+            <!-- Navigation Jump Tabs -->
+            <div class="execom-tabs">
+              <button type="button" class="execom-tab-btn active" data-tab="all">All Sections View</button>
+              <button type="button" class="execom-tab-btn" data-tab="senior">Senior Execom (13)</button>
+              <button type="button" class="execom-tab-btn" data-tab="junior">Junior Execom (6)</button>
+              <button type="button" class="execom-tab-btn" data-tab="roster">Chapter Roster (48)</button>
+            </div>
+          </div>
+
+          <!-- B. Tier 1: Senior Executive Committee -->
+          <div id="section-senior" style="margin-bottom: 4rem;">
+            <div class="execom-tier-header">
+              <div>
+                <div class="execom-tier-tag">Tier 1 • Primary Spotlight</div>
+                <h2 class="execom-tier-h2">Senior Executive Committee (Execom)</h2>
+                <div class="execom-tier-desc">13 Executive Positions across Core Presidency, Technical, Coordination, Media, PR, and Finance.</div>
+              </div>
+              <div class="execom-mandate-ref" style="align-self: flex-start;">13 Appointed Positions</div>
+            </div>
+
+            <!-- Top 3 Leadership Spotlight -->
+            <div class="execom-core-grid">
+              ${coreLeaders.map(l => `
+                <div class="execom-leader-card">
+                  <div>
+                    <div class="execom-leader-top">
+                      <span class="execom-lead-pill">★ Executive Lead</span>
+                      <span style="font-family: monospace; font-size: 0.72rem; color: #94A3B8;">Tier 1 Core</span>
+                    </div>
+                    <div class="execom-avatar-wrap">
+                      <div class="execom-avatar-ring">
+                        <div class="execom-avatar-inner">${l.avatar}</div>
+                      </div>
+                      <div>
+                        <h3 class="execom-leader-name">${this.escapeHtml(l.name)}</h3>
+                        <div class="execom-leader-role">${this.escapeHtml(l.role)}</div>
+                      </div>
+                    </div>
+                    <p class="execom-leader-bio">${this.escapeHtml(l.bio)}</p>
+                  </div>
+                  <div class="execom-card-footer">
+                    <span>🎓 ${this.escapeHtml(l.badge)}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Functional Teams Grid -->
+            <div class="execom-func-grid">
+              ${functionalMembers.map(m => `
+                <div class="execom-func-card ${m.isLead ? 'is-lead' : ''}">
+                  <div>
+                    <div class="execom-func-top">
+                      <span class="execom-func-team">${this.escapeHtml(m.team)}</span>
+                      ${m.isLead ? `<span class="execom-lead-tag">TEAM LEAD</span>` : `<span style="font-size: 0.65rem; color: #94A3B8;">Member</span>`}
+                    </div>
+                    <div class="execom-func-mid">
+                      <div class="execom-mini-avatar" ${m.isLead ? 'style="background: linear-gradient(135deg, #06B6D4, #F59E0B);"' : ''}>${m.avatar}</div>
+                      <div>
+                        <h4 class="execom-func-name">${this.escapeHtml(m.name)}</h4>
+                        <div class="execom-func-role">${this.escapeHtml(m.role)}</div>
+                      </div>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #94A3B8; line-height: 1.45; margin-bottom: 0.75rem;">${this.escapeHtml(m.bio)}</p>
+                  </div>
+                  <div class="execom-func-badge">${this.escapeHtml(m.badge)}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- C. Tier 2: Junior Executive Committee -->
+          <div id="section-junior" style="margin-bottom: 4rem;">
+            <div class="execom-tier-header">
+              <div>
+                <div class="execom-tier-tag" style="color: #06B6D4;">Tier 2 • Operational Tracks</div>
+                <h2 class="execom-tier-h2">Junior Executive Committee (Junior Execom)</h2>
+                <div class="execom-tier-desc">6 Appointed Junior Executives dedicated to technical simulation toolkits, stage ops, venue logistics, and audit archival.</div>
+              </div>
+              <div class="execom-mandate-ref" style="align-self: flex-start; color: #06B6D4; border-color: rgba(6, 182, 212, 0.4);">6 Appointed Members</div>
+            </div>
+
+            <div class="execom-junior-grid">
+              ${data.juniorExecom.map(j => `
+                <div class="execom-junior-card">
+                  <div>
+                    <span class="execom-track-pill ${j.color}">💼 ${this.escapeHtml(j.track)}</span>
+                    <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.75rem;">
+                      <div class="execom-mini-avatar" style="background: linear-gradient(135deg, #06B6D4, #3B82F6); font-size: 0.95rem;">${j.avatar}</div>
+                      <div>
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: #FFFFFF;">${this.escapeHtml(j.name)}</h4>
+                        <div style="font-family: monospace; font-size: 0.75rem; color: #94A3B8;">${this.escapeHtml(j.badge)}</div>
+                      </div>
+                    </div>
+                    <div class="execom-focus-box">
+                      <span class="execom-focus-lbl">Key Operational Focus:</span>
+                      <strong>${this.escapeHtml(j.focus)}</strong>
+                    </div>
+                  </div>
+                  <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.75rem; color: #06B6D4; display: flex; justify-content: space-between;">
+                    <span>Mentored by Senior Leads</span>
+                    <span>Active 2026–27 &rarr;</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- D. Tier 3: Student Chapter Directory -->
+          <div id="section-roster">
+            <div class="execom-tier-header">
+              <div>
+                <div class="execom-tier-tag" style="color: #10B981;">Tier 3 • Complete Chapter Directory</div>
+                <h2 class="execom-tier-h2">Student Chapter Members Roster</h2>
+                <div class="execom-tier-desc">Complete cross-referenced registry of 48 registered undergraduate & postgraduate members.</div>
+              </div>
+              <div id="execom-live-count" class="execom-mandate-ref" style="color: #10B981; border-color: rgba(16, 185, 129, 0.4); font-weight: 700;">
+                Showing 34 General Members
+              </div>
+            </div>
+
+            <!-- Interactive Control Panel -->
+            <div class="execom-ctrl-panel">
+              <div class="execom-ctrl-row-1">
+                <input type="text" id="execom-search" class="execom-search-input" placeholder="🔍 Search by student name, semester, department..." />
+                
+                <div class="execom-toggle-group">
+                  <button type="button" class="execom-toggle-btn active" data-filter="general">General Members Only (${generalCount})</button>
+                  <button type="button" class="execom-toggle-btn" data-filter="all">Show All Members (${totalCount})</button>
+                </div>
+
+                <div style="display: flex; gap: 0.35rem;">
+                  <button type="button" class="execom-view-btn execom-pill-btn active" data-mode="grid" title="Grid View">Grid</button>
+                  <button type="button" class="execom-view-btn execom-pill-btn" data-mode="table" title="Table View">Table</button>
+                </div>
+              </div>
+
+              <div class="execom-ctrl-row-2">
+                <div class="execom-filter-pills">
+                  <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748B;">Semester:</span>
+                  <button type="button" class="execom-pill-btn active" data-sem="All">All</button>
+                  <button type="button" class="execom-pill-btn" data-sem="Ph.D.">Ph.D.</button>
+                  <button type="button" class="execom-pill-btn" data-sem="S7">S7</button>
+                  <button type="button" class="execom-pill-btn" data-sem="S5">S5</button>
+                  <button type="button" class="execom-pill-btn" data-sem="S3">S3</button>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748B;">Dept:</span>
+                  <select id="execom-dept-select" class="execom-dept-select">
+                    <option value="All">All Departments</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering (44)</option>
+                    <option value="Chemical Engineering">Chemical Engineering (4)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Members List Container -->
+            <div id="execom-members-display" class="execom-roster-grid"></div>
+          </div>
+        </div>
+      `;
+    },
+
+    initExecomInteractivity(container) {
+      const searchInput = container.querySelector('#execom-search');
+      const deptSelect = container.querySelector('#execom-dept-select');
+      const displayEl = container.querySelector('#execom-members-display');
+      const countEl = container.querySelector('#execom-live-count');
+      const toggleBtns = container.querySelectorAll('.execom-toggle-btn');
+      const pillBtns = container.querySelectorAll('.execom-pill-btn');
+      const tabBtns = container.querySelectorAll('.execom-tab-btn');
+      const viewModeBtns = container.querySelectorAll('.execom-view-btn');
+
+      if (!displayEl) return;
+
+      let state = {
+        query: '',
+        sem: 'All',
+        dept: 'All',
+        showAll: false,
+        viewMode: 'grid',
+        activeTab: 'all'
+      };
+
+      const renderRoster = () => {
+        const filtered = EXECOM_ROSTER_DATA.roster.filter(m => {
+          if (!state.showAll && m.isExecom) return false;
+          if (state.query) {
+            const q = state.query.toLowerCase();
+            const matchName = m.name.toLowerCase().includes(q);
+            const matchDept = m.department.toLowerCase().includes(q);
+            const matchSem = m.semester.toLowerCase().includes(q);
+            const matchRole = m.execomRole ? m.execomRole.toLowerCase().includes(q) : false;
+            if (!matchName && !matchDept && !matchSem && !matchRole) return false;
+          }
+          if (state.sem !== 'All') {
+            if (state.sem === 'Ph.D.' && m.semester !== 'Ph.D.') return false;
+            if (state.sem !== 'Ph.D.' && m.semester !== state.sem) return false;
+          }
+          if (state.dept !== 'All') {
+            if (m.department !== state.dept) return false;
+          }
+          return true;
+        });
+
+        if (countEl) {
+          countEl.textContent = `Showing ${filtered.length} ${state.showAll ? 'Total Members' : 'General Members'}`;
+        }
+
+        if (filtered.length === 0) {
+          displayEl.innerHTML = `
+            <div style="text-align: center; padding: 3rem 1rem; color: #64748B; background: #FFFFFF; border: 1px dashed #CBD5E1; border-radius: 12px; width: 100%;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+              <h4 style="font-weight: 700; color: #1E293B; margin-bottom: 0.25rem;">No members match your criteria</h4>
+              <p style="font-size: 0.8rem;">Try clearing search keywords or selecting 'All' in semester and department filters.</p>
+            </div>
+          `;
+          return;
+        }
+
+        if (state.viewMode === 'grid') {
+          displayEl.className = 'execom-roster-grid';
+          displayEl.innerHTML = filtered.map(m => `
+            <div class="execom-student-card ${m.isExecom ? 'is-execom' : ''}">
+              <div>
+                <div class="execom-card-top-sem">
+                  <span class="execom-sem-tag">${m.semester}</span>
+                  ${m.isExecom ? `<span class="execom-exe-status">${m.execomTier === 'senior' ? 'Senior Execom' : 'Junior Execom'}</span>` : ''}
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="width: 38px; height: 38px; border-radius: 8px; background: #1E293B; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 0.8rem; font-weight: 800; flex-shrink: 0;">
+                    ${m.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                  </div>
+                  <div style="min-width: 0;">
+                    <div class="execom-student-name" title="${PublicRenderer.escapeHtml(m.name)}">${PublicRenderer.escapeHtml(m.name)}</div>
+                    <div class="execom-student-meta">${PublicRenderer.escapeHtml(m.programme)} • ${PublicRenderer.escapeHtml(m.department)}</div>
+                  </div>
+                </div>
+              </div>
+              ${m.isExecom ? `<div class="execom-role-ribbon">★ ${PublicRenderer.escapeHtml(m.execomRole)}</div>` : ''}
+            </div>
+          `).join('');
+        } else {
+          displayEl.className = 'execom-table-wrap';
+          displayEl.innerHTML = `
+            <table class="execom-table">
+              <thead>
+                <tr>
+                  <th style="width: 45px;">#</th>
+                  <th>Student Name</th>
+                  <th>Programme</th>
+                  <th>Department</th>
+                  <th style="text-align: center;">Semester</th>
+                  <th>Executive Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${filtered.map((m, idx) => `
+                  <tr class="${m.isExecom ? 'is-execom' : ''}">
+                    <td style="font-family: monospace; color: #64748B;">${idx + 1}</td>
+                    <td style="font-weight: 700; color: #0F172A;">${PublicRenderer.escapeHtml(m.name)}</td>
+                    <td>${PublicRenderer.escapeHtml(m.programme)}</td>
+                    <td>${PublicRenderer.escapeHtml(m.department)}</td>
+                    <td style="text-align: center;"><span class="execom-sem-tag">${m.semester}</span></td>
+                    <td>
+                      ${m.isExecom
+                        ? `<span class="execom-exe-status">✓ ${PublicRenderer.escapeHtml(m.execomRole)}</span>`
+                        : `<span style="color: #64748B; font-size: 0.78rem;">General Member</span>`}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+        }
+      };
+
+      // Search event
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          state.query = e.target.value.trim();
+          renderRoster();
+        });
+      }
+
+      // Dept event
+      if (deptSelect) {
+        deptSelect.addEventListener('change', (e) => {
+          state.dept = e.target.value;
+          renderRoster();
+        });
+      }
+
+      // General / All toggle
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          toggleBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          state.showAll = (btn.dataset.filter === 'all');
+          renderRoster();
+        });
+      });
+
+      // Semester pills
+      pillBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          pillBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          state.sem = btn.dataset.sem || 'All';
+          renderRoster();
+        });
+      });
+
+      // View mode (grid vs table)
+      viewModeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          viewModeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          state.viewMode = btn.dataset.mode || 'grid';
+          renderRoster();
+        });
+      });
+
+      // Section Jump Tabs
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const tab = btn.dataset.tab;
+          const secSenior = container.querySelector('#section-senior');
+          const secJunior = container.querySelector('#section-junior');
+          const secRoster = container.querySelector('#section-roster');
+
+          if (secSenior) secSenior.style.display = (tab === 'all' || tab === 'senior') ? 'block' : 'none';
+          if (secJunior) secJunior.style.display = (tab === 'all' || tab === 'junior') ? 'block' : 'none';
+          if (secRoster) secRoster.style.display = (tab === 'all' || tab === 'roster') ? 'block' : 'none';
+        });
+      });
+
+      // Initial roster render
+      renderRoster();
     },
 
     escapeHtml(str) {
