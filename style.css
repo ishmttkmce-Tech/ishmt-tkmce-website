@@ -312,6 +312,40 @@ body.loading-state {
   border-radius: 2px;
 }
 
+/* ISHMT Regional Chapter Trivandrum (ISHMT-RCT) Official Header Emblem */
+.header-rct-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  border: 2px solid rgba(139, 16, 20, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.5px;
+  flex-shrink: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+.header-rct-link:hover {
+  transform: scale(1.08);
+  border-color: #8B1014;
+  box-shadow: 0 4px 16px rgba(139, 16, 20, 0.25);
+}
+
+.header-rct-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
 /* Discreet Admin Entry Lock Button (Secret - Hidden by default; Revealed via Ctrl+Shift+CapsLock) */
 .admin-lock-btn {
   display: none;
@@ -1731,6 +1765,10 @@ body.loading-state {
   }
   .header-nav {
     display: none; /* Collapsed for mobile or menu drawer */
+  }
+  .header-rct-link {
+    width: 44px;
+    height: 44px;
   }
   .cards-grid.cols-2, .cards-grid.cols-3, .cards-grid.cols-4 {
     grid-template-columns: 1fr;
@@ -3252,6 +3290,16 @@ body.loading-state {
   text-align: center;
   padding: 2px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.footer-emblem-badge:hover {
+  transform: scale(1.08);
+  border-color: #8B1014;
+  box-shadow: 0 3px 10px rgba(139, 16, 20, 0.2);
 }
 
 .footer-emblem-img {

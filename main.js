@@ -141,7 +141,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v8_contact_footer';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v9_rct_logo';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -161,7 +161,8 @@
           'ishmt_site_blueprint_v4_minimal',
           'ishmt_site_blueprint_v5_academic',
           'ishmt_site_blueprint_v6_academic',
-          'ishmt_site_blueprint_v7_academic'
+          'ishmt_site_blueprint_v7_academic',
+          'ishmt_site_blueprint_v8_contact_footer'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -1014,7 +1015,7 @@
           <section class="contact-page-banner">
             <h1 class="contact-banner-title">Contact Us</h1>
             <p class="contact-banner-sub">
-              Indian Society for Heat and Mass Transfer • TKMCE Student Chapter &amp; Regional Secretariat
+              Indian Society for Heat and Mass Transfer • TKMCE Student Chapter &amp; Regional Chapter
             </p>
           </section>
 
@@ -1033,7 +1034,7 @@
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
-                <span>Thank you! Your inquiry has been sent to the ISHMT Secretariat. We will respond shortly.</span>
+                <span>Thank you! Your inquiry has been sent to the ISHMT team. We will respond shortly.</span>
               </div>
 
               <form id="academic-contact-form">
@@ -1062,9 +1063,9 @@
               </form>
             </div>
 
-            <!-- Right Column: Secretariat Addresses + Interactive Map -->
+            <!-- Right Column: Chapter Addresses + Interactive Map -->
             <div>
-              <h2 class="contact-section-title">Secretariat Addresses</h2>
+              <h2 class="contact-section-title">Chapter Addresses</h2>
               <div class="contact-accent-bar"></div>
 
               <div class="address-cards-row">
@@ -1164,11 +1165,9 @@
                   <div class="footer-emblem-badge" title="National ISHMT Emblem">
                     <img src="ishmt-logo.jpg" alt="ISHMT Logo" class="footer-emblem-img" />
                   </div>
-                  <div class="footer-emblem-badge" title="Regional Chapter Trivandrum">
-                    <span style="font-size: 0.55rem; font-weight: 800; color: #8B1014; line-height: 1.1;">ISHMT</span>
-                    <span style="font-size: 0.45rem; font-weight: 700; color: #111827;">RCT</span>
-                    <span style="font-size: 0.38rem; color: #6B7280;">TVM</span>
-                  </div>
+                  <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="footer-emblem-badge" title="ISHMT Regional Chapter Trivandrum (ISHMT-RCT)">
+                    <img src="ishmt-rct-logo.png" alt="ISHMT Regional Chapter Trivandrum" class="footer-emblem-img" />
+                  </a>
                   <div class="footer-emblem-badge" title="TKM College of Engineering">
                     <span style="font-size: 0.55rem; font-weight: 800; color: #111827; line-height: 1.1;">TKMCE</span>
                     <span style="font-size: 0.45rem; font-weight: 700; color: #8B1014;">MECH</span>
@@ -1214,7 +1213,7 @@
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
                   <div>
-                    <strong style="color: #111827;">Campus Secretariat:</strong><br>
+                    <strong style="color: #111827;">Campus Location:</strong><br>
                     Department of Mechanical Engineering, TKM College of Engineering, Kollam – 691 005
                   </div>
                 </div>

@@ -23,7 +23,7 @@ function assert(condition, message) {
 console.log('=== Running Production Build and Routing Integrity Test ===\n');
 
 // 1. Check core project files
-const requiredFiles = ['index.html', 'style.css', 'main.js', 'ishmt-logo.jpg', '.gitignore'];
+const requiredFiles = ['index.html', 'style.css', 'main.js', 'ishmt-logo.jpg', 'ishmt-rct-logo.png', '.gitignore'];
 requiredFiles.forEach(file => {
   const filePath = path.join(ROOT_DIR, file);
   assert(fs.existsSync(filePath), `Required file exists: ${file}`);

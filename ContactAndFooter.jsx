@@ -69,7 +69,7 @@ export function ContactUs() {
           Contact Us
         </h1>
         <p className="text-sm text-gray-500 mt-2">
-          Indian Society for Heat and Mass Transfer • TKMCE Student Chapter &amp; Regional Secretariat
+          Indian Society for Heat and Mass Transfer • TKMCE Student Chapter &amp; Regional Chapter
         </p>
       </section>
 
@@ -95,7 +95,7 @@ export function ContactUs() {
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md flex items-center gap-3 text-green-800 text-sm">
                 <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
                 <span>
-                  Thank you! Your message has been received. Our chapter secretariat will get back to
+                  Thank you! Your message has been received. Our chapter team will get back to
                   you shortly.
                 </span>
               </div>
@@ -189,7 +189,7 @@ export function ContactUs() {
           <div className="space-y-8">
             <div>
               <h2 className="font-serif text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                Secretariat Addresses
+                Chapter Addresses
               </h2>
               <div className="w-12 h-1 bg-[#8B1014] mt-2 mb-6"></div>
             </div>
@@ -370,14 +370,20 @@ export function GlobalFooter() {
                 />
               </div>
 
-              {/* Regional RCT Emblem Placeholder */}
-              <div className="w-14 h-14 rounded-full border border-gray-300 bg-white p-1 flex flex-col items-center justify-center text-center shadow-xs">
-                <span className="text-[9px] font-bold tracking-tight text-[#8B1014] leading-tight">
-                  ISHMT
-                </span>
-                <span className="text-[7.5px] font-bold text-gray-700">RCT</span>
-                <span className="text-[6px] text-gray-500">TRIVANDRUM</span>
-              </div>
+              {/* Regional RCT Emblem */}
+              <a
+                href="https://www.ishmtkerala.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-14 h-14 rounded-full overflow-hidden border border-gray-300 shadow-xs bg-white p-0.5 flex items-center justify-center hover:scale-105 transition-transform"
+                title="ISHMT Regional Chapter Trivandrum (ISHMT-RCT)"
+              >
+                <img
+                  src="ishmt-rct-logo.png"
+                  alt="ISHMT Regional Chapter Trivandrum Emblem"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </a>
 
               {/* TKMCE Emblem Badge */}
               <div className="w-14 h-14 rounded-full border border-gray-300 bg-white p-1 flex flex-col items-center justify-center text-center shadow-xs">
@@ -436,7 +442,7 @@ export function GlobalFooter() {
             <div className="flex items-start gap-3 text-sm">
               <MapPin className="w-5 h-5 text-[#8B1014] shrink-0 mt-0.5" />
               <div className="text-gray-700 leading-relaxed">
-                <span className="font-semibold block text-gray-900">Campus Secretariat:</span>
+                <span className="font-semibold block text-gray-900">Campus Location:</span>
                 Department of Mechanical Engineering, TKM College of Engineering, Kollam – 691 005
               </div>
             </div>
