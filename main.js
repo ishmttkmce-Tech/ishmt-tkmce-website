@@ -37,20 +37,10 @@
         slug: '/',
         sections: [
           {
-            id: 'sec-hero',
-            type: 'hero',
-            layout: { containerWidth: 'wide', paddingY: 'sm', bgType: 'canvas', alignment: 'left', visible: true },
-            content: {
-              eyebrow: 'INDIAN SOCIETY FOR HEAT AND MASS TRANSFER',
-              title: '',
-              subtitle: '',
-              button1Text: '',
-              button1Url: '',
-              button2Text: '',
-              button2Url: '',
-              cardTitle: '',
-              cardSubtitle: ''
-            }
+            id: 'sec-academic-home',
+            type: 'academic-home',
+            layout: { containerWidth: 'full', paddingY: 'none', bgType: 'canvas', visible: true },
+            content: {}
           }
         ]
       },
@@ -202,7 +192,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v4_minimal';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v5_academic';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -218,7 +208,8 @@
           'ishmt_site_blueprint_2026',
           'ishmt_site_blueprint_2026_27_v1',
           'ishmt_site_blueprint_2026_27_live',
-          'ishmt_site_blueprint_2026_27_minimal'
+          'ishmt_site_blueprint_2026_27_minimal',
+          'ishmt_site_blueprint_v4_minimal'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -586,8 +577,9 @@
         contentEl.insertAdjacentHTML('beforeend', sectionHtml);
       });
 
-      // Initialize interactive widgets for Execom Directory
+      // Initialize interactive widgets for Execom Directory & Academic Home
       this.initExecomInteractivity(contentEl);
+      this.initAcademicHomeInteractivity(contentEl);
     },
 
     renderNav(navItems, currentRoute) {
@@ -606,6 +598,10 @@
 
     generateBlockHtml(section, isAdminMode = false) {
       const { id, type, layout = {}, content = {} } = section;
+      if (type === 'academic-home') {
+        return this.generateAcademicHomeHtml();
+      }
+
       const widthClass = layout.containerWidth || 'boxed';
       const padClass = `pad-${layout.paddingY || 'md'}`;
       const bgClass = `bg-${layout.bgType || 'canvas'}`;
@@ -795,6 +791,193 @@
             ${innerContent}
           </div>
         </section>
+      `;
+    },
+
+    initAcademicHomeInteractivity(contentEl) {
+      if (!contentEl) return;
+      const aboutBtn = contentEl.querySelector('#academic-about-btn');
+      if (aboutBtn) {
+        aboutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const aboutSection = document.getElementById('about');
+          if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+    },
+
+    generateAcademicHomeHtml() {
+      return `
+        <div class="academic-home-wrapper">
+          <!-- =====================================================================
+               SECTION A: HERO SECTION (FULL-WIDTH VIEWPORT WITH 40% BUILDING OPACITY)
+               ===================================================================== -->
+          <section class="academic-hero-section">
+            <!-- Isolated Architectural Background Layer (Exactly 40% Opacity) -->
+            <div class="academic-hero-bg">
+              <img
+                src="tkmce-building.jpg"
+                alt="TKM College of Engineering Administrative Building"
+                class="academic-hero-bg-img"
+                loading="eager"
+              />
+            </div>
+
+            <!-- Centered Floating Welcome Card (Unaffected by Background Opacity) -->
+            <div class="academic-hero-card">
+              <!-- Eyebrow Badge with Crimson Underline -->
+              <div class="academic-eyebrow-badge">
+                <span>WELCOME TO ISHMT-TKMCE STUDENT CHAPTER</span>
+              </div>
+
+              <!-- Main Serif Heading -->
+              <h1 class="academic-hero-heading">
+                Welcome to the ISHMT Student Chapter at TKM College of Engineering
+              </h1>
+
+              <!-- Academic Body Description -->
+              <p class="academic-hero-body">
+                We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.
+              </p>
+
+              <!-- CTA Buttons Row -->
+              <div class="academic-cta-row">
+                <a href="#/contact" class="academic-btn-primary">
+                  <span>Become a Member</span>
+                  <svg class="academic-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+                <button type="button" class="academic-btn-outline" id="academic-about-btn">
+                  About Us
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- =====================================================================
+               SECTION B: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER)
+               ===================================================================== -->
+          <section class="academic-stats-banner">
+            <div class="academic-stats-container">
+              <div class="academic-stat-item">
+                <div class="academic-stat-value">450+</div>
+                <div class="academic-stat-label">Student Members &amp; Alumni</div>
+              </div>
+              <div class="academic-stat-item">
+                <div class="academic-stat-value">20+</div>
+                <div class="academic-stat-label">Hands-On Workshops &amp; Seminars</div>
+              </div>
+              <div class="academic-stat-item">
+                <div class="academic-stat-value">15+</div>
+                <div class="academic-stat-label">Research Projects &amp; Test Rigs</div>
+              </div>
+              <div class="academic-stat-item">
+                <div class="academic-stat-value">1973</div>
+                <div class="academic-stat-label">National ISHMT Scientific Legacy</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- =====================================================================
+               SECTION C: ABOUT THE CHAPTER SECTION (EDITORIAL CONTAINER)
+               ===================================================================== -->
+          <section id="about" class="academic-about-section">
+            <div class="academic-about-container">
+              <h2 class="academic-section-heading">About the Chapter</h2>
+              <!-- Crimson Accent Bar -->
+              <div class="academic-crimson-bar"></div>
+              <div class="academic-about-text">
+                <p>
+                  The Indian Society for Heat and Mass Transfer (ISHMT) is India’s foremost professional body dedicated to disseminating science and engineering across heat transfer, mass transport, thermodynamics, and energy systems. Affiliated regionally with ISHMT-RCT (Trivandrum), the student chapter at TKM College of Engineering serves as a technical hub bridging foundational engineering coursework with modern research and industrial applications.
+                </p>
+                <p>
+                  We nurture a collaborative culture where students engage directly with peer researchers, faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC, national laboratories, and academic institutions. Our focus spans from fundamental convective and radiative transport to high-performance computing, clean fuels, and thermal management for next-generation mobility.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- =====================================================================
+               SECTION D: WHAT WE OFFER SECTION (FEATURE CARDS GRID)
+               ===================================================================== -->
+          <section class="academic-offer-section">
+            <div class="academic-offer-container">
+              <div class="academic-offer-header">
+                <h2 class="academic-section-heading">What We Offer</h2>
+                <div class="academic-crimson-bar mx-auto"></div>
+              </div>
+
+              <div class="academic-offer-grid">
+                <!-- Card 1: Distinguished Lecture Series -->
+                <div class="academic-card">
+                  <div class="academic-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                  </div>
+                  <h3 class="academic-card-title">Distinguished Lecture Series</h3>
+                  <p class="academic-card-desc">
+                    Expert technical seminars led by ISHMT fellows, aerospace scientists, and industry leaders.
+                  </p>
+                </div>
+
+                <!-- Card 2: Simulation & Tool Bootcamps -->
+                <div class="academic-card">
+                  <div class="academic-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                      <rect x="9" y="9" width="6" height="6"></rect>
+                      <line x1="9" y1="1" x2="9" y2="4"></line>
+                      <line x1="15" y1="1" x2="15" y2="4"></line>
+                      <line x1="9" y1="20" x2="9" y2="23"></line>
+                      <line x1="15" y1="20" x2="15" y2="23"></line>
+                      <line x1="20" y1="9" x2="23" y2="9"></line>
+                      <line x1="20" y1="14" x2="23" y2="14"></line>
+                      <line x1="1" y1="9" x2="4" y2="9"></line>
+                      <line x1="1" y1="14" x2="4" y2="14"></line>
+                    </svg>
+                  </div>
+                  <h3 class="academic-card-title">Simulation &amp; Tool Bootcamps</h3>
+                  <p class="academic-card-desc">
+                    Practical training in OpenFOAM, ANSYS Fluent, meshing, and numerical heat transfer.
+                  </p>
+                </div>
+
+                <!-- Card 3: Hardware & R&D Projects -->
+                <div class="academic-card">
+                  <div class="academic-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                    </svg>
+                  </div>
+                  <h3 class="academic-card-title">Hardware &amp; R&amp;D Projects</h3>
+                  <p class="academic-card-desc">
+                    Prototyping heat pipes, phase-change thermal storage units, and solar collectors in TKMCE labs.
+                  </p>
+                </div>
+
+                <!-- Card 4: Conference Mentorship -->
+                <div class="academic-card">
+                  <div class="academic-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="8" r="6"></circle>
+                      <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+                    </svg>
+                  </div>
+                  <h3 class="academic-card-title">Conference Mentorship</h3>
+                  <p class="academic-card-desc">
+                    Guidance for publishing papers and participating in the biennial ISHMT-ASTFE International Conference (IHMTC).
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       `;
     },
 

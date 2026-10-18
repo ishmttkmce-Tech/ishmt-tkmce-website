@@ -2603,3 +2603,354 @@ body.loading-state {
   }
 }
 
+/* ==========================================================================
+   ACADEMIC HOME PAGE STYLING (ISHMT TKMCE)
+   ========================================================================== */
+.academic-home-wrapper {
+  width: 100%;
+  background-color: #FFFFFF;
+  color: #111827;
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* SECTION A: HERO SECTION */
+.academic-hero-section {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  padding: 4rem 1.5rem;
+}
+
+.academic-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  pointer-events: none;
+  user-select: none;
+}
+
+.academic-hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.40; /* Exactly 40% building opacity */
+  filter: contrast(105%);
+}
+
+.academic-hero-card {
+  position: relative;
+  z-index: 10;
+  max-width: 48rem; /* max-w-3xl */
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+@media (min-width: 768px) {
+  .academic-hero-card {
+    padding: 3.5rem 3rem;
+  }
+}
+
+.academic-eyebrow-badge {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+}
+
+.academic-eyebrow-badge span {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #8B1014;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid #8B1014;
+  display: inline-block;
+}
+
+.academic-hero-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .academic-hero-heading {
+    font-size: 2.75rem;
+  }
+}
+
+.academic-hero-body {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #374151;
+  margin-bottom: 2rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.academic-cta-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .academic-cta-row {
+    flex-direction: row;
+  }
+}
+
+.academic-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background-color: #8B1014;
+  color: #FFFFFF !important;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(139, 16, 20, 0.25);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+
+.academic-btn-primary:hover {
+  background-color: #700c10;
+  box-shadow: 0 10px 15px -3px rgba(139, 16, 20, 0.35);
+  transform: translateY(-1px);
+  color: #FFFFFF !important;
+}
+
+.academic-arrow-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.academic-btn-primary:hover .academic-arrow-icon {
+  transform: translateX(3px);
+}
+
+.academic-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  background-color: #FFFFFF;
+  color: #8B1014;
+  border: 1.5px solid #8B1014;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.academic-btn-outline:hover {
+  background-color: rgba(139, 16, 20, 0.06);
+  transform: translateY(-1px);
+}
+
+/* SECTION B: IMPACT & LEGACY STATISTICS BAR */
+.academic-stats-banner {
+  background-color: #8B1014;
+  color: #FFFFFF;
+  padding: 2.25rem 1.5rem;
+  width: 100%;
+}
+
+.academic-stats-container {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .academic-stats-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.academic-stat-value {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .academic-stat-value {
+    font-size: 2.5rem;
+  }
+}
+
+.academic-stat-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.35rem;
+  font-weight: 500;
+}
+
+/* SECTION C: ABOUT THE CHAPTER SECTION */
+.academic-about-section {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem;
+  background-color: #FFFFFF;
+}
+
+.academic-section-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .academic-section-heading {
+    font-size: 2.25rem;
+  }
+}
+
+.academic-crimson-bar {
+  width: 4rem;
+  height: 4px;
+  background-color: #8B1014;
+  margin-top: 0.75rem;
+  margin-bottom: 2rem;
+  border-radius: 2px;
+}
+
+.academic-crimson-bar.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.academic-about-text p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #374151;
+  margin-bottom: 1.5rem;
+}
+
+/* SECTION D: WHAT WE OFFER SECTION */
+.academic-offer-section {
+  background-color: #F9FAFB;
+  padding: 4.5rem 1.5rem;
+  border-top: 1px solid #F3F4F6;
+}
+
+.academic-offer-container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.academic-offer-header {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto 3rem auto;
+}
+
+.academic-offer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .academic-offer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .academic-offer-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.academic-card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid #E5E7EB;
+  border-top: 4px solid #8B1014;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.academic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
+  border-color: #D1D5DB;
+  border-top-color: #8B1014;
+}
+
+.academic-card-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 8px;
+  background-color: rgba(139, 16, 20, 0.08);
+  color: #8B1014;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.academic-card-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.academic-card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
+}
+
+.academic-card-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #4B5563;
+  margin: 0;
+}
+
