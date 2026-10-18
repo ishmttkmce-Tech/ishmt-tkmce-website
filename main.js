@@ -27,7 +27,6 @@
     navigation: [
       { id: 'nav-home', label: 'HOME', path: '/', isPublic: true },
       { id: 'nav-events', label: 'EVENTS & WORKSHOPS', path: '/events', isPublic: true },
-      { id: 'nav-research', label: 'RESEARCH & LABS', path: '/research', isPublic: true },
       { id: 'nav-team', label: 'EXECUTIVE TEAM', path: '/team', isPublic: true },
       { id: 'nav-gallery', label: 'GALLERY', path: '/gallery', isPublic: true },
       { id: 'nav-contact', label: 'CONTACT', path: '/contact', isPublic: true }
@@ -117,68 +116,6 @@
           }
         ]
       },
-      '/research': {
-        title: 'Research & Labs',
-        slug: '/research',
-        sections: [
-          {
-            id: 'sec-research-hero',
-            type: 'hero',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Applied Investigations',
-              title: 'Cutting-Edge Heat & Mass Transfer Research',
-              subtitle: 'Student-led research initiatives mentored by faculty in the Department of Mechanical Engineering at TKMCE.',
-              button1Text: 'Submit Research Abstract',
-              button1Url: '#/contact'
-            }
-          },
-          {
-            id: 'sec-research-grid',
-            type: 'grid-cards',
-            layout: { columns: 2, containerWidth: 'boxed', paddingY: 'md', bgType: 'subtle', alignment: 'left', visible: true },
-            content: {
-              eyebrow: 'Active Research Grants & Projects',
-              title: 'Ongoing Student Investigations',
-              description: 'Projects presented at international conferences and published in peer-reviewed journals.',
-              items: [
-                {
-                  id: 'res-1',
-                  tag: 'Nanomaterials',
-                  title: 'Nanofluid Heat Transfer in Microchannels',
-                  description: 'Investigating thermal conductivity enhancements of Al2O3 and graphene oxide aqueous dispersions in micro-scale heat sinks.',
-                  linkText: 'Read Abstract →',
-                  linkUrl: '#/contact'
-                },
-                {
-                  id: 'res-2',
-                  tag: 'Renewables',
-                  title: 'Solar Desalination with Organic PCMs',
-                  description: 'Evaluating latent heat energy storage in stepped solar stills for nocturnal freshwater generation.',
-                  linkText: 'Read Abstract →',
-                  linkUrl: '#/contact'
-                },
-                {
-                  id: 'res-3',
-                  tag: 'Gas Turbines',
-                  title: 'Film Cooling in High-Pressure Turbine Vanes',
-                  description: 'Numerical evaluation of shaped film hole geometries and blowing ratios on adiabatic cooling effectiveness.',
-                  linkText: 'Read Abstract →',
-                  linkUrl: '#/contact'
-                },
-                {
-                  id: 'res-4',
-                  tag: 'Electrification',
-                  title: 'Liquid Cold Plate Optimization for Li-ion Packs',
-                  description: 'CFD design of serpentine and mini-channel flow distributions to minimize temperature gradients in EV battery cells.',
-                  linkText: 'Read Abstract →',
-                  linkUrl: '#/contact'
-                }
-              ]
-            }
-          }
-        ]
-      },
       '/team': {
         title: 'Executive Team',
         slug: '/team',
@@ -194,36 +131,7 @@
       '/gallery': {
         title: 'Gallery',
         slug: '/gallery',
-        sections: [
-          {
-            id: 'sec-gallery-hero',
-            type: 'hero',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Memories & Moments',
-              title: 'Chapter Photo Gallery',
-              subtitle: 'Snapshots from our hands-on workshops, lab experiments, industrial visits, and national award ceremonies.'
-            }
-          },
-          {
-            id: 'sec-gallery-grid',
-            type: 'image-gallery',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'subtle', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Photo Highlights',
-              title: 'Campus Activities & Conclaves',
-              description: 'Explore the vibrant student community at TKM College of Engineering.',
-              items: [
-                { id: 'img-1', title: 'National Conclave Keynote', caption: 'LPSC ISRO scientist addressing 350+ delegates in Jubilee Hall', imageUrl: 'ishmt-logo.jpg' },
-                { id: 'img-2', title: 'Wind Tunnel Calibration', caption: 'Aerodynamics and convective heat transfer research group', imageUrl: 'ishmt-logo.jpg' },
-                { id: 'img-3', title: 'CFD Lab Simulation Sprint', caption: 'Hands-on OpenFOAM meshing and solver workshops', imageUrl: 'ishmt-logo.jpg' },
-                { id: 'img-4', title: 'NTPC Power Station Tour', caption: 'Industrial field visit exploring steam turbine surface condensers', imageUrl: 'ishmt-logo.jpg' },
-                { id: 'img-5', title: 'Annual Chapter Assembly', caption: 'Felicitating technical paper presentation winners', imageUrl: 'ishmt-logo.jpg' },
-                { id: 'img-6', title: 'Hands-on Hardware Test Rig', caption: 'Liquid cold plate temperature acquisition for EV cells', imageUrl: 'ishmt-logo.jpg' }
-              ]
-            }
-          }
-        ]
+        sections: []
       },
       '/contact': {
         title: 'Contact',
@@ -294,7 +202,7 @@
   // ==========================================================================
   // 2. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_2026_27_minimal';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v4_minimal';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -309,7 +217,8 @@
           'ishmt_site_blueprint_v3',
           'ishmt_site_blueprint_2026',
           'ishmt_site_blueprint_2026_27_v1',
-          'ishmt_site_blueprint_2026_27_live'
+          'ishmt_site_blueprint_2026_27_live',
+          'ishmt_site_blueprint_2026_27_minimal'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
