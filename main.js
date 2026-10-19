@@ -1156,86 +1156,74 @@
                 <h3 class="footer-column-title" style="font-size: 1.05rem; margin-bottom: 0.25rem;">
                   Indian Society for Heat and Mass Transfer (ISHMT)
                 </h3>
-                <div class="footer-meta-badge">TKMCE Student Chapter • Est. 2026</div>
-
-                <p class="footer-desc-p">
-                  Affiliated regionally with the ISHMT Trivandrum Regional Chapter (ISHMT-RCT) and anchored within the Department of Mechanical Engineering at Thangal Kunju Musaliar College of Engineering.
+                <div class="footer-meta-badge">Students Chapter – TKM College of Engineering, Kollam</div>
+                <p style="font-size: 0.75rem; color: #6B7280; margin-top: 0.25rem; margin-bottom: 0.75rem;">
+                  Affiliated with ISHMT Regional Chapter, Trivandrum
                 </p>
 
-                <div class="footer-contact-item">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                  <a href="mailto:ishmt@tkmce.ac.in" class="footer-link">ishmt@tkmce.ac.in</a>
-                </div>
-                <div class="footer-contact-item">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                  <span>Karicode, Kollam — 691005, Kerala, India</span>
-                </div>
+                <p class="footer-desc-p">
+                  Promoting scientific inquiry, heat transfer technologies, computational fluid dynamics, and thermal management education across Kerala.
+                </p>
               </div>
 
-              <!-- Column 2: Quick Links & Academic Navigation -->
+              <!-- Column 2: Useful Links -->
               <div>
-                <h4 class="footer-col-heading">Chapter Navigation</h4>
-                <div class="footer-accent-line"></div>
-                <ul class="footer-links-list">
-                  <li><a href="#/" class="footer-link">Home &amp; Welcome</a></li>
-                  <li><a href="#/events" class="footer-link">Colloquiums &amp; Workshops</a></li>
-                  <li><a href="#/team" class="footer-link">Executive Committee 2026–27</a></li>
-                  <li><a href="#/gallery" class="footer-link">Chapter Gallery</a></li>
-                  <li><a href="#/contact" class="footer-link">Contact &amp; Inquiries</a></li>
-                  <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="footer-link" style="color: #8B1014; font-weight: 700;">Join as Student Member ↗</a></li>
-                </ul>
-              </div>
-
-              <!-- Column 3: Institutional Affiliations & Parent Bodies -->
-              <div>
-                <h4 class="footer-col-heading">Institutional Affiliations</h4>
+                <h4 class="footer-col-heading">Useful Links</h4>
                 <div class="footer-accent-line"></div>
                 <ul class="footer-links-list">
                   <li>
-                    <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>ISHMT-RCT Portal:</strong> Official Regional Site ↗
+                    <a href="#/" class="footer-link">
+                      <span class="footer-link-dot"></span>
+                      <span>Home</span>
                     </a>
                   </li>
                   <li>
-                    <a href="https://tkmce.ac.in" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>TKMCE Kollam:</strong> Parent Institution Portal ↗
+                    <a href="#/" class="footer-link">
+                      <span class="footer-link-dot"></span>
+                      <span>About Us</span>
                     </a>
                   </li>
                   <li>
-                    <a href="https://tkmce.ac.in/department/mechanical-engineering/" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>Dept. of Mechanical Engg:</strong> Host Department ↗
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <span class="footer-link-dot"></span>
+                      <span>Membership</span>
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.ishmt.org" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>ISHMT National:</strong> National Council Body ↗
-                    </a>
-                  </li>
-                  <li>
-                    <a href="http://astfe.org" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>ASTFE:</strong> Thermal &amp; Fluids Partner ↗
+                    <a href="#/events" class="footer-link">
+                      <span class="footer-link-dot"></span>
+                      <span>News &amp; Events</span>
                     </a>
                   </li>
                 </ul>
               </div>
 
-              <!-- Column 4: Parent Chapter Regional Office Address -->
+              <!-- Column 3: Contact Us -->
               <div>
-                <h4 class="footer-col-heading">Regional Parent Chapter</h4>
+                <h4 class="footer-col-heading">Contact Us</h4>
                 <div class="footer-accent-line"></div>
-                <div class="footer-rct-box">
-                  <div class="footer-rct-tag">REGIONAL CHAPTER TRIVANDRUM (RCT)</div>
-                  <p class="footer-rct-address">
-                    Indian Society for Heat and Mass Transfer<br />
-                    PRS Entity, LPSC, Valiamala<br />
-                    Thiruvananthapuram, Kerala — 695 547
-                  </p>
-                  <p class="footer-rct-portal">
-                    Official Regional Chapter Portal:<br />
-                    <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="footer-rct-link">
-                      https://www.ishmtkerala.in/ ↗
-                    </a>
-                  </p>
+                
+                <div class="footer-contact-item" style="margin-bottom: 0.85rem;">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8B1014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <div style="font-size: 0.82rem; color: #4B5563; line-height: 1.5;">
+                    <strong style="color: #111827; display: block;">Campus Location:</strong>
+                    Department of Mechanical Engineering, TKM College of Engineering, Kollam – 691 005
+                  </div>
+                </div>
+
+                <div class="footer-contact-item" style="margin-bottom: 0.85rem;">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8B1014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path></svg>
+                  <div style="font-size: 0.82rem; color: #4B5563; line-height: 1.5;">
+                    <strong style="color: #111827; display: block;">Regional Headquarters:</strong>
+                    Indian Society for Heat and Mass Transfer, Regional Chapter, Trivandrum
+                    <div style="font-size: 0.72rem; color: #6B7280;">Reg. No. TVM/TC/614/2016</div>
+                    <div>PRS Entity, Liquid Propulsion Systems Centre (LPSC), Thiruvananthapuram – 695 547</div>
+                  </div>
+                </div>
+
+                <div class="footer-contact-item">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8B1014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <a href="mailto:ishmtkerala@gmail.com" class="footer-link" style="color: #4B5563; font-weight: 500;">ishmtkerala@gmail.com</a>
                 </div>
               </div>
             </div>
@@ -1243,7 +1231,7 @@
             <!-- Global Bottom Copyright Bar -->
             <div class="footer-bottom-bar">
               <div class="footer-copy-text">
-                &copy; 2026–2027 ISHMT Students Chapter, TKM College of Engineering, Kollam. Affiliated to ISHMT Regional Chapter Trivandrum.
+                &copy; 2026 ISHMT Student Chapter TKMCE. All Rights Reserved.
               </div>
               <div class="footer-bottom-actions">
                 <a href="#/login" class="footer-admin-link">Staff &amp; Admin Access</a>

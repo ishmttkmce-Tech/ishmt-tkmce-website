@@ -348,10 +348,7 @@ export function GlobalFooter() {
         'https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog',
       isExternal: true
     },
-    { label: 'News & Events', href: '#/events' },
-    { label: 'MoA & By-Laws', href: '#/' },
-    { label: 'Terms & Conditions', href: '#/' },
-    { label: 'Disclaimer', href: '#/' }
+    { label: 'News & Events', href: '#/events' }
   ];
 
   return (
