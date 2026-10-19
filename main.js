@@ -329,7 +329,92 @@
       '/gallery': {
         title: 'Gallery',
         slug: '/gallery',
-        sections: []
+        sections: [
+          {
+            id: 'sec-gallery-hero',
+            type: 'hero',
+            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'crimson-tint', alignment: 'center', visible: true },
+            content: {
+              eyebrow: 'Visual Documentation & Archives',
+              title: 'Chapter Gallery & Photo Archives',
+              subtitle: 'Visual records of technical workshops, computational bootcamps, laboratory demonstrations, and industrial visits of the ISHMT TKMCE Student Chapter.',
+              button1Text: 'View Events & Programs',
+              button1Url: '#/events'
+            }
+          },
+          {
+            id: 'sec-gallery-archive',
+            type: 'academic-gallery',
+            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'left', visible: true },
+            content: {
+              eyebrow: 'Session 2026–2027 Curation',
+              title: 'Chapter Visual Archives & Activities',
+              subtitle: 'Select an archive category below to explore chapter activities, computational workshops, and industry collaborations.',
+              items: [
+                {
+                  id: 'gal-1',
+                  category: 'workshops',
+                  categoryLabel: 'Workshops & Bootcamps',
+                  title: 'THERMO-HACK 2026: Heat Exchanger Design',
+                  date: 'October 2026',
+                  tag: 'Hackathon',
+                  description: 'Students collaborating on CAD modeling, mesh generation, and CFD simulation optimization for compact generative heat exchangers.',
+                  icon: 'laptop'
+                },
+                {
+                  id: 'gal-2',
+                  category: 'workshops',
+                  categoryLabel: 'Workshops & Bootcamps',
+                  title: 'OpenFOAM & Thermal Meshing Intensive',
+                  date: 'September 2026',
+                  tag: 'Workshop',
+                  description: 'Hands-on bootcamp exploring snappyHexMesh, conjugate heat transfer solvers, and turbulence modeling in the Mechanical Computing Lab.',
+                  icon: 'code'
+                },
+                {
+                  id: 'gal-3',
+                  category: 'lectures',
+                  categoryLabel: 'Distinguished Lectures',
+                  title: 'Advances in Spacecraft Thermal Shielding',
+                  date: 'October 2026',
+                  tag: 'Keynote Lecture',
+                  description: 'Technical lecture by Dr. S. Ramanathan, Senior Scientist at Liquid Propulsion Systems Centre (LPSC / ISRO) on re-entry protection systems.',
+                  icon: 'shield'
+                },
+                {
+                  id: 'gal-4',
+                  category: 'visits',
+                  categoryLabel: 'Industrial Visits',
+                  title: 'NTPC Combined Cycle Power Plant Tour',
+                  date: 'Academic Session 2026–27',
+                  tag: 'Field Visit',
+                  description: 'On-site technical inspection of superheaters, surface condensers, and high-efficiency cooling towers for chapter members.',
+                  icon: 'factory'
+                },
+                {
+                  id: 'gal-5',
+                  category: 'labs',
+                  categoryLabel: 'Laboratory Research',
+                  title: 'Heat Pipe & Phase Change Material Rig Testing',
+                  date: 'Academic Session 2026–27',
+                  tag: 'R&D Evaluation',
+                  description: 'Experimental testing of copper-water heat pipes and transient temperature profiles in the TKMCE Mechanical Research Facility.',
+                  icon: 'flame'
+                },
+                {
+                  id: 'gal-6',
+                  category: 'lectures',
+                  categoryLabel: 'Distinguished Lectures',
+                  title: 'ISHMT Regional Council Delegation & Meeting',
+                  date: 'Academic Session 2026–27',
+                  tag: 'Regional Council',
+                  description: 'Executive committee delegation presenting chapter milestones and research synchronization with the Trivandrum Regional Chapter.',
+                  icon: 'users'
+                }
+              ]
+            }
+          }
+        ]
       },
       '/contact': {
         title: 'Contact',
@@ -349,7 +434,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v11_clean';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v11_motion_audit';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -476,7 +561,7 @@
     hasPlayedIntro: false,
     headerHeight: 96,
     headerLeftOffset: 32,
-    lockupMetrics: { scale: 0.65, initialX: 0, initialY: 0, targetX: 0, targetY: 0 },
+    lockupMetrics: { centerTx: 0, centerTy: 0, logoShift: 0, dockScale: 0.32 },
 
     calculateMetrics() {
       const container = document.getElementById('lockup-container');
@@ -491,27 +576,34 @@
 
       this.headerHeight = isMobile ? 80 : 96;
       this.headerLeftOffset = isMobile ? 16 : 32;
+      const containerTop = isMobile ? 12 : 16;
 
-      const rect = lockup.getBoundingClientRect();
-      const lockupWidth = rect.width || 360;
-      const lockupHeight = rect.height || 180;
+      // Unconstrained natural dimensions of the lockup
+      const lockupWidth = lockup.offsetWidth || 600;
+      const lockupHeight = lockup.offsetHeight || 190;
 
-      const stage1X = (viewportWidth / 2) - (lockupWidth / 2);
-      const stage1Y = (viewportHeight / 2) - (lockupHeight / 2);
+      // Translation required to position lockup precisely in the viewport center
+      const centerTx = (viewportWidth / 2) - (lockupWidth / 2) - this.headerLeftOffset;
+      const centerTy = (viewportHeight / 2) - (lockupHeight / 2) - containerTop;
 
-      let targetScale = 0.62;
-      if (isMobile) targetScale = 0.48;
-      else if (isTablet) targetScale = 0.55;
+      // In Stage 1, the circular emblem (200px wide) is shifted to the exact viewport center
+      const logoShift = (lockupWidth / 2) - 100;
 
-      const stage3X = this.headerLeftOffset;
-      const stage3Y = (this.headerHeight / 2) - ((lockupHeight * targetScale) / 2);
+      let dockScale = 0.32;
+      if (isMobile) dockScale = 0.24;
+      else if (isTablet) dockScale = 0.28;
+
+      // Dynamically update root CSS variables for pixel-perfect transitions
+      document.documentElement.style.setProperty('--center-tx', `${Math.round(centerTx)}px`);
+      document.documentElement.style.setProperty('--center-ty', `${Math.round(centerTy)}px`);
+      document.documentElement.style.setProperty('--logo-shift', `${Math.round(logoShift)}px`);
+      document.documentElement.style.setProperty('--dock-scale', `${dockScale}`);
 
       this.lockupMetrics = {
-        scale: targetScale,
-        stage1X, stage1Y,
-        stage3X, stage3Y,
-        deltaX: stage3X - stage1X,
-        deltaY: stage3Y - stage1Y
+        centerTx: Math.round(centerTx),
+        centerTy: Math.round(centerTy),
+        logoShift: Math.round(logoShift),
+        dockScale
       };
     },
 
@@ -529,48 +621,62 @@
 
       this.calculateMetrics();
 
+      // Reset all docked and stage states
       container.classList.remove('docked');
+      container.classList.add('centered');
       logoWrapper.classList.remove('stage-2', 'docked');
       textBlock.classList.remove('stage-2', 'docked');
-      headerBar.classList.remove('visible');
+      headerBar.classList.remove('docked', 'visible');
 
+      // Clear inline transforms so CSS variables control initial centered geometry
       container.style.transition = 'none';
-      container.style.transform = 'translate(0px, 0px) scale(1)';
+      container.style.transform = `translate(${this.lockupMetrics.centerTx}px, ${this.lockupMetrics.centerTy}px) scale(1)`;
       logoWrapper.style.transition = 'none';
-      logoWrapper.style.transform = 'none';
+      logoWrapper.style.transform = `translateX(${this.lockupMetrics.logoShift}px) scale(2.25)`;
       textBlock.style.transition = 'none';
       textBlock.style.opacity = '0';
+      textBlock.style.transform = 'translateX(-180px)';
 
-      void container.offsetWidth;
+      void container.offsetWidth; // Force reflow
 
+      // Re-enable CSS transitions
       container.style.transition = '';
       logoWrapper.style.transition = '';
       textBlock.style.transition = '';
 
+      // Stage 1: Isolated Emblem Breathing in Center
       container.classList.add('stage-1');
       logoWrapper.classList.add('stage-1');
       textBlock.classList.add('stage-1');
 
+      // Stage 2 (t=800ms): Emblem shifts to lockup origin, typography smoothly reveals
       setTimeout(() => {
+        logoWrapper.classList.remove('stage-1');
         logoWrapper.classList.add('stage-2');
-        textBlock.classList.add('stage-2');
-      }, 700);
+        logoWrapper.style.transform = '';
 
+        textBlock.classList.remove('stage-1');
+        textBlock.classList.add('stage-2');
+        textBlock.style.opacity = '';
+        textBlock.style.transform = '';
+      }, 800);
+
+      // Stage 3 (t=1800ms): Lockup glides into top header bar
       setTimeout(() => {
+        container.classList.remove('centered', 'stage-1');
         container.classList.add('docked');
+        container.style.transform = `translate(0px, 0px) scale(${this.lockupMetrics.dockScale})`;
+
         logoWrapper.classList.add('docked');
         textBlock.classList.add('docked');
-        headerBar.classList.add('visible');
-
-        const { deltaX, deltaY, scale } = this.lockupMetrics;
-        container.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+        headerBar.classList.add('docked', 'visible');
 
         if (publicView) {
           publicView.classList.add('visible');
         }
         this.hasPlayedIntro = true;
         if (callback) callback();
-      }, 1500);
+      }, 1800);
     },
 
     setInstantDocked() {
@@ -589,16 +695,20 @@
       textBlock.style.transition = 'none';
       headerBar.style.transition = 'none';
 
+      container.classList.remove('centered', 'stage-1');
       container.classList.add('docked');
-      headerBar.classList.add('visible');
-
-      const { deltaX, deltaY, scale } = this.lockupMetrics;
-      container.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+      container.style.transform = `translate(0px, 0px) scale(${this.lockupMetrics.dockScale})`;
 
       logoWrapper.classList.remove('stage-1');
       logoWrapper.classList.add('stage-2', 'docked');
+      logoWrapper.style.transform = '';
+
       textBlock.classList.remove('stage-1');
       textBlock.classList.add('stage-2', 'docked');
+      textBlock.style.transform = '';
+      textBlock.style.opacity = '';
+
+      headerBar.classList.add('docked', 'visible');
 
       void container.offsetWidth;
 
@@ -650,15 +760,16 @@
       // Initialize interactive widgets
       this.initExecomInteractivity(contentEl);
       this.initAcademicHomeInteractivity(contentEl);
+      this.initAcademicGalleryInteractivity(contentEl);
       this.initAcademicContactInteractivity(contentEl);
       this.initGlobalFooterInteractivity(contentEl);
     },
 
     renderNav(navItems, currentRoute) {
       const navEl = document.getElementById('header-nav');
-      if (!navEl) return;
+      const mobileNavEl = document.getElementById('mobile-nav-links');
 
-      navEl.innerHTML = navItems
+      const linksHtml = navItems
         .filter(item => item.isPublic !== false)
         .map(item => {
           const isActive = (item.path === currentRoute) ? 'active' : '';
@@ -666,6 +777,9 @@
           return `<a href="${hashUrl}" class="nav-link ${isActive}">${this.escapeHtml(item.label)}</a>`;
         })
         .join('');
+
+      if (navEl) navEl.innerHTML = linksHtml;
+      if (mobileNavEl) mobileNavEl.innerHTML = linksHtml;
     },
 
     generateBlockHtml(section, isAdminMode = false, pageSlug = '/') {
@@ -679,12 +793,9 @@
         innerContent = this.generateAcademicContactHtml(isAdminMode);
       } else if (type === 'execom-directory') {
         innerContent = this.generateExecomHtml(isAdminMode);
+      } else if (type === 'academic-gallery') {
+        innerContent = this.generateAcademicGalleryHtml(section, isAdminMode, pageSlug);
       } else {
-        const widthClass = layout.containerWidth || 'boxed';
-        const padClass = `pad-${layout.paddingY || 'md'}`;
-        const bgClass = `bg-${layout.bgType || 'canvas'}`;
-        const alignClass = `align-${layout.alignment || 'left'}`;
-
         const secPath = `pages.${pageSlug}.sections.${id}.content`;
 
         switch (type) {
@@ -759,6 +870,20 @@
         }
       }
 
+      const isCustomFullBleed = type === 'academic-home' || type === 'academic-contact' || type === 'execom-directory';
+      const widthClass = layout.containerWidth || 'boxed';
+      const padClass = `pad-${layout.paddingY || 'md'}`;
+      const bgClass = `bg-${layout.bgType || 'canvas'}`;
+      const alignClass = `align-${layout.alignment || 'left'}`;
+
+      const renderedBlock = isCustomFullBleed ? innerContent : `
+        <section class="page-section ${bgClass} ${padClass} ${alignClass}">
+          <div class="block-container ${widthClass}">
+            ${innerContent}
+          </div>
+        </section>
+      `;
+
       if (isAdminMode) {
         return `
           <div class="canvas-block-wrapper" data-section-id="${id}">
@@ -770,12 +895,176 @@
               <button class="canvas-toolbar-btn btn-action-duplicate" data-section-id="${id}" title="Duplicate Section">❐</button>
               <button class="canvas-toolbar-btn btn-delete btn-action-delete" data-section-id="${id}" title="Delete Section">🗑</button>
             </div>
-            ${innerContent}
+            ${renderedBlock}
           </div>
         `;
       }
 
-      return innerContent;
+      return renderedBlock;
+    },
+
+    generateAcademicGalleryHtml(section, isAdminMode = false, pageSlug = '/gallery') {
+      const { id, content = {} } = section;
+      const secPath = `pages.${pageSlug}.sections.${id}.content`;
+      const items = content.items || [];
+
+      return `
+        <div class="academic-gallery-wrapper">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            ${content.eyebrow || isAdminMode ? `<div class="badge-eyebrow" style="margin-bottom: 0.75rem;" ${isAdminMode ? `data-edit-path="${secPath}.eyebrow" title="Click to edit eyebrow"` : ''}>${this.escapeHtml(content.eyebrow || 'Visual Archives')}</div>` : ''}
+            <h2 class="section-heading" ${isAdminMode ? `data-edit-path="${secPath}.title" title="Click to edit title"` : ''}>${this.escapeHtml(content.title || 'Chapter Visual Archives & Activities')}</h2>
+            <p class="section-desc align-center" ${isAdminMode ? `data-edit-path="${secPath}.subtitle" title="Click to edit description"` : ''}>${this.escapeHtml(content.subtitle || 'Explore chapter workshops, computational masterclasses, and industrial visits.')}</p>
+            <div class="academic-crimson-bar mx-auto" style="margin-top: 1rem;"></div>
+          </div>
+
+          <!-- Category Filter Bar -->
+          <div class="gallery-filter-bar">
+            <button type="button" class="gallery-filter-btn active" data-filter="all">All Archives</button>
+            <button type="button" class="gallery-filter-btn" data-filter="workshops">Workshops &amp; Bootcamps</button>
+            <button type="button" class="gallery-filter-btn" data-filter="lectures">Distinguished Lectures</button>
+            <button type="button" class="gallery-filter-btn" data-filter="visits">Industrial Visits</button>
+            <button type="button" class="gallery-filter-btn" data-filter="labs">Hardware &amp; Labs</button>
+          </div>
+
+          <!-- Academic Gallery Cards Grid -->
+          <div class="academic-gallery-grid">
+            ${items.map((item, idx) => `
+              <div class="academic-gallery-card ${isAdminMode ? 'studio-card-wrapper' : ''}" data-category="${item.category || 'workshops'}" data-item-id="${item.id}">
+                ${isAdminMode ? `
+                  <div class="studio-card-actions">
+                    <button type="button" class="studio-card-btn btn-card-dup" data-card-type="gallery" data-section-id="${id}" data-card-id="${item.id}" title="Duplicate Card">❐ Duplicate</button>
+                    <button type="button" class="studio-card-btn btn-card-delete" data-card-type="gallery" data-section-id="${id}" data-card-id="${item.id}" title="Delete Card">🗑 Delete</button>
+                  </div>
+                ` : ''}
+                
+                <div class="gallery-card-banner">
+                  <div class="gallery-card-icon-halo">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      ${this.getCategoryIconSvg(item.category || 'workshops')}
+                    </svg>
+                  </div>
+                  <span class="gallery-card-tag" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.tag" title="Click to edit tag"` : ''}>${this.escapeHtml(item.tag || 'Chapter Event')}</span>
+                  <span class="gallery-card-date" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.date" title="Click to edit date"` : ''}>${this.escapeHtml(item.date || '2026–27')}</span>
+                </div>
+
+                <div class="gallery-card-body">
+                  <h3 class="gallery-card-title" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.title" title="Click to edit title"` : ''}>${this.escapeHtml(item.title || 'Untitled Event')}</h3>
+                  <p class="gallery-card-desc" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.description" title="Click to edit description"` : ''}>${this.escapeHtml(item.description || 'Activity documentation and technical summary.')}</p>
+                  
+                  <div class="gallery-card-footer">
+                    <span>${this.escapeHtml(item.categoryLabel || 'Academic Archive')}</span>
+                    <span style="font-size: 0.88rem; color: #8B0D1A;">🔍 View Details</span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+
+            ${isAdminMode ? `
+              <div class="studio-add-card-placeholder" data-action="add-gallery-card" data-section-id="${id}">
+                <span style="font-size: 1.4rem; font-weight: 700; color: #8B1014;">+ Add New Gallery Card</span>
+                <span style="font-size: 0.85rem; color: #6B7280; margin-top: 4px;">Click to append a workshop, seminar, visit, or lab archive card</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    },
+
+    getCategoryIconSvg(category) {
+      switch (category) {
+        case 'workshops':
+          return '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>';
+        case 'lectures':
+          return '<path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path>';
+        case 'visits':
+          return '<path d="M2 20h20"></path><path d="M5 20V8l7-5 7 5v12"></path><path d="M9 12h6"></path><path d="M9 16h6"></path>';
+        case 'labs':
+          return '<path d="M8.5 2h7l.5 4h-8z"></path><path d="M6 14a6 6 0 1 0 12 0"></path><path d="M12 2v10"></path>';
+        default:
+          return '<circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon>';
+      }
+    },
+
+    initAcademicGalleryInteractivity(contentEl) {
+      if (!contentEl) return;
+
+      // Filter tabs switching
+      const filterBtns = contentEl.querySelectorAll('.gallery-filter-btn');
+      const cards = contentEl.querySelectorAll('.academic-gallery-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+          cards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              card.style.display = 'flex';
+              card.style.opacity = '1';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Lightbox modal setup
+      let modalOverlay = document.getElementById('gallery-lightbox-modal');
+      if (!modalOverlay) {
+        modalOverlay = document.createElement('div');
+        modalOverlay.id = 'gallery-lightbox-modal';
+        modalOverlay.className = 'gallery-modal-overlay';
+        modalOverlay.innerHTML = `
+          <div class="gallery-modal-card">
+            <button type="button" class="gallery-modal-close-btn" id="gallery-modal-close" aria-label="Close modal">&times;</button>
+            <div class="gallery-modal-header">
+              <span id="gallery-modal-tag" class="gallery-card-tag" style="position: static; display: inline-block; margin-bottom: 0.5rem;">Event</span>
+              <h3 id="gallery-modal-title" style="font-family: var(--theme-font-family); font-size: 1.5rem; font-weight: 700; color: #0B0B0B; margin: 0;"></h3>
+              <p id="gallery-modal-date" style="font-size: 0.85rem; color: #8B1014; font-weight: 600; margin-top: 0.35rem;"></p>
+            </div>
+            <div class="gallery-modal-body">
+              <p id="gallery-modal-desc" style="font-size: 1rem; color: #4B5563; line-height: 1.7; margin-bottom: 1.5rem;"></p>
+              <div style="background: #F9FAFB; border-radius: 8px; padding: 1rem 1.25rem; border-left: 4px solid #8B1014; font-size: 0.88rem; color: #374151;">
+                <strong>Archival Reference:</strong> Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter, Department of Mechanical Engineering, TKM College of Engineering.
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modalOverlay);
+
+        const closeBtn = modalOverlay.querySelector('#gallery-modal-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => modalOverlay.classList.remove('open'));
+        }
+        modalOverlay.addEventListener('click', (e) => {
+          if (e.target === modalOverlay) modalOverlay.classList.remove('open');
+        });
+      }
+
+      cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.studio-card-actions') || e.target.closest('.studio-add-card-placeholder')) return;
+
+          const titleEl = card.querySelector('.gallery-card-title');
+          const descEl = card.querySelector('.gallery-card-desc');
+          const tagEl = card.querySelector('.gallery-card-tag');
+          const dateEl = card.querySelector('.gallery-card-date');
+
+          const modalTitle = document.getElementById('gallery-modal-title');
+          const modalDesc = document.getElementById('gallery-modal-desc');
+          const modalTag = document.getElementById('gallery-modal-tag');
+          const modalDate = document.getElementById('gallery-modal-date');
+
+          if (modalTitle && titleEl) modalTitle.textContent = titleEl.textContent;
+          if (modalDesc && descEl) modalDesc.textContent = descEl.textContent;
+          if (modalTag && tagEl) modalTag.textContent = tagEl.textContent;
+          if (modalDate && dateEl) modalDate.textContent = dateEl.textContent;
+
+          if (modalOverlay) modalOverlay.classList.add('open');
+        });
+      });
     },
 
     initAcademicHomeInteractivity(contentEl) {
@@ -1156,74 +1445,86 @@
                 <h3 class="footer-column-title" style="font-size: 1.05rem; margin-bottom: 0.25rem;">
                   Indian Society for Heat and Mass Transfer (ISHMT)
                 </h3>
-                <div class="footer-meta-badge">Students Chapter – TKM College of Engineering, Kollam</div>
-                <p style="font-size: 0.75rem; color: #6B7280; margin-top: 0.25rem; margin-bottom: 0.75rem;">
-                  Affiliated with ISHMT Regional Chapter, Trivandrum
-                </p>
+                <div class="footer-meta-badge">TKMCE Student Chapter • Est. 2026</div>
 
                 <p class="footer-desc-p">
-                  Promoting scientific inquiry, heat transfer technologies, computational fluid dynamics, and thermal management education across Kerala.
+                  Affiliated regionally with the ISHMT Trivandrum Regional Chapter (ISHMT-RCT) and anchored within the Department of Mechanical Engineering at Thangal Kunju Musaliar College of Engineering.
                 </p>
+
+                <div class="footer-contact-item">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <a href="mailto:ishmt@tkmce.ac.in" class="footer-link">ishmt@tkmce.ac.in</a>
+                </div>
+                <div class="footer-contact-item">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Karicode, Kollam — 691005, Kerala, India</span>
+                </div>
               </div>
 
-              <!-- Column 2: Useful Links -->
+              <!-- Column 2: Quick Links & Academic Navigation -->
               <div>
-                <h4 class="footer-col-heading">Useful Links</h4>
+                <h4 class="footer-col-heading">Chapter Navigation</h4>
+                <div class="footer-accent-line"></div>
+                <ul class="footer-links-list">
+                  <li><a href="#/" class="footer-link">Home &amp; Welcome</a></li>
+                  <li><a href="#/events" class="footer-link">Colloquiums &amp; Workshops</a></li>
+                  <li><a href="#/team" class="footer-link">Executive Committee 2026–27</a></li>
+                  <li><a href="#/gallery" class="footer-link">Chapter Gallery</a></li>
+                  <li><a href="#/contact" class="footer-link">Contact &amp; Inquiries</a></li>
+                  <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="footer-link" style="color: #8B1014; font-weight: 700;">Join as Student Member ↗</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 3: Institutional Affiliations & Parent Bodies -->
+              <div>
+                <h4 class="footer-col-heading">Institutional Affiliations</h4>
                 <div class="footer-accent-line"></div>
                 <ul class="footer-links-list">
                   <li>
-                    <a href="#/" class="footer-link">
-                      <span class="footer-link-dot"></span>
-                      <span>Home</span>
+                    <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>ISHMT-RCT Portal:</strong> Official Regional Site ↗
                     </a>
                   </li>
                   <li>
-                    <a href="#/" class="footer-link">
-                      <span class="footer-link-dot"></span>
-                      <span>About Us</span>
+                    <a href="https://tkmce.ac.in" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>TKMCE Kollam:</strong> Parent Institution Portal ↗
                     </a>
                   </li>
                   <li>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <span class="footer-link-dot"></span>
-                      <span>Membership</span>
+                    <a href="https://tkmce.ac.in/department/mechanical-engineering/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>Dept. of Mechanical Engg:</strong> Host Department ↗
                     </a>
                   </li>
                   <li>
-                    <a href="#/events" class="footer-link">
-                      <span class="footer-link-dot"></span>
-                      <span>News &amp; Events</span>
+                    <a href="http://www.ishmt.org" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>ISHMT National:</strong> National Council Body ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://astfe.org" target="_blank" rel="noopener noreferrer" class="footer-link">
+                      <strong>ASTFE:</strong> Thermal &amp; Fluids Partner ↗
                     </a>
                   </li>
                 </ul>
               </div>
 
-              <!-- Column 3: Contact Us -->
+              <!-- Column 4: Parent Chapter Regional Office Address -->
               <div>
-                <h4 class="footer-col-heading">Contact Us</h4>
+                <h4 class="footer-col-heading">Regional Parent Chapter</h4>
                 <div class="footer-accent-line"></div>
-                
-                <div class="footer-contact-item" style="margin-bottom: 0.85rem;">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8B1014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                  <div style="font-size: 0.82rem; color: #4B5563; line-height: 1.5;">
-                    <strong style="color: #111827; display: block;">Campus Location:</strong>
-                    Department of Mechanical Engineering, TKM College of Engineering, Kollam – 691 005
-                  </div>
-                </div>
-
-                <div class="footer-contact-item" style="margin-bottom: 0.85rem;">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8B1014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path></svg>
-                  <div style="font-size: 0.82rem; color: #4B5563; line-height: 1.5;">
-                    <strong style="color: #111827; display: block;">Regional Headquarters:</strong>
-                    Indian Society for Heat and Mass Transfer, Regional Chapter, Trivandrum
-                    <div style="font-size: 0.72rem; color: #6B7280;">Reg. No. TVM/TC/614/2016</div>
-                    <div>PRS Entity, Liquid Propulsion Systems Centre (LPSC), Thiruvananthapuram – 695 547</div>
-                  </div>
-                </div>
-
-                <div class="footer-contact-item">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8B1014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                  <a href="mailto:ishmtkerala@gmail.com" class="footer-link" style="color: #4B5563; font-weight: 500;">ishmtkerala@gmail.com</a>
+                <div class="footer-rct-box">
+                  <div class="footer-rct-tag">REGIONAL CHAPTER TRIVANDRUM (RCT)</div>
+                  <p class="footer-rct-address">
+                    Indian Society for Heat and Mass Transfer<br />
+                    PRS Entity, LPSC, Valiamala<br />
+                    Thiruvananthapuram, Kerala — 695 547
+                  </p>
+                  <p class="footer-rct-portal">
+                    Official Regional Chapter Portal:<br />
+                    <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="footer-rct-link">
+                      https://www.ishmtkerala.in/ ↗
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -1231,7 +1532,7 @@
             <!-- Global Bottom Copyright Bar -->
             <div class="footer-bottom-bar">
               <div class="footer-copy-text">
-                &copy; 2026 ISHMT Student Chapter TKMCE. All Rights Reserved.
+                &copy; 2026–2027 ISHMT Students Chapter, TKM College of Engineering, Kollam. Affiliated to ISHMT Regional Chapter Trivandrum.
               </div>
               <div class="footer-bottom-actions">
                 <a href="#/login" class="footer-admin-link">Staff &amp; Admin Access</a>
@@ -1767,6 +2068,7 @@
       // Re-initialize widgets inside admin canvas preview
       PublicRenderer.initExecomInteractivity(renderEl);
       PublicRenderer.initAcademicHomeInteractivity(renderEl);
+      PublicRenderer.initAcademicGalleryInteractivity(renderEl);
       PublicRenderer.initAcademicContactInteractivity(renderEl);
     },
 
@@ -1904,6 +2206,21 @@
                 this.renderLiveCanvas();
               }
             }
+          } else if (cardType === 'gallery') {
+            const secId = dupBtn.getAttribute('data-section-id');
+            const page = blueprint.pages[this.activePageSlug];
+            const sec = (page.sections || []).find(s => s.id === secId);
+            if (sec && sec.content && sec.content.items) {
+              const idx = sec.content.items.findIndex(i => i.id === cardId);
+              if (idx !== -1) {
+                const orig = sec.content.items[idx];
+                const dup = { ...deepClone(orig), id: `gal-${Date.now()}`, title: `${orig.title} (Copy)` };
+                sec.content.items.splice(idx + 1, 0, dup);
+                SiteStore.save(blueprint, true);
+                App.showToast('Gallery archive card duplicated.');
+                this.renderLiveCanvas();
+              }
+            }
           } else if (cardType === 'offer') {
             const list = blueprint.homeData.offers;
             const idx = list.findIndex(o => o.id === cardId);
@@ -1956,6 +2273,15 @@
               sec.content.items = sec.content.items.filter(i => i.id !== cardId);
               SiteStore.save(blueprint, true);
               App.showToast('Event card deleted.');
+            }
+          } else if (cardType === 'gallery') {
+            const secId = delBtn.getAttribute('data-section-id');
+            const page = blueprint.pages[this.activePageSlug];
+            const sec = (page.sections || []).find(s => s.id === secId);
+            if (sec && sec.content && sec.content.items) {
+              sec.content.items = sec.content.items.filter(i => i.id !== cardId);
+              SiteStore.save(blueprint, true);
+              App.showToast('Gallery archive card deleted.');
             }
           } else if (cardType === 'offer') {
             blueprint.homeData.offers = blueprint.homeData.offers.filter(o => o.id !== cardId);
@@ -2072,6 +2398,35 @@
               });
               SiteStore.save(blueprint, true);
               App.showToast('New event card added.');
+              this.renderLiveCanvas();
+              setTimeout(() => {
+                const idx = sec.content.items.length - 1;
+                const secPath = `pages.${this.activePageSlug}.sections.${secId}.content`;
+                const el = document.querySelector(`[data-edit-path="${secPath}.items.${idx}.title"]`);
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  el.click();
+                }
+              }, 120);
+            }
+          } else if (action === 'add-gallery-card') {
+            const secId = addPlaceholder.getAttribute('data-section-id');
+            const page = blueprint.pages[this.activePageSlug];
+            const sec = (page.sections || []).find(s => s.id === secId);
+            if (sec && sec.content) {
+              if (!sec.content.items) sec.content.items = [];
+              const newId = `gal-${Date.now()}`;
+              sec.content.items.push({
+                id: newId,
+                category: 'workshops',
+                categoryLabel: 'Workshops & Bootcamps',
+                title: 'New Chapter Activity Archive',
+                date: 'Academic Session 2026–27',
+                tag: 'Chapter Event',
+                description: 'Click and type directly to document this workshop, keynote lecture, or industrial visit.'
+              });
+              SiteStore.save(blueprint, true);
+              App.showToast('New gallery archive card added. Click to edit!');
               this.renderLiveCanvas();
               setTimeout(() => {
                 const idx = sec.content.items.length - 1;
@@ -3005,6 +3360,28 @@
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(() => {
           IntroMotion.calculateMetrics();
+        });
+      }
+
+      // Mobile Navigation Drawer Toggle & Link Binding
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileNavDrawer = document.getElementById('mobile-nav-drawer');
+      if (mobileMenuBtn && mobileNavDrawer) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          mobileNavDrawer.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!mobileNavDrawer.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+            mobileNavDrawer.classList.remove('open');
+          }
+        });
+
+        mobileNavDrawer.addEventListener('click', (e) => {
+          if (e.target.closest('.nav-link') || e.target.closest('.mobile-rct-link')) {
+            mobileNavDrawer.classList.remove('open');
+          }
         });
       }
 

@@ -27,6 +27,15 @@
         <img src="ishmt-rct-logo.png" alt="ISHMT Regional Chapter Trivandrum Logo" class="header-rct-logo">
       </a>
 
+      <!-- Mobile Hamburger Menu Button -->
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Navigation Menu" title="Toggle Navigation Menu">
+        <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
       <!-- Secret Admin Entry Lock (Hidden by default; revealed only via Ctrl + Shift + CapsLock) -->
       <a href="#/login" id="admin-lock-btn" class="admin-lock-btn admin-hidden" title="Admin Portal Login (Ctrl+Shift+CapsLock)" aria-label="Admin Portal Login">
         <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -36,6 +45,19 @@
       </a>
     </div>
   </header>
+
+  <!-- Mobile Navigation Slide-Down Drawer -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Mobile Navigation">
+    <div class="mobile-nav-inner">
+      <nav id="mobile-nav-links" class="mobile-nav-links"></nav>
+      <div class="mobile-nav-footer">
+        <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="mobile-rct-link">
+          <img src="ishmt-rct-logo.png" alt="ISHMT RCT" class="mobile-rct-img">
+          <span>ISHMT Regional Chapter Trivandrum ↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- Center-to-Docked Unified Logo & Typography Lockup (Direct Child of Body) -->
   <div id="lockup-container" class="lockup-container centered" title="ISHMT TKMCE Students Chapter">
