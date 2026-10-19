@@ -559,6 +559,9 @@
       logoWrapper.classList.remove('stage-2', 'docked');
       textBlock.classList.remove('stage-2', 'docked');
       headerBar.classList.remove('docked', 'visible');
+      if (publicView) {
+        publicView.classList.remove('visible');
+      }
 
       // Clear inline transforms so CSS variables control initial centered geometry
       container.style.transition = 'none';
@@ -593,7 +596,7 @@
         textBlock.style.transform = '';
       }, 800);
 
-      // Stage 3 (t=1800ms): Lockup glides into top header bar
+      // Stage 3 (t=1800ms): Lockup glides into top header bar with fluid deceleration
       setTimeout(() => {
         container.classList.remove('centered', 'stage-1');
         container.classList.add('docked');
@@ -602,17 +605,20 @@
         logoWrapper.classList.add('docked');
         textBlock.classList.add('docked');
         headerBar.classList.add('docked', 'visible');
+      }, 1800);
 
+      // Phase 4 (t=2350ms): Smooth transition after Phase 3 - page content glides in gracefully
+      setTimeout(() => {
         if (publicView) {
           publicView.classList.add('visible');
         }
 
-        // UNLOCK BODY SCROLL IMMEDIATELY AS LOGO DOCKS
+        // Unlock body scroll once the page content begins its smooth reveal
         document.body.classList.remove('loading-state');
 
         this.hasPlayedIntro = true;
         if (callback) callback();
-      }, 1800);
+      }, 2350);
     },
 
     setInstantDocked() {

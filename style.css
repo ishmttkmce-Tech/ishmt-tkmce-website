@@ -31,7 +31,7 @@
   --dock-scale: 0.32;
 
   --ease-stage2: cubic-bezier(0.32, 0.0, 0.24, 1);
-  --ease-stage3: cubic-bezier(0.28, 0.0, 0.2, 1);
+  --ease-stage3: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Studio Theme Tokens */
@@ -95,7 +95,7 @@ body.loading-state {
   opacity: 0;
   transform: translateY(-100%);
   will-change: transform, opacity;
-  transition: opacity 1.0s var(--ease-stage3), transform 1.0s var(--ease-stage3);
+  transition: opacity 1.15s var(--ease-stage3), transform 1.15s var(--ease-stage3);
   pointer-events: none;
 }
 
@@ -116,7 +116,7 @@ body.loading-state {
   pointer-events: auto;
   cursor: pointer;
   transform: translate(var(--center-tx), var(--center-ty)) scale(1.0);
-  transition: transform 1.05s var(--ease-stage3);
+  transition: transform 1.15s var(--ease-stage3);
 }
 
 .lockup-container.centered {
@@ -514,8 +514,9 @@ body.loading-state {
   min-height: 100vh;
   padding-top: 96px; /* Offset for fixed header bar */
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 1.0s var(--ease-standard), transform 1.0s var(--ease-standard);
+  transform: translateY(28px);
+  will-change: transform, opacity;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .public-view.visible {
