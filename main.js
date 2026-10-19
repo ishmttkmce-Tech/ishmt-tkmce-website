@@ -615,9 +615,13 @@
       const publicView = document.getElementById('public-view');
 
       if (!container || !logoWrapper || !textBlock || !headerBar) {
+        document.body.classList.remove('loading-state');
         if (callback) callback();
         return;
       }
+
+      // Temporarily lock body scroll during the 1.8s intro animation
+      document.body.classList.add('loading-state');
 
       this.calculateMetrics();
 
@@ -674,6 +678,10 @@
         if (publicView) {
           publicView.classList.add('visible');
         }
+
+        // UNLOCK BODY SCROLL IMMEDIATELY AS LOGO DOCKS
+        document.body.classList.remove('loading-state');
+
         this.hasPlayedIntro = true;
         if (callback) callback();
       }, 1800);
@@ -718,6 +726,10 @@
       headerBar.style.transition = '';
 
       if (publicView) publicView.classList.add('visible');
+
+      // ENSURE BODY SCROLL IS UNLOCKED INSTANTLY
+      document.body.classList.remove('loading-state');
+
       this.hasPlayedIntro = true;
     }
   };
@@ -3344,9 +3356,9 @@
         }
       });
 
-      // Keyboard replay in public mode (Space or R)
+      // Keyboard replay in public mode ('R' key; Space is preserved for native page scroll)
       window.addEventListener('keydown', (e) => {
-        if ((e.code === 'Space' || e.key === ' ' || e.key === 'r' || e.key === 'R') &&
+        if ((e.key === 'r' || e.key === 'R') &&
             this.currentRoute !== '/login' && this.currentRoute !== '/admin' &&
             document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
           e.preventDefault();
@@ -3442,6 +3454,11 @@
       } else {
         IntroMotion.setInstantDocked();
       }
+
+      // Guarantee body scroll unlock regardless of browser state
+      setTimeout(() => {
+        document.body.classList.remove('loading-state');
+      }, isInitial ? 2000 : 50);
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },

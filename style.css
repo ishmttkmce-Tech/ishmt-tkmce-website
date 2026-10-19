@@ -49,6 +49,8 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
@@ -63,12 +65,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  overflow-y: visible;
 }
 
-/* Initially lock body scroll during intro animation */
+/* Temporarily lock body scroll exclusively during the 1.8s intro animation */
 body.loading-state {
-  overflow: hidden;
-  height: 100vh;
+  overflow: hidden !important;
 }
 
 /* ==========================================================================
