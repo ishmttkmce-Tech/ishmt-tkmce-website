@@ -349,7 +349,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v10_studio';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v11_clean';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -363,7 +363,7 @@
           'ishmt_site_blueprint_2026', 'ishmt_site_blueprint_2026_27_v1', 'ishmt_site_blueprint_2026_27_live',
           'ishmt_site_blueprint_2026_27_minimal', 'ishmt_site_blueprint_v4_minimal', 'ishmt_site_blueprint_v5_academic',
           'ishmt_site_blueprint_v6_academic', 'ishmt_site_blueprint_v7_academic', 'ishmt_site_blueprint_v8_contact_footer',
-          'ishmt_site_blueprint_v9_rct_logo'
+          'ishmt_site_blueprint_v9_rct_logo', 'ishmt_site_blueprint_v10_studio'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
