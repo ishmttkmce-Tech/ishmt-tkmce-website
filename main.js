@@ -341,78 +341,6 @@
               button1Text: 'View Events & Programs',
               button1Url: '#/events'
             }
-          },
-          {
-            id: 'sec-gallery-archive',
-            type: 'academic-gallery',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'left', visible: true },
-            content: {
-              eyebrow: 'Session 2026–2027 Curation',
-              title: 'Chapter Visual Archives & Activities',
-              subtitle: 'Select an archive category below to explore chapter activities, computational workshops, and industry collaborations.',
-              items: [
-                {
-                  id: 'gal-1',
-                  category: 'workshops',
-                  categoryLabel: 'Workshops & Bootcamps',
-                  title: 'THERMO-HACK 2026: Heat Exchanger Design',
-                  date: 'October 2026',
-                  tag: 'Hackathon',
-                  description: 'Students collaborating on CAD modeling, mesh generation, and CFD simulation optimization for compact generative heat exchangers.',
-                  icon: 'laptop'
-                },
-                {
-                  id: 'gal-2',
-                  category: 'workshops',
-                  categoryLabel: 'Workshops & Bootcamps',
-                  title: 'OpenFOAM & Thermal Meshing Intensive',
-                  date: 'September 2026',
-                  tag: 'Workshop',
-                  description: 'Hands-on bootcamp exploring snappyHexMesh, conjugate heat transfer solvers, and turbulence modeling in the Mechanical Computing Lab.',
-                  icon: 'code'
-                },
-                {
-                  id: 'gal-3',
-                  category: 'lectures',
-                  categoryLabel: 'Distinguished Lectures',
-                  title: 'Advances in Spacecraft Thermal Shielding',
-                  date: 'October 2026',
-                  tag: 'Keynote Lecture',
-                  description: 'Technical lecture by Dr. S. Ramanathan, Senior Scientist at Liquid Propulsion Systems Centre (LPSC / ISRO) on re-entry protection systems.',
-                  icon: 'shield'
-                },
-                {
-                  id: 'gal-4',
-                  category: 'visits',
-                  categoryLabel: 'Industrial Visits',
-                  title: 'NTPC Combined Cycle Power Plant Tour',
-                  date: 'Academic Session 2026–27',
-                  tag: 'Field Visit',
-                  description: 'On-site technical inspection of superheaters, surface condensers, and high-efficiency cooling towers for chapter members.',
-                  icon: 'factory'
-                },
-                {
-                  id: 'gal-5',
-                  category: 'labs',
-                  categoryLabel: 'Laboratory Research',
-                  title: 'Heat Pipe & Phase Change Material Rig Testing',
-                  date: 'Academic Session 2026–27',
-                  tag: 'R&D Evaluation',
-                  description: 'Experimental testing of copper-water heat pipes and transient temperature profiles in the TKMCE Mechanical Research Facility.',
-                  icon: 'flame'
-                },
-                {
-                  id: 'gal-6',
-                  category: 'lectures',
-                  categoryLabel: 'Distinguished Lectures',
-                  title: 'ISHMT Regional Council Delegation & Meeting',
-                  date: 'Academic Session 2026–27',
-                  tag: 'Regional Council',
-                  description: 'Executive committee delegation presenting chapter milestones and research synchronization with the Trivandrum Regional Chapter.',
-                  icon: 'users'
-                }
-              ]
-            }
           }
         ]
       },
@@ -434,7 +362,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v11_motion_audit';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v12_gallery_cleanup';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -448,7 +376,7 @@
           'ishmt_site_blueprint_2026', 'ishmt_site_blueprint_2026_27_v1', 'ishmt_site_blueprint_2026_27_live',
           'ishmt_site_blueprint_2026_27_minimal', 'ishmt_site_blueprint_v4_minimal', 'ishmt_site_blueprint_v5_academic',
           'ishmt_site_blueprint_v6_academic', 'ishmt_site_blueprint_v7_academic', 'ishmt_site_blueprint_v8_contact_footer',
-          'ishmt_site_blueprint_v9_rct_logo', 'ishmt_site_blueprint_v10_studio'
+          'ishmt_site_blueprint_v9_rct_logo', 'ishmt_site_blueprint_v10_studio', 'ishmt_site_blueprint_v11_motion_audit'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
