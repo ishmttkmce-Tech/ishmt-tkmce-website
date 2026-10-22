@@ -1,27 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import {
-  ShieldCheck,
   Users,
   Search,
   Filter,
   Sparkles,
-  Award,
   GraduationCap,
   Cpu,
-  Layers,
-  FileText,
-  CheckCircle2,
   ChevronRight,
   Flame,
-  Calendar,
   Building,
-  UserCheck,
-  LayoutGrid,
-  Table as TableIcon,
   Crown,
-  Briefcase,
-  Compass,
-  ArrowRight
+  Briefcase
 } from 'lucide-react';
 
 import {
@@ -32,7 +21,7 @@ import {
 } from './teamData';
 
 /**
- * TeamAndMembers - Production-Grade Executive Committee & Roster Component
+ * TeamAndMembers - Production-Grade Executive Committee & Directory Component
  * Session: 2026–27 | ISHMT TKMCE Student Chapter
  */
 export default function TeamAndMembers() {
@@ -40,49 +29,39 @@ export default function TeamAndMembers() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSemester, setSelectedSemester] = useState('All');
   const [selectedDept, setSelectedDept] = useState('All');
-  const [showAllMembers, setShowAllMembers] = useState(false); // false = General Members Only, true = All Members
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'table'
   const [activeTab, setActiveTab] = useState('all'); // 'all' | 'senior' | 'junior' | 'directory'
 
-  // --- Filtered Roster Computation ---
+  // --- Filtered Directory Computation ---
   const filteredMembers = useMemo(() => {
     return ALL_ROSTER_MEMBERS.filter((member) => {
-      // 1. Execom separation toggle
-      if (!showAllMembers && member.isExecom) {
-        return false;
-      }
-
-      // 2. Search query filter (name)
+      // 1. Search query filter
       if (searchQuery.trim() !== '') {
         const query = searchQuery.toLowerCase().trim();
         const nameMatches = member.name.toLowerCase().includes(query);
         const deptMatches = member.department.toLowerCase().includes(query);
         const semMatches = member.semester.toLowerCase().includes(query);
-        const roleMatches = member.execomRole ? member.execomRole.toLowerCase().includes(query) : false;
-        if (!nameMatches && !deptMatches && !semMatches && !roleMatches) {
+        if (!nameMatches && !deptMatches && !semMatches) {
           return false;
         }
       }
 
-      // 3. Semester filter
+      // 2. Semester filter
       if (selectedSemester !== 'All') {
         if (selectedSemester === 'Ph.D.' && member.semester !== 'Ph.D.') return false;
         if (selectedSemester !== 'Ph.D.' && member.semester !== selectedSemester) return false;
       }
 
-      // 4. Department filter
+      // 3. Department filter
       if (selectedDept !== 'All') {
         if (member.department !== selectedDept) return false;
       }
 
       return true;
     });
-  }, [searchQuery, selectedSemester, selectedDept, showAllMembers]);
+  }, [searchQuery, selectedSemester, selectedDept]);
 
   // Statistics counts
   const totalRosterCount = ALL_ROSTER_MEMBERS.length;
-  const generalMembersCount = ALL_ROSTER_MEMBERS.filter(m => !m.isExecom).length;
-  const execomInRosterCount = ALL_ROSTER_MEMBERS.filter(m => m.isExecom).length;
 
   // Senior leadership split
   const coreLeaders = useMemo(() => SENIOR_EXECOM.filter(m => m.isCoreLeadership), []);
@@ -100,7 +79,7 @@ export default function TeamAndMembers() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
 
         {/* ======================================================================
-            A. HEADER & OFFICIAL MANDATE BANNER
+            A. HEADER & STATS SECTION
             ====================================================================== */}
         <header className="text-center max-w-4xl mx-auto mb-16">
           {/* Subtitle Badge */}
@@ -121,49 +100,19 @@ export default function TeamAndMembers() {
             {CHAPTER_META.department}, {CHAPTER_META.institution}. Constituted under the aegis of the Indian Society for Heat and Mass Transfer.
           </p>
 
-          {/* Sleek Glassmorphic Mandate Callout Banner */}
-          <div className="relative p-6 sm:p-7 rounded-2xl bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-slate-900/80 border border-white/10 backdrop-blur-xl shadow-2xl text-left overflow-hidden group hover:border-cyan-500/30 transition-all duration-300">
-            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#8B0D1A] via-amber-500 to-cyan-400" />
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-red-950/40 border border-red-500/20 text-red-400 flex-shrink-0 mt-0.5">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-bold uppercase tracking-wider text-amber-400">Official Constitution Mandate</span>
-                    <span className="text-[11px] text-slate-500 font-mono">• Date: {CHAPTER_META.notificationDate}</span>
-                  </div>
-                  <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed italic">
-                    "{CHAPTER_META.mandateText}"
-                  </p>
-                </div>
-              </div>
-              <div className="flex-shrink-0 flex items-center gap-2 self-end md:self-center">
-                <span className="text-[11px] font-mono font-semibold px-3 py-1 rounded-md bg-white/5 border border-white/10 text-cyan-300">
-                  REF: ISHMT-TKMCE-2026
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Metric Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
-            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-md">
+          {/* Metric Bar: 3-Card Centered Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto mt-6">
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-md text-center">
               <div className="text-2xl font-bold text-white font-mono">13</div>
               <div className="text-xs text-slate-400 uppercase tracking-wider mt-0.5">Senior Execom</div>
             </div>
-            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-md">
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-md text-center">
               <div className="text-2xl font-bold text-cyan-400 font-mono">6</div>
               <div className="text-xs text-slate-400 uppercase tracking-wider mt-0.5">Junior Execom</div>
             </div>
-            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-md">
-              <div className="text-2xl font-bold text-amber-400 font-mono">48</div>
-              <div className="text-xs text-slate-400 uppercase tracking-wider mt-0.5">Registered Members</div>
-            </div>
-            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-md">
-              <div className="text-2xl font-bold text-rose-400 font-mono">100%</div>
-              <div className="text-xs text-slate-400 uppercase tracking-wider mt-0.5">Peer Cross-Verified</div>
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-md text-center">
+              <div className="text-2xl font-bold text-amber-400 font-mono">{totalRosterCount}</div>
+              <div className="text-xs text-slate-400 uppercase tracking-wider mt-0.5">General Members</div>
             </div>
           </div>
         </header>
@@ -208,7 +157,7 @@ export default function TeamAndMembers() {
                 : 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10'
             }`}
           >
-            Chapter Roster ({showAllMembers ? totalRosterCount : generalMembersCount})
+            General Members ({totalRosterCount})
           </button>
         </div>
 
@@ -274,22 +223,17 @@ export default function TeamAndMembers() {
                       </div>
                     </div>
 
-                    <p className="text-xs text-slate-300 leading-relaxed mb-6 font-light">
-                      {leader.bio}
-                    </p>
-                  </div>
-
-                  {/* Academic Details Badge */}
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
-                      <GraduationCap className="w-4 h-4 text-cyan-400" />
+                    {/* Degree, Branch & Semester (Replacing bio) */}
+                    <div className="flex items-center gap-2 text-xs font-mono text-cyan-300 bg-white/5 px-3 py-2.5 rounded-xl border border-white/10 mb-6">
+                      <GraduationCap className="w-4 h-4 text-cyan-400 shrink-0" />
                       <span>{leader.academicBadge}</span>
                     </div>
-                    {leader.isFallback && (
-                      <span className="text-[10px] uppercase font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">
-                        Notification Role
-                      </span>
-                    )}
+                  </div>
+
+                  {/* Card Footer */}
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                    <span>Appointed Executive</span>
+                    <span className="font-mono text-amber-400 font-semibold">Session 2026–27</span>
                   </div>
                 </div>
               ))}
@@ -349,16 +293,17 @@ export default function TeamAndMembers() {
                       </div>
                     </div>
 
-                    <p className="text-[11px] text-slate-400 line-clamp-2 mb-4 leading-relaxed">
-                      {member.bio}
-                    </p>
+                    {/* Degree, Branch & Semester (Replacing bio) */}
+                    <div className="flex items-center gap-2 text-[11px] font-mono text-cyan-300 bg-white/5 px-2.5 py-2 rounded-lg border border-white/10 mb-4">
+                      <GraduationCap className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                      <span className="truncate">{member.academicBadge}</span>
+                    </div>
                   </div>
 
-                  {/* Academic Details Footer */}
-                  <div className="pt-3 border-t border-white/5">
-                    <span className="inline-block text-[11px] font-mono text-slate-400">
-                      {member.academicBadge}
-                    </span>
+                  {/* Card Footer */}
+                  <div className="pt-2.5 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                    <span>Functional Team</span>
+                    <span className="font-mono text-slate-400">2026–27</span>
                   </div>
                 </div>
               ))}
@@ -415,7 +360,7 @@ export default function TeamAndMembers() {
                     </div>
 
                     {/* Member Name & Avatar */}
-                    <div className="flex items-center gap-3.5 mb-3.5">
+                    <div className="flex items-center gap-3.5 mb-4">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 p-[1.5px] flex-shrink-0 shadow-md">
                         <div className="w-full h-full rounded-[10px] bg-slate-950 flex items-center justify-center text-sm font-bold text-white font-mono">
                           {junior.avatar}
@@ -425,20 +370,18 @@ export default function TeamAndMembers() {
                         <h4 className="text-base font-bold text-white group-hover:text-cyan-200 transition-colors">
                           {junior.name}
                         </h4>
-                        <div className="text-xs text-slate-400 font-mono">
-                          {junior.academicBadge}
+                        <div className="text-xs text-cyan-400 font-medium">
+                          Junior Executive
                         </div>
                       </div>
                     </div>
 
-                    {/* Key Operational Focus */}
-                    <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 mb-4">
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block mb-0.5">
-                        Key Operational Focus:
+                    {/* Degree, Branch & Semester (Replacing Operational Focus) */}
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 mb-4 flex items-center gap-2.5">
+                      <GraduationCap className="w-4 h-4 text-cyan-400 shrink-0" />
+                      <span className="text-xs font-mono text-cyan-300 font-medium">
+                        {junior.academicBadge}
                       </span>
-                      <p className="text-xs text-slate-200 font-medium">
-                        {junior.focus}
-                      </p>
                     </div>
                   </div>
 
@@ -455,7 +398,7 @@ export default function TeamAndMembers() {
         )}
 
         {/* ======================================================================
-            D. TIER 3: STUDENT CHAPTER MEMBERS DIRECTORY (INTERACTIVE)
+            D. TIER 3: STUDENT CHAPTER MEMBERS DIRECTORY (TABLE ONLY)
             ====================================================================== */}
         {(activeTab === 'all' || activeTab === 'directory') && (
           <section className="mb-20">
@@ -466,24 +409,24 @@ export default function TeamAndMembers() {
                   <span>Tier 3 • Complete Chapter Directory</span>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-['Oswald',sans-serif] uppercase">
-                  Student Chapter Members Roster
+                  Student Chapter General Members
                 </h2>
                 <p className="text-slate-400 text-xs sm:text-sm mt-1">
-                  Full registry of {totalRosterCount} undergraduate & postgraduate students cross-referenced with Execom responsibilities.
+                  Full registry of {totalRosterCount} registered undergraduate & postgraduate student members.
                 </p>
               </div>
 
               {/* Live Count Badge */}
               <div className="mt-4 sm:mt-0 flex items-center gap-2">
                 <span className="text-xs font-mono px-3.5 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-bold shadow-sm">
-                  Showing {filteredMembers.length} {showAllMembers ? 'Total Members' : 'General Members'}
+                  Showing {filteredMembers.length} of {totalRosterCount} General Members
                 </span>
               </div>
             </div>
 
             {/* Interactive Control Panel */}
             <div className="p-5 sm:p-6 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-xl mb-8 space-y-4">
-              <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
                 {/* Search Bar */}
                 <div className="relative flex-1">
                   <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 transform -translate-y-1/2" />
@@ -504,75 +447,6 @@ export default function TeamAndMembers() {
                   )}
                 </div>
 
-                {/* Execom Directory Toggle */}
-                <div className="flex items-center gap-3 bg-slate-950/70 p-1.5 rounded-xl border border-white/10">
-                  <button
-                    onClick={() => setShowAllMembers(false)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                      !showAllMembers
-                        ? 'bg-[#8B0D1A] text-white shadow'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    General Members Only ({generalMembersCount})
-                  </button>
-                  <button
-                    onClick={() => setShowAllMembers(true)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                      showAllMembers
-                        ? 'bg-[#8B0D1A] text-white shadow'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    Show All Members ({totalRosterCount})
-                  </button>
-                </div>
-
-                {/* View Mode Switcher */}
-                <div className="flex items-center gap-1 bg-slate-950/70 p-1.5 rounded-xl border border-white/10 self-end lg:self-auto">
-                  <button
-                    onClick={() => setViewMode('grid')}
-                    className={`p-1.5 rounded-lg transition-colors ${
-                      viewMode === 'grid' ? 'bg-cyan-500/20 text-cyan-300' : 'text-slate-400 hover:text-white'
-                    }`}
-                    title="Grid View"
-                  >
-                    <LayoutGrid className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('table')}
-                    className={`p-1.5 rounded-lg transition-colors ${
-                      viewMode === 'table' ? 'bg-cyan-500/20 text-cyan-300' : 'text-slate-400 hover:text-white'
-                    }`}
-                    title="Table View"
-                  >
-                    <TableIcon className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Semester & Department Filters */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-3 border-t border-white/5">
-                {/* Semester Tabs */}
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mr-2 flex items-center gap-1">
-                    <Filter className="w-3.5 h-3.5" /> Semester:
-                  </span>
-                  {['All', 'Ph.D.', 'S7', 'S5', 'S3'].map((sem) => (
-                    <button
-                      key={sem}
-                      onClick={() => setSelectedSemester(sem)}
-                      className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-                        selectedSemester === sem
-                          ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold'
-                          : 'bg-white/5 text-slate-400 hover:text-white border border-transparent'
-                      }`}
-                    >
-                      {sem}
-                    </button>
-                  ))}
-                </div>
-
                 {/* Department Filter */}
                 <div className="flex items-center gap-2 w-full sm:w-auto">
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1 whitespace-nowrap">
@@ -581,7 +455,7 @@ export default function TeamAndMembers() {
                   <select
                     value={selectedDept}
                     onChange={(e) => setSelectedDept(e.target.value)}
-                    className="w-full sm:w-auto px-3 py-1.5 bg-slate-950/70 border border-white/10 rounded-lg text-xs text-white focus:outline-none focus:border-cyan-400"
+                    className="w-full sm:w-auto px-3 py-2 bg-slate-950/70 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-400"
                   >
                     <option value="All">All Departments</option>
                     <option value="Mechanical Engineering">Mechanical Engineering (44)</option>
@@ -589,9 +463,29 @@ export default function TeamAndMembers() {
                   </select>
                 </div>
               </div>
+
+              {/* Semester Filters */}
+              <div className="flex items-center gap-1.5 flex-wrap pt-3 border-t border-white/5">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mr-2 flex items-center gap-1">
+                  <Filter className="w-3.5 h-3.5" /> Semester:
+                </span>
+                {['All', 'Ph.D.', 'S7', 'S5', 'S3'].map((sem) => (
+                  <button
+                    key={sem}
+                    onClick={() => setSelectedSemester(sem)}
+                    className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+                      selectedSemester === sem
+                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold'
+                        : 'bg-white/5 text-slate-400 hover:text-white border border-transparent'
+                    }`}
+                  >
+                    {sem}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Directory Render: Grid View vs. Table View */}
+            {/* Directory Render: Strictly Compact Table View */}
             {filteredMembers.length === 0 ? (
               <div className="text-center py-16 px-4 rounded-2xl bg-slate-900/40 border border-white/5">
                 <Users className="w-10 h-10 text-slate-600 mx-auto mb-3" />
@@ -608,62 +502,7 @@ export default function TeamAndMembers() {
                   Reset Filters
                 </button>
               </div>
-            ) : viewMode === 'grid' ? (
-              /* --- GRID VIEW --- */
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {filteredMembers.map((member) => (
-                  <div
-                    key={member.id}
-                    className={`p-4 rounded-xl backdrop-blur-md transition-all duration-200 border flex flex-col justify-between ${
-                      member.isExecom
-                        ? 'bg-slate-900/80 border-amber-500/30 hover:border-amber-400 hover:shadow-md'
-                        : 'bg-slate-900/40 border-white/5 hover:border-white/15 hover:bg-slate-900/60'
-                    }`}
-                  >
-                    <div>
-                      {/* Top Bar with Semester & Execom Badge */}
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300 border border-white/10 font-bold">
-                          {member.semester}
-                        </span>
-                        {member.isExecom && (
-                          <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
-                            member.execomTier === 'senior'
-                              ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
-                              : 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30'
-                          }`}>
-                            {member.execomTier === 'senior' ? 'Senior Execom' : 'Junior Execom'}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Student Details */}
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-xs font-bold text-white font-mono flex-shrink-0">
-                          {member.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
-                        </div>
-                        <div className="min-w-0">
-                          <h4 className="text-sm font-bold text-white truncate hover:text-slate-200">
-                            {member.name}
-                          </h4>
-                          <span className="text-[11px] text-slate-400 font-medium truncate block">
-                            {member.programme} • {member.department}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Execom Role Note if applicable */}
-                    {member.isExecom && (
-                      <div className="mt-3 pt-2.5 border-t border-white/5 text-[11px] text-amber-300/90 font-medium truncate">
-                        ★ {member.execomRole}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
             ) : (
-              /* --- COMPACT TABLE VIEW --- */
               <div className="overflow-x-auto rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-xl">
                 <table className="w-full text-left text-xs sm:text-sm">
                   <thead className="bg-slate-950/80 text-slate-400 text-xs uppercase tracking-wider font-semibold border-b border-white/10">
@@ -673,16 +512,14 @@ export default function TeamAndMembers() {
                       <th className="py-3.5 px-4">Programme</th>
                       <th className="py-3.5 px-4">Department</th>
                       <th className="py-3.5 px-4 text-center">Semester</th>
-                      <th className="py-3.5 px-4">Executive Status</th>
+                      <th className="py-3.5 px-4">Member Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5 text-slate-300">
                     {filteredMembers.map((member, idx) => (
                       <tr
                         key={member.id}
-                        className={`hover:bg-white/[0.03] transition-colors ${
-                          member.isExecom ? 'bg-amber-500/[0.02]' : ''
-                        }`}
+                        className="hover:bg-white/[0.03] transition-colors"
                       >
                         <td className="py-3 px-4 font-mono text-slate-400">{idx + 1}</td>
                         <td className="py-3 px-4 font-bold text-white flex items-center gap-2.5">
@@ -699,20 +536,9 @@ export default function TeamAndMembers() {
                           </span>
                         </td>
                         <td className="py-3 px-4">
-                          {member.isExecom ? (
-                            <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
-                              member.execomTier === 'senior'
-                                ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
-                                : 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30'
-                            }`}>
-                              <CheckCircle2 className="w-3 h-3" />
-                              {member.execomRole}
-                            </span>
-                          ) : (
-                            <span className="text-[11px] text-slate-400 font-normal">
-                              General Member
-                            </span>
-                          )}
+                          <span className="text-xs text-slate-400 font-normal">
+                            General Member
+                          </span>
                         </td>
                       </tr>
                     ))}

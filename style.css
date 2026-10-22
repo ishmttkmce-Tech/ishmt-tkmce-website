@@ -2248,13 +2248,13 @@ body.loading-state {
   color: #0B0B0B;
 }
 
-/* Minimalist 4-Metric Grid */
+/* Minimalist 3-Metric Centered Grid */
 .execom-metrics-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
   margin: 0 auto 2.5rem;
-  max-width: 860px;
+  max-width: 720px;
 }
 
 .execom-metric-box {
@@ -2460,6 +2460,21 @@ body.loading-state {
   margin-bottom: 1.15rem;
 }
 
+.execom-academic-info {
+  background: #F5F2ED;
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+  margin: 0.75rem 0;
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #0B0B0B;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .execom-card-footer {
   padding-top: 0.75rem;
   border-top: 1px solid rgba(11, 11, 11, 0.06);
@@ -2469,6 +2484,27 @@ body.loading-state {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.execom-func-footer {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(11, 11, 11, 0.06);
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: #777777;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.execom-junior-role {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #8B0D1A;
+  margin-top: 0.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 /* Functional Teams Grid */
@@ -2957,11 +2993,6 @@ body.loading-state {
   background: #FAF8F5;
 }
 
-.execom-table tr.is-execom {
-  background: #FAF8F5;
-  border-left: 3px solid #8B0D1A;
-}
-
 /* Empty State */
 .execom-empty-box {
   text-align: center;
@@ -2992,8 +3023,11 @@ body.loading-state {
   .execom-junior-grid {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 640px) {
   .execom-metrics-row {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
