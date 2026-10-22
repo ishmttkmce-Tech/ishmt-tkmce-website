@@ -156,7 +156,7 @@
       line3: "Karicode, Kollam, Kerala – 691 005"
     },
     regionalChapter: {
-      badge: "Regional Parent Chapter",
+      badge: "Regional Chapter",
       title: "ISHMT - Regional Chapter, Trivandrum",
       line1: "PRS Entity, LPSC, Valiamala,",
       line2: "Trivandrum, Kerala – 695 547",
@@ -362,7 +362,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v13_members_update';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v14_footer_cleanup';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -377,7 +377,7 @@
           'ishmt_site_blueprint_2026_27_minimal', 'ishmt_site_blueprint_v4_minimal', 'ishmt_site_blueprint_v5_academic',
           'ishmt_site_blueprint_v6_academic', 'ishmt_site_blueprint_v7_academic', 'ishmt_site_blueprint_v8_contact_footer',
           'ishmt_site_blueprint_v9_rct_logo', 'ishmt_site_blueprint_v10_studio', 'ishmt_site_blueprint_v11_motion_audit',
-          'ishmt_site_blueprint_v12_gallery_cleanup'
+          'ishmt_site_blueprint_v12_gallery_cleanup', 'ishmt_site_blueprint_v13_members_update'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -1201,27 +1201,9 @@
     },
 
     initGlobalFooterInteractivity(contentEl) {
-      if (!contentEl) return;
-      const scrollBtn = contentEl.querySelector('#global-scroll-top-btn');
-      if (scrollBtn) {
-        const checkScroll = () => {
-          if (window.scrollY > 300) {
-            scrollBtn.classList.add('visible');
-          } else {
-            scrollBtn.classList.remove('visible');
-          }
-        };
-
-        if (window.__ishmt_footer_scroll_fn) {
-          window.removeEventListener('scroll', window.__ishmt_footer_scroll_fn);
-        }
-        window.__ishmt_footer_scroll_fn = checkScroll;
-        window.addEventListener('scroll', checkScroll);
-        checkScroll();
-
-        scrollBtn.addEventListener('click', () => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+      if (window.__ishmt_footer_scroll_fn) {
+        window.removeEventListener('scroll', window.__ishmt_footer_scroll_fn);
+        window.__ishmt_footer_scroll_fn = null;
       }
     },
 
@@ -1306,7 +1288,7 @@
                   </address>
                 </div>
 
-                <!-- Parent Regional Chapter (ISHMT-RCT) -->
+                <!-- Regional Chapter (ISHMT-RCT) -->
                 <div class="address-info-card">
                   <div class="address-card-badge">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1382,11 +1364,6 @@
                   <a href="https://www.ishmtkerala.in/" target="_blank" rel="noopener noreferrer" class="footer-emblem-badge" title="ISHMT Regional Chapter Trivandrum (ISHMT-RCT)">
                     <img src="ishmt-rct-logo.png" alt="ISHMT Regional Chapter Trivandrum" class="footer-emblem-img" />
                   </a>
-                  <div class="footer-emblem-badge" title="TKM College of Engineering">
-                    <span style="font-size: 0.55rem; font-weight: 800; color: #111827; line-height: 1.1;">TKMCE</span>
-                    <span style="font-size: 0.45rem; font-weight: 700; color: #8B1014;">MECH</span>
-                    <span style="font-size: 0.38rem; color: #6B7280;">KOLLAM</span>
-                  </div>
                 </div>
 
                 <h3 class="footer-column-title" style="font-size: 1.05rem; margin-bottom: 0.25rem;">
@@ -1432,32 +1409,12 @@
                       <strong>ISHMT-RCT Portal:</strong> Official Regional Site ↗
                     </a>
                   </li>
-                  <li>
-                    <a href="https://tkmce.ac.in" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>TKMCE Kollam:</strong> Parent Institution Portal ↗
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://tkmce.ac.in/department/mechanical-engineering/" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>Dept. of Mechanical Engg:</strong> Host Department ↗
-                    </a>
-                  </li>
-                  <li>
-                    <a href="http://www.ishmt.org" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>ISHMT National:</strong> National Council Body ↗
-                    </a>
-                  </li>
-                  <li>
-                    <a href="http://astfe.org" target="_blank" rel="noopener noreferrer" class="footer-link">
-                      <strong>ASTFE:</strong> Thermal &amp; Fluids Partner ↗
-                    </a>
-                  </li>
                 </ul>
               </div>
 
               <!-- Column 4: Parent Chapter Regional Office Address -->
               <div>
-                <h4 class="footer-col-heading">Regional Parent Chapter</h4>
+                <h4 class="footer-col-heading">Regional Chapter</h4>
                 <div class="footer-accent-line"></div>
                 <div class="footer-rct-box">
                   <div class="footer-rct-tag">REGIONAL CHAPTER TRIVANDRUM (RCT)</div>
@@ -1480,13 +1437,6 @@
             <div class="footer-bottom-bar">
               <div class="footer-copy-text">
                 &copy; 2026–2027 ISHMT Students Chapter, TKM College of Engineering, Kollam. Affiliated to ISHMT Regional Chapter Trivandrum.
-              </div>
-              <div class="footer-bottom-actions">
-                <a href="#/login" class="footer-admin-link">Staff &amp; Admin Access</a>
-                <button type="button" id="global-scroll-top-btn" class="footer-scroll-top" title="Back to Top">
-                  <span>Back to Top</span>
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>

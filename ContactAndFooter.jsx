@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   MapPin,
   Building2,
   Mail,
   Phone,
   Send,
-  ArrowUp,
   CheckCircle2,
   ExternalLink,
   Globe,
@@ -212,11 +211,11 @@ export function ContactUs() {
                 </address>
               </div>
 
-              {/* Card 2: Parent Regional Chapter (ISHMT-RCT) */}
+              {/* Card 2: Regional Chapter (ISHMT-RCT) */}
               <div className="bg-[#FAF9F7] p-5 rounded-lg border border-gray-200 hover:border-[#8B1014]/50 transition-colors">
                 <div className="flex items-center gap-2 text-[#8B1014] font-bold text-xs tracking-wider uppercase mb-2">
                   <Building2 className="w-4 h-4 text-[#8B1014]" />
-                  <span>Regional Parent Chapter</span>
+                  <span>Regional Chapter</span>
                 </div>
                 <h3 className="font-bold text-gray-900 text-lg mb-2">
                   ISHMT - Regional Chapter, Trivandrum
@@ -317,28 +316,6 @@ export function ContactUs() {
  * Global Academic Footer Component
  */
 export function GlobalFooter() {
-  const [showScrollTop, setShowScrollTop] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
   const usefulLinks = [
     { label: 'Home', href: '#/' },
     { label: 'About Us', href: '#/' },
@@ -384,15 +361,6 @@ export function GlobalFooter() {
                   className="w-full h-full object-cover rounded-full"
                 />
               </a>
-
-              {/* TKMCE Emblem Badge */}
-              <div className="w-14 h-14 rounded-full border border-gray-300 bg-white p-1 flex flex-col items-center justify-center text-center shadow-xs">
-                <span className="text-[9px] font-bold tracking-tight text-gray-900 leading-tight">
-                  TKMCE
-                </span>
-                <span className="text-[7px] text-[#8B1014] font-semibold">MECH</span>
-                <span className="text-[6px] text-gray-500">KOLLAM</span>
-              </div>
             </div>
 
             {/* Title */}
@@ -471,7 +439,7 @@ export function GlobalFooter() {
           </div>
         </div>
 
-        {/* BOTTOM COPYRIGHT BAR & SCROLL-TO-TOP */}
+        {/* BOTTOM COPYRIGHT BAR */}
         <div className="border-t border-gray-300 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
           <p>© 2026 ISHMT Student Chapter TKMCE. All Rights Reserved.</p>
           <p className="text-gray-400">
@@ -479,17 +447,6 @@ export function GlobalFooter() {
           </p>
         </div>
       </div>
-
-      {/* Floating Scroll to Top Button */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          aria-label="Scroll to top"
-          className="fixed bottom-6 right-6 z-50 border border-[#8B1014] text-[#8B1014] bg-white hover:bg-[#8B1014] hover:text-white p-2.5 rounded shadow-md transition-all duration-200 cursor-pointer flex items-center justify-center"
-        >
-          <ArrowUp className="w-5 h-5" />
-        </button>
-      )}
     </footer>
   );
 }
