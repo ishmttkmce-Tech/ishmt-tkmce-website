@@ -86,7 +86,25 @@ assert(jsContent.includes('PublicRenderer'), 'main.js defines PublicRenderer');
 assert(jsContent.includes('AdminStudio'), 'main.js defines AdminStudio CMS');
 assert(jsContent.includes('App'), 'main.js defines App initialization controller');
 
-// 6. Check .gitignore rules
+// 6. Photo Cropper & Executive Security Verifications
+assert(htmlContent.includes('id="photo-cropper-modal"'), 'index.html contains #photo-cropper-modal');
+assert(htmlContent.includes('id="cropper-display-canvas"'), 'index.html contains #cropper-display-canvas');
+assert(htmlContent.includes('id="cropper-zoom-range"'), 'index.html contains #cropper-zoom-range');
+assert(htmlContent.includes('id="cropper-save-btn"'), 'index.html contains #cropper-save-btn');
+
+assert(cssContent.includes('.avatar-shield'), 'style.css defines .avatar-shield transparent protection overlay');
+assert(cssContent.includes('.select-none'), 'style.css defines strict .select-none anti-copy styles');
+assert(cssContent.includes('.modal-cropper'), 'style.css defines .modal-cropper styles');
+assert(cssContent.includes('.execom-pyramid-row-1'), 'style.css defines .execom-pyramid-row-1 Tier 1 pyramid styles');
+assert(cssContent.includes('.execom-pyramid-row-2'), 'style.css defines .execom-pyramid-row-2 Tier 1 pyramid styles');
+assert(cssContent.includes('.execom-func-grid'), 'style.css defines .execom-func-grid functional team grid');
+
+assert(jsContent.includes('PhotoCropper'), 'main.js defines PhotoCropper module');
+assert(jsContent.includes('PhotoCropper.init()'), 'main.js initializes PhotoCropper in App.init');
+assert(jsContent.includes('btn-card-photo'), 'main.js binds .btn-card-photo inline trigger');
+assert(jsContent.includes('btn-member-photo-trigger'), 'main.js binds .btn-member-photo-trigger inspector button');
+
+// 7. Check .gitignore rules
 const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');
 ['node_modules', '.next', 'dist', '.env'].forEach(rule => {
   assert(gitignoreContent.includes(rule), `.gitignore contains rule for: ${rule}`);

@@ -502,6 +502,104 @@
     </div>
   </div>
 
+  <!-- ======================================================================
+       MODAL: EXECUTIVE PHOTO MANAGEMENT & CIRCULAR CROPPER (Admin Only)
+       ====================================================================== -->
+  <div id="photo-cropper-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="cropper-modal-title">
+    <div class="modal-card modal-cropper">
+      <div class="modal-header">
+        <div>
+          <h3 id="cropper-modal-title" class="modal-title">Executive Member Photo Management</h3>
+          <p id="cropper-member-label" class="modal-desc">Upload, zoom, pan, and align 1:1 circular executive avatar.</p>
+        </div>
+        <button type="button" class="modal-close-btn" data-close="photo-cropper-modal" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Security & Metadata Stripping Notice -->
+        <div class="cropper-privacy-badge">
+          <span class="privacy-icon">🛡️</span>
+          <div>
+            <strong>Strict Privacy &amp; EXIF Stripping:</strong>
+            Raw photos are decoded onto a clean HTML5 canvas and re-encoded to 200&times;200px compressed WebP. All hidden GPS geotags, camera EXIF headers, and device serial numbers are permanently purged before persistence.
+          </div>
+        </div>
+
+        <!-- File Selection Strip -->
+        <div class="cropper-upload-strip">
+          <input type="file" id="cropper-file-input" accept=".jpg,.jpeg,.png,.webp" class="cropper-hidden-file-input" aria-label="Select photo file">
+          <button type="button" id="cropper-pick-file-btn" class="btn btn-secondary">
+            📁 Select New Photo (.jpg, .jpeg, .png, .webp &le; 10MB)
+          </button>
+          <span id="cropper-file-name" class="cropper-file-status">No new file selected</span>
+        </div>
+
+        <!-- Interactive Pan & Zoom Stage -->
+        <div class="cropper-stage-wrapper">
+          <div id="cropper-stage" class="cropper-stage" tabIndex="0" role="region" aria-label="Image cropping and positioning canvas">
+            <canvas id="cropper-display-canvas" width="320" height="320" class="cropper-display-canvas"></canvas>
+            
+            <!-- Circular Mask Matching Avatar Frame -->
+            <div class="cropper-circular-mask" aria-hidden="true">
+              <div class="cropper-circle-ring">
+                <div class="cropper-crosshair-h"></div>
+                <div class="cropper-crosshair-v"></div>
+              </div>
+            </div>
+
+            <!-- Drag hint overlay -->
+            <div id="cropper-drag-hint" class="cropper-drag-hint">
+              <span>Click &amp; Drag to Reposition • Use Slider to Zoom</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Adjustment Controls Panel -->
+        <div class="cropper-controls-panel">
+          <div class="cropper-control-row">
+            <label for="cropper-zoom-range" class="cropper-ctrl-label">
+              <span>Zoom Level</span>
+              <span id="cropper-zoom-val" class="cropper-val-pill">1.0&times;</span>
+            </label>
+            <div class="cropper-slider-wrap">
+              <span class="cropper-zoom-min">1&times;</span>
+              <input type="range" id="cropper-zoom-range" min="1" max="3" step="0.02" value="1" class="cropper-slider">
+              <span class="cropper-zoom-max">3&times;</span>
+            </div>
+          </div>
+
+          <div class="cropper-actions-bar">
+            <div class="cropper-rot-btns">
+              <button type="button" id="cropper-rotate-ccw" class="btn btn-ghost btn-sm" title="Rotate 90 degrees counter-clockwise">
+                ↺ Rotate -90&deg;
+              </button>
+              <button type="button" id="cropper-rotate-cw" class="btn btn-ghost btn-sm" title="Rotate 90 degrees clockwise">
+                ↻ Rotate +90&deg;
+              </button>
+              <button type="button" id="cropper-reset-btn" class="btn btn-ghost btn-sm" title="Reset Zoom & Alignment">
+                Reset Alignment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions" style="justify-content: space-between;">
+        <div>
+          <button type="button" id="cropper-remove-avatar-btn" class="btn btn-danger-outline" title="Remove custom photo and revert to initial badge">
+            🗑 Revert to Initials
+          </button>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <button type="button" class="btn btn-ghost" data-close="photo-cropper-modal">Cancel</button>
+          <button type="button" id="cropper-save-btn" class="btn btn-primary">
+            ✓ Save &amp; Strip Metadata
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Global Floating Toast Notification -->
   <div id="toast-notification" class="toast-notification" role="alert" aria-live="polite"></div>
 

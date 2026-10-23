@@ -68,7 +68,13 @@ export default function TeamAndMembers() {
   const functionalLeads = useMemo(() => SENIOR_EXECOM.filter(m => !m.isCoreLeadership), []);
 
   return (
-    <div className="min-h-screen bg-[#07090E] text-slate-100 font-sans antialiased selection:bg-[#8B0D1A] selection:text-white pb-24">
+    <div
+      onContextMenu={(e) => e.preventDefault()}
+      onCopy={(e) => e.preventDefault()}
+      onCut={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+      className="min-h-screen bg-[#07090E] text-slate-100 font-sans antialiased selection:bg-[#8B0D1A] selection:text-white pb-24 select-none"
+    >
       {/* Background Decorative Ambient Gradients */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 left-1/4 w-[650px] h-[650px] bg-[#8B0D1A]/10 rounded-full blur-[140px] transform -translate-y-1/2" />
@@ -92,7 +98,7 @@ export default function TeamAndMembers() {
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight uppercase leading-tight mb-4 font-['Oswald',sans-serif]">
             ISHMT TKMCE Student Chapter
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-amber-200 to-cyan-300">
-              Executive Committee & Members (2026–27)
+              Executive Committee &amp; Members (2026–27)
             </span>
           </h1>
 
@@ -162,7 +168,7 @@ export default function TeamAndMembers() {
         </div>
 
         {/* ======================================================================
-            B. TIER 1: SENIOR EXECUTIVE COMMITTEE (PRIMARY SPOTLIGHT)
+            B. TIER 1: SENIOR EXECUTIVE COMMITTEE (3-LEVEL HIERARCHICAL PYRAMID)
             ====================================================================== */}
         {(activeTab === 'all' || activeTab === 'senior') && (
           <section className="mb-24">
@@ -184,34 +190,104 @@ export default function TeamAndMembers() {
               </div>
             </div>
 
-            {/* 1. TOP LEADERSHIP ROW (Chairperson, Vice Chairperson, General Secretary) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-              {coreLeaders.map((leader) => (
+            {/* LEVEL 1: Chairperson / President Centered Alone */}
+            {coreLeaders[0] && (
+              <div className="flex justify-center mb-6">
+                <div
+                  key={coreLeaders[0].id}
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="w-full max-w-md relative p-6 sm:p-7 rounded-2xl bg-gradient-to-b from-slate-900/95 via-slate-900/70 to-slate-900/95 border-2 border-amber-500/50 hover:border-amber-400 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:shadow-amber-950/40 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div className="absolute -top-[1px] left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500/20 to-red-500/20 text-amber-300 border border-amber-500/30">
+                        <Crown className="w-3.5 h-3.5 text-amber-400" />
+                        President / Chair
+                      </span>
+                      <span className="text-[11px] font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-md border border-white/10">
+                        Tier 1 • Row 1
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4 mb-5">
+                      {/* 1:1 Circular Avatar with Shield */}
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden p-[2px] bg-gradient-to-br from-amber-500 via-red-600 to-slate-900 flex-shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                        {coreLeaders[0].avatarUrl ? (
+                          <img
+                            src={coreLeaders[0].avatarUrl}
+                            alt={coreLeaders[0].name}
+                            className="w-full h-full rounded-full object-cover pointer-events-none select-none"
+                            draggable={false}
+                          />
+                        ) : (
+                          <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-lg font-extrabold text-white font-mono tracking-wider">
+                            {coreLeaders[0].avatar}
+                          </div>
+                        )}
+                        <div className="avatar-shield absolute inset-0 z-10 rounded-full" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-white group-hover:text-amber-200 transition-colors">
+                          {coreLeaders[0].name}
+                        </h3>
+                        <p className="text-sm font-semibold text-amber-400 mt-0.5">
+                          {coreLeaders[0].role}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs font-mono text-cyan-300 bg-white/5 px-3 py-2.5 rounded-xl border border-white/10 mb-6">
+                      <GraduationCap className="w-4 h-4 text-cyan-400 shrink-0" />
+                      <span>{coreLeaders[0].academicBadge}</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                    <span>Appointed Executive</span>
+                    <span className="font-mono text-amber-400 font-semibold">Session 2026–27</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* LEVEL 2: Vice President & General Secretary Centered in 2 Columns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-10">
+              {coreLeaders.slice(1).map((leader) => (
                 <div
                   key={leader.id}
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
                   className="relative p-6 sm:p-7 rounded-2xl bg-gradient-to-b from-slate-900/90 via-slate-900/60 to-slate-900/90 border-2 border-amber-500/40 hover:border-amber-400/80 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:shadow-amber-950/30 transition-all duration-300 flex flex-col justify-between group"
                 >
-                  {/* Subtle Top Glow Accent */}
                   <div className="absolute -top-[1px] left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
-
                   <div>
-                    {/* Top Badges */}
                     <div className="flex items-center justify-between mb-5">
                       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500/20 to-red-500/20 text-amber-300 border border-amber-500/30">
                         <Crown className="w-3.5 h-3.5 text-amber-400" />
                         Executive Lead
                       </span>
                       <span className="text-[11px] font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-md border border-white/10">
-                        Tier 1 Core
+                        Tier 1 • Row 2
                       </span>
                     </div>
 
-                    {/* Avatar Initials with Dual Glowing Ring */}
                     <div className="flex items-center gap-4 mb-5">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-red-600 to-slate-900 p-[2px] shadow-lg shadow-amber-950/40 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
-                        <div className="w-full h-full rounded-[14px] bg-slate-950 flex items-center justify-center text-lg font-extrabold text-white font-mono tracking-wider">
-                          {leader.avatar}
-                        </div>
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden p-[2px] bg-gradient-to-br from-amber-500 via-red-600 to-slate-900 flex-shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                        {leader.avatarUrl ? (
+                          <img
+                            src={leader.avatarUrl}
+                            alt={leader.name}
+                            className="w-full h-full rounded-full object-cover pointer-events-none select-none"
+                            draggable={false}
+                          />
+                        ) : (
+                          <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-lg font-extrabold text-white font-mono tracking-wider">
+                            {leader.avatar}
+                          </div>
+                        )}
+                        <div className="avatar-shield absolute inset-0 z-10 rounded-full" aria-hidden="true" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-white group-hover:text-amber-200 transition-colors">
@@ -223,14 +299,12 @@ export default function TeamAndMembers() {
                       </div>
                     </div>
 
-                    {/* Degree, Branch & Semester (Replacing bio) */}
                     <div className="flex items-center gap-2 text-xs font-mono text-cyan-300 bg-white/5 px-3 py-2.5 rounded-xl border border-white/10 mb-6">
                       <GraduationCap className="w-4 h-4 text-cyan-400 shrink-0" />
                       <span>{leader.academicBadge}</span>
                     </div>
                   </div>
 
-                  {/* Card Footer */}
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
                     <span>Appointed Executive</span>
                     <span className="font-mono text-amber-400 font-semibold">Session 2026–27</span>
@@ -239,11 +313,13 @@ export default function TeamAndMembers() {
               ))}
             </div>
 
-            {/* 2. FUNCTIONAL TEAMS GRID (Technical, PC, Media, PR, Finance) */}
+            {/* LEVEL 3+: FUNCTIONAL TEAMS GRID (Technical, PC, Media, PR, Finance) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
               {functionalLeads.map((member) => (
                 <div
                   key={member.id}
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
                   className={`relative p-5 rounded-xl backdrop-blur-md transition-all duration-300 flex flex-col justify-between ${
                     member.isLead
                       ? 'bg-slate-900/80 border-2 border-cyan-500/40 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-950/30'
@@ -272,16 +348,26 @@ export default function TeamAndMembers() {
                       )}
                     </div>
 
-                    {/* Member Info */}
+                    {/* Member Info with Circular Avatar and Shield */}
                     <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-11 h-11 rounded-xl p-[1.5px] flex-shrink-0 ${
+                      <div className={`relative w-11 h-11 rounded-full p-[1.5px] flex-shrink-0 overflow-hidden ${
                         member.isLead
                           ? 'bg-gradient-to-br from-cyan-400 to-amber-500'
                           : 'bg-gradient-to-br from-slate-700 to-slate-800'
                       }`}>
-                        <div className="w-full h-full rounded-[10px] bg-slate-950 flex items-center justify-center text-xs font-bold text-white font-mono">
-                          {member.avatar}
-                        </div>
+                        {member.avatarUrl ? (
+                          <img
+                            src={member.avatarUrl}
+                            alt={member.name}
+                            className="w-full h-full rounded-full object-cover pointer-events-none select-none"
+                            draggable={false}
+                          />
+                        ) : (
+                          <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-xs font-bold text-white font-mono">
+                            {member.avatar}
+                          </div>
+                        )}
+                        <div className="avatar-shield absolute inset-0 z-10 rounded-full" aria-hidden="true" />
                       </div>
                       <div className="min-w-0">
                         <h4 className="text-sm font-bold text-white truncate hover:text-cyan-200 transition-colors">
@@ -293,7 +379,7 @@ export default function TeamAndMembers() {
                       </div>
                     </div>
 
-                    {/* Degree, Branch & Semester (Replacing bio) */}
+                    {/* Degree, Branch & Semester */}
                     <div className="flex items-center gap-2 text-[11px] font-mono text-cyan-300 bg-white/5 px-2.5 py-2 rounded-lg border border-white/10 mb-4">
                       <GraduationCap className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                       <span className="truncate">{member.academicBadge}</span>
@@ -339,6 +425,8 @@ export default function TeamAndMembers() {
               {JUNIOR_EXECOM.map((junior) => (
                 <div
                   key={junior.id}
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
                   className="p-6 rounded-2xl bg-gradient-to-b from-slate-900/70 to-slate-900/40 border border-cyan-500/20 hover:border-cyan-500/50 backdrop-blur-xl shadow-lg hover:shadow-cyan-950/20 transition-all duration-300 flex flex-col justify-between group"
                 >
                   <div>
@@ -359,12 +447,22 @@ export default function TeamAndMembers() {
                       <span className="text-[11px] font-mono text-slate-500">Tier 2</span>
                     </div>
 
-                    {/* Member Name & Avatar */}
+                    {/* Member Name & Circular Avatar with Shield */}
                     <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 p-[1.5px] flex-shrink-0 shadow-md">
-                        <div className="w-full h-full rounded-[10px] bg-slate-950 flex items-center justify-center text-sm font-bold text-white font-mono">
-                          {junior.avatar}
-                        </div>
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-cyan-400 to-blue-600 p-[1.5px] flex-shrink-0 shadow-md">
+                        {junior.avatarUrl ? (
+                          <img
+                            src={junior.avatarUrl}
+                            alt={junior.name}
+                            className="w-full h-full rounded-full object-cover pointer-events-none select-none"
+                            draggable={false}
+                          />
+                        ) : (
+                          <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-sm font-bold text-white font-mono">
+                            {junior.avatar}
+                          </div>
+                        )}
+                        <div className="avatar-shield absolute inset-0 z-10 rounded-full" aria-hidden="true" />
                       </div>
                       <div>
                         <h4 className="text-base font-bold text-white group-hover:text-cyan-200 transition-colors">
@@ -376,7 +474,7 @@ export default function TeamAndMembers() {
                       </div>
                     </div>
 
-                    {/* Degree, Branch & Semester (Replacing Operational Focus) */}
+                    {/* Degree, Branch & Semester */}
                     <div className="p-3 rounded-xl bg-white/5 border border-white/10 mb-4 flex items-center gap-2.5">
                       <GraduationCap className="w-4 h-4 text-cyan-400 shrink-0" />
                       <span className="text-xs font-mono text-cyan-300 font-medium">
@@ -388,7 +486,8 @@ export default function TeamAndMembers() {
                   <div className="flex items-center justify-between pt-3 border-t border-white/5 text-[11px] text-slate-400">
                     <span>Mentored by Senior Team</span>
                     <span className="text-cyan-400 font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                      Active Role <ChevronRight className="w-3 h-3" />
+                      2026–27
+                      <ChevronRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
                 </div>
