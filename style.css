@@ -24,15 +24,14 @@
   --theme-body-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --theme-header-gradient: linear-gradient(90deg, #F5F2ED 0%, #FAF7F2 45%, #F5F2ED 100%);
 
-  /* Animation & Docking Metrics - Default to exact viewport center from first frame */
-  --center-tx: calc(50vw - 300px - 32px);
+  /* Animation & Docking Metrics (Default Fallback Calculated to Center) */
+  --center-tx: calc(50vw - 310px - 32px);
   --center-ty: calc(50vh - 100px - 16px);
-  --logo-shift: 200px;
+  --logo-shift: 210px;
   --dock-scale: 0.32;
   --intro-scale: 2.25;
 
-  /* Ultra-smooth organic motion curves (30% faster speed across phases 1 to 3) */
-  --ease-stage2: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-stage2: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-stage3: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -70,7 +69,7 @@ body {
   overflow-y: visible;
 }
 
-/* Temporarily lock body scroll exclusively during the 1.8s intro animation */
+/* Temporarily lock body scroll exclusively during the intro animation */
 body.loading-state {
   overflow: hidden !important;
 }
@@ -98,7 +97,7 @@ body.loading-state {
   opacity: 0;
   transform: translateY(-100%);
   will-change: transform, opacity;
-  transition: opacity 0.8s var(--ease-stage3), transform 0.8s var(--ease-stage3);
+  transition: opacity 1.6s var(--ease-stage3), transform 1.6s var(--ease-stage3);
   pointer-events: none;
 }
 
@@ -119,18 +118,22 @@ body.loading-state {
   pointer-events: auto;
   cursor: pointer;
   transform: translate(var(--center-tx), var(--center-ty)) scale(1.0);
-  transition: none; /* No transition on initial stage-1 */
+  transition: none !important; /* CRITICAL: Absolutely no transition in Phase 1! Always loads directly at center */
 }
 
-.lockup-container.centered,
+.lockup-container.centered {
+  transform: translate(var(--center-tx), var(--center-ty)) scale(1.0);
+  transition: none !important;
+}
+
 .lockup-container.stage-1 {
   transform: translate(var(--center-tx), var(--center-ty)) scale(1.0);
-  transition: none !important; /* Zero slide from side; locked dead center */
+  transition: none !important;
 }
 
 .lockup-container.docked {
   transform: translate(0px, 0px) scale(var(--dock-scale));
-  transition: transform 0.8s var(--ease-stage3) !important;
+  transition: transform 1.6s var(--ease-stage3) !important;
 }
 
 .lockup {
@@ -170,7 +173,7 @@ body.loading-state {
   transform: translateX(var(--logo-shift)) scale(var(--intro-scale, 2.25));
   filter: drop-shadow(0px 16px 36px rgba(0, 0, 0, 0.18)) drop-shadow(0px 0px 42px rgba(139, 13, 26, 0.14));
   animation: emblem-breathe 2.4s ease-in-out infinite;
-  transition: none !important; /* Strictly lock in center without any slide from sides */
+  transition: none !important; /* CRITICAL: Never animate into Stage 1 from anywhere; already seated at center */
 }
 
 @keyframes emblem-breathe {
@@ -182,19 +185,19 @@ body.loading-state {
   }
 }
 
-/* Motion States - Phase 2: Smooth Transition & Emergence with Directional Shadow (30% faster: 0.8s) */
+/* Motion States - Phase 2: Smooth Transition & Emergence with Directional Shadow */
 .logo-wrapper.stage-2 {
   animation: none;
   transform: translateX(0px) scale(1.0);
   filter: drop-shadow(14px 10px 24px rgba(0, 0, 0, 0.24)) drop-shadow(0px 4px 14px rgba(139, 13, 26, 0.16));
-  transition: transform 0.8s var(--ease-stage2), filter 0.8s var(--ease-stage2);
+  transition: transform 1.5s var(--ease-stage2), filter 1.5s var(--ease-stage2);
 }
 
-/* Motion States - Phase 3: Docked to Top Header (30% faster: 0.8s) */
+/* Motion States - Phase 3: Docked to Top Header */
 .logo-wrapper.docked {
   animation: none;
   filter: drop-shadow(2px 3px 8px rgba(0, 0, 0, 0.15));
-  transition: filter 0.8s var(--ease-stage3);
+  transition: filter 1.4s var(--ease-stage3);
 }
 
 /* Right Side: 4-Line Left-Aligned Text Block */
@@ -226,15 +229,15 @@ body.loading-state {
   filter: blur(0px);
   text-shadow: 2px 4px 14px rgba(0, 0, 0, 0.14);
   pointer-events: auto;
-  transition: transform 0.75s var(--ease-stage2) 0.05s,
-              opacity 0.7s var(--ease-stage2) 0.05s,
-              filter 0.7s var(--ease-stage2) 0.05s,
-              text-shadow 0.7s var(--ease-stage2) 0.05s;
+  transition: transform 1.5s var(--ease-stage2) 0.08s,
+              opacity 1.4s var(--ease-stage2) 0.08s,
+              filter 1.4s var(--ease-stage2) 0.08s,
+              text-shadow 1.4s var(--ease-stage2) 0.08s;
 }
 
 .text-block.docked {
   text-shadow: none;
-  transition: text-shadow 0.75s var(--ease-stage3);
+  transition: text-shadow 1.4s var(--ease-stage3);
 }
 
 /* Typography Scale */
@@ -579,7 +582,7 @@ body.loading-state {
   opacity: 0;
   transform: translateY(28px);
   will-change: transform, opacity;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .public-view.visible {
@@ -2192,9 +2195,6 @@ body.loading-state {
 
 @media (max-width: 768px) {
   :root {
-    --center-tx: calc(50vw - 300px - 16px);
-    --center-ty: calc(50vh - 100px - 12px);
-    --dock-scale: 0.24;
     --intro-scale: 1.3;
   }
   .header-bar {

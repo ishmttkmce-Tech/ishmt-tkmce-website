@@ -561,24 +561,22 @@
         return;
       }
 
-      // Temporarily lock body scroll during intro animation
+      // Temporarily lock body scroll during the intro animation
       document.body.classList.add('loading-state');
 
       this.calculateMetrics();
 
       // Reset all docked and stage states
       container.classList.remove('docked');
-      container.classList.add('centered', 'stage-1');
+      container.classList.add('centered');
       logoWrapper.classList.remove('stage-2', 'docked');
-      logoWrapper.classList.add('stage-1');
       textBlock.classList.remove('stage-2', 'docked');
-      textBlock.classList.add('stage-1');
       headerBar.classList.remove('docked', 'visible');
       if (publicView) {
         publicView.classList.remove('visible');
       }
 
-      // Clear inline transforms so CSS variables control initial centered geometry
+      // CRITICAL: Disable all transitions during Stage 1 so the emblem is instantly seated at center without any slide or motion from sides
       container.style.transition = 'none';
       container.style.transform = `translate(${this.lockupMetrics.centerTx}px, ${this.lockupMetrics.centerTy}px) scale(1)`;
       logoWrapper.style.transition = 'none';
@@ -589,34 +587,40 @@
 
       void container.offsetWidth; // Force reflow
 
-      // Stage 2 (t=560ms, 30% faster): Emblem shifts to lockup origin, typography smoothly reveals
-      setTimeout(() => {
-        logoWrapper.style.transition = 'transform 0.8s var(--ease-stage2), filter 0.8s var(--ease-stage2)';
-        textBlock.style.transition = 'transform 0.75s var(--ease-stage2) 0.05s, opacity 0.7s var(--ease-stage2) 0.05s, filter 0.7s var(--ease-stage2) 0.05s, text-shadow 0.7s var(--ease-stage2) 0.05s';
+      // Stage 1: Isolated Emblem Breathing in Center (Transitions strictly kept disabled)
+      container.classList.add('stage-1');
+      logoWrapper.classList.add('stage-1');
+      textBlock.classList.add('stage-1');
 
+      // Stage 2 (t=1100ms, relaxed speed decreased by ~30%): Emblem shifts to lockup origin, typography smoothly reveals
+      setTimeout(() => {
         logoWrapper.classList.remove('stage-1');
         logoWrapper.classList.add('stage-2');
+        logoWrapper.style.transition = 'transform 1.5s var(--ease-stage2), filter 1.5s var(--ease-stage2)';
         logoWrapper.style.transform = '';
 
         textBlock.classList.remove('stage-1');
         textBlock.classList.add('stage-2');
+        textBlock.style.transition = 'transform 1.5s var(--ease-stage2) 0.08s, opacity 1.4s var(--ease-stage2) 0.08s, filter 1.4s var(--ease-stage2) 0.08s';
         textBlock.style.opacity = '';
         textBlock.style.transform = '';
-      }, 560);
+      }, 1100);
 
-      // Stage 3 (t=1260ms, 30% faster): Lockup glides into top header bar with fluid deceleration
+      // Stage 3 (t=2450ms, decreased speed by ~30% with ultra-smooth 1.6s transition): Lockup glides into top header bar with fluid deceleration
       setTimeout(() => {
-        container.style.transition = 'transform 0.8s var(--ease-stage3)';
         container.classList.remove('centered', 'stage-1');
         container.classList.add('docked');
+        container.style.transition = 'transform 1.6s var(--ease-stage3)';
         container.style.transform = `translate(0px, 0px) scale(${this.lockupMetrics.dockScale})`;
 
         logoWrapper.classList.add('docked');
+        logoWrapper.style.transition = 'filter 1.4s var(--ease-stage3)';
         textBlock.classList.add('docked');
+        textBlock.style.transition = 'text-shadow 1.4s var(--ease-stage3)';
         headerBar.classList.add('docked', 'visible');
-      }, 1260);
+      }, 2450);
 
-      // Phase 4 (t=1650ms, 30% faster): Smooth transition after Phase 3 - page content glides in gracefully
+      // Phase 4 (t=3250ms): Smooth transition after Phase 3 - page content glides in gracefully
       setTimeout(() => {
         if (publicView) {
           publicView.classList.add('visible');
@@ -627,7 +631,7 @@
 
         this.hasPlayedIntro = true;
         if (callback) callback();
-      }, 1650);
+      }, 3250);
     },
 
     setInstantDocked() {
@@ -4761,7 +4765,7 @@
       // Guarantee body scroll unlock regardless of browser state
       setTimeout(() => {
         document.body.classList.remove('loading-state');
-      }, isInitial ? 1750 : 50);
+      }, isInitial ? 3800 : 50);
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
