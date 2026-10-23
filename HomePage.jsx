@@ -16,12 +16,14 @@ import {
  * Design Theme: Deep Crimson (#8B1014), Crisp White (#FFFFFF), Light Warm Gray (#F9FAFB)
  * Typography: Playfair Display (Serif Headings) & Inter / Plus Jakarta Sans (Sans Body)
  */
-export default function HomePage() {
   const handleScrollToAbout = (e) => {
-    e.preventDefault();
-    const aboutSection = document.getElementById('about');
+    if (e) e.preventDefault();
+    const aboutSection = document.getElementById('about-us') || document.getElementById('about');
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
+      if (window.history && window.history.pushState) {
+        window.history.pushState(null, null, '#about-us');
+      }
     }
   };
 
@@ -99,39 +101,54 @@ export default function HomePage() {
             Welcome to the ISHMT Student Chapter at TKM College of Engineering
           </h1>
 
-          {/* Academic Body Description */}
-          <p className="text-base md:text-lg text-gray-700 leading-relaxed font-sans mb-8">
-            We warmly welcome students, faculty, researchers, and engineering innovators to the Indian
-            Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar
-            College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our
-            chapter is your community to explore thermal sciences, energy transition, and computational
-            fluid dynamics through hands-on workshops, lab research, and national academic collaborations.
-          </p>
-
-          {/* CTA Buttons Row */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* CTA Buttons Row Directly Beneath Heading */}
+          <div className="flex justify-center items-center gap-4 mt-8 flex-wrap">
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#8B1014] hover:bg-[#720c0f] text-white font-medium text-base rounded-md shadow-md hover:shadow-lg transition-all duration-200 group"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#800000] text-white font-medium text-base rounded-full shadow-lg shadow-maroon-900/20 hover:-translate-y-0.5 transition-transform duration-200 group cursor-pointer"
             >
               <span>Become a Member</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+              <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
             </a>
 
-            <button
+            <a
+              href="#about-us"
               onClick={handleScrollToAbout}
-              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 bg-white hover:bg-[#8B1014]/5 text-[#8B1014] border-[1.5px] border-[#8B1014] font-medium text-base rounded-md transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center justify-center px-8 py-3 bg-transparent text-[#800000] border border-maroon-800 font-medium text-base rounded-full hover:bg-maroon-50 transition-all duration-200 cursor-pointer"
             >
               About Us
-            </button>
+            </a>
           </div>
         </div>
       </section>
 
       {/* =====================================================================
-          SECTION B: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER)
+          SECTION B: DEDICATED ABOUT US SECTION (EDITORIAL CONTAINER)
+          ===================================================================== */}
+      <section id="about-us" className="max-w-4xl mx-auto px-6 py-16 text-center bg-white scroll-mt-24">
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#800000] tracking-tight">
+          About Our Chapter
+        </h2>
+        {/* Subtle maroon dividing line */}
+        <div className="w-16 h-1 bg-[#800000] mx-auto mt-4 mb-8 rounded"></div>
+
+        <div className="space-y-6 text-stone-700 text-lg sm:text-xl leading-relaxed font-sans max-w-3xl mx-auto text-center">
+          <p>
+            We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.
+          </p>
+          <p className="text-base sm:text-lg text-stone-600">
+            The Indian Society for Heat and Mass Transfer (ISHMT) is India’s foremost professional body dedicated to disseminating science and engineering across heat transfer, mass transport, thermodynamics, and energy systems. Affiliated regionally with ISHMT-RCT (Trivandrum), the student chapter at TKM College of Engineering serves as a technical hub bridging foundational engineering coursework with modern research and industrial applications.
+          </p>
+          <p className="text-base sm:text-lg text-stone-600">
+            We nurture a collaborative culture where students engage directly with peer researchers, faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC, national laboratories, and academic institutions.
+          </p>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION C: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER)
           ===================================================================== */}
       <section className="bg-[#8B1014] text-white py-8 px-6 shadow-inner">
         <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 text-center">
@@ -145,34 +162,6 @@ export default function HomePage() {
               </span>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* =====================================================================
-          SECTION C: ABOUT THE CHAPTER SECTION (EDITORIAL CONTAINER)
-          ===================================================================== */}
-      <section id="about" className="max-w-5xl mx-auto py-16 md:py-20 px-6 bg-white">
-        <div className="max-w-3xl">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
-            About the Chapter
-          </h2>
-          {/* Crimson Accent Bar */}
-          <div className="w-16 h-1 bg-[#8B1014] mt-3 mb-8"></div>
-        </div>
-
-        <div className="space-y-6 text-gray-700 text-base md:text-lg leading-relaxed font-sans">
-          <p>
-            The Indian Society for Heat and Mass Transfer (ISHMT) is India’s foremost professional body
-            dedicated to disseminating science and engineering across heat transfer, mass transport,
-            thermodynamics, and energy systems. Affiliated regionally with ISHMT-RCT (Trivandrum), the
-            student chapter at TKM College of Engineering serves as a technical hub bridging
-            foundational engineering coursework with modern research and industrial applications.
-          </p>
-          <p>
-            We nurture a collaborative culture where students engage directly with peer researchers,
-            faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC,
-            national laboratories, and academic institutions.
-          </p>
         </div>
       </section>
 

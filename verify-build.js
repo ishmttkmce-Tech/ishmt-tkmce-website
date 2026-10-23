@@ -110,7 +110,11 @@ assert(jsContent.includes('PhotoCropper.init()'), 'main.js initializes PhotoCrop
 assert(jsContent.includes('MemberDetailModal'), 'main.js defines MemberDetailModal module');
 assert(jsContent.includes('MemberDetailModal.init()'), 'main.js initializes MemberDetailModal in App.init');
 assert(jsContent.includes('btn-card-photo'), 'main.js binds .btn-card-photo inline trigger');
-assert(jsContent.includes('btn-member-photo-trigger'), 'main.js binds .btn-member-photo-trigger inspector button');
+assert(cssContent.includes('.academic-btn-primary'), 'style.css defines .academic-btn-primary pill styles');
+assert(cssContent.includes('.academic-btn-outline'), 'style.css defines .academic-btn-outline pill styles');
+assert(cssContent.includes('.academic-about-section'), 'style.css defines .academic-about-section styles');
+assert(jsContent.includes('id="about-us"'), 'main.js defines #about-us dedicated section');
+assert(jsContent.includes('academic-btn-outline'), 'main.js renders secondary About Us button');
 
 // 7. Check .gitignore rules
 const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');

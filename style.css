@@ -3285,72 +3285,75 @@ body.loading-state {
 
 .academic-cta-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-}
-
-@media (min-width: 640px) {
-  .academic-cta-row {
-    flex-direction: row;
-  }
+  margin-top: 2rem;
 }
 
 .academic-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1.75rem;
-  background-color: #8B1014;
+  gap: 0.6rem;
+  padding: 0.75rem 2rem;
+  background-color: #800000;
   color: #FFFFFF !important;
+  font-family: var(--theme-body-font);
   font-weight: 600;
   font-size: 1rem;
-  border-radius: 6px;
-  box-shadow: 0 4px 6px -1px rgba(139, 16, 20, 0.25);
-  transition: all 0.2s ease;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(128, 0, 0, 0.2), 0 4px 6px -4px rgba(128, 0, 0, 0.15);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
   text-decoration: none;
   cursor: pointer;
   border: none;
 }
 
 .academic-btn-primary:hover {
-  background-color: #700c10;
-  box-shadow: 0 10px 15px -3px rgba(139, 16, 20, 0.35);
-  transform: translateY(-1px);
+  background-color: #6a0000;
+  box-shadow: 0 14px 20px -3px rgba(128, 0, 0, 0.3);
+  transform: translateY(-2px);
   color: #FFFFFF !important;
 }
 
-.academic-arrow-icon {
-  width: 1.1rem;
-  height: 1.1rem;
+.academic-arrow-icon,
+.academic-arrow-symbol {
+  display: inline-block;
+  font-size: 1.15rem;
+  line-height: 1;
   transition: transform 0.2s ease;
 }
 
-.academic-btn-primary:hover .academic-arrow-icon {
-  transform: translateX(3px);
+.academic-btn-primary:hover .academic-arrow-icon,
+.academic-btn-primary:hover .academic-arrow-symbol {
+  transform: translateX(4px);
 }
 
 .academic-btn-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 1.75rem;
-  background-color: #FFFFFF;
-  color: #8B1014;
-  border: 1.5px solid #8B1014;
+  padding: 0.75rem 2rem;
+  background-color: transparent;
+  color: #800000;
+  border: 1px solid #800000;
+  font-family: var(--theme-body-font);
   font-weight: 600;
   font-size: 1rem;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
 }
 
 .academic-btn-outline:hover {
-  background-color: rgba(139, 16, 20, 0.06);
-  transform: translateY(-1px);
+  background-color: rgba(128, 0, 0, 0.05);
+  border-color: #800000;
+  color: #800000;
+  transform: translateY(-2px);
 }
 
 /* SECTION B: IMPACT & LEGACY STATISTICS BAR */
@@ -3397,12 +3400,67 @@ body.loading-state {
   font-weight: 500;
 }
 
-/* SECTION C: ABOUT THE CHAPTER SECTION */
+/* SECTION: DEDICATED ABOUT US SECTION (EDITORIAL CONTAINER) */
 .academic-about-section {
-  max-width: 64rem;
+  max-width: 56rem; /* max-w-4xl */
   margin: 0 auto;
-  padding: 4.5rem 1.5rem;
+  padding: 4rem 1.5rem; /* px-6 py-16 */
+  text-align: center;
   background-color: #FFFFFF;
+  scroll-margin-top: 110px;
+}
+
+.academic-about-container {
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.academic-about-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.25rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #800000; /* bold, serif, maroon */
+  letter-spacing: -0.01em;
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .academic-about-heading {
+    font-size: 2.6rem;
+  }
+}
+
+.academic-about-divider {
+  width: 4rem; /* w-16 */
+  height: 4px; /* h-1 */
+  background-color: #800000; /* bg-maroon-800 */
+  margin: 1rem auto 2rem auto; /* mx-auto mt-4 mb-8 */
+  border-radius: 2px;
+}
+
+.academic-about-text {
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.academic-about-body {
+  font-size: 1.15rem; /* text-lg or text-xl */
+  line-height: 1.8; /* leading-relaxed */
+  color: #44403c; /* text-stone-700 */
+  margin-bottom: 1.5rem;
+  font-family: 'Inter', -apple-system, sans-serif;
+  text-align: center;
+}
+
+.academic-about-subtext {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #57534e;
+  margin-bottom: 1.25rem;
+  text-align: center;
 }
 
 .academic-section-heading {

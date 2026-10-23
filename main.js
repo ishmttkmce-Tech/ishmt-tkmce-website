@@ -102,7 +102,7 @@
   const DEFAULT_HOME_DATA = {
     eyebrowBadge: "WELCOME TO ISHMT-TKMCE STUDENT CHAPTER",
     heroHeading: "Welcome to the ISHMT Student Chapter at TKM College of Engineering",
-    heroBody: "We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.",
+    heroBody: "",
     primaryBtnText: "Become a Member",
     primaryBtnUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog",
     secondaryBtnText: "About Us",
@@ -110,7 +110,8 @@
       { id: "stat-1", value: "50+", label: "Student Members & Alumni" },
       { id: "stat-2", value: "1973", label: "National ISHMT Scientific Legacy" }
     ],
-    aboutHeading: "About the Chapter",
+    aboutHeading: "About Our Chapter",
+    aboutIntro: "We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.",
     aboutP1: "The Indian Society for Heat and Mass Transfer (ISHMT) is India’s foremost professional body dedicated to disseminating science and engineering across heat transfer, mass transport, thermodynamics, and energy systems. Affiliated regionally with ISHMT-RCT (Trivandrum), the student chapter at TKM College of Engineering serves as a technical hub bridging foundational engineering coursework with modern research and industrial applications.",
     aboutP2: "We nurture a collaborative culture where students engage directly with peer researchers, faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC, national laboratories, and academic institutions.",
     offersHeading: "What We Offer",
@@ -361,7 +362,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v18_hierarchical_modal';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v19_hero_about';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -378,7 +379,8 @@
           'ishmt_site_blueprint_v9_rct_logo', 'ishmt_site_blueprint_v10_studio', 'ishmt_site_blueprint_v11_motion_audit',
           'ishmt_site_blueprint_v12_gallery_cleanup', 'ishmt_site_blueprint_v13_members_update',
           'ishmt_site_blueprint_v14_footer_cleanup', 'ishmt_site_blueprint_v15_team_update',
-          'ishmt_site_blueprint_v16_photo_cropper_security', 'ishmt_site_blueprint_v17_live_sync'
+          'ishmt_site_blueprint_v16_photo_cropper_security', 'ishmt_site_blueprint_v17_live_sync',
+          'ishmt_site_blueprint_v18_hierarchical_modal'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -1029,9 +1031,12 @@
       if (aboutBtn) {
         aboutBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          const aboutSection = document.getElementById('about');
+          const aboutSection = document.getElementById('about-us') || document.getElementById('about');
           if (aboutSection) {
             aboutSection.scrollIntoView({ behavior: 'smooth' });
+            if (window.history && window.history.pushState) {
+              window.history.pushState(null, null, '#about-us');
+            }
           }
         });
       }
@@ -1066,28 +1071,39 @@
                 ${this.escapeHtml(home.heroHeading)}
               </h1>
 
-              <!-- Academic Body Description -->
-              <p class="academic-hero-body" ${isAdminMode ? 'data-edit-path="homeData.heroBody" title="Click to edit body text"' : ''}>
-                ${this.escapeHtml(home.heroBody)}
-              </p>
-
-              <!-- CTA Buttons Row -->
+              <!-- CTA Buttons Row (Directly Beneath Main Heading) -->
               <div class="academic-cta-row">
                 <a href="${home.primaryBtnUrl}" target="_blank" rel="noopener noreferrer" class="academic-btn-primary">
-                  <span ${isAdminMode ? 'data-edit-path="homeData.primaryBtnText" title="Click to edit button label"' : ''}>${this.escapeHtml(home.primaryBtnText)}</span>
-                  <svg class="academic-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
+                  <span ${isAdminMode ? 'data-edit-path="homeData.primaryBtnText" title="Click to edit button label"' : ''}>${this.escapeHtml(home.primaryBtnText || 'Become a Member')}</span>
+                  <span class="academic-arrow-symbol" aria-hidden="true">→</span>
                 </a>
-                <button type="button" class="academic-btn-outline" id="academic-about-btn" ${isAdminMode ? 'data-edit-path="homeData.secondaryBtnText" title="Click to edit button label"' : ''}>
-                  ${this.escapeHtml(home.secondaryBtnText)}
-                </button>
+                <a href="#about-us" class="academic-btn-outline" id="academic-about-btn" ${isAdminMode ? 'data-edit-path="homeData.secondaryBtnText" title="Click to edit button label"' : ''}>
+                  ${this.escapeHtml(home.secondaryBtnText || 'About Us')}
+                </a>
               </div>
             </div>
           </section>
 
-          <!-- SECTION B: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER) -->
+          <!-- SECTION B: DEDICATED ABOUT US SECTION (EDITORIAL CONTAINER) -->
+          <section id="about-us" class="academic-about-section">
+            <div class="academic-about-container">
+              <h2 class="academic-about-heading" ${isAdminMode ? 'data-edit-path="homeData.aboutHeading" title="Click to edit heading"' : ''}>${this.escapeHtml(home.aboutHeading || 'About Our Chapter')}</h2>
+              <div class="academic-about-divider"></div>
+              <div class="academic-about-text">
+                <p class="academic-about-body" ${isAdminMode ? 'data-edit-path="homeData.aboutIntro" title="Click to edit intro paragraph"' : ''}>
+                  ${this.escapeHtml(home.aboutIntro || "We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.")}
+                </p>
+                ${home.aboutP1 ? `
+                  <p class="academic-about-subtext" ${isAdminMode ? 'data-edit-path="homeData.aboutP1" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP1)}</p>
+                ` : ''}
+                ${home.aboutP2 ? `
+                  <p class="academic-about-subtext" ${isAdminMode ? 'data-edit-path="homeData.aboutP2" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP2)}</p>
+                ` : ''}
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION C: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER) -->
           <section class="academic-stats-banner">
             <div class="academic-stats-container">
               ${(home.stats || []).map((s, idx) => `
@@ -1107,18 +1123,6 @@
                   <span style="font-weight: 700; font-size: 0.9rem;">+ Add Milestone Stat</span>
                 </div>
               ` : ''}
-            </div>
-          </section>
-
-          <!-- SECTION C: ABOUT THE CHAPTER SECTION (EDITORIAL CONTAINER) -->
-          <section id="about" class="academic-about-section">
-            <div class="academic-about-container">
-              <h2 class="academic-section-heading" ${isAdminMode ? 'data-edit-path="homeData.aboutHeading" title="Click to edit heading"' : ''}>${this.escapeHtml(home.aboutHeading)}</h2>
-              <div class="academic-crimson-bar"></div>
-              <div class="academic-about-text">
-                <p ${isAdminMode ? 'data-edit-path="homeData.aboutP1" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP1)}</p>
-                <p ${isAdminMode ? 'data-edit-path="homeData.aboutP2" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP2)}</p>
-              </div>
             </div>
           </section>
 
@@ -3346,11 +3350,6 @@
             </div>
 
             <div class="form-group">
-              <label>Hero Body Description</label>
-              <textarea class="form-textarea" rows="4" data-inspector-path="homeData.heroBody">${PublicRenderer.escapeHtml(home.heroBody)}</textarea>
-            </div>
-
-            <div class="form-group">
               <label>Primary Button Label</label>
               <input type="text" class="form-input" data-inspector-path="homeData.primaryBtnText" value="${PublicRenderer.escapeHtml(home.primaryBtnText)}">
             </div>
@@ -3371,12 +3370,17 @@
 
             <div class="form-group">
               <label>About Heading</label>
-              <input type="text" class="form-input" data-inspector-path="homeData.aboutHeading" value="${PublicRenderer.escapeHtml(home.aboutHeading)}">
+              <input type="text" class="form-input" data-inspector-path="homeData.aboutHeading" value="${PublicRenderer.escapeHtml(home.aboutHeading || 'About Our Chapter')}">
+            </div>
+
+            <div class="form-group">
+              <label>About Us Main / Intro Paragraph</label>
+              <textarea class="form-textarea" rows="4" data-inspector-path="homeData.aboutIntro">${PublicRenderer.escapeHtml(home.aboutIntro || home.heroBody || '')}</textarea>
             </div>
 
             <div class="form-group">
               <label>About Paragraph 1</label>
-              <textarea class="form-textarea" rows="3" data-inspector-path="homeData.aboutP1">${PublicRenderer.escapeHtml(home.aboutP1)}</textarea>
+              <textarea class="form-textarea" rows="3" data-inspector-path="homeData.aboutP1">${PublicRenderer.escapeHtml(home.aboutP1 || '')}</textarea>
             </div>
 
             <div class="form-group">
