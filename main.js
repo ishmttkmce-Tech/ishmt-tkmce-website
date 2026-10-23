@@ -561,16 +561,18 @@
         return;
       }
 
-      // Temporarily lock body scroll during the 1.8s intro animation
+      // Temporarily lock body scroll during intro animation
       document.body.classList.add('loading-state');
 
       this.calculateMetrics();
 
       // Reset all docked and stage states
       container.classList.remove('docked');
-      container.classList.add('centered');
+      container.classList.add('centered', 'stage-1');
       logoWrapper.classList.remove('stage-2', 'docked');
+      logoWrapper.classList.add('stage-1');
       textBlock.classList.remove('stage-2', 'docked');
+      textBlock.classList.add('stage-1');
       headerBar.classList.remove('docked', 'visible');
       if (publicView) {
         publicView.classList.remove('visible');
@@ -587,18 +589,11 @@
 
       void container.offsetWidth; // Force reflow
 
-      // Re-enable CSS transitions
-      container.style.transition = '';
-      logoWrapper.style.transition = '';
-      textBlock.style.transition = '';
-
-      // Stage 1: Isolated Emblem Breathing in Center
-      container.classList.add('stage-1');
-      logoWrapper.classList.add('stage-1');
-      textBlock.classList.add('stage-1');
-
-      // Stage 2 (t=800ms): Emblem shifts to lockup origin, typography smoothly reveals
+      // Stage 2 (t=560ms, 30% faster): Emblem shifts to lockup origin, typography smoothly reveals
       setTimeout(() => {
+        logoWrapper.style.transition = 'transform 0.8s var(--ease-stage2), filter 0.8s var(--ease-stage2)';
+        textBlock.style.transition = 'transform 0.75s var(--ease-stage2) 0.05s, opacity 0.7s var(--ease-stage2) 0.05s, filter 0.7s var(--ease-stage2) 0.05s, text-shadow 0.7s var(--ease-stage2) 0.05s';
+
         logoWrapper.classList.remove('stage-1');
         logoWrapper.classList.add('stage-2');
         logoWrapper.style.transform = '';
@@ -607,10 +602,11 @@
         textBlock.classList.add('stage-2');
         textBlock.style.opacity = '';
         textBlock.style.transform = '';
-      }, 800);
+      }, 560);
 
-      // Stage 3 (t=1800ms): Lockup glides into top header bar with fluid deceleration
+      // Stage 3 (t=1260ms, 30% faster): Lockup glides into top header bar with fluid deceleration
       setTimeout(() => {
+        container.style.transition = 'transform 0.8s var(--ease-stage3)';
         container.classList.remove('centered', 'stage-1');
         container.classList.add('docked');
         container.style.transform = `translate(0px, 0px) scale(${this.lockupMetrics.dockScale})`;
@@ -618,9 +614,9 @@
         logoWrapper.classList.add('docked');
         textBlock.classList.add('docked');
         headerBar.classList.add('docked', 'visible');
-      }, 1800);
+      }, 1260);
 
-      // Phase 4 (t=2350ms): Smooth transition after Phase 3 - page content glides in gracefully
+      // Phase 4 (t=1650ms, 30% faster): Smooth transition after Phase 3 - page content glides in gracefully
       setTimeout(() => {
         if (publicView) {
           publicView.classList.add('visible');
@@ -631,7 +627,7 @@
 
         this.hasPlayedIntro = true;
         if (callback) callback();
-      }, 2350);
+      }, 1650);
     },
 
     setInstantDocked() {
@@ -4765,7 +4761,7 @@
       // Guarantee body scroll unlock regardless of browser state
       setTimeout(() => {
         document.body.classList.remove('loading-state');
-      }, isInitial ? 2000 : 50);
+      }, isInitial ? 1750 : 50);
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },

@@ -10,15 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=20261024_dynamic_events">
+  <link rel="stylesheet" href="style.css?v=20261024_smooth_center_motion">
   <script>
     // Safeguard: Ensure body scroll is unlocked seamlessly
     (function() {
       function unlockScroll() {
         if (document.body) document.body.classList.remove('loading-state');
       }
-      window.addEventListener('DOMContentLoaded', unlockScroll);
-      setTimeout(unlockScroll, 1200);
+      setTimeout(unlockScroll, 1800);
     })();
   </script>
 </head>
@@ -70,7 +69,7 @@
   </div>
 
   <!-- Center-to-Docked Unified Logo & Typography Lockup (Direct Child of Body) -->
-  <div id="lockup-container" class="lockup-container centered" title="ISHMT TKMCE Students Chapter">
+  <div id="lockup-container" class="lockup-container centered stage-1" title="ISHMT TKMCE Students Chapter">
     <div id="lockup" class="lockup">
       <!-- Left Side: Circular Emblem -->
       <div id="logo-wrapper" class="logo-wrapper stage-1">
@@ -650,6 +649,6 @@
   <!-- Global Floating Toast Notification -->
   <div id="toast-notification" class="toast-notification" role="alert" aria-live="polite"></div>
 
-  <script src="main.js?v=20261024_dynamic_events"></script>
+  <script src="main.js?v=20261024_smooth_center_motion"></script>
 </body>
 </html>
