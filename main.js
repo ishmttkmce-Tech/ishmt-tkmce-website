@@ -164,6 +164,47 @@
     }
   };
 
+  const DEFAULT_EVENTS_DATA = {
+    events: [
+      {
+        id: "evt-1",
+        title: "Masterclass on Computational Heat & Fluid Mechanics (CFD 2026)",
+        category: "Workshop",
+        dateTime: "2026-11-12T10:00",
+        venue: "Mechanical CAD Lab, TKMCE",
+        registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform",
+        description: "Hands-on computational workshop covering boundary layer discretization, meshing strategies, and finite volume thermal simulations using OpenFOAM and ANSYS Fluent.",
+        status: "Upcoming",
+        posterUrl: "",
+        createdAt: "2026-10-23T10:00:00.000Z"
+      },
+      {
+        id: "evt-2",
+        title: "Cryogenic Cooling & Space Propulsion Thermal Management",
+        category: "Webinar",
+        dateTime: "2026-11-28T18:30",
+        venue: "Google Meet (Hybrid Stream)",
+        registrationLink: "https://meet.google.com/ishmt-tkmce-webinar",
+        description: "Distinguished guest lecture by scientists from ISRO LPSC covering thermal protection systems, liquid hydrogen boil-off mitigation, and regenerative rocket engine cooling.",
+        status: "Upcoming",
+        posterUrl: "",
+        createdAt: "2026-10-23T11:00:00.000Z"
+      },
+      {
+        id: "evt-3",
+        title: "Official Inauguration of ISHMT TKMCE Chapter 2026–27",
+        category: "Inauguration",
+        dateTime: "2026-09-23T14:30",
+        venue: "APJ Abdul Kalam Auditorium, TKMCE",
+        registrationLink: "",
+        description: "Grand inaugural ceremony of the ISHMT Student Chapter at TKMCE, presided over by Regional Chapter dignitaries, faculty mentors, and mechanical engineering scholars.",
+        status: "Completed",
+        posterUrl: "",
+        createdAt: "2026-09-20T10:00:00.000Z"
+      }
+    ]
+  };
+
   // Helper Functions for Deep Operations
   function deepClone(obj) {
     if (obj === undefined) return undefined;
@@ -246,6 +287,7 @@
     execomData: DEFAULT_EXECOM_DATA,
     homeData: DEFAULT_HOME_DATA,
     contactData: DEFAULT_CONTACT_DATA,
+    eventsData: DEFAULT_EVENTS_DATA,
     inlineOverrides: {},
     pages: {
       '/': {
@@ -265,27 +307,10 @@
         slug: '/events',
         sections: [
           {
-            id: 'sec-events-hero',
-            type: 'hero',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'crimson-tint', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'ISHMT-TKMCE Student Chapter',
-              title: 'Events & Workshops',
-              subtitle: 'Official schedule and announcements for technical boot camps, guest lectures, colloquiums, and chapter competitions will be published here.',
-              button1Text: '',
-              button1Url: ''
-            }
-          },
-          {
-            id: 'sec-events-grid',
-            type: 'grid-cards',
-            layout: { columns: 2, containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'left', visible: true },
-            content: {
-              eyebrow: '',
-              title: '',
-              description: '',
-              items: []
-            }
+            id: 'sec-academic-events',
+            type: 'academic-events',
+            layout: { containerWidth: 'full', paddingY: 'none', bgType: 'canvas', visible: true },
+            content: {}
           }
         ]
       },
@@ -337,7 +362,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v20_join_events';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v21_dynamic_events';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -355,7 +380,8 @@
           'ishmt_site_blueprint_v12_gallery_cleanup', 'ishmt_site_blueprint_v13_members_update',
           'ishmt_site_blueprint_v14_footer_cleanup', 'ishmt_site_blueprint_v15_team_update',
           'ishmt_site_blueprint_v16_photo_cropper_security', 'ishmt_site_blueprint_v17_live_sync',
-          'ishmt_site_blueprint_v18_hierarchical_modal', 'ishmt_site_blueprint_v19_hero_about'
+          'ishmt_site_blueprint_v18_hierarchical_modal', 'ishmt_site_blueprint_v19_hero_about',
+          'ishmt_site_blueprint_v20_join_events'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -694,6 +720,7 @@
       this.initExecomInteractivity(contentEl);
       this.initAcademicHomeInteractivity(contentEl);
       this.initAcademicGalleryInteractivity(contentEl);
+      this.initAcademicEventsInteractivity(contentEl);
       this.initAcademicContactInteractivity(contentEl);
       this.initGlobalFooterInteractivity(contentEl);
     },
@@ -725,6 +752,8 @@
 
       if (type === 'academic-home') {
         innerContent = this.generateAcademicHomeHtml(isAdminMode);
+      } else if (type === 'academic-events') {
+        innerContent = this.generateAcademicEventsHtml(isAdminMode);
       } else if (type === 'academic-contact') {
         innerContent = this.generateAcademicContactHtml(isAdminMode);
       } else if (type === 'execom-directory') {
@@ -821,7 +850,7 @@
         }
       }
 
-      const isCustomFullBleed = type === 'academic-home' || type === 'academic-contact' || type === 'execom-directory';
+      const isCustomFullBleed = type === 'academic-home' || type === 'academic-events' || type === 'academic-contact' || type === 'execom-directory';
       const widthClass = layout.containerWidth || 'boxed';
       const padClass = `pad-${layout.paddingY || 'md'}`;
       const bgClass = `bg-${layout.bgType || 'canvas'}`;
@@ -1157,6 +1186,646 @@
           </section>
         </div>
       `;
+    },
+
+    formatEventDate(dtStr) {
+      if (!dtStr) return 'Date & Time TBA';
+      try {
+        const dt = new Date(dtStr);
+        if (isNaN(dt.getTime())) return dtStr;
+        return dt.toLocaleDateString('en-US', {
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        });
+      } catch (e) {
+        return dtStr;
+      }
+    },
+
+    buildGoogleCalendarUrl(event) {
+      if (!event || !event.dateTime) return '#';
+      try {
+        const startDt = new Date(event.dateTime);
+        if (isNaN(startDt.getTime())) return '#';
+        const endDt = new Date(startDt.getTime() + 2 * 60 * 60 * 1000);
+        const toIsoClean = (d) => d.toISOString().replace(/-|:|\.\d\d\d/g, '');
+        const dates = `${toIsoClean(startDt)}/${toIsoClean(endDt)}`;
+        const title = encodeURIComponent(event.title || 'ISHMT Event');
+        const details = encodeURIComponent(event.description || '');
+        const location = encodeURIComponent(event.venue || 'TKMCE');
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+      } catch (e) {
+        return '#';
+      }
+    },
+
+    processAndSanitizePoster(file, callback) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          // 16:9 aspect ratio, max-width 1280px
+          const targetMaxWidth = 1280;
+          const targetWidth = Math.min(img.width || 1280, targetMaxWidth);
+          const targetHeight = Math.round(targetWidth * (9 / 16));
+
+          const canvas = document.createElement('canvas');
+          canvas.width = targetWidth;
+          canvas.height = targetHeight;
+          const ctx = canvas.getContext('2d');
+
+          // Center crop to 16:9
+          const imgRatio = img.width / img.height;
+          const targetRatio = 16 / 9;
+          let sx = 0, sy = 0, sWidth = img.width, sHeight = img.height;
+
+          if (imgRatio > targetRatio) {
+            sWidth = img.height * targetRatio;
+            sx = (img.width - sWidth) / 2;
+          } else {
+            sHeight = img.width / targetRatio;
+            sy = (img.height - sHeight) / 2;
+          }
+
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetWidth, targetHeight);
+
+          // Export as compressed .webp data URL (strips all EXIF/GPS metadata)
+          const webpDataUrl = canvas.toDataURL('image/webp', 0.88);
+          if (typeof callback === 'function') {
+            callback(webpDataUrl);
+          }
+        };
+        img.onerror = () => {
+          console.error('Failed to load image for sanitization.');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+
+    generateAcademicEventsHtml(isAdminMode = false) {
+      const isAdmin = isAdminMode || AuthService.isAuthenticated();
+      const blueprint = SiteStore.get();
+      const eventsObj = (blueprint && blueprint.eventsData) || DEFAULT_EVENTS_DATA;
+      const events = (eventsObj && Array.isArray(eventsObj.events)) ? eventsObj.events : (DEFAULT_EVENTS_DATA.events || []);
+
+      const upcomingCount = events.filter(e => (e.status || 'Upcoming') === 'Upcoming').length;
+      const completedCount = events.filter(e => (e.status || 'Upcoming') === 'Completed').length;
+
+      return `
+        <div class="events-page-wrap">
+          <!-- HERO BANNER -->
+          <section class="events-hero-section">
+            <div class="events-hero-container">
+              <div class="events-hero-eyebrow">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>ISHMT-TKMCE Student Chapter</span>
+              </div>
+              <h1 class="events-hero-title">Events &amp; Workshops</h1>
+              <p class="events-hero-desc">Explore our flagship technical conferences, national webinars, computational fluid dynamics masterclasses, and thermal engineering symposia.</p>
+            </div>
+          </section>
+
+          <!-- PART 1: ADMIN-ONLY EVENT MANAGEMENT INTERFACE -->
+          ${isAdmin ? this.generateEventsAdminPanelHtml(events) : ''}
+
+          <!-- PART 2: PUBLIC TABBED DISPLAY SECTION -->
+          <section class="events-public-section">
+            <!-- TABS -->
+            <div class="events-tabs-container">
+              <button type="button" class="events-tab-pill active" data-event-tab="upcoming">
+                <span>Upcoming Events</span>
+                <span class="events-tab-badge" id="badge-upcoming-count">${upcomingCount}</span>
+              </button>
+              <button type="button" class="events-tab-pill" data-event-tab="completed">
+                <span>Past Events</span>
+                <span class="events-tab-badge" id="badge-completed-count">${completedCount}</span>
+              </button>
+            </div>
+
+            <!-- CARDS GRID -->
+            <div id="events-grid-container" class="events-cards-grid">
+              ${this.generateEventCardsListHtml(events, 'upcoming')}
+            </div>
+          </section>
+        </div>
+      `;
+    },
+
+    generateEventsAdminPanelHtml(events) {
+      return `
+        <div class="events-admin-panel" id="events-admin-dashboard">
+          <div class="events-admin-card">
+            <div class="events-admin-header">
+              <div class="events-admin-header-left">
+                <span class="events-admin-badge">Admin Only</span>
+                <h2 class="events-admin-title">Event Management Dashboard</h2>
+              </div>
+              <span style="font-size: 0.82rem; opacity: 0.85;">Strip EXIF • 16:9 WebP Auto-Sanitize</span>
+            </div>
+
+            <div class="events-admin-body">
+              <form id="admin-event-form">
+                <input type="hidden" id="admin-event-edit-id" value="" />
+                <input type="hidden" id="admin-event-poster-data" value="" />
+
+                <div class="events-form-grid">
+                  <div class="events-form-field col-span-2">
+                    <label class="events-form-label" for="admin-event-title">Event Title *</label>
+                    <input type="text" id="admin-event-title" class="events-form-input" placeholder="e.g. Masterclass on Computational Heat &amp; Fluid Mechanics" required />
+                  </div>
+
+                  <div class="events-form-field">
+                    <label class="events-form-label" for="admin-event-category">Event Category *</label>
+                    <select id="admin-event-category" class="events-form-select">
+                      <option value="Workshop">Workshop</option>
+                      <option value="Webinar">Webinar</option>
+                      <option value="Conference">Conference</option>
+                      <option value="Inauguration">Inauguration</option>
+                    </select>
+                  </div>
+
+                  <div class="events-form-field">
+                    <label class="events-form-label" for="admin-event-datetime">Date &amp; Time *</label>
+                    <input type="datetime-local" id="admin-event-datetime" class="events-form-input" required />
+                  </div>
+
+                  <div class="events-form-field">
+                    <label class="events-form-label" for="admin-event-venue">Venue / Platform *</label>
+                    <input type="text" id="admin-event-venue" class="events-form-input" placeholder="e.g. Seminar Hall or Google Meet" required />
+                  </div>
+
+                  <div class="events-form-field">
+                    <label class="events-form-label" for="admin-event-status">Event Status *</label>
+                    <select id="admin-event-status" class="events-form-select">
+                      <option value="Upcoming">Upcoming</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                  </div>
+
+                  <div class="events-form-field col-span-2">
+                    <label class="events-form-label" for="admin-event-reg-link">Registration Link (URL)</label>
+                    <input type="url" id="admin-event-reg-link" class="events-form-input" placeholder="https://forms.gle/... or https://meet.google.com/..." />
+                  </div>
+
+                  <div class="events-form-field col-span-2">
+                    <label class="events-form-label" for="admin-event-desc">Short Description / Prerequisites</label>
+                    <textarea id="admin-event-desc" class="events-form-textarea" rows="3" placeholder="Provide event highlights, prerequisites, speakers, or syllabus details..."></textarea>
+                  </div>
+
+                  <div class="events-form-field col-span-2">
+                    <label class="events-form-label">Poster Image Upload (Canvas Sanitized to 16:9 WebP, max 1280px)</label>
+                    <div class="events-poster-dropzone" id="admin-poster-dropzone">
+                      <input type="file" id="admin-event-poster-file" accept="image/*" style="display: none;" />
+                      <div id="admin-dropzone-prompt">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 0.5rem;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        <p style="margin: 0; font-weight: 600; color: #374151;">Click or drag an image here to upload event poster</p>
+                        <p style="margin: 0.35rem 0 0; font-size: 0.8rem; color: #6B7280;">Canvas automatically strips EXIF/GPS metadata, centers to 16:9, and compresses to WebP</p>
+                      </div>
+                      <div class="events-poster-preview-wrap" id="admin-poster-preview-wrap" style="display: none;">
+                        <img id="admin-poster-preview-img" class="events-poster-preview-img" alt="Poster preview" draggable="false" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="events-form-actions">
+                  <button type="submit" class="events-btn-save" id="admin-event-submit-btn">Publish Event</button>
+                  <button type="button" class="events-btn-cancel" id="admin-event-cancel-btn">Reset Form</button>
+                </div>
+              </form>
+
+              <!-- EVENT ROSTER TABLE -->
+              <div class="events-roster-section">
+                <h3 class="events-roster-title">Current Event Roster (${events.length})</h3>
+                <div class="events-roster-table-wrap">
+                  <table class="events-roster-table">
+                    <thead>
+                      <tr>
+                        <th>Poster</th>
+                        <th>Title &amp; Category</th>
+                        <th>Date &amp; Time</th>
+                        <th>Venue</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="events-roster-tbody">
+                      ${this.generateEventRosterRowsHtml(events)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    },
+
+    generateEventRosterRowsHtml(events) {
+      if (!events || events.length === 0) {
+        return `<tr><td colspan="6" style="text-align: center; padding: 2rem; color: #6B7280;">No events in roster. Use the form above to add an event.</td></tr>`;
+      }
+      return events.map(evt => {
+        const posterSrc = evt.posterUrl || '';
+        const categoryClass = `category-${(evt.category || 'Workshop').toLowerCase()}`;
+        const statusColor = evt.status === 'Completed' ? '#6B7280' : '#047857';
+        return `
+          <tr data-roster-event-id="${evt.id}">
+            <td>
+              ${posterSrc ? `
+                <img src="${posterSrc}" alt="${this.escapeHtml(evt.title)}" class="events-table-poster" draggable="false" oncontextmenu="return false;" />
+              ` : `
+                <div class="events-table-poster" style="display: flex; align-items: center; justify-content: center; background: #800000; color: #fff; font-size: 0.65rem; font-weight: 700;">16:9</div>
+              `}
+            </td>
+            <td>
+              <div style="font-weight: 700; color: #111827; margin-bottom: 0.2rem;">${this.escapeHtml(evt.title)}</div>
+              <span class="event-category-badge ${categoryClass}" style="position: static; display: inline-block; padding: 0.15rem 0.55rem; font-size: 0.7rem;">${this.escapeHtml(evt.category || 'Workshop')}</span>
+            </td>
+            <td style="white-space: nowrap;">${this.formatEventDate(evt.dateTime)}</td>
+            <td>${this.escapeHtml(evt.venue || 'TBA')}</td>
+            <td>
+              <span style="display: inline-block; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; background: ${evt.status === 'Completed' ? '#F3F4F6' : '#ECFDF5'}; color: ${statusColor};">
+                ${this.escapeHtml(evt.status || 'Upcoming')}
+              </span>
+            </td>
+            <td>
+              <div class="events-table-actions">
+                <button type="button" class="events-action-btn edit" data-action="edit-event" data-event-id="${evt.id}" title="Edit Event">Edit</button>
+                <button type="button" class="events-action-btn delete" data-action="delete-event" data-event-id="${evt.id}" title="Delete Event">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    },
+
+    generateEventCardsListHtml(events, tab = 'upcoming') {
+      const isUpcomingTab = tab === 'upcoming';
+      const filtered = events.filter(evt => {
+        const status = evt.status || 'Upcoming';
+        return isUpcomingTab ? (status === 'Upcoming') : (status === 'Completed');
+      });
+
+      if (filtered.length === 0) {
+        return `
+          <div class="events-empty-state-box" style="grid-column: 1 / -1;">
+            <div class="events-empty-state-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <h3 class="events-empty-state-title">${isUpcomingTab ? 'No Upcoming Events Scheduled' : 'No Past Events Archived'}</h3>
+            <p class="events-empty-state-text">${isUpcomingTab ? 'Stay tuned! New technical workshops, guest seminars, and chapter conclaves will be published here.' : 'Archived event summaries and past chapter activity records will appear here.'}</p>
+          </div>
+        `;
+      }
+
+      return filtered.map(evt => this.generateSingleEventCardHtml(evt)).join('');
+    },
+
+    generateSingleEventCardHtml(evt) {
+      const isUpcoming = (evt.status || 'Upcoming') === 'Upcoming';
+      const category = evt.category || 'Workshop';
+      const categoryClass = `category-${category.toLowerCase()}`;
+      const formattedDate = this.formatEventDate(evt.dateTime);
+      const calendarUrl = this.buildGoogleCalendarUrl(evt);
+
+      const posterHtml = evt.posterUrl ? `
+        <img 
+          src="${evt.posterUrl}" 
+          alt="${this.escapeHtml(evt.title)}" 
+          class="event-poster-img"
+          draggable="false"
+          oncontextmenu="return false;"
+        />
+      ` : `
+        <div class="event-poster-fallback" draggable="false" oncontextmenu="return false;">
+          <div class="event-poster-fallback-emblem">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+          </div>
+          <h4 class="event-poster-fallback-title">${this.escapeHtml(evt.title)}</h4>
+          <span class="event-poster-fallback-sub">ISHMT TKMCE • ${this.escapeHtml(category)}</span>
+        </div>
+      `;
+
+      return `
+        <div class="event-display-card" data-event-id="${evt.id}">
+          <!-- Poster Container (16:9 ratio, anti-drag/anti-copy) -->
+          <div class="event-poster-container" draggable="false" oncontextmenu="return false;">
+            <span class="event-category-badge ${categoryClass}">
+              ${this.escapeHtml(category)}
+            </span>
+            ${posterHtml}
+          </div>
+
+          <!-- Card Body -->
+          <div class="event-card-body">
+            <h3 class="event-card-title">${this.escapeHtml(evt.title)}</h3>
+
+            <!-- Logistics Ribbon -->
+            <div class="event-logistics-ribbon">
+              <div class="event-logistics-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>${formattedDate}</span>
+              </div>
+              <div class="event-logistics-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>${this.escapeHtml(evt.venue || 'TBA')}</span>
+              </div>
+            </div>
+
+            <!-- Description (2-line clamped) -->
+            <p class="event-card-description">${this.escapeHtml(evt.description || 'Join us for this premier technical initiative hosted by the ISHMT Student Chapter.')}</p>
+
+            <!-- CTA Row -->
+            <div class="event-card-cta-row">
+              ${isUpcoming ? `
+                <a 
+                  href="${evt.registrationLink || '#'}" 
+                  ${evt.registrationLink ? 'target="_blank" rel="noopener noreferrer"' : ''}
+                  class="event-btn-register"
+                >
+                  <span>Register Now</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <a 
+                  href="${calendarUrl}" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="event-btn-calendar"
+                  title="Add event to your Google Calendar"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg>
+                  <span>Add to Google Calendar</span>
+                </a>
+              ` : `
+                <button type="button" class="event-btn-concluded" disabled>
+                  Registration Closed • Event Concluded
+                </button>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    },
+
+    initAcademicEventsInteractivity(contentEl) {
+      if (!contentEl) return;
+
+      // 1. Tabbed Navigation Interaction
+      const tabsContainer = contentEl.querySelector('.events-tabs-container');
+      if (tabsContainer) {
+        tabsContainer.addEventListener('click', (e) => {
+          const tabPill = e.target.closest('[data-event-tab]');
+          if (!tabPill) return;
+
+          tabsContainer.querySelectorAll('.events-tab-pill').forEach(pill => pill.classList.remove('active'));
+          tabPill.classList.add('active');
+
+          const tab = tabPill.getAttribute('data-event-tab');
+          const blueprint = SiteStore.get();
+          const events = (blueprint.eventsData && blueprint.eventsData.events) || DEFAULT_EVENTS_DATA.events;
+          const gridContainer = contentEl.querySelector('#events-grid-container');
+          if (gridContainer) {
+            gridContainer.innerHTML = PublicRenderer.generateEventCardsListHtml(events, tab);
+          }
+        });
+      }
+
+      // 2. Admin Dashboard Form & Sanitization (Only runs if Admin panel is rendered in DOM)
+      const form = contentEl.querySelector('#admin-event-form');
+      if (form) {
+        const dropzone = contentEl.querySelector('#admin-poster-dropzone');
+        const fileInput = contentEl.querySelector('#admin-event-poster-file');
+        const previewWrap = contentEl.querySelector('#admin-poster-preview-wrap');
+        const previewImg = contentEl.querySelector('#admin-poster-preview-img');
+        const posterDataInput = contentEl.querySelector('#admin-event-poster-data');
+        const dropPrompt = contentEl.querySelector('#admin-dropzone-prompt');
+
+        const handlePosterFile = (file) => {
+          PublicRenderer.processAndSanitizePoster(file, (sanitizedUrl) => {
+            if (posterDataInput) posterDataInput.value = sanitizedUrl;
+            if (previewImg) previewImg.src = sanitizedUrl;
+            if (previewWrap) previewWrap.style.display = 'block';
+            if (dropPrompt) dropPrompt.style.display = 'none';
+            App.showToast('Poster sanitized to 16:9 WebP (EXIF stripped).');
+          });
+        };
+
+        if (dropzone && fileInput) {
+          dropzone.addEventListener('click', (e) => {
+            if (e.target !== fileInput) {
+              fileInput.click();
+            }
+          });
+
+          dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = '#800000';
+            dropzone.style.background = '#FBF5F5';
+          });
+
+          dropzone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = 'rgba(128, 0, 0, 0.3)';
+            dropzone.style.background = '#FDFBFB';
+          });
+
+          dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = 'rgba(128, 0, 0, 0.3)';
+            dropzone.style.background = '#FDFBFB';
+            const files = e.dataTransfer.files;
+            if (files && files[0] && files[0].type.startsWith('image/')) {
+              handlePosterFile(files[0]);
+            }
+          });
+
+          fileInput.addEventListener('change', () => {
+            if (fileInput.files && fileInput.files[0]) {
+              handlePosterFile(fileInput.files[0]);
+            }
+          });
+        }
+
+        // Form Submit
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const editId = form.querySelector('#admin-event-edit-id').value;
+          const title = form.querySelector('#admin-event-title').value.trim();
+          const category = form.querySelector('#admin-event-category').value;
+          const dateTime = form.querySelector('#admin-event-datetime').value;
+          const venue = form.querySelector('#admin-event-venue').value.trim();
+          const status = form.querySelector('#admin-event-status').value;
+          const registrationLink = form.querySelector('#admin-event-reg-link').value.trim();
+          const description = form.querySelector('#admin-event-desc').value.trim();
+          const posterUrl = form.querySelector('#admin-event-poster-data').value;
+
+          if (!title || !dateTime || !venue) {
+            alert('Please fill in all required fields (Title, Date & Time, Venue).');
+            return;
+          }
+
+          const blueprint = SiteStore.get();
+          if (!blueprint.eventsData) blueprint.eventsData = deepClone(DEFAULT_EVENTS_DATA);
+          if (!Array.isArray(blueprint.eventsData.events)) blueprint.eventsData.events = [];
+
+          if (editId) {
+            const idx = blueprint.eventsData.events.findIndex(ev => ev.id === editId);
+            if (idx !== -1) {
+              blueprint.eventsData.events[idx] = {
+                ...blueprint.eventsData.events[idx],
+                title, category, dateTime, venue, status, registrationLink, description, posterUrl
+              };
+              App.showToast('Event updated successfully!');
+            }
+          } else {
+            const newEvt = {
+              id: 'evt-' + Date.now(),
+              title,
+              category,
+              dateTime,
+              venue,
+              status,
+              registrationLink,
+              description,
+              posterUrl,
+              createdAt: new Date().toISOString()
+            };
+            blueprint.eventsData.events.unshift(newEvt);
+            App.showToast('Event published successfully!');
+          }
+
+          SiteStore.save(blueprint);
+
+          // Reset form
+          form.reset();
+          form.querySelector('#admin-event-edit-id').value = '';
+          form.querySelector('#admin-event-poster-data').value = '';
+          if (previewWrap) previewWrap.style.display = 'none';
+          if (dropPrompt) dropPrompt.style.display = 'block';
+          const submitBtn = form.querySelector('#admin-event-submit-btn');
+          if (submitBtn) submitBtn.textContent = 'Publish Event';
+
+          // Refresh UI
+          PublicRenderer.refreshEventsSection(contentEl);
+        });
+
+        // Cancel / Reset Form
+        const cancelBtn = contentEl.querySelector('#admin-event-cancel-btn');
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', () => {
+            form.reset();
+            form.querySelector('#admin-event-edit-id').value = '';
+            form.querySelector('#admin-event-poster-data').value = '';
+            if (previewWrap) previewWrap.style.display = 'none';
+            if (dropPrompt) dropPrompt.style.display = 'block';
+            const submitBtn = form.querySelector('#admin-event-submit-btn');
+            if (submitBtn) submitBtn.textContent = 'Publish Event';
+          });
+        }
+      }
+
+      // 3. Event Roster Actions (Edit & Delete)
+      contentEl.addEventListener('click', (e) => {
+        const editBtn = e.target.closest('[data-action="edit-event"]');
+        if (editBtn) {
+          const eventId = editBtn.getAttribute('data-event-id');
+          const blueprint = SiteStore.get();
+          const events = (blueprint.eventsData && blueprint.eventsData.events) || DEFAULT_EVENTS_DATA.events;
+          const evt = events.find(ev => ev.id === eventId);
+          if (!evt) return;
+
+          const form = contentEl.querySelector('#admin-event-form');
+          if (!form) return;
+
+          form.querySelector('#admin-event-edit-id').value = evt.id;
+          form.querySelector('#admin-event-title').value = evt.title || '';
+          form.querySelector('#admin-event-category').value = evt.category || 'Workshop';
+          form.querySelector('#admin-event-datetime').value = evt.dateTime || '';
+          form.querySelector('#admin-event-venue').value = evt.venue || '';
+          form.querySelector('#admin-event-status').value = evt.status || 'Upcoming';
+          form.querySelector('#admin-event-reg-link').value = evt.registrationLink || '';
+          form.querySelector('#admin-event-desc').value = evt.description || '';
+          form.querySelector('#admin-event-poster-data').value = evt.posterUrl || '';
+
+          const previewWrap = form.querySelector('#admin-poster-preview-wrap');
+          const previewImg = form.querySelector('#admin-poster-preview-img');
+          const dropPrompt = form.querySelector('#admin-dropzone-prompt');
+
+          if (evt.posterUrl) {
+            if (previewImg) previewImg.src = evt.posterUrl;
+            if (previewWrap) previewWrap.style.display = 'block';
+            if (dropPrompt) dropPrompt.style.display = 'none';
+          } else {
+            if (previewWrap) previewWrap.style.display = 'none';
+            if (dropPrompt) dropPrompt.style.display = 'block';
+          }
+
+          const submitBtn = form.querySelector('#admin-event-submit-btn');
+          if (submitBtn) submitBtn.textContent = 'Update Event';
+
+          const dashboard = contentEl.querySelector('#events-admin-dashboard');
+          if (dashboard) dashboard.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+
+        const deleteBtn = e.target.closest('[data-action="delete-event"]');
+        if (deleteBtn) {
+          const eventId = deleteBtn.getAttribute('data-event-id');
+          if (!confirm('Are you sure you want to permanently delete this event?')) return;
+
+          const blueprint = SiteStore.get();
+          if (!blueprint.eventsData) blueprint.eventsData = deepClone(DEFAULT_EVENTS_DATA);
+          blueprint.eventsData.events = (blueprint.eventsData.events || []).filter(ev => ev.id !== eventId);
+          SiteStore.save(blueprint);
+          App.showToast('Event removed from chapter roster.');
+          PublicRenderer.refreshEventsSection(contentEl);
+          return;
+        }
+      });
+    },
+
+    refreshEventsSection(contentEl) {
+      if (!contentEl) return;
+      const blueprint = SiteStore.get();
+      const events = (blueprint.eventsData && blueprint.eventsData.events) || DEFAULT_EVENTS_DATA.events;
+
+      // Update Roster Table
+      const rosterTbody = contentEl.querySelector('#events-roster-tbody');
+      if (rosterTbody) {
+        rosterTbody.innerHTML = this.generateEventRosterRowsHtml(events);
+      }
+
+      // Update Roster Title
+      const rosterTitle = contentEl.querySelector('.events-roster-title');
+      if (rosterTitle) {
+        rosterTitle.textContent = `Current Event Roster (${events.length})`;
+      }
+
+      // Update Tab Badges
+      const upcomingCount = events.filter(e => (e.status || 'Upcoming') === 'Upcoming').length;
+      const completedCount = events.filter(e => (e.status || 'Upcoming') === 'Completed').length;
+      const upcomingBadge = contentEl.querySelector('#badge-upcoming-count');
+      const completedBadge = contentEl.querySelector('#badge-completed-count');
+      if (upcomingBadge) upcomingBadge.textContent = upcomingCount;
+      if (completedBadge) completedBadge.textContent = completedCount;
+
+      // Update Card Grid
+      const activeTabPill = contentEl.querySelector('.events-tab-pill.active');
+      const currentTab = activeTabPill ? activeTabPill.getAttribute('data-event-tab') : 'upcoming';
+      const gridContainer = contentEl.querySelector('#events-grid-container');
+      if (gridContainer) {
+        gridContainer.innerHTML = this.generateEventCardsListHtml(events, currentTab);
+      }
     },
 
     initAcademicContactInteractivity(contentEl) {
@@ -2626,6 +3295,7 @@
       PublicRenderer.initExecomInteractivity(renderEl);
       PublicRenderer.initAcademicHomeInteractivity(renderEl);
       PublicRenderer.initAcademicGalleryInteractivity(renderEl);
+      PublicRenderer.initAcademicEventsInteractivity(renderEl);
       PublicRenderer.initAcademicContactInteractivity(renderEl);
     },
 
@@ -3423,7 +4093,23 @@
         return;
       }
 
-      // 4. GENERIC HERO / GRID BLOCKS INSPECTOR
+      // 4. ACADEMIC EVENTS INSPECTOR
+      if (type === 'academic-events') {
+        containerEl.innerHTML = `
+          <div class="inspector-card">
+            <div class="inspector-card-title">Events &amp; Workshops System</div>
+            <p style="font-size: 0.85rem; color: #4B5563; line-height: 1.5; margin-bottom: 1rem;">
+              Manage chapter events, workshops, webinars, and symposiums using the on-page Event Management Dashboard above.
+            </p>
+            <div style="background: #F3F4F6; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.82rem; color: #374151;">
+              <strong>Poster Auto-Sanitization:</strong> 16:9 WebP compression &amp; EXIF stripping is active for all uploads.
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // 5. GENERIC HERO / GRID BLOCKS INSPECTOR
       const secPath = `pages.${this.activePageSlug}.sections.${sectionId}.content`;
       containerEl.innerHTML = `
         <div class="inspector-card">

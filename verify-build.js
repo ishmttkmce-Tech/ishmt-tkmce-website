@@ -119,7 +119,22 @@ assert(cssContent.includes('.nav-link.nav-link-join'), 'style.css defines .nav-l
 assert(jsContent.includes('id: \'nav-join\''), 'main.js defines nav-join CTA linking to membership form');
 assert(jsContent.includes('label: \'CONTACT US\''), 'main.js configures CONTACT US in navigation');
 
-// 7. Check .gitignore rules
+// 7. Dynamic Events & Workshops System Verifications
+assert(fs.existsSync(path.join(ROOT_DIR, 'EventsAndWorkshops.jsx')), 'EventsAndWorkshops.jsx exists');
+assert(cssContent.includes('.events-admin-card'), 'style.css defines .events-admin-card');
+assert(cssContent.includes('.events-tab-pill'), 'style.css defines .events-tab-pill');
+assert(cssContent.includes('.event-display-card'), 'style.css defines .event-display-card');
+assert(cssContent.includes('.event-category-badge'), 'style.css defines .event-category-badge');
+assert(cssContent.includes('.events-cards-grid'), 'style.css defines .events-cards-grid');
+assert(cssContent.includes('.event-btn-register'), 'style.css defines .event-btn-register');
+assert(cssContent.includes('.event-btn-concluded'), 'style.css defines .event-btn-concluded');
+assert(jsContent.includes('DEFAULT_EVENTS_DATA'), 'main.js defines DEFAULT_EVENTS_DATA');
+assert(jsContent.includes('academic-events'), 'main.js configures academic-events section type');
+assert(jsContent.includes('generateAcademicEventsHtml'), 'main.js defines generateAcademicEventsHtml');
+assert(jsContent.includes('initAcademicEventsInteractivity'), 'main.js defines initAcademicEventsInteractivity');
+assert(jsContent.includes('processAndSanitizePoster'), 'main.js defines processAndSanitizePoster canvas sanitizer');
+
+// 8. Check .gitignore rules
 const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');
 ['node_modules', '.next', 'dist', '.env'].forEach(rule => {
   assert(gitignoreContent.includes(rule), `.gitignore contains rule for: ${rule}`);
