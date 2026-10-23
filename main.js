@@ -1084,26 +1084,7 @@
             </div>
           </section>
 
-          <!-- SECTION B: DEDICATED ABOUT US SECTION (EDITORIAL CONTAINER) -->
-          <section id="about-us" class="academic-about-section">
-            <div class="academic-about-container">
-              <h2 class="academic-about-heading" ${isAdminMode ? 'data-edit-path="homeData.aboutHeading" title="Click to edit heading"' : ''}>${this.escapeHtml(home.aboutHeading || 'About Our Chapter')}</h2>
-              <div class="academic-about-divider"></div>
-              <div class="academic-about-text">
-                <p class="academic-about-body" ${isAdminMode ? 'data-edit-path="homeData.aboutIntro" title="Click to edit intro paragraph"' : ''}>
-                  ${this.escapeHtml(home.aboutIntro || "We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.")}
-                </p>
-                ${home.aboutP1 ? `
-                  <p class="academic-about-subtext" ${isAdminMode ? 'data-edit-path="homeData.aboutP1" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP1)}</p>
-                ` : ''}
-                ${home.aboutP2 ? `
-                  <p class="academic-about-subtext" ${isAdminMode ? 'data-edit-path="homeData.aboutP2" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP2)}</p>
-                ` : ''}
-              </div>
-            </div>
-          </section>
-
-          <!-- SECTION C: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER) -->
+          <!-- SECTION B: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER) -->
           <section class="academic-stats-banner">
             <div class="academic-stats-container">
               ${(home.stats || []).map((s, idx) => `
@@ -1123,6 +1104,25 @@
                   <span style="font-weight: 700; font-size: 0.9rem;">+ Add Milestone Stat</span>
                 </div>
               ` : ''}
+            </div>
+          </section>
+
+          <!-- SECTION C: DEDICATED ABOUT US SECTION (EDITORIAL CONTAINER) -->
+          <section id="about-us" class="academic-about-section">
+            <div class="academic-about-container">
+              <h2 class="academic-about-heading" ${isAdminMode ? 'data-edit-path="homeData.aboutHeading" title="Click to edit heading"' : ''}>${this.escapeHtml(home.aboutHeading || 'About Our Chapter')}</h2>
+              <div class="academic-about-divider"></div>
+              <div class="academic-about-text">
+                <p class="academic-about-body" ${isAdminMode ? 'data-edit-path="homeData.aboutIntro" title="Click to edit intro paragraph"' : ''}>
+                  ${this.escapeHtml(home.aboutIntro || "We warmly welcome students, faculty, researchers, and engineering innovators to the Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter at Thangal Kunju Musaliar College of Engineering, Kollam. Anchored in the Department of Mechanical Engineering, our chapter is your community to explore thermal sciences, energy transition, and computational fluid dynamics through hands-on workshops, lab research, and national academic collaborations.")}
+                </p>
+                ${home.aboutP1 ? `
+                  <p class="academic-about-subtext" ${isAdminMode ? 'data-edit-path="homeData.aboutP1" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP1)}</p>
+                ` : ''}
+                ${home.aboutP2 ? `
+                  <p class="academic-about-subtext" ${isAdminMode ? 'data-edit-path="homeData.aboutP2" title="Click to edit paragraph"' : ''}>${this.escapeHtml(home.aboutP2)}</p>
+                ` : ''}
+              </div>
             </div>
           </section>
 

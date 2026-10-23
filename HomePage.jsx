@@ -125,7 +125,25 @@ import {
       </section>
 
       {/* =====================================================================
-          SECTION B: DEDICATED ABOUT US SECTION (EDITORIAL CONTAINER)
+          SECTION B: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER)
+          ===================================================================== */}
+      <section className="bg-[#8B1014] text-white py-8 px-6 shadow-inner">
+        <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 text-center">
+          {stats.map((item, index) => (
+            <div key={index} className="flex flex-col items-center justify-center p-2">
+              <span className="font-serif text-3xl md:text-4xl font-bold tracking-tight">
+                {item.stat}
+              </span>
+              <span className="text-sm text-white/90 font-sans mt-1.5 font-medium">
+                {item.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION C: DEDICATED ABOUT US SECTION (EDITORIAL CONTAINER)
           ===================================================================== */}
       <section id="about-us" className="max-w-4xl mx-auto px-6 py-16 text-center bg-white scroll-mt-24">
         <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#800000] tracking-tight">
@@ -144,24 +162,6 @@ import {
           <p className="text-base sm:text-lg text-stone-600">
             We nurture a collaborative culture where students engage directly with peer researchers, faculty mentors, and visiting scientists from premier organizations like ISRO/VSSC, national laboratories, and academic institutions.
           </p>
-        </div>
-      </section>
-
-      {/* =====================================================================
-          SECTION C: IMPACT & LEGACY STATISTICS BAR (CRIMSON BANNER)
-          ===================================================================== */}
-      <section className="bg-[#8B1014] text-white py-8 px-6 shadow-inner">
-        <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 text-center">
-          {stats.map((item, index) => (
-            <div key={index} className="flex flex-col items-center justify-center p-2">
-              <span className="font-serif text-3xl md:text-4xl font-bold tracking-tight">
-                {item.stat}
-              </span>
-              <span className="text-sm text-white/90 font-sans mt-1.5 font-medium">
-                {item.label}
-              </span>
-            </div>
-          ))}
         </div>
       </section>
 
