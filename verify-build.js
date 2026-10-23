@@ -115,6 +115,9 @@ assert(cssContent.includes('.academic-btn-outline'), 'style.css defines .academi
 assert(cssContent.includes('.academic-about-section'), 'style.css defines .academic-about-section styles');
 assert(jsContent.includes('id="about-us"'), 'main.js defines #about-us dedicated section');
 assert(jsContent.includes('academic-btn-outline'), 'main.js renders secondary About Us button');
+assert(cssContent.includes('.nav-link.nav-link-join'), 'style.css defines .nav-link.nav-link-join pill CTA styles');
+assert(jsContent.includes('id: \'nav-join\''), 'main.js defines nav-join CTA linking to membership form');
+assert(jsContent.includes('label: \'CONTACT US\''), 'main.js configures CONTACT US in navigation');
 
 // 7. Check .gitignore rules
 const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');

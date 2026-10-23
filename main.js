@@ -233,7 +233,15 @@
       { id: 'nav-events', label: 'EVENTS & WORKSHOPS', path: '/events', isPublic: true },
       { id: 'nav-team', label: 'EXECUTIVE TEAM', path: '/team', isPublic: true },
       { id: 'nav-gallery', label: 'GALLERY', path: '/gallery', isPublic: true },
-      { id: 'nav-contact', label: 'CONTACT', path: '/contact', isPublic: true }
+      { id: 'nav-contact', label: 'CONTACT US', path: '/contact', isPublic: true },
+      { 
+        id: 'nav-join', 
+        label: 'JOIN', 
+        path: 'https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform?usp=dialog', 
+        isExternal: true, 
+        isCta: true, 
+        isPublic: true 
+      }
     ],
     execomData: DEFAULT_EXECOM_DATA,
     homeData: DEFAULT_HOME_DATA,
@@ -261,11 +269,11 @@
             type: 'hero',
             layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'crimson-tint', alignment: 'center', visible: true },
             content: {
-              eyebrow: 'Academic & Industry Events',
-              title: 'Flagship Workshops & Thermal Colloquiums',
-              subtitle: 'Hands-on technical boot camps, national hackathons, and industrial masterclasses hosted by ISHMT RCT Students Chapter TKMCE.',
-              button1Text: 'Register for Upcoming Event',
-              button1Url: '#/contact'
+              eyebrow: 'ISHMT-TKMCE Student Chapter',
+              title: 'Events & Workshops',
+              subtitle: 'Official schedule and announcements for technical boot camps, guest lectures, colloquiums, and chapter competitions will be published here.',
+              button1Text: '',
+              button1Url: ''
             }
           },
           {
@@ -273,43 +281,10 @@
             type: 'grid-cards',
             layout: { columns: 2, containerWidth: 'boxed', paddingY: 'md', bgType: 'canvas', alignment: 'left', visible: true },
             content: {
-              eyebrow: 'Upcoming & Recent Programs',
-              title: 'Featured Chapter Activities',
-              description: 'Participate in peer-reviewed technical challenges and gain recognized certifications.',
-              items: [
-                {
-                  id: 'ev-1',
-                  tag: 'Hackathon',
-                  title: 'THERMO-HACK 2026: Heat Exchanger Design',
-                  description: 'A 36-hour national challenge focused on generative compact heat exchanger core geometry optimization.',
-                  linkText: 'Event Details →',
-                  linkUrl: '#/contact'
-                },
-                {
-                  id: 'ev-2',
-                  tag: 'Workshop',
-                  title: 'OpenFOAM & Thermal Meshing Intensive',
-                  description: 'Comprehensive 3-day boot camp on mesh generation with snappyHexMesh and conjugate heat transfer solvers.',
-                  linkText: 'Register Now →',
-                  linkUrl: '#/contact'
-                },
-                {
-                  id: 'ev-3',
-                  tag: 'Distinguished Lecture',
-                  title: 'Advances in Spacecraft Thermal Shielding',
-                  description: 'Keynote lecture by Dr. S. Ramanathan, Senior Scientist at Liquid Propulsion Systems Centre (LPSC / ISRO).',
-                  linkText: 'View Keynote Summary →',
-                  linkUrl: '#/contact'
-                },
-                {
-                  id: 'ev-4',
-                  tag: 'Field Visit',
-                  title: 'NTPC Combined Cycle Power Plant Tour',
-                  description: 'On-site technical inspection of superheaters, condensers, and cooling towers for chapter members.',
-                  linkText: 'View Gallery →',
-                  linkUrl: '#/gallery'
-                }
-              ]
+              eyebrow: '',
+              title: '',
+              description: '',
+              items: []
             }
           }
         ]
@@ -362,7 +337,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v19_hero_about';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v20_join_events';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -380,7 +355,7 @@
           'ishmt_site_blueprint_v12_gallery_cleanup', 'ishmt_site_blueprint_v13_members_update',
           'ishmt_site_blueprint_v14_footer_cleanup', 'ishmt_site_blueprint_v15_team_update',
           'ishmt_site_blueprint_v16_photo_cropper_security', 'ishmt_site_blueprint_v17_live_sync',
-          'ishmt_site_blueprint_v18_hierarchical_modal'
+          'ishmt_site_blueprint_v18_hierarchical_modal', 'ishmt_site_blueprint_v19_hero_about'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -731,8 +706,11 @@
         .filter(item => item.isPublic !== false)
         .map(item => {
           const isActive = (item.path === currentRoute) ? 'active' : '';
-          const hashUrl = item.path === '/' ? '#/' : `#${item.path}`;
-          return `<a href="${hashUrl}" class="nav-link ${isActive}">${this.escapeHtml(item.label)}</a>`;
+          const isExternal = item.isExternal || (item.path && item.path.startsWith('http'));
+          const href = isExternal ? item.path : (item.path === '/' ? '#/' : `#${item.path}`);
+          const target = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+          const ctaClass = item.isCta ? 'nav-link-join' : '';
+          return `<a href="${href}" ${target} class="nav-link ${ctaClass} ${isActive}" data-nav-id="${item.id}">${this.escapeHtml(item.label)}</a>`;
         })
         .join('');
 
@@ -796,7 +774,8 @@
               ${content.eyebrow || isAdminMode ? `<div class="badge-eyebrow" ${isAdminMode ? `data-edit-path="${secPath}.eyebrow" title="Click to edit eyebrow"` : ''}>${this.escapeHtml(content.eyebrow || '')}</div>` : ''}
               <h2 class="section-heading" ${isAdminMode ? `data-edit-path="${secPath}.title" title="Click to edit heading"` : ''}>${this.escapeHtml(content.title || '')}</h2>
               <p class="section-desc" ${isAdminMode ? `data-edit-path="${secPath}.description" title="Click to edit description"` : ''}>${this.escapeHtml(content.description || '')}</p>
-              <div class="cards-grid cols-${layout.columns || 2}" style="margin-top: 2rem;">
+              ${(content.items && content.items.length > 0) ? `
+                <div class="cards-grid cols-${layout.columns || 2}" style="margin-top: 2rem;">
                 ${(content.items || []).map((card, idx) => `
                   <div class="card-item ${isAdminMode ? 'studio-card-wrapper' : ''}">
                     ${isAdminMode ? `
@@ -813,15 +792,29 @@
                     ${card.linkText || isAdminMode ? `<a href="${card.linkUrl || '#'}" class="card-link"><span ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.linkText" title="Click to edit link"` : ''}>${this.escapeHtml(card.linkText || 'Details →')}</span></a>` : ''}
                   </div>
                 `).join('')}
-                ${isAdminMode ? `
-                  <div class="studio-add-card-placeholder" data-action="add-event-card" data-section-id="${id}">
-                    <span style="font-size: 1.4rem; font-weight: 700; color: #8B1014;">+ Add New Event Card</span>
-                    <span style="font-size: 0.85rem; color: #6B7280; margin-top: 4px;">Click to append a workshop, seminar, or competition card</span>
-                  </div>
-                ` : ''}
               </div>
-            `;
-            break;
+            ` : `
+              <div class="events-empty-state" style="text-align: center; padding: 3.5rem 2rem; background: #FFFFFF; border-radius: 12px; border: 1px dashed rgba(139, 13, 26, 0.22); box-shadow: 0 4px 16px rgba(0,0,0,0.02); margin-top: 1.5rem;">
+                <div style="width: 52px; height: 52px; margin: 0 auto 1.25rem; border-radius: 50%; background: rgba(139, 13, 26, 0.08); display: flex; align-items: center; justify-content: center; color: #8B1014;">
+                  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </div>
+                <h3 style="font-family: var(--theme-font-family); font-size: 1.35rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0;">Upcoming Events to be Announced</h3>
+                <p style="color: #6B7280; font-size: 0.95rem; max-width: 480px; margin: 0 auto; line-height: 1.6;">There are currently no active workshops or competitions scheduled. Program schedules and registration links will be posted here as dates are finalized.</p>
+              </div>
+            `}
+            ${isAdminMode ? `
+              <div class="studio-add-card-placeholder" data-action="add-event-card" data-section-id="${id}" style="margin-top: 1.5rem;">
+                <span style="font-size: 1.4rem; font-weight: 700; color: #8B1014;">+ Add New Event Card</span>
+                <span style="font-size: 0.85rem; color: #6B7280; margin-top: 4px;">Click to append a workshop, seminar, or competition card</span>
+              </div>
+            ` : ''}
+          `;
+          break;
 
           default:
             innerContent = `<div class="section-desc">Custom section: ${this.escapeHtml(type)}</div>`;
