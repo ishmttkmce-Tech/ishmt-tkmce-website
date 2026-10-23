@@ -35,8 +35,8 @@ requiredFiles.forEach(file => {
 
 // 2. Validate index.html asset references & DOM hooks
 const htmlContent = fs.readFileSync(path.join(ROOT_DIR, 'index.html'), 'utf-8');
-assert(htmlContent.includes('href="style.css"'), 'index.html links to style.css');
-assert(htmlContent.includes('src="main.js"'), 'index.html references main.js');
+assert(/href="style\.css(\?v=[^"]+)?"/.test(htmlContent), 'index.html links to style.css');
+assert(/src="main\.js(\?v=[^"]+)?"/.test(htmlContent), 'index.html references main.js');
 assert(htmlContent.includes('src="ishmt-logo.jpg"'), 'index.html references ishmt-logo.jpg');
 
 const requiredDOMElements = [

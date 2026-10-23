@@ -18,7 +18,7 @@ export const CHAPTER_META = {
 
 /**
  * 1. SENIOR EXECUTIVE COMMITTEE (SENIOR EXECOM)
- * Total: 13 Executive Positions across Core Leadership and 5 Functional Teams
+ * Total: 12 Executive Positions across Core Leadership and 5 Functional Teams
  */
 export const SENIOR_EXECOM = [
   // --- Core Leadership Tier ---
@@ -37,7 +37,7 @@ export const SENIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S7",
     isFallback: false,
     avatar: "PR",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-sen-1.webp",
     bio: "Steering chapter governance, ISHMT RCT coordination, and strategic academic initiatives for the 2026–27 tenure."
   },
   {
@@ -56,7 +56,7 @@ export const SENIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S5",
     isFallback: false,
     avatar: "RM",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-sen-2.webp",
     bio: "Assisting chapter operations, inter-departmental synergies, and workshop oversight."
   },
   {
@@ -74,7 +74,7 @@ export const SENIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S7",
     isFallback: false,
     avatar: "PP",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-sen-3.webp",
     bio: "Managing institutional correspondence, council records, and general chapter logistics."
   },
 
@@ -95,7 +95,7 @@ export const SENIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S7",
     isFallback: false,
     avatar: "AS",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-sen-4.webp",
     bio: "Head of simulation toolkits, CFD masterclasses, and thermal hardware bench investigations."
   },
   {
@@ -135,7 +135,7 @@ export const SENIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S5",
     isFallback: false,
     avatar: "AR",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-sen-6.webp",
     bio: "Directing event scheduling, conclaves, guest lecture curation, and venue execution."
   },
   {
@@ -154,27 +154,8 @@ export const SENIOR_EXECOM = [
     academicBadge: "B.Tech • Chemical Engineering • S3",
     isFallback: false,
     avatar: "AJ",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-sen-7.webp",
     bio: "Coordinating multi-tier attendee check-ins, registration pipelines, and delegate hospitality."
-  },
-  {
-    id: "sen-8",
-    name: "M.Tech Nominee",
-    role: "+1 Nominee (M.Tech Representative)",
-    team: "Program Coordination Team",
-    category: "Program Coordination",
-    isLead: false,
-    isCoreLeadership: false,
-    isNominee: true,
-    rank: 8,
-    programme: "M.Tech",
-    department: "Thermal Power Engineering",
-    semester: "S3",
-    academicBadge: "M.Tech • Thermal Power Engineering • S3",
-    isFallback: false,
-    avatar: "MT",
-    avatarUrl: null,
-    bio: "Postgraduate liaison bringing advanced research synchronization to chapter programs."
   },
 
   // --- Media & Design Team ---
@@ -251,7 +232,7 @@ export const SENIOR_EXECOM = [
     academicBadge: "B.Tech • Chemical Engineering • S3",
     isFallback: false,
     avatar: "AA",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-sen-12.webp",
     bio: "Student delegate relations, inter-college invitations, and chapter promotion drives."
   },
 
@@ -292,12 +273,12 @@ export const JUNIOR_EXECOM = [
     semester: "S3",
     academicBadge: "B.Tech • Mechanical Engineering • S3",
     avatar: "AS",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-jun-1.webp",
     trackColor: "cyan"
   },
   {
     id: "jun-2",
-    name: "Kashinathan M P",
+    name: "Kasinathan M P",
     rosterNameMatch: "KASINATHAN M P",
     track: "Technical Track",
     focus: "Hands-on Setup & Code Troubleshooting",
@@ -306,7 +287,7 @@ export const JUNIOR_EXECOM = [
     semester: "S5",
     academicBadge: "B.Tech • Mechanical Engineering • S5",
     avatar: "KM",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-jun-2.webp",
     trackColor: "cyan"
   },
   {
@@ -320,7 +301,7 @@ export const JUNIOR_EXECOM = [
     semester: "S3",
     academicBadge: "B.Tech • Mechanical Engineering • S3",
     avatar: "MD",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-jun-3.webp",
     trackColor: "rose"
   },
   {
@@ -334,7 +315,7 @@ export const JUNIOR_EXECOM = [
     semester: "S5",
     academicBadge: "B.Tech • Mechanical Engineering • S5",
     avatar: "NS",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-jun-4.webp",
     trackColor: "rose"
   },
   {
@@ -348,7 +329,7 @@ export const JUNIOR_EXECOM = [
     semester: "S3",
     academicBadge: "B.Tech • Mechanical Engineering • S3",
     avatar: "DM",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-jun-5.webp",
     trackColor: "amber"
   },
   {
@@ -362,7 +343,7 @@ export const JUNIOR_EXECOM = [
     semester: "S3",
     academicBadge: "B.Tech • Chemical Engineering • S3",
     avatar: "NM",
-    avatarUrl: null,
+    avatarUrl: "avatars/exec-avatar-jun-6.webp",
     trackColor: "emerald"
   }
 ];

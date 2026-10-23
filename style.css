@@ -29,6 +29,7 @@
   --center-ty: 0px;
   --logo-shift: 0px;
   --dock-scale: 0.32;
+  --intro-scale: 2.25;
 
   --ease-stage2: cubic-bezier(0.32, 0.0, 0.24, 1);
   --ease-stage3: cubic-bezier(0.22, 1, 0.36, 1);
@@ -161,7 +162,7 @@ body.loading-state {
 
 /* Motion States - Phase 1: Isolated Centered State */
 .logo-wrapper.stage-1 {
-  transform: translateX(var(--logo-shift)) scale(2.25);
+  transform: translateX(var(--logo-shift)) scale(var(--intro-scale, 2.25));
   filter: drop-shadow(0px 16px 36px rgba(0, 0, 0, 0.18)) drop-shadow(0px 0px 42px rgba(139, 13, 26, 0.14));
   animation: emblem-breathe 2.4s ease-in-out infinite;
 }
@@ -2108,6 +2109,9 @@ body.loading-state {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --intro-scale: 1.3;
+  }
   .header-bar {
     height: 80px;
     padding: 0 1rem;

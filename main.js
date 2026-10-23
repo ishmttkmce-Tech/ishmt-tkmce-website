@@ -24,27 +24,26 @@
       mandate: "The appointed Senior and Junior Executive members will steer the technical events, regional seminars, computational workshops, and chapter operations under the direct mentorship of the ISHMT Trivandrum Regional Chapter for the 2026–2027 academic session."
     },
     seniorExecom: [
-      { id: "sen-1", name: "Pranav R", role: "Chairperson / President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S7", avatar: "PR", avatarUrl: null, bio: "Steering chapter governance, ISHMT RCT coordination, and strategic academic initiatives for the 2026–27 tenure." },
-      { id: "sen-2", name: "Rohit Mangalassery", role: "Vice Chairperson / Vice President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S5", avatar: "RM", avatarUrl: null, bio: "Assisting chapter operations, inter-departmental synergies, and workshop oversight." },
-      { id: "sen-3", name: "Parthiv J Prasad", role: "General Secretary", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S7", avatar: "PP", avatarUrl: null, bio: "Managing institutional correspondence, council records, and general chapter logistics." },
-      { id: "sen-4", name: "Amal S", role: "Technical Team Lead", team: "Technical Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S7", avatar: "AS", avatarUrl: null, bio: "Head of simulation toolkits, CFD masterclasses, and thermal hardware bench investigations." },
+      { id: "sen-1", name: "Pranav R", role: "Chairperson / President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S7", avatar: "PR", avatarUrl: "avatars/exec-avatar-sen-1.webp", bio: "Steering chapter governance, ISHMT RCT coordination, and strategic academic initiatives for the 2026–27 tenure." },
+      { id: "sen-2", name: "Rohit Mangalassery", role: "Vice Chairperson / Vice President", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S5", avatar: "RM", avatarUrl: "avatars/exec-avatar-sen-2.webp", bio: "Assisting chapter operations, inter-departmental synergies, and workshop oversight." },
+      { id: "sen-3", name: "Parthiv J Prasad", role: "General Secretary", team: "Executive Leadership", isLead: true, isCore: true, badge: "B.Tech • Mechanical Engineering • S7", avatar: "PP", avatarUrl: "avatars/exec-avatar-sen-3.webp", bio: "Managing institutional correspondence, council records, and general chapter logistics." },
+      { id: "sen-4", name: "Amal S", role: "Technical Team Lead", team: "Technical Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S7", avatar: "AS", avatarUrl: "avatars/exec-avatar-sen-4.webp", bio: "Head of simulation toolkits, CFD masterclasses, and thermal hardware bench investigations." },
       { id: "sen-5", name: "Afnan", role: "Technical Team Member", team: "Technical Team", isLead: false, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AN", avatarUrl: null, bio: "Supporting computational fluid simulations, code troubleshooting, and lab test rigs." },
-      { id: "sen-6", name: "Amrutha R", role: "Program Coordination Lead", team: "Program Coordination Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AR", avatarUrl: null, bio: "Directing event scheduling, conclaves, guest lecture curation, and venue execution." },
-      { id: "sen-7", name: "Aafiya Junide", role: "Program Coordination Member", team: "Program Coordination Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AJ", avatarUrl: null, bio: "Coordinating attendee check-ins, registration pipelines, and delegate hospitality." },
-      { id: "sen-8", name: "M.Tech Nominee", role: "+1 Nominee (M.Tech Representative)", team: "Program Coordination Team", isLead: false, isCore: false, badge: "M.Tech • Thermal Power Engineering • S3", avatar: "MT", avatarUrl: null, bio: "Postgraduate liaison bringing advanced research synchronization to chapter programs." },
+      { id: "sen-6", name: "Amrutha R", role: "Program Coordination Lead", team: "Program Coordination Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AR", avatarUrl: "avatars/exec-avatar-sen-6.webp", bio: "Directing event scheduling, conclaves, guest lecture curation, and venue execution." },
+      { id: "sen-7", name: "Aafiya Junide", role: "Program Coordination Member", team: "Program Coordination Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AJ", avatarUrl: "avatars/exec-avatar-sen-7.webp", bio: "Coordinating attendee check-ins, registration pipelines, and delegate hospitality." },
       { id: "sen-9", name: "Arjun R", role: "Media & Design Lead", team: "Media & Design Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AR", avatarUrl: null, bio: "Art direction, technical infographics, poster design, and digital event branding." },
       { id: "sen-10", name: "Abhinav K", role: "Media & Design Member", team: "Media & Design Team", isLead: false, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AK", avatarUrl: null, bio: "Video production, motion graphics, and chapter social media creative assets." },
       { id: "sen-11", name: "Vinayak V", role: "Public Relations Lead", team: "Public Relations (PR) Team", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "VV", avatarUrl: null, bio: "Spearheading chapter outreach, industry liaison with ISRO/DRDO mentors, and press briefs." },
-      { id: "sen-12", name: "Anugraha Asok", role: "Public Relations Member", team: "Public Relations (PR) Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AA", avatarUrl: null, bio: "Student delegate relations, inter-college invitations, and chapter promotion drives." },
+      { id: "sen-12", name: "Anugraha Asok", role: "Public Relations Member", team: "Public Relations (PR) Team", isLead: false, isCore: false, badge: "B.Tech • Chemical Engineering • S3", avatar: "AA", avatarUrl: "avatars/exec-avatar-sen-12.webp", bio: "Student delegate relations, inter-college invitations, and chapter promotion drives." },
       { id: "sen-13", name: "Ashwa", role: "Finance & Documentation Lead", team: "Finance & Documentation", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AS", avatarUrl: null, bio: "Overseeing budget allocations, voucher audits, annual chapter reports, and financial registry." }
     ],
     juniorExecom: [
-      { id: "jun-1", name: "Amal Sebastian", track: "Technical Track", focus: "Simulation Toolkits & Lab Support", badge: "B.Tech • Mechanical Engineering • S3", avatar: "AS", avatarUrl: null, color: "cyan" },
-      { id: "jun-2", name: "Kashinathan M P", track: "Technical Track", focus: "Hands-on Setup & Code Troubleshooting", badge: "B.Tech • Mechanical Engineering • S5", avatar: "KM", avatarUrl: null, color: "cyan" },
-      { id: "jun-3", name: "Meenakshi D R", track: "Program Coordination (PC) Track", focus: "Venue Logistics & Attendee Check-In", badge: "B.Tech • Mechanical Engineering • S3", avatar: "MD", avatarUrl: null, color: "rose" },
-      { id: "jun-4", name: "Nidhin Sabu", track: "Program Coordination (PC) Track", focus: "Stage Management & Event Operations", badge: "B.Tech • Mechanical Engineering • S5", avatar: "NS", avatarUrl: null, color: "rose" },
-      { id: "jun-5", name: "Denny J Mangalathu", track: "Dual PC / Public Relations", focus: "Cross-Functional Operations & Outreach", badge: "B.Tech • Mechanical Engineering • S3", avatar: "DM", avatarUrl: null, color: "amber" },
-      { id: "jun-6", name: "Nithin Sunil Mathews", track: "Finance & Documentation Track", focus: "Audit Archival, Vouchers & Registry", badge: "B.Tech • Chemical Engineering • S3", avatar: "NM", avatarUrl: null, color: "emerald" }
+      { id: "jun-1", name: "Amal Sebastian", track: "Technical Track", focus: "Simulation Toolkits & Lab Support", badge: "B.Tech • Mechanical Engineering • S3", avatar: "AS", avatarUrl: "avatars/exec-avatar-jun-1.webp", color: "cyan" },
+      { id: "jun-2", name: "Kasinathan M P", track: "Technical Track", focus: "Hands-on Setup & Code Troubleshooting", badge: "B.Tech • Mechanical Engineering • S5", avatar: "KM", avatarUrl: "avatars/exec-avatar-jun-2.webp", color: "cyan" },
+      { id: "jun-3", name: "Meenakshi D R", track: "Program Coordination (PC) Track", focus: "Venue Logistics & Attendee Check-In", badge: "B.Tech • Mechanical Engineering • S3", avatar: "MD", avatarUrl: "avatars/exec-avatar-jun-3.webp", color: "rose" },
+      { id: "jun-4", name: "Nidhin Sabu", track: "Program Coordination (PC) Track", focus: "Stage Management & Event Operations", badge: "B.Tech • Mechanical Engineering • S5", avatar: "NS", avatarUrl: "avatars/exec-avatar-jun-4.webp", color: "rose" },
+      { id: "jun-5", name: "Denny J Mangalathu", track: "Dual PC / Public Relations", focus: "Cross-Functional Operations & Outreach", badge: "B.Tech • Mechanical Engineering • S3", avatar: "DM", avatarUrl: "avatars/exec-avatar-jun-5.webp", color: "amber" },
+      { id: "jun-6", name: "Nithin Sunil Mathews", track: "Finance & Documentation Track", focus: "Audit Archival, Vouchers & Registry", badge: "B.Tech • Chemical Engineering • S3", avatar: "NM", avatarUrl: "avatars/exec-avatar-jun-6.webp", color: "emerald" }
     ],
     roster: [
       { id: 1,  name: "Denny J Mangalathu",       programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
@@ -362,7 +361,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v16_photo_cropper_security';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v17_live_sync';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -378,7 +377,8 @@
           'ishmt_site_blueprint_v6_academic', 'ishmt_site_blueprint_v7_academic', 'ishmt_site_blueprint_v8_contact_footer',
           'ishmt_site_blueprint_v9_rct_logo', 'ishmt_site_blueprint_v10_studio', 'ishmt_site_blueprint_v11_motion_audit',
           'ishmt_site_blueprint_v12_gallery_cleanup', 'ishmt_site_blueprint_v13_members_update',
-          'ishmt_site_blueprint_v14_footer_cleanup', 'ishmt_site_blueprint_v15_team_update'
+          'ishmt_site_blueprint_v14_footer_cleanup', 'ishmt_site_blueprint_v15_team_update',
+          'ishmt_site_blueprint_v16_photo_cropper_security'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -520,20 +520,28 @@
       const logoShift = (lockupWidth / 2) - 100;
 
       let dockScale = 0.32;
-      if (isMobile) dockScale = 0.24;
-      else if (isTablet) dockScale = 0.28;
+      let introScale = 2.25;
+      if (isMobile) {
+        dockScale = 0.24;
+        introScale = 1.3;
+      } else if (isTablet) {
+        dockScale = 0.28;
+        introScale = 1.75;
+      }
 
       // Dynamically update root CSS variables for pixel-perfect transitions
       document.documentElement.style.setProperty('--center-tx', `${Math.round(centerTx)}px`);
       document.documentElement.style.setProperty('--center-ty', `${Math.round(centerTy)}px`);
       document.documentElement.style.setProperty('--logo-shift', `${Math.round(logoShift)}px`);
       document.documentElement.style.setProperty('--dock-scale', `${dockScale}`);
+      document.documentElement.style.setProperty('--intro-scale', `${introScale}`);
 
       this.lockupMetrics = {
         centerTx: Math.round(centerTx),
         centerTy: Math.round(centerTy),
         logoShift: Math.round(logoShift),
-        dockScale
+        dockScale,
+        introScale
       };
     },
 
@@ -569,7 +577,7 @@
       container.style.transition = 'none';
       container.style.transform = `translate(${this.lockupMetrics.centerTx}px, ${this.lockupMetrics.centerTy}px) scale(1)`;
       logoWrapper.style.transition = 'none';
-      logoWrapper.style.transform = `translateX(${this.lockupMetrics.logoShift}px) scale(2.25)`;
+      logoWrapper.style.transform = `translateX(${this.lockupMetrics.logoShift}px) scale(${this.lockupMetrics.introScale})`;
       textBlock.style.transition = 'none';
       textBlock.style.opacity = '0';
       textBlock.style.transform = 'translateX(-180px)';
@@ -3816,7 +3824,9 @@
 
       PublicRenderer.render(route);
 
-      if (isInitial && !IntroMotion.hasPlayedIntro) {
+      // If direct navigation to a sub-route (e.g. #/team, #/events, #/gallery, #/contact), dock instantly so users see content without delay
+      const isSubRoute = route !== '/' && route !== '';
+      if (isInitial && !IntroMotion.hasPlayedIntro && !isSubRoute) {
         IntroMotion.play();
       } else {
         IntroMotion.setInstantDocked();
