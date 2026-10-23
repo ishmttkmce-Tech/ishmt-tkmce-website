@@ -1600,10 +1600,6 @@
             </div>
 
             <!-- Tier 3 (Functional Leads): Dedicated row mapping ONLY members with LEAD badge -->
-            <div class="execom-tier-subheading">
-              <span>Tier 3 • Functional Leads</span>
-              <span class="execom-subheading-tag">${functionalLeads.length} Lead Positions</span>
-            </div>
             <div class="execom-tier3-leads-grid">
               ${functionalLeads.map(m => {
                 const fullIdx = data.seniorExecom.findIndex(item => item.id === m.id);
@@ -1649,10 +1645,6 @@
             </div>
 
             <!-- Tier 4 (Functional Members): Dedicated row beneath Leads mapping ONLY members with MEMBER badge -->
-            <div class="execom-tier-subheading">
-              <span>Tier 4 • Functional Members</span>
-              <span class="execom-subheading-tag">${functionalMembers.length} Appointed Members</span>
-            </div>
             <div class="execom-tier4-members-grid">
               ${functionalMembers.map(m => {
                 const fullIdx = data.seniorExecom.findIndex(item => item.id === m.id);

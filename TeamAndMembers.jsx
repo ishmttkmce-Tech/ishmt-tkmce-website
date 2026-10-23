@@ -342,16 +342,6 @@ export default function TeamAndMembers() {
 
             {/* TIER 3 (FUNCTIONAL LEADS): Dedicated Row Mapping ONLY Members with LEAD Badge */}
             <div className="mb-12">
-              <div className="flex items-center justify-between pb-3 mb-6 border-b border-cyan-500/20">
-                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-400">
-                  <Sparkles className="w-4 h-4 text-cyan-400" />
-                  <span>Tier 3 • Functional Leads</span>
-                </div>
-                <span className="text-xs font-mono text-cyan-300/80 bg-cyan-500/10 px-2.5 py-0.5 rounded-md border border-cyan-500/20">
-                  {functionalLeads.length} Lead Positions
-                </span>
-              </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
                 {functionalLeads.map((member) => (
                   <div
@@ -422,16 +412,6 @@ export default function TeamAndMembers() {
 
             {/* TIER 4 (FUNCTIONAL MEMBERS): Dedicated Row Beneath Leads Mapping ONLY Members with MEMBER Badge */}
             <div>
-              <div className="flex items-center justify-between pb-3 mb-6 border-b border-white/10">
-                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300">
-                  <Users className="w-4 h-4 text-slate-400" />
-                  <span>Tier 4 • Functional Members</span>
-                </div>
-                <span className="text-xs font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-md border border-white/10">
-                  {functionalMembers.length} Appointed Members
-                </span>
-              </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {functionalMembers.map((member) => (
                   <div

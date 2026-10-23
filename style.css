@@ -22,7 +22,7 @@
   --theme-border-radius: 12px;
   --theme-font-family: 'Oswald', 'Roboto Condensed', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --theme-body-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --theme-header-gradient: linear-gradient(90deg, #F5F2ED 0%, #FAF7F2 45%, rgba(139, 13, 26, 0.08) 78%, rgba(11, 11, 11, 0.05) 100%);
+  --theme-header-gradient: linear-gradient(90deg, #F5F2ED 0%, #FAF7F2 45%, #F5F2ED 100%);
 
   /* Animation & Docking Metrics */
   --center-tx: 0px;
@@ -84,6 +84,7 @@ body.loading-state {
   width: 100vw;
   height: 96px;
   z-index: 100;
+  background-color: #F5F2ED;
   background: var(--theme-header-gradient);
   border-bottom: 2px solid var(--theme-border-color);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
