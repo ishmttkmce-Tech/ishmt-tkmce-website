@@ -274,7 +274,8 @@ export const JUNIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S3",
     avatar: "AS",
     avatarUrl: "avatars/exec-avatar-jun-1.webp",
-    trackColor: "cyan"
+    trackColor: "cyan",
+    bio: "Assisting simulation workshops, OpenFOAM setup sessions, and student lab project support."
   },
   {
     id: "jun-2",
@@ -288,7 +289,8 @@ export const JUNIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S5",
     avatar: "KM",
     avatarUrl: "avatars/exec-avatar-jun-2.webp",
-    trackColor: "cyan"
+    trackColor: "cyan",
+    bio: "Conducting hands-on thermal laboratory apparatus calibration and code troubleshooting."
   },
   {
     id: "jun-3",
@@ -302,7 +304,8 @@ export const JUNIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S3",
     avatar: "MD",
     avatarUrl: "avatars/exec-avatar-jun-3.webp",
-    trackColor: "rose"
+    trackColor: "rose",
+    bio: "Managing venue seating logistics, guest hospitality, and registration desk coordination."
   },
   {
     id: "jun-4",
@@ -316,7 +319,8 @@ export const JUNIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S5",
     avatar: "NS",
     avatarUrl: "avatars/exec-avatar-jun-4.webp",
-    trackColor: "rose"
+    trackColor: "rose",
+    bio: "Supervising stage audio-visual equipment, event run-sheets, and hall management."
   },
   {
     id: "jun-5",
@@ -330,7 +334,8 @@ export const JUNIOR_EXECOM = [
     academicBadge: "B.Tech • Mechanical Engineering • S3",
     avatar: "DM",
     avatarUrl: "avatars/exec-avatar-jun-5.webp",
-    trackColor: "amber"
+    trackColor: "amber",
+    bio: "Facilitating inter-departmental communications, public relations, and delegate assistance."
   },
   {
     id: "jun-6",
@@ -344,7 +349,8 @@ export const JUNIOR_EXECOM = [
     academicBadge: "B.Tech • Chemical Engineering • S3",
     avatar: "NM",
     avatarUrl: "avatars/exec-avatar-jun-6.webp",
-    trackColor: "emerald"
+    trackColor: "emerald",
+    bio: "Maintaining chapter vouchers, meeting minutes archival, and financial registry books."
   }
 ];
 

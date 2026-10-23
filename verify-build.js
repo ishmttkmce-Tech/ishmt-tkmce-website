@@ -86,21 +86,29 @@ assert(jsContent.includes('PublicRenderer'), 'main.js defines PublicRenderer');
 assert(jsContent.includes('AdminStudio'), 'main.js defines AdminStudio CMS');
 assert(jsContent.includes('App'), 'main.js defines App initialization controller');
 
-// 6. Photo Cropper & Executive Security Verifications
+// 6. Photo Cropper, Executive Hierarchy & Member Detail Modal Verifications
 assert(htmlContent.includes('id="photo-cropper-modal"'), 'index.html contains #photo-cropper-modal');
 assert(htmlContent.includes('id="cropper-display-canvas"'), 'index.html contains #cropper-display-canvas');
 assert(htmlContent.includes('id="cropper-zoom-range"'), 'index.html contains #cropper-zoom-range');
 assert(htmlContent.includes('id="cropper-save-btn"'), 'index.html contains #cropper-save-btn');
+assert(htmlContent.includes('id="member-detail-modal"'), 'index.html contains #member-detail-modal');
+assert(htmlContent.includes('id="member-detail-container"'), 'index.html contains #member-detail-container');
+assert(htmlContent.includes('id="modal-admin-bio-textarea"'), 'index.html contains #modal-admin-bio-textarea');
+assert(htmlContent.includes('id="modal-save-bio-btn"'), 'index.html contains #modal-save-bio-btn');
 
 assert(cssContent.includes('.avatar-shield'), 'style.css defines .avatar-shield transparent protection overlay');
 assert(cssContent.includes('.select-none'), 'style.css defines strict .select-none anti-copy styles');
 assert(cssContent.includes('.modal-cropper'), 'style.css defines .modal-cropper styles');
 assert(cssContent.includes('.execom-pyramid-row-1'), 'style.css defines .execom-pyramid-row-1 Tier 1 pyramid styles');
 assert(cssContent.includes('.execom-pyramid-row-2'), 'style.css defines .execom-pyramid-row-2 Tier 1 pyramid styles');
-assert(cssContent.includes('.execom-func-grid'), 'style.css defines .execom-func-grid functional team grid');
+assert(cssContent.includes('.execom-tier3-leads-grid'), 'style.css defines .execom-tier3-leads-grid Tier 3 grid styles');
+assert(cssContent.includes('.execom-tier4-members-grid'), 'style.css defines .execom-tier4-members-grid Tier 4 grid styles');
+assert(cssContent.includes('.member-detail-backdrop'), 'style.css defines .member-detail-backdrop modal styles');
 
 assert(jsContent.includes('PhotoCropper'), 'main.js defines PhotoCropper module');
 assert(jsContent.includes('PhotoCropper.init()'), 'main.js initializes PhotoCropper in App.init');
+assert(jsContent.includes('MemberDetailModal'), 'main.js defines MemberDetailModal module');
+assert(jsContent.includes('MemberDetailModal.init()'), 'main.js initializes MemberDetailModal in App.init');
 assert(jsContent.includes('btn-card-photo'), 'main.js binds .btn-card-photo inline trigger');
 assert(jsContent.includes('btn-member-photo-trigger'), 'main.js binds .btn-member-photo-trigger inspector button');
 

@@ -600,6 +600,53 @@
     </div>
   </div>
 
+  <!-- ======================================================================
+       MODAL: INTERACTIVE MEMBER DETAIL POPUP MODAL (Split 2-Column Layout)
+       ====================================================================== -->
+  <div id="member-detail-modal" class="member-detail-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="member-modal-name">
+    <div id="member-detail-container" class="member-detail-card" onclick="event.stopPropagation()">
+      <button type="button" class="member-modal-close" data-close="member-detail-modal" aria-label="Close modal">&times;</button>
+      <div class="member-modal-grid">
+        <!-- Left Column: Full Uncropped Vertical/Rectangular Portrait (md:col-span-5) -->
+        <div class="member-modal-left">
+          <div id="member-modal-img-wrap" class="member-portrait-wrap"></div>
+        </div>
+
+        <!-- Right Column: Member Metadata & Public Description (md:col-span-7) -->
+        <div class="member-modal-right">
+          <div class="member-modal-tier-row">
+            <span id="member-modal-tier-pill" class="member-modal-tier-pill">CORE LEADERSHIP</span>
+            <span class="member-modal-session-tag">SESSION 2026–27</span>
+          </div>
+
+          <h2 id="member-modal-name" class="member-modal-name">Member Name</h2>
+          <div id="member-modal-role" class="member-modal-role">Executive Role</div>
+
+          <div class="member-modal-academic-row">
+            <span id="member-modal-academic-badge" class="member-modal-academic-badge">B.Tech • Mechanical Engineering</span>
+          </div>
+
+          <div class="member-modal-desc-section">
+            <div class="member-modal-desc-title">MEMBER DESCRIPTION &amp; RESPONSIBILITIES</div>
+            <div id="member-modal-desc-text" class="member-modal-desc-text"></div>
+          </div>
+
+          <div id="member-modal-admin-editor" class="member-modal-admin-editor hidden">
+            <div class="admin-editor-header">
+              <span class="admin-editor-badge">ADMIN MODE ONLY • EDIT PUBLIC DESCRIPTION</span>
+            </div>
+            <textarea id="modal-admin-bio-textarea" class="modal-admin-textarea" rows="4" placeholder="Enter updated public description / responsibilities for this member..."></textarea>
+            <div class="admin-editor-actions">
+              <button type="button" id="modal-save-bio-btn" class="btn btn-primary btn-save-bio">
+                Save &amp; Publish to Public Tab
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Global Floating Toast Notification -->
   <div id="toast-notification" class="toast-notification" role="alert" aria-live="polite"></div>
 

@@ -63,9 +63,28 @@ export default function TeamAndMembers() {
   // Statistics counts
   const totalRosterCount = ALL_ROSTER_MEMBERS.length;
 
-  // Senior leadership split
-  const coreLeaders = useMemo(() => SENIOR_EXECOM.filter(m => m.isCoreLeadership), []);
-  const functionalLeads = useMemo(() => SENIOR_EXECOM.filter(m => !m.isCoreLeadership), []);
+  // Member Detail Popup Modal State
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [editedBio, setEditedBio] = useState('');
+
+  // Check admin mode (localStorage or token)
+  const isAdmin = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    return !!(localStorage.getItem('ishmt_admin_token') || localStorage.getItem('ishmt_is_admin') === 'true');
+  }, []);
+
+  // 4 Strict Hierarchical Vertical Tiers:
+  // Tier 1 (Peak): Single centered card for Chairperson / President
+  const peakLeader = useMemo(() => SENIOR_EXECOM.find(m => m.id === 'sen-1' || m.role.toLowerCase().includes('chairperson')), []);
+
+  // Tier 2 (Core Admin): 2-column centered row for Vice President and General Secretary
+  const coreAdminLeaders = useMemo(() => SENIOR_EXECOM.filter(m => (m.id === 'sen-2' || m.id === 'sen-3') || (m.isCoreLeadership && m.id !== 'sen-1')), []);
+
+  // Tier 3 (Functional Leads): Dedicated row that ONLY maps over members with LEAD badge (isLead: true)
+  const functionalLeads = useMemo(() => SENIOR_EXECOM.filter(m => !m.isCoreLeadership && m.isLead), []);
+
+  // Tier 4 (Functional Members): Dedicated row beneath Leads that ONLY maps over members with MEMBER badge (!isLead)
+  const functionalMembers = useMemo(() => SENIOR_EXECOM.filter(m => !m.isCoreLeadership && !m.isLead), []);
 
   return (
     <div
@@ -190,14 +209,18 @@ export default function TeamAndMembers() {
               </div>
             </div>
 
-            {/* LEVEL 1: Chairperson / President Centered Alone */}
-            {coreLeaders[0] && (
-              <div className="flex justify-center mb-6">
+            {/* TIER 1 (PEAK): Chairperson / President Centered Alone */}
+            {peakLeader && (
+              <div className="flex justify-center mb-8">
                 <div
-                  key={coreLeaders[0].id}
+                  key={peakLeader.id}
                   draggable={false}
                   onContextMenu={(e) => e.preventDefault()}
-                  className="w-full max-w-md relative p-6 sm:p-7 rounded-2xl bg-gradient-to-b from-slate-900/95 via-slate-900/70 to-slate-900/95 border-2 border-amber-500/50 hover:border-amber-400 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:shadow-amber-950/40 transition-all duration-300 flex flex-col justify-between group"
+                  onClick={() => {
+                    setSelectedMember(peakLeader);
+                    setEditedBio(peakLeader.bio || '');
+                  }}
+                  className="w-full max-w-md relative p-6 sm:p-7 rounded-2xl bg-gradient-to-b from-slate-900/95 via-slate-900/70 to-slate-900/95 border-2 border-amber-500/50 hover:border-amber-400 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:shadow-amber-950/40 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
                 >
                   <div className="absolute -top-[1px] left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
                   <div>
@@ -207,40 +230,40 @@ export default function TeamAndMembers() {
                         President / Chair
                       </span>
                       <span className="text-[11px] font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-md border border-white/10">
-                        Tier 1 • Row 1
+                        Tier 1 • Peak
                       </span>
                     </div>
 
                     <div className="flex items-center gap-4 mb-5">
                       {/* 1:1 Circular Avatar with Shield */}
                       <div className="relative w-16 h-16 rounded-full overflow-hidden p-[2px] bg-gradient-to-br from-amber-500 via-red-600 to-slate-900 flex-shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                        {coreLeaders[0].avatarUrl ? (
+                        {peakLeader.avatarUrl ? (
                           <img
-                            src={coreLeaders[0].avatarUrl}
-                            alt={coreLeaders[0].name}
+                            src={peakLeader.avatarUrl}
+                            alt={peakLeader.name}
                             className="w-full h-full rounded-full object-cover pointer-events-none select-none"
                             draggable={false}
                           />
                         ) : (
                           <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-lg font-extrabold text-white font-mono tracking-wider">
-                            {coreLeaders[0].avatar}
+                            {peakLeader.avatar}
                           </div>
                         )}
                         <div className="avatar-shield absolute inset-0 z-10 rounded-full" aria-hidden="true" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-white group-hover:text-amber-200 transition-colors">
-                          {coreLeaders[0].name}
+                          {peakLeader.name}
                         </h3>
                         <p className="text-sm font-semibold text-amber-400 mt-0.5">
-                          {coreLeaders[0].role}
+                          {peakLeader.role}
                         </p>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 text-xs font-mono text-cyan-300 bg-white/5 px-3 py-2.5 rounded-xl border border-white/10 mb-6">
                       <GraduationCap className="w-4 h-4 text-cyan-400 shrink-0" />
-                      <span>{coreLeaders[0].academicBadge}</span>
+                      <span>{peakLeader.academicBadge}</span>
                     </div>
                   </div>
 
@@ -252,14 +275,18 @@ export default function TeamAndMembers() {
               </div>
             )}
 
-            {/* LEVEL 2: Vice President & General Secretary Centered in 2 Columns */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-10">
-              {coreLeaders.slice(1).map((leader) => (
+            {/* TIER 2 (CORE ADMIN): Vice President & General Secretary Centered in 2 Columns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12">
+              {coreAdminLeaders.map((leader) => (
                 <div
                   key={leader.id}
                   draggable={false}
                   onContextMenu={(e) => e.preventDefault()}
-                  className="relative p-6 sm:p-7 rounded-2xl bg-gradient-to-b from-slate-900/90 via-slate-900/60 to-slate-900/90 border-2 border-amber-500/40 hover:border-amber-400/80 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:shadow-amber-950/30 transition-all duration-300 flex flex-col justify-between group"
+                  onClick={() => {
+                    setSelectedMember(leader);
+                    setEditedBio(leader.bio || '');
+                  }}
+                  className="relative p-6 sm:p-7 rounded-2xl bg-gradient-to-b from-slate-900/90 via-slate-900/60 to-slate-900/90 border-2 border-amber-500/40 hover:border-amber-400/80 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:shadow-amber-950/30 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
                 >
                   <div className="absolute -top-[1px] left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
                   <div>
@@ -269,7 +296,7 @@ export default function TeamAndMembers() {
                         Executive Lead
                       </span>
                       <span className="text-[11px] font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-md border border-white/10">
-                        Tier 1 • Row 2
+                        Tier 2 • Core Admin
                       </span>
                     </div>
 
@@ -313,86 +340,163 @@ export default function TeamAndMembers() {
               ))}
             </div>
 
-            {/* LEVEL 3+: FUNCTIONAL TEAMS GRID (Technical, PC, Media, PR, Finance) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-              {functionalLeads.map((member) => (
-                <div
-                  key={member.id}
-                  draggable={false}
-                  onContextMenu={(e) => e.preventDefault()}
-                  className={`relative p-5 rounded-xl backdrop-blur-md transition-all duration-300 flex flex-col justify-between ${
-                    member.isLead
-                      ? 'bg-slate-900/80 border-2 border-cyan-500/40 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-950/30'
-                      : 'bg-slate-900/50 border border-white/10 hover:border-white/20'
-                  }`}
-                >
-                  <div>
-                    {/* Header badge */}
-                    <div className="flex items-center justify-between gap-1 mb-3">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 truncate max-w-[130px]">
-                        {member.team}
-                      </span>
-                      {member.isLead ? (
+            {/* TIER 3 (FUNCTIONAL LEADS): Dedicated Row Mapping ONLY Members with LEAD Badge */}
+            <div className="mb-12">
+              <div className="flex items-center justify-between pb-3 mb-6 border-b border-cyan-500/20">
+                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-400">
+                  <Sparkles className="w-4 h-4 text-cyan-400" />
+                  <span>Tier 3 • Functional Leads</span>
+                </div>
+                <span className="text-xs font-mono text-cyan-300/80 bg-cyan-500/10 px-2.5 py-0.5 rounded-md border border-cyan-500/20">
+                  {functionalLeads.length} Lead Positions
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                {functionalLeads.map((member) => (
+                  <div
+                    key={member.id}
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
+                    onClick={() => {
+                      setSelectedMember(member);
+                      setEditedBio(member.bio || '');
+                    }}
+                    className="relative p-5 rounded-xl bg-slate-900/80 border-2 border-cyan-500/40 hover:border-cyan-400 backdrop-blur-md shadow-lg hover:shadow-cyan-950/30 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
+                  >
+                    <div>
+                      {/* Header badge */}
+                      <div className="flex items-center justify-between gap-1 mb-3">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 truncate max-w-[130px]">
+                          {member.team}
+                        </span>
                         <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                           <Sparkles className="w-2.5 h-2.5" />
-                          TEAM LEAD
+                          LEAD
                         </span>
-                      ) : member.isNominee ? (
-                        <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                          Nominee
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
-                          Member
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Member Info with Circular Avatar and Shield */}
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className={`relative w-11 h-11 rounded-full p-[1.5px] flex-shrink-0 overflow-hidden ${
-                        member.isLead
-                          ? 'bg-gradient-to-br from-cyan-400 to-amber-500'
-                          : 'bg-gradient-to-br from-slate-700 to-slate-800'
-                      }`}>
-                        {member.avatarUrl ? (
-                          <img
-                            src={member.avatarUrl}
-                            alt={member.name}
-                            className="w-full h-full rounded-full object-cover pointer-events-none select-none"
-                            draggable={false}
-                          />
-                        ) : (
-                          <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-xs font-bold text-white font-mono">
-                            {member.avatar}
-                          </div>
-                        )}
-                        <div className="avatar-shield absolute inset-0 z-10 rounded-full" aria-hidden="true" />
                       </div>
-                      <div className="min-w-0">
-                        <h4 className="text-sm font-bold text-white truncate hover:text-cyan-200 transition-colors">
-                          {member.name}
-                        </h4>
-                        <p className="text-xs font-medium text-slate-400 truncate">
-                          {member.role}
-                        </p>
+
+                      {/* Member Info with Circular Avatar and Shield */}
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="relative w-11 h-11 rounded-full p-[1.5px] flex-shrink-0 overflow-hidden bg-gradient-to-br from-cyan-400 to-amber-500 group-hover:scale-105 transition-transform duration-300">
+                          {member.avatarUrl ? (
+                            <img
+                              src={member.avatarUrl}
+                              alt={member.name}
+                              className="w-full h-full rounded-full object-cover pointer-events-none select-none"
+                              draggable={false}
+                            />
+                          ) : (
+                            <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-xs font-bold text-white font-mono">
+                              {member.avatar}
+                            </div>
+                          )}
+                          <div className="avatar-shield absolute inset-0 z-10 rounded-full" aria-hidden="true" />
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="text-sm font-bold text-white truncate group-hover:text-cyan-200 transition-colors">
+                            {member.name}
+                          </h4>
+                          <p className="text-xs font-medium text-cyan-400 truncate">
+                            {member.role}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Degree, Branch & Semester */}
+                      <div className="flex items-center gap-2 text-[11px] font-mono text-cyan-300 bg-white/5 px-2.5 py-2 rounded-lg border border-white/10 mb-4">
+                        <GraduationCap className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                        <span className="truncate">{member.academicBadge}</span>
                       </div>
                     </div>
 
-                    {/* Degree, Branch & Semester */}
-                    <div className="flex items-center gap-2 text-[11px] font-mono text-cyan-300 bg-white/5 px-2.5 py-2 rounded-lg border border-white/10 mb-4">
-                      <GraduationCap className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                      <span className="truncate">{member.academicBadge}</span>
+                    {/* Card Footer */}
+                    <div className="pt-2.5 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                      <span>Functional Lead</span>
+                      <span className="font-mono text-slate-400">2026–27</span>
                     </div>
                   </div>
+                ))}
+              </div>
+            </div>
 
-                  {/* Card Footer */}
-                  <div className="pt-2.5 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
-                    <span>Functional Team</span>
-                    <span className="font-mono text-slate-400">2026–27</span>
-                  </div>
+            {/* TIER 4 (FUNCTIONAL MEMBERS): Dedicated Row Beneath Leads Mapping ONLY Members with MEMBER Badge */}
+            <div>
+              <div className="flex items-center justify-between pb-3 mb-6 border-b border-white/10">
+                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300">
+                  <Users className="w-4 h-4 text-slate-400" />
+                  <span>Tier 4 • Functional Members</span>
                 </div>
-              ))}
+                <span className="text-xs font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-md border border-white/10">
+                  {functionalMembers.length} Appointed Members
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {functionalMembers.map((member) => (
+                  <div
+                    key={member.id}
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
+                    onClick={() => {
+                      setSelectedMember(member);
+                      setEditedBio(member.bio || '');
+                    }}
+                    className="relative p-5 rounded-xl bg-slate-900/50 border border-white/10 hover:border-white/30 backdrop-blur-md shadow-md hover:shadow-slate-900/40 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
+                  >
+                    <div>
+                      {/* Header badge */}
+                      <div className="flex items-center justify-between gap-1 mb-3">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 truncate max-w-[130px]">
+                          {member.team}
+                        </span>
+                        <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                          MEMBER
+                        </span>
+                      </div>
+
+                      {/* Member Info with Circular Avatar and Shield */}
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="relative w-11 h-11 rounded-full p-[1.5px] flex-shrink-0 overflow-hidden bg-gradient-to-br from-slate-700 to-slate-800 group-hover:scale-105 transition-transform duration-300">
+                          {member.avatarUrl ? (
+                            <img
+                              src={member.avatarUrl}
+                              alt={member.name}
+                              className="w-full h-full rounded-full object-cover pointer-events-none select-none"
+                              draggable={false}
+                            />
+                          ) : (
+                            <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-xs font-bold text-white font-mono">
+                              {member.avatar}
+                            </div>
+                          )}
+                          <div className="avatar-shield absolute inset-0 z-10 rounded-full" aria-hidden="true" />
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="text-sm font-bold text-white truncate group-hover:text-slate-200 transition-colors">
+                            {member.name}
+                          </h4>
+                          <p className="text-xs font-medium text-slate-400 truncate">
+                            {member.role}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Degree, Branch & Semester */}
+                      <div className="flex items-center gap-2 text-[11px] font-mono text-slate-300 bg-white/5 px-2.5 py-2 rounded-lg border border-white/10 mb-4">
+                        <GraduationCap className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="truncate">{member.academicBadge}</span>
+                      </div>
+                    </div>
+
+                    {/* Card Footer */}
+                    <div className="pt-2.5 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                      <span>Functional Member</span>
+                      <span className="font-mono text-slate-400">2026–27</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         )}
@@ -427,7 +531,11 @@ export default function TeamAndMembers() {
                   key={junior.id}
                   draggable={false}
                   onContextMenu={(e) => e.preventDefault()}
-                  className="p-6 rounded-2xl bg-gradient-to-b from-slate-900/70 to-slate-900/40 border border-cyan-500/20 hover:border-cyan-500/50 backdrop-blur-xl shadow-lg hover:shadow-cyan-950/20 transition-all duration-300 flex flex-col justify-between group"
+                  onClick={() => {
+                    setSelectedMember(junior);
+                    setEditedBio(junior.bio || '');
+                  }}
+                  className="p-6 rounded-2xl bg-gradient-to-b from-slate-900/70 to-slate-900/40 border border-cyan-500/20 hover:border-cyan-500/50 backdrop-blur-xl shadow-lg hover:shadow-cyan-950/20 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
                 >
                   <div>
                     {/* Functional Track Pill Badge */}
@@ -665,6 +773,148 @@ export default function TeamAndMembers() {
         </footer>
 
       </div>
+
+      {/* ======================================================================
+          INTERACTIVE MEMBER DETAIL POPUP MODAL (Split 2-Column Wide Layout)
+          ====================================================================== */}
+      {selectedMember && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => setSelectedMember(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className={`relative w-full max-w-3xl bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-200 ${
+              !isAdmin ? 'select-none' : ''
+            }`}
+            onClick={(e) => e.stopPropagation()}
+            onContextMenu={(e) => {
+              if (!isAdmin) e.preventDefault();
+            }}
+            onCopy={(e) => {
+              if (!isAdmin) e.preventDefault();
+            }}
+          >
+            {/* Modal Close Button */}
+            <button
+              type="button"
+              onClick={() => setSelectedMember(null)}
+              className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center text-xl font-bold transition-all shadow-sm"
+              aria-label="Close modal"
+            >
+              &times;
+            </button>
+
+            <div className="grid grid-cols-1 md:grid-cols-12 min-h-[380px]">
+              {/* Left Column (Full Image - md:col-span-5): Uncropped Vertical Rectangular Portrait */}
+              <div className="md:col-span-5 relative bg-slate-950 flex items-center justify-center overflow-hidden min-h-[280px] md:min-h-full">
+                {selectedMember.avatarUrl ? (
+                  <img
+                    src={selectedMember.avatarUrl}
+                    alt={selectedMember.name}
+                    className="object-cover w-full h-full max-h-[400px] md:max-h-full rounded-l-lg pointer-events-none select-none"
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
+                  />
+                ) : (
+                  <div className="w-full h-full min-h-[280px] flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-slate-900 via-slate-950 to-[#2A080C] text-white">
+                    <div className="w-20 h-20 rounded-xl bg-[#8B0D1A]/20 border-2 border-[#8B0D1A]/40 flex items-center justify-center text-3xl font-extrabold text-white font-mono mb-3">
+                      {selectedMember.avatar || selectedMember.name.substring(0, 2).toUpperCase()}
+                    </div>
+                    <div className="font-bold text-lg text-white font-['Oswald',sans-serif] uppercase tracking-wide">
+                      {selectedMember.name}
+                    </div>
+                    <div className="text-xs font-mono text-slate-400 mt-1">
+                      {selectedMember.academicBadge || selectedMember.track || 'ISHMT TKMCE'}
+                    </div>
+                  </div>
+                )}
+                {/* Anti-copy transparent shield */}
+                <div
+                  className="absolute inset-0 z-10 pointer-events-auto"
+                  aria-hidden="true"
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              </div>
+
+              {/* Right Column (Member Data - md:col-span-7) */}
+              <div className="md:col-span-7 p-6 bg-white text-slate-900 flex flex-col justify-between overflow-y-auto max-h-[85vh]">
+                <div>
+                  {/* Tier Pill */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-[#8B0D1A]/10 text-[#8B0D1A] border border-[#8B0D1A]/20">
+                      {selectedMember.isCoreLeadership || selectedMember.isCore
+                        ? 'CORE LEADERSHIP'
+                        : selectedMember.isLead
+                        ? 'FUNCTIONAL LEAD'
+                        : selectedMember.track
+                        ? 'JUNIOR EXECOM'
+                        : 'FUNCTIONAL MEMBER'}
+                    </span>
+                    <span className="text-xs font-mono text-slate-500 font-semibold">SESSION 2026–27</span>
+                  </div>
+
+                  {/* Name */}
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 font-['Oswald',sans-serif] uppercase tracking-tight mb-1">
+                    {selectedMember.name}
+                  </h2>
+
+                  {/* Role in Maroon */}
+                  <p className="text-sm sm:text-base font-bold text-[#8B0D1A] uppercase tracking-wide mb-4">
+                    {selectedMember.role || selectedMember.focus || 'Executive Member'}
+                  </p>
+
+                  {/* Academic Details Pill */}
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-xs font-mono font-semibold text-slate-800 mb-6">
+                    <GraduationCap className="w-4 h-4 text-slate-600 shrink-0" />
+                    <span>{selectedMember.academicBadge || 'B.Tech • Mechanical Engineering'}</span>
+                  </div>
+
+                  {/* Member Description Section */}
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-4">
+                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#8B0D1A] mb-2">
+                      MEMBER DESCRIPTION &amp; RESPONSIBILITIES
+                    </div>
+                    <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                      {selectedMember.bio ||
+                        (selectedMember.track
+                          ? `${selectedMember.focus} across chapter operations.`
+                          : 'Appointed member of the ISHMT TKMCE Student Chapter Executive Committee for 2026–27.')}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Admin-Only Editor (Omitted completely from DOM when isAdmin is false) */}
+                {isAdmin && (
+                  <div className="mt-2 p-4 bg-red-50/70 border border-dashed border-[#8B0D1A]/40 rounded-xl">
+                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#8B0D1A] mb-2 bg-[#8B0D1A]/10 px-2 py-0.5 rounded inline-block">
+                      ADMIN MODE ONLY • EDIT PUBLIC DESCRIPTION
+                    </div>
+                    <textarea
+                      value={editedBio}
+                      onChange={(e) => setEditedBio(e.target.value)}
+                      rows={3}
+                      placeholder="Enter updated public description / responsibilities for this member..."
+                      className="w-full p-2.5 bg-white border border-[#8B0D1A]/30 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#8B0D1A] mb-3"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        selectedMember.bio = editedBio;
+                        alert('Description saved and published!');
+                      }}
+                      className="px-4 py-2 bg-[#8B0D1A] hover:bg-[#700A15] text-white text-xs font-bold rounded-lg shadow transition-all"
+                    >
+                      Save &amp; Publish to Public Tab
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

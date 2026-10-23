@@ -38,12 +38,12 @@
       { id: "sen-13", name: "Ashwa", role: "Finance & Documentation Lead", team: "Finance & Documentation", isLead: true, isCore: false, badge: "B.Tech • Mechanical Engineering • S5", avatar: "AS", avatarUrl: null, bio: "Overseeing budget allocations, voucher audits, annual chapter reports, and financial registry." }
     ],
     juniorExecom: [
-      { id: "jun-1", name: "Amal Sebastian", track: "Technical Track", focus: "Simulation Toolkits & Lab Support", badge: "B.Tech • Mechanical Engineering • S3", avatar: "AS", avatarUrl: "avatars/exec-avatar-jun-1.webp", color: "cyan" },
-      { id: "jun-2", name: "Kasinathan M P", track: "Technical Track", focus: "Hands-on Setup & Code Troubleshooting", badge: "B.Tech • Mechanical Engineering • S5", avatar: "KM", avatarUrl: "avatars/exec-avatar-jun-2.webp", color: "cyan" },
-      { id: "jun-3", name: "Meenakshi D R", track: "Program Coordination (PC) Track", focus: "Venue Logistics & Attendee Check-In", badge: "B.Tech • Mechanical Engineering • S3", avatar: "MD", avatarUrl: "avatars/exec-avatar-jun-3.webp", color: "rose" },
-      { id: "jun-4", name: "Nidhin Sabu", track: "Program Coordination (PC) Track", focus: "Stage Management & Event Operations", badge: "B.Tech • Mechanical Engineering • S5", avatar: "NS", avatarUrl: "avatars/exec-avatar-jun-4.webp", color: "rose" },
-      { id: "jun-5", name: "Denny J Mangalathu", track: "Dual PC / Public Relations", focus: "Cross-Functional Operations & Outreach", badge: "B.Tech • Mechanical Engineering • S3", avatar: "DM", avatarUrl: "avatars/exec-avatar-jun-5.webp", color: "amber" },
-      { id: "jun-6", name: "Nithin Sunil Mathews", track: "Finance & Documentation Track", focus: "Audit Archival, Vouchers & Registry", badge: "B.Tech • Chemical Engineering • S3", avatar: "NM", avatarUrl: "avatars/exec-avatar-jun-6.webp", color: "emerald" }
+      { id: "jun-1", name: "Amal Sebastian", track: "Technical Track", focus: "Simulation Toolkits & Lab Support", badge: "B.Tech • Mechanical Engineering • S3", avatar: "AS", avatarUrl: "avatars/exec-avatar-jun-1.webp", color: "cyan", bio: "Assisting simulation workshops, OpenFOAM setup sessions, and student lab project support." },
+      { id: "jun-2", name: "Kasinathan M P", track: "Technical Track", focus: "Hands-on Setup & Code Troubleshooting", badge: "B.Tech • Mechanical Engineering • S5", avatar: "KM", avatarUrl: "avatars/exec-avatar-jun-2.webp", color: "cyan", bio: "Conducting hands-on thermal laboratory apparatus calibration and code troubleshooting." },
+      { id: "jun-3", name: "Meenakshi D R", track: "Program Coordination (PC) Track", focus: "Venue Logistics & Attendee Check-In", badge: "B.Tech • Mechanical Engineering • S3", avatar: "MD", avatarUrl: "avatars/exec-avatar-jun-3.webp", color: "rose", bio: "Managing venue seating logistics, guest hospitality, and registration desk coordination." },
+      { id: "jun-4", name: "Nidhin Sabu", track: "Program Coordination (PC) Track", focus: "Stage Management & Event Operations", badge: "B.Tech • Mechanical Engineering • S5", avatar: "NS", avatarUrl: "avatars/exec-avatar-jun-4.webp", color: "rose", bio: "Supervising stage audio-visual equipment, event run-sheets, and hall management." },
+      { id: "jun-5", name: "Denny J Mangalathu", track: "Dual PC / Public Relations", focus: "Cross-Functional Operations & Outreach", badge: "B.Tech • Mechanical Engineering • S3", avatar: "DM", avatarUrl: "avatars/exec-avatar-jun-5.webp", color: "amber", bio: "Facilitating inter-departmental communications, public relations, and delegate assistance." },
+      { id: "jun-6", name: "Nithin Sunil Mathews", track: "Finance & Documentation Track", focus: "Audit Archival, Vouchers & Registry", badge: "B.Tech • Chemical Engineering • S3", avatar: "NM", avatarUrl: "avatars/exec-avatar-jun-6.webp", color: "emerald", bio: "Maintaining chapter vouchers, meeting minutes archival, and financial registry books." }
     ],
     roster: [
       { id: 1,  name: "Denny J Mangalathu",       programme: "B.Tech", department: "Mechanical Engineering", semester: "S3", isExecom: false, execomRole: null, execomTier: null },
@@ -361,7 +361,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v17_live_sync';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v18_hierarchical_modal';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -378,7 +378,7 @@
           'ishmt_site_blueprint_v9_rct_logo', 'ishmt_site_blueprint_v10_studio', 'ishmt_site_blueprint_v11_motion_audit',
           'ishmt_site_blueprint_v12_gallery_cleanup', 'ishmt_site_blueprint_v13_members_update',
           'ishmt_site_blueprint_v14_footer_cleanup', 'ishmt_site_blueprint_v15_team_update',
-          'ishmt_site_blueprint_v16_photo_cropper_security'
+          'ishmt_site_blueprint_v16_photo_cropper_security', 'ishmt_site_blueprint_v17_live_sync'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -1456,8 +1456,10 @@
     generateExecomHtml(isAdminMode = false) {
       const blueprint = SiteStore.get();
       const data = blueprint.execomData || DEFAULT_EXECOM_DATA;
-      const coreLeaders = data.seniorExecom.filter(m => m.isCore);
-      const functionalMembers = data.seniorExecom.filter(m => !m.isCore);
+      const peakLeader = data.seniorExecom.find(m => m.id === 'sen-1') || data.seniorExecom[0];
+      const coreAdminLeaders = data.seniorExecom.filter(m => (m.id === 'sen-2' || m.id === 'sen-3') || (m.isCore && m.id !== peakLeader?.id));
+      const functionalLeads = data.seniorExecom.filter(m => !m.isCore && m.isLead);
+      const functionalMembers = data.seniorExecom.filter(m => !m.isCore && !m.isLead);
       const totalCount = (data.roster || []).length;
 
       return `
@@ -1495,7 +1497,7 @@
             </div>
           </div>
 
-          <!-- B. Tier 1: Senior Executive Committee (3-Level Hierarchical Pyramid) -->
+          <!-- B. Tier 1: Senior Executive Leadership (4 Distinct Vertical Tiers) -->
           <div id="section-senior" class="execom-tier-wrap">
             <div class="execom-tier-header">
               <div>
@@ -1506,13 +1508,13 @@
               <div class="execom-mandate-ref">${data.seniorExecom.length} Appointed Positions</div>
             </div>
 
-            <!-- Pyramid Row 1: Chairperson / President Centered Alone -->
+            <!-- Tier 1 (Peak): Chairperson / President Centered Alone -->
             <div class="execom-pyramid-row-1">
-              ${coreLeaders[0] ? (() => {
-                const l = coreLeaders[0];
+              ${peakLeader ? (() => {
+                const l = peakLeader;
                 const fullIdx = data.seniorExecom.findIndex(m => m.id === l.id);
                 return `
-                  <div class="execom-leader-card ${isAdminMode ? 'studio-card-wrapper' : ''}" draggable="false">
+                  <div class="execom-leader-card member-card-interactive ${isAdminMode ? 'studio-card-wrapper' : ''}" data-member-id="${l.id}" data-member-type="senior" draggable="false" title="Click to view member profile">
                     ${isAdminMode ? `
                       <div class="studio-card-actions">
                         <button type="button" class="studio-card-btn btn-card-photo" data-card-type="senior" data-card-id="${l.id}" title="Upload / Adjust Photo">📷 Photo</button>
@@ -1552,12 +1554,12 @@
               })() : ''}
             </div>
 
-            <!-- Pyramid Row 2: Vice President & General Secretary Centered in 2 Columns -->
+            <!-- Tier 2 (Core Admin): Vice President & General Secretary Centered in 2 Columns -->
             <div class="execom-pyramid-row-2">
-              ${coreLeaders.slice(1).map(l => {
+              ${coreAdminLeaders.map(l => {
                 const fullIdx = data.seniorExecom.findIndex(m => m.id === l.id);
                 return `
-                  <div class="execom-leader-card ${isAdminMode ? 'studio-card-wrapper' : ''}" draggable="false">
+                  <div class="execom-leader-card member-card-interactive ${isAdminMode ? 'studio-card-wrapper' : ''}" data-member-id="${l.id}" data-member-type="senior" draggable="false" title="Click to view member profile">
                     ${isAdminMode ? `
                       <div class="studio-card-actions">
                         <button type="button" class="studio-card-btn btn-card-photo" data-card-type="senior" data-card-id="${l.id}" title="Upload / Adjust Photo">📷 Photo</button>
@@ -1568,7 +1570,7 @@
                     <div>
                       <div class="execom-leader-top">
                         <span class="execom-lead-pill" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.team"` : ''}>${this.escapeHtml(l.team)}</span>
-                        <span class="execom-tier-sub">Core</span>
+                        <span class="execom-tier-sub">Core • Tier 2</span>
                       </div>
                       <div class="execom-avatar-wrap">
                         <div class="execom-avatar-container">
@@ -1597,12 +1599,16 @@
               }).join('')}
             </div>
 
-            <!-- Functional Teams Grid (Level 3+) -->
-            <div class="execom-func-grid">
-              ${functionalMembers.map(m => {
+            <!-- Tier 3 (Functional Leads): Dedicated row mapping ONLY members with LEAD badge -->
+            <div class="execom-tier-subheading">
+              <span>Tier 3 • Functional Leads</span>
+              <span class="execom-subheading-tag">${functionalLeads.length} Lead Positions</span>
+            </div>
+            <div class="execom-tier3-leads-grid">
+              ${functionalLeads.map(m => {
                 const fullIdx = data.seniorExecom.findIndex(item => item.id === m.id);
                 return `
-                  <div class="execom-func-card ${m.isLead ? 'is-lead' : ''} ${isAdminMode ? 'studio-card-wrapper' : ''}" draggable="false">
+                  <div class="execom-func-card is-lead member-card-interactive ${isAdminMode ? 'studio-card-wrapper' : ''}" data-member-id="${m.id}" data-member-type="senior" draggable="false" title="Click to view member profile">
                     ${isAdminMode ? `
                       <div class="studio-card-actions">
                         <button type="button" class="studio-card-btn btn-card-photo" data-card-type="senior" data-card-id="${m.id}" title="Upload / Adjust Photo">📷 Photo</button>
@@ -1613,7 +1619,56 @@
                     <div>
                       <div class="execom-func-top">
                         <span class="execom-func-team" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.team"` : ''}>${this.escapeHtml(m.team)}</span>
-                        <span class="execom-lead-tag">${m.isLead ? 'Lead' : 'Member'}</span>
+                        <span class="execom-lead-tag">Lead</span>
+                      </div>
+                      <div class="execom-func-mid">
+                        <div class="execom-avatar-container mini">
+                          ${m.avatarUrl ? `
+                            <img src="${this.escapeHtml(m.avatarUrl)}" alt="${this.escapeHtml(m.name)}" class="execom-avatar-img pointer-events-none select-none" draggable="false">
+                          ` : `
+                            <div class="execom-avatar-initials">${this.escapeHtml(m.avatar || 'FL')}</div>
+                          `}
+                          <div class="avatar-shield" aria-hidden="true"></div>
+                        </div>
+                        <div>
+                          <h4 class="execom-func-name" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.name" title="Click to edit name"` : ''}>${this.escapeHtml(m.name)}</h4>
+                          <div class="execom-func-role" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.role" title="Click to edit role"` : ''}>${this.escapeHtml(m.role)}</div>
+                        </div>
+                      </div>
+                      <div class="execom-academic-info">
+                        <span ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.badge"` : ''}>${this.escapeHtml(m.badge)}</span>
+                      </div>
+                    </div>
+                    <div class="execom-func-footer">
+                      <span>Functional Lead</span>
+                      <span>2026–27</span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Tier 4 (Functional Members): Dedicated row beneath Leads mapping ONLY members with MEMBER badge -->
+            <div class="execom-tier-subheading">
+              <span>Tier 4 • Functional Members</span>
+              <span class="execom-subheading-tag">${functionalMembers.length} Appointed Members</span>
+            </div>
+            <div class="execom-tier4-members-grid">
+              ${functionalMembers.map(m => {
+                const fullIdx = data.seniorExecom.findIndex(item => item.id === m.id);
+                return `
+                  <div class="execom-func-card member-card-interactive ${isAdminMode ? 'studio-card-wrapper' : ''}" data-member-id="${m.id}" data-member-type="senior" draggable="false" title="Click to view member profile">
+                    ${isAdminMode ? `
+                      <div class="studio-card-actions">
+                        <button type="button" class="studio-card-btn btn-card-photo" data-card-type="senior" data-card-id="${m.id}" title="Upload / Adjust Photo">📷 Photo</button>
+                        <button type="button" class="studio-card-btn btn-card-dup" data-card-type="senior" data-card-id="${m.id}" title="Duplicate Member">❐ Copy</button>
+                        <button type="button" class="studio-card-btn btn-card-delete" data-card-type="senior" data-card-id="${m.id}" title="Delete Member">🗑 Del</button>
+                      </div>
+                    ` : ''}
+                    <div>
+                      <div class="execom-func-top">
+                        <span class="execom-func-team" ${isAdminMode ? `data-edit-path="execomData.seniorExecom.${fullIdx}.team"` : ''}>${this.escapeHtml(m.team)}</span>
+                        <span class="execom-lead-tag" style="background: rgba(107, 114, 128, 0.1); color: #4B5563; border-color: rgba(107, 114, 128, 0.2);">Member</span>
                       </div>
                       <div class="execom-func-mid">
                         <div class="execom-avatar-container mini">
@@ -1634,7 +1689,7 @@
                       </div>
                     </div>
                     <div class="execom-func-footer">
-                      <span>Functional Team</span>
+                      <span>Functional Member</span>
                       <span>2026–27</span>
                     </div>
                   </div>
@@ -1663,7 +1718,7 @@
 
             <div class="execom-junior-grid">
               ${data.juniorExecom.map((j, idx) => `
-                <div class="execom-junior-card ${isAdminMode ? 'studio-card-wrapper' : ''}" draggable="false">
+                <div class="execom-junior-card member-card-interactive ${isAdminMode ? 'studio-card-wrapper' : ''}" data-member-id="${j.id}" data-member-type="junior" draggable="false" title="Click to view member profile">
                   ${isAdminMode ? `
                     <div class="studio-card-actions">
                       <button type="button" class="studio-card-btn btn-card-photo" data-card-type="junior" data-card-id="${j.id}" title="Upload / Adjust Photo">📷 Photo</button>
@@ -1900,6 +1955,17 @@
       container.addEventListener('dragstart', (e) => {
         e.preventDefault();
         return false;
+      });
+
+      // Interactive Member Card Click -> Open Detail Popup Modal
+      container.addEventListener('click', (e) => {
+        if (e.target.closest('.studio-card-actions') || e.target.closest('.studio-add-card-placeholder')) {
+          return;
+        }
+        const card = e.target.closest('.member-card-interactive');
+        if (card && card.dataset.memberId) {
+          MemberDetailModal.open(card.dataset.memberId, card.dataset.memberType || 'senior');
+        }
       });
 
       renderRoster();
@@ -2292,6 +2358,194 @@
         }
         this.close();
       }
+    }
+  };
+
+  // ==========================================================================
+  // 6C. INTERACTIVE MEMBER DETAIL POPUP MODAL CONTROLLER
+  // ==========================================================================
+  const MemberDetailModal = {
+    modalEl: null,
+    containerEl: null,
+    currentMember: null,
+    currentType: 'senior',
+
+    init() {
+      this.modalEl = document.getElementById('member-detail-modal');
+      this.containerEl = document.getElementById('member-detail-container');
+      if (!this.modalEl) return;
+
+      // Close button
+      const closeBtn = this.modalEl.querySelector('[data-close="member-detail-modal"]');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => this.close());
+      }
+
+      // Backdrop click to close
+      this.modalEl.addEventListener('click', (e) => {
+        if (e.target === this.modalEl) {
+          this.close();
+        }
+      });
+
+      // Escape key to close
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.modalEl && !this.modalEl.classList.contains('hidden')) {
+          this.close();
+        }
+      });
+
+      // Admin Save Bio handler
+      this.modalEl.addEventListener('click', (e) => {
+        if (e.target && e.target.id === 'modal-save-bio-btn') {
+          this.saveBio();
+        }
+      });
+    },
+
+    open(memberId, memberType = 'senior') {
+      if (!this.modalEl) this.init();
+      if (!this.modalEl) return;
+
+      const blueprint = SiteStore.get();
+      const exeData = blueprint.execomData || DEFAULT_EXECOM_DATA;
+      let member = null;
+
+      if (memberType === 'junior') {
+        member = (exeData.juniorExecom || []).find(m => m.id === memberId);
+      } else {
+        member = (exeData.seniorExecom || []).find(m => m.id === memberId);
+        if (!member) {
+          member = (exeData.juniorExecom || []).find(m => m.id === memberId);
+          if (member) memberType = 'junior';
+        }
+      }
+
+      if (!member) return;
+
+      this.currentMember = member;
+      this.currentType = memberType;
+
+      const isAdmin = AuthService.isAuthenticated();
+
+      // 1. Left Column (Full Image - md:col-span-5): Uncropped vertical/rectangular portrait
+      // Strict anti-copy: draggable="false", oncontextmenu="return false;", pointer-events: none;
+      const imgWrap = document.getElementById('member-modal-img-wrap');
+      if (imgWrap) {
+        if (member.avatarUrl) {
+          imgWrap.innerHTML = `
+            <img 
+              src="${PublicRenderer.escapeHtml(member.avatarUrl)}" 
+              alt="${PublicRenderer.escapeHtml(member.name)}" 
+              class="member-portrait-img" 
+              draggable="false" 
+              oncontextmenu="return false;"
+              style="pointer-events: none;"
+            />
+            <div class="member-portrait-shield" aria-hidden="true" oncontextmenu="return false;"></div>
+          `;
+        } else {
+          imgWrap.innerHTML = `
+            <div class="member-portrait-fallback" oncontextmenu="return false;">
+              <div class="fallback-emblem-seal">${PublicRenderer.escapeHtml(member.avatar || member.name.substring(0, 2).toUpperCase())}</div>
+              <div class="fallback-seal-name">${PublicRenderer.escapeHtml(member.name)}</div>
+              <div class="fallback-seal-dept">${PublicRenderer.escapeHtml(member.badge || member.track || 'ISHMT TKMCE')}</div>
+            </div>
+          `;
+        }
+      }
+
+      // 2. Right Column (Member Data - md:col-span-7)
+      const tierPill = document.getElementById('member-modal-tier-pill');
+      if (tierPill) {
+        if (memberType === 'junior') {
+          tierPill.textContent = 'JUNIOR EXECOM';
+        } else if (member.isCore) {
+          tierPill.textContent = 'CORE LEADERSHIP';
+        } else if (member.isLead) {
+          tierPill.textContent = 'FUNCTIONAL LEAD';
+        } else {
+          tierPill.textContent = 'FUNCTIONAL MEMBER';
+        }
+      }
+
+      const nameEl = document.getElementById('member-modal-name');
+      if (nameEl) nameEl.textContent = member.name;
+
+      const roleEl = document.getElementById('member-modal-role');
+      if (roleEl) {
+        roleEl.textContent = member.role || member.focus || member.track || 'Executive Member';
+      }
+
+      const badgeEl = document.getElementById('member-modal-academic-badge');
+      if (badgeEl) {
+        badgeEl.textContent = member.badge || 'B.Tech • Mechanical Engineering';
+      }
+
+      const descTextEl = document.getElementById('member-modal-desc-text');
+      const bioText = member.bio || (memberType === 'junior' ? `${member.focus || 'Active operational track'} across chapter operations.` : 'Appointed member of the ISHMT TKMCE Student Chapter Executive Committee for 2026–27.');
+      if (descTextEl) {
+        descTextEl.textContent = bioText;
+      }
+
+      // 3. Admin-Only Editor & Public Security
+      const adminEditor = document.getElementById('member-modal-admin-editor');
+      const container = document.getElementById('member-detail-container');
+
+      if (isAdmin) {
+        if (adminEditor) {
+          adminEditor.classList.remove('hidden');
+          const textarea = document.getElementById('modal-admin-bio-textarea');
+          if (textarea) textarea.value = member.bio || '';
+        }
+        if (container) {
+          container.classList.remove('member-modal-public-readonly', 'select-none');
+          container.removeAttribute('oncopy');
+        }
+      } else {
+        if (adminEditor) {
+          adminEditor.classList.add('hidden');
+        }
+        if (container) {
+          container.classList.add('member-modal-public-readonly', 'select-none');
+          container.setAttribute('oncopy', 'return false;');
+        }
+      }
+
+      // Show Modal
+      this.modalEl.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    },
+
+    saveBio() {
+      if (!this.currentMember || !AuthService.isAuthenticated()) return;
+      const textarea = document.getElementById('modal-admin-bio-textarea');
+      if (!textarea) return;
+
+      const newBio = textarea.value.trim();
+      const blueprint = SiteStore.get();
+      const exeData = blueprint.execomData || DEFAULT_EXECOM_DATA;
+
+      let targetList = this.currentType === 'junior' ? exeData.juniorExecom : exeData.seniorExecom;
+      const item = targetList.find(m => m.id === this.currentMember.id);
+      if (item) {
+        item.bio = newBio;
+        SiteStore.save(blueprint, true);
+        this.currentMember.bio = newBio;
+
+        const descTextEl = document.getElementById('member-modal-desc-text');
+        if (descTextEl) descTextEl.textContent = newBio;
+
+        App.showToast(`Updated public description for ${item.name}.`);
+      }
+    },
+
+    close() {
+      if (!this.modalEl) return;
+      this.modalEl.classList.add('hidden');
+      document.body.style.overflow = '';
+      this.currentMember = null;
+      this.currentType = 'senior';
     }
   };
 
@@ -3666,6 +3920,7 @@
       SiteStore.init();
       AdminStudio.init();
       PhotoCropper.init();
+      MemberDetailModal.init();
       this.bindLogin();
 
       window.addEventListener('hashchange', () => this.handleRoute());
