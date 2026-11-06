@@ -202,7 +202,14 @@ assert(jsContent.includes('syncFromCloud'), 'main.js defines syncFromCloud Verce
 assert(jsContent.includes('syncToCloud'), 'main.js defines syncToCloud Vercel KV persistence');
 assert(jsContent.includes('end-program-cert-modal'), 'main.js binds end-program-cert-modal to roster action');
 
-// 12. Check .gitignore rules
+// 12. Instant Delete & Ctrl+Z / Toast Undo System Verifications
+assert(cssContent.includes('.toast-undo-btn'), 'style.css defines .toast-undo-btn styling');
+assert(jsContent.includes('const UndoManager'), 'main.js defines UndoManager');
+assert(jsContent.includes('UndoManager.push'), 'main.js records deleted items in UndoManager');
+assert(jsContent.includes('UndoManager.undo()'), 'main.js binds undo restoration');
+assert(!/data-action="delete-event"[^;]+confirm\(/s.test(jsContent), 'main.js removed blocking confirm() from event delete');
+
+// 13. Check .gitignore rules
 const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');
 ['node_modules', '.next', 'dist', '.env'].forEach(rule => {
   assert(gitignoreContent.includes(rule), `.gitignore contains rule for: ${rule}`);

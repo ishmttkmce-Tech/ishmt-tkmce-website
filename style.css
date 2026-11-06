@@ -2135,6 +2135,30 @@ body.loading-state {
 .toast-notification.active {
   transform: translateY(0);
   opacity: 1;
+  pointer-events: auto;
+}
+
+.toast-undo-btn {
+  background: #800000;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.toast-undo-btn:hover {
+  background: #A00000;
+  transform: translateY(-1px);
+  border-color: #FFFFFF;
 }
 
 /* Utilities */

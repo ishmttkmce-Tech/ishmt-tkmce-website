@@ -730,6 +730,39 @@
   };
 
   // ==========================================================================
+  // 3B. UNDO MANAGER (Instant Deletion + Ctrl+Z & In-Toast Undo)
+  // ==========================================================================
+  const UndoManager = {
+    stack: [],
+
+    push(action) {
+      if (!action || typeof action.undo !== 'function') return;
+      this.stack.push(action);
+      if (this.stack.length > 50) this.stack.shift();
+    },
+
+    undo() {
+      if (this.stack.length === 0) {
+        App.showToast('Nothing to undo.');
+        return false;
+      }
+      const action = this.stack.pop();
+      try {
+        action.undo();
+        App.showToast(`↩️ Restored: ${action.description || 'Deleted item'}`);
+        return true;
+      } catch (err) {
+        console.error('Undo execution error:', err);
+        return false;
+      }
+    },
+
+    hasUndo() {
+      return this.stack.length > 0;
+    }
+  };
+
+  // ==========================================================================
   // 4. AUTHENTICATION SERVICE (#/login)
   // ==========================================================================
   const AuthService = {
@@ -2617,14 +2650,34 @@
           if (delBtn) {
             const postId = delBtn.getAttribute('data-post-id');
             if (!postId) return;
-            if (!confirm('Are you sure you want to permanently delete this photo/carousel from the gallery?')) return;
 
             const bp = SiteStore.get();
-            if (bp.galleryData && bp.galleryData.posts) {
-              bp.galleryData.posts = bp.galleryData.posts.filter(p => p.id !== postId);
+            if (bp.galleryData && Array.isArray(bp.galleryData.posts)) {
+              const postIndex = bp.galleryData.posts.findIndex(p => p.id === postId);
+              if (postIndex === -1) return;
+
+              const deletedPost = bp.galleryData.posts[postIndex];
+
+              // Delete immediately without any blocking confirm() popup
+              bp.galleryData.posts.splice(postIndex, 1);
               SiteStore.save(bp);
-              App.showToast('Post removed from chapter gallery.');
               PublicRenderer.refreshGallerySection(contentEl);
+
+              const undoRestore = () => {
+                const curBp = SiteStore.get();
+                if (!curBp.galleryData) curBp.galleryData = deepClone(DEFAULT_GALLERY_DATA);
+                if (!Array.isArray(curBp.galleryData.posts)) curBp.galleryData.posts = [];
+                curBp.galleryData.posts.splice(postIndex, 0, deletedPost);
+                SiteStore.save(curBp);
+                PublicRenderer.refreshGallerySection(contentEl);
+              };
+
+              UndoManager.push({
+                description: `Gallery Post "${deletedPost.title || deletedPost.id}"`,
+                undo: undoRestore
+              });
+
+              App.showToast(`Deleted gallery post.`, undoRestore);
             }
           }
         });
@@ -3828,18 +3881,38 @@
           return;
         }
 
-        // Delete Event
+        // Delete Event (Instant Delete + Undo / Ctrl+Z)
         const deleteBtn = e.target.closest('[data-action="delete-event"]');
         if (deleteBtn) {
           const eventId = deleteBtn.getAttribute('data-event-id');
-          if (!confirm('Are you sure you want to permanently delete this event?')) return;
-
           const blueprint = SiteStore.get();
           if (!blueprint.eventsData) blueprint.eventsData = deepClone(DEFAULT_EVENTS_DATA);
-          blueprint.eventsData.events = (blueprint.eventsData.events || []).filter(ev => ev.id !== eventId);
+          const eventIndex = (blueprint.eventsData.events || []).findIndex(ev => ev.id === eventId);
+          if (eventIndex === -1) return;
+
+          const deletedEvent = blueprint.eventsData.events[eventIndex];
+
+          // Delete immediately without any blocking confirm() popup
+          blueprint.eventsData.events.splice(eventIndex, 1);
           SiteStore.save(blueprint);
-          App.showToast('Event removed from chapter roster.');
           PublicRenderer.refreshEventsSection(contentEl);
+
+          // Register in UndoManager
+          const undoRestore = () => {
+            const currentBp = SiteStore.get();
+            if (!currentBp.eventsData) currentBp.eventsData = deepClone(DEFAULT_EVENTS_DATA);
+            if (!Array.isArray(currentBp.eventsData.events)) currentBp.eventsData.events = [];
+            currentBp.eventsData.events.splice(eventIndex, 0, deletedEvent);
+            SiteStore.save(currentBp);
+            PublicRenderer.refreshEventsSection(contentEl);
+          };
+
+          UndoManager.push({
+            description: `Event "${deletedEvent.title}"`,
+            undo: undoRestore
+          });
+
+          App.showToast(`Deleted "${deletedEvent.title}".`, undoRestore);
           return;
         }
       });
@@ -5135,22 +5208,42 @@
 
     removePhoto() {
       if (!this.activeMember) return;
-      if (!confirm(`Are you sure you want to remove the custom photo for ${this.activeMember.name} and revert to initials badge?`)) return;
-
+      const memberName = this.activeMember.name;
       const blueprint = SiteStore.get();
       const data = blueprint.execomData || DEFAULT_EXECOM_DATA;
       const list = this.activeMember.type === 'senior' ? data.seniorExecom : data.juniorExecom;
       const member = list.find(m => m.id === this.activeMember.id);
       if (member) {
+        const oldAvatarUrl = member.avatarUrl;
+        const oldAvatarFileId = member.avatarFileId;
         member.avatarUrl = null;
         member.avatarFileId = null;
         SiteStore.save(blueprint, true);
-        App.showToast(`Reverted ${this.activeMember.name} to initials badge.`);
         AdminStudio.renderLiveCanvas();
         if (AdminStudio && AdminStudio.activeSectionId === 'execom-directory') {
           AdminStudio.renderInspector('execom-directory');
         }
         this.close();
+
+        const undoRestore = () => {
+          const curBp = SiteStore.get();
+          const d = curBp.execomData || DEFAULT_EXECOM_DATA;
+          const l = member.type === 'senior' ? d.seniorExecom : d.juniorExecom;
+          const m = l.find(x => x.id === member.id);
+          if (m) {
+            m.avatarUrl = oldAvatarUrl;
+            m.avatarFileId = oldAvatarFileId;
+            SiteStore.save(curBp, true);
+            AdminStudio.renderLiveCanvas();
+          }
+        };
+
+        UndoManager.push({
+          description: `Photo for ${memberName}`,
+          undo: undoRestore
+        });
+
+        App.showToast(`Removed photo for ${memberName}.`, undoRestore);
       }
     },
 
@@ -5673,52 +5766,62 @@
           return;
         }
 
-        // 3. Delete Card Button
+        // 3. Delete Card Button (Instant Delete + Undo / Ctrl+Z - No blocking confirm() popups)
         const delBtn = e.target.closest('.btn-card-delete');
         if (delBtn) {
           e.preventDefault();
           e.stopPropagation();
           const cardType = delBtn.getAttribute('data-card-type');
           const cardId = delBtn.getAttribute('data-card-id');
-          if (!confirm('Are you sure you want to delete this card?')) return;
 
+          const previousBlueprint = deepClone(SiteStore.get());
           const blueprint = SiteStore.get();
+          let itemLabel = 'Item';
+
           if (cardType === 'senior') {
             blueprint.execomData.seniorExecom = blueprint.execomData.seniorExecom.filter(m => m.id !== cardId);
-            SiteStore.save(blueprint, true);
-            App.showToast('Senior member deleted.');
+            itemLabel = 'Senior leader';
           } else if (cardType === 'junior') {
             blueprint.execomData.juniorExecom = blueprint.execomData.juniorExecom.filter(m => m.id !== cardId);
-            SiteStore.save(blueprint, true);
-            App.showToast('Junior track deleted.');
+            itemLabel = 'Junior track member';
           } else if (cardType === 'event') {
             const secId = delBtn.getAttribute('data-section-id');
             const page = blueprint.pages[this.activePageSlug];
             const sec = (page.sections || []).find(s => s.id === secId);
             if (sec && sec.content && sec.content.items) {
               sec.content.items = sec.content.items.filter(i => i.id !== cardId);
-              SiteStore.save(blueprint, true);
-              App.showToast('Event card deleted.');
             }
+            itemLabel = 'Event card';
           } else if (cardType === 'gallery') {
             const secId = delBtn.getAttribute('data-section-id');
             const page = blueprint.pages[this.activePageSlug];
             const sec = (page.sections || []).find(s => s.id === secId);
             if (sec && sec.content && sec.content.items) {
               sec.content.items = sec.content.items.filter(i => i.id !== cardId);
-              SiteStore.save(blueprint, true);
-              App.showToast('Gallery archive card deleted.');
             }
+            itemLabel = 'Gallery card';
           } else if (cardType === 'offer') {
             blueprint.homeData.offers = blueprint.homeData.offers.filter(o => o.id !== cardId);
-            SiteStore.save(blueprint, true);
-            App.showToast('Card deleted.');
+            itemLabel = 'Initiative card';
           } else if (cardType === 'stat') {
             blueprint.homeData.stats = blueprint.homeData.stats.filter(s => s.id !== cardId);
-            SiteStore.save(blueprint, true);
-            App.showToast('Stat item deleted.');
+            itemLabel = 'Milestone stat';
           }
+
+          SiteStore.save(blueprint, true);
           this.renderLiveCanvas();
+
+          const undoRestore = () => {
+            SiteStore.save(previousBlueprint, true);
+            this.renderLiveCanvas();
+          };
+
+          UndoManager.push({
+            description: `${itemLabel}`,
+            undo: undoRestore
+          });
+
+          App.showToast(`Deleted ${itemLabel}.`, undoRestore);
           return;
         }
 
@@ -6738,19 +6841,39 @@
     },
 
     deleteSection(sectionId) {
-      if (!confirm('Are you sure you want to delete this section?')) return;
       const blueprint = SiteStore.get();
       const page = blueprint.pages[this.activePageSlug];
       if (!page || !page.sections) return;
 
-      page.sections = page.sections.filter(s => s.id !== sectionId);
+      const secIndex = page.sections.findIndex(s => s.id === sectionId);
+      if (secIndex === -1) return;
+      const deletedSection = page.sections[secIndex];
+
+      page.sections.splice(secIndex, 1);
       if (this.activeSectionId === sectionId) this.activeSectionId = null;
 
       SiteStore.save(blueprint, true);
       this.renderSectionsOutline();
       this.renderLiveCanvas();
       this.renderInspector(null);
-      App.showToast('Section removed.');
+
+      const undoRestore = () => {
+        const curBp = SiteStore.get();
+        const p = curBp.pages[this.activePageSlug];
+        if (p && p.sections) {
+          p.sections.splice(secIndex, 0, deletedSection);
+          SiteStore.save(curBp, true);
+          this.renderSectionsOutline();
+          this.renderLiveCanvas();
+        }
+      };
+
+      UndoManager.push({
+        description: `Section "${deletedSection.title || deletedSection.type || sectionId}"`,
+        undo: undoRestore
+      });
+
+      App.showToast(`Deleted section "${deletedSection.title || deletedSection.type}".`, undoRestore);
     },
 
     toggleSectionVisibility(sectionId) {
@@ -6901,6 +7024,19 @@
         });
       }
 
+      // Global Ctrl+Z (or Cmd+Z) Undo Shortcut
+      window.addEventListener('keydown', (e) => {
+        const tag = (e.target.tagName || '').toLowerCase();
+        const isEditingField = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
+
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !e.shiftKey) {
+          if (!isEditingField && UndoManager.hasUndo()) {
+            e.preventDefault();
+            UndoManager.undo();
+          }
+        }
+      });
+
       // Handle Initial Route
       this.handleRoute(true);
     },
@@ -7001,16 +7137,35 @@
       }
     },
 
-    showToast(message) {
+    showToast(message, undoAction = null) {
       const toast = document.getElementById('toast-notification');
       if (!toast) return;
 
-      toast.textContent = message;
+      if (window.__toast_timer) {
+        clearTimeout(window.__toast_timer);
+      }
+
+      if (undoAction && typeof undoAction === 'function') {
+        toast.innerHTML = `
+          <span>${message}</span>
+          <button type="button" class="toast-undo-btn" id="toast-undo-action-btn">↩️ Undo (Ctrl+Z)</button>
+        `;
+        const undoBtn = toast.querySelector('#toast-undo-action-btn');
+        if (undoBtn) {
+          undoBtn.addEventListener('click', () => {
+            UndoManager.undo();
+            toast.classList.remove('active');
+          });
+        }
+      } else {
+        toast.textContent = message;
+      }
+
       toast.classList.add('active');
 
-      setTimeout(() => {
+      window.__toast_timer = setTimeout(() => {
         toast.classList.remove('active');
-      }, 3500);
+      }, undoAction ? 6500 : 3500);
     }
   };
 
