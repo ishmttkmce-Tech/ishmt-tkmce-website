@@ -679,10 +679,22 @@
        ====================================================================== -->
   <div id="gallery-post-modal" class="gallery-modal-backdrop" role="dialog" aria-modal="true" aria-label="Instagram Post View" style="display: none;">
     <div class="gallery-split-modal-card" onclick="event.stopPropagation()">
-      <!-- Left Column: Full Image Display with Double-Click Heart Burst (md:col-span-7) -->
+      <!-- Left Column: Carousel Frame (1 to 10 photos/videos) with Double-Click Heart Burst (md:col-span-7) -->
       <div class="gallery-modal-left-col" id="gallery-modal-img-col">
         <div class="image-protection-shield select-none" id="gallery-modal-shield" aria-hidden="true" oncontextmenu="return false;"></div>
-        <img id="gallery-modal-full-img" class="gallery-modal-full-img select-none" alt="ISHMT Gallery Photo" draggable="false" oncontextmenu="return false;" />
+        
+        <!-- Multi-Slide Carousel Container -->
+        <div class="gallery-carousel-frame" id="gallery-modal-slides-wrap">
+          <img id="gallery-modal-full-img" class="gallery-modal-full-img select-none" alt="ISHMT Gallery Media" draggable="false" oncontextmenu="return false;" />
+        </div>
+
+        <!-- Carousel Navigation Controls (hidden if 1 slide) -->
+        <button type="button" class="gallery-carousel-arrow prev" id="gallery-modal-prev-btn" aria-label="Previous slide" style="display: none;">&#8249;</button>
+        <button type="button" class="gallery-carousel-arrow next" id="gallery-modal-next-btn" aria-label="Next slide" style="display: none;">&#8250;</button>
+        <span class="gallery-carousel-counter-pill" id="gallery-modal-counter-pill" style="display: none;">1 / 1</span>
+        <div class="gallery-carousel-dots" id="gallery-modal-dots" style="display: none;"></div>
+
+        <!-- Floating Heart Burst Animation -->
         <div id="gallery-modal-heart-burst" class="gallery-heart-burst">
           <svg width="90" height="90" viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" stroke-width="1.5">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>

@@ -171,11 +171,22 @@
         title: "Masterclass on Computational Heat & Fluid Mechanics (CFD 2026)",
         category: "Workshop",
         dateTime: "2026-11-12T10:00",
+        deadline: "2026-11-10T23:59",
         venue: "Mechanical CAD Lab, TKMCE",
         registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform",
+        certificateUrl: "",
         description: "Hands-on computational workshop covering boundary layer discretization, meshing strategies, and finite volume thermal simulations using OpenFOAM and ANSYS Fluent.",
         status: "Upcoming",
         posterUrl: "",
+        linkedGalleryPostId: "post-2",
+        attachments: [
+          {
+            id: "att-101",
+            type: "pdf",
+            url: "#",
+            name: "Masterclass Syllabus & CFD Rulebook (PDF)"
+          }
+        ],
         createdAt: "2026-10-23T10:00:00.000Z"
       },
       {
@@ -183,11 +194,22 @@
         title: "Cryogenic Cooling & Space Propulsion Thermal Management",
         category: "Webinar",
         dateTime: "2026-11-28T18:30",
+        deadline: "2026-11-26T18:00",
         venue: "Google Meet (Hybrid Stream)",
         registrationLink: "https://meet.google.com/ishmt-tkmce-webinar",
+        certificateUrl: "",
         description: "Distinguished guest lecture by scientists from ISRO LPSC covering thermal protection systems, liquid hydrogen boil-off mitigation, and regenerative rocket engine cooling.",
         status: "Upcoming",
         posterUrl: "",
+        linkedGalleryPostId: "post-3",
+        attachments: [
+          {
+            id: "att-201",
+            type: "pdf",
+            url: "#",
+            name: "Webinar Schedule & Speaker Profile (PDF)"
+          }
+        ],
         createdAt: "2026-10-23T11:00:00.000Z"
       },
       {
@@ -195,11 +217,22 @@
         title: "Official Inauguration of ISHMT TKMCE Chapter 2026–27",
         category: "Inauguration",
         dateTime: "2026-09-23T14:30",
+        deadline: "2026-09-21T18:00",
         venue: "APJ Abdul Kalam Auditorium, TKMCE",
         registrationLink: "",
+        certificateUrl: "https://drive.google.com/drive/folders/ishmt-tkmce-inauguration-credentials",
         description: "Grand inaugural ceremony of the ISHMT Student Chapter at TKMCE, presided over by Regional Chapter dignitaries, faculty mentors, and mechanical engineering scholars.",
         status: "Completed",
         posterUrl: "",
+        linkedGalleryPostId: "post-1",
+        attachments: [
+          {
+            id: "att-301",
+            type: "pdf",
+            url: "#",
+            name: "Inaugural Brochure & Chapter Charter (PDF)"
+          }
+        ],
         createdAt: "2026-09-20T10:00:00.000Z"
       }
     ]
@@ -214,6 +247,11 @@
         eventTag: "Inauguration 2026",
         hashtags: ["#Inauguration2026", "#ISHMT", "#TKMCE", "#HeatTransfer", "#ThermalSciences", "#MechanicalEngineering"],
         imageUrl: "ishmt-logo.jpg",
+        mediaItems: [
+          { type: "image", url: "ishmt-logo.jpg", name: "Inaugural Plaque & Crest" },
+          { type: "image", url: "tkmce-building.jpg", name: "Auditorium Ceremony Gathering" },
+          { type: "image", url: "ishmt-rct-logo.png", name: "Official Chapter Charter Handover" }
+        ],
         date: "September 2026",
         likes: 184,
         likedByMe: false,
@@ -239,6 +277,10 @@
         eventTag: "Workshops",
         hashtags: ["#CFD", "#OpenFOAM", "#ANSYSFluent", "#Meshing", "#ThermalFluids", "#TKMCE"],
         imageUrl: "tkmce-building.jpg",
+        mediaItems: [
+          { type: "image", url: "tkmce-building.jpg", name: "CAD Lab Simulation Session" },
+          { type: "image", url: "ishmt-logo.jpg", name: "ANSYS Turbulent Kinetic Energy Contours" }
+        ],
         date: "October 2026",
         likes: 142,
         likedByMe: false,
@@ -264,6 +306,10 @@
         eventTag: "Conferences",
         hashtags: ["#ISRO", "#Cryogenics", "#SpacePropulsion", "#RegenerativeCooling", "#RocketScience", "#ThermalEngineering"],
         imageUrl: "ishmt-rct-logo.png",
+        mediaItems: [
+          { type: "image", url: "ishmt-rct-logo.png", name: "ISRO LPSC Guest Lecture Deck" },
+          { type: "image", url: "tkmce-building.jpg", name: "Interactive Q&A Session" }
+        ],
         date: "October 2026",
         likes: 215,
         likedByMe: false,
@@ -283,6 +329,9 @@
         eventTag: "Lab Sessions",
         hashtags: ["#ThermalLab", "#HeatExchangers", "#Boiling", "#CriticalHeatFlux", "#ExperimentalThermodynamics", "#TKMCE"],
         imageUrl: "tkmce-building.jpg",
+        mediaItems: [
+          { type: "image", url: "tkmce-building.jpg", name: "Pool Boiling Test Rig" }
+        ],
         date: "October 2026",
         likes: 98,
         likedByMe: false,
@@ -302,6 +351,10 @@
         eventTag: "Industrial Visits",
         hashtags: ["#IndustrialVisit", "#VSSC", "#ISRO", "#Aerospace", "#ThermalProtection", "#Trivandrum"],
         imageUrl: "ishmt-rct-logo.png",
+        mediaItems: [
+          { type: "image", url: "ishmt-rct-logo.png", name: "Delegation at VSSC Gate" },
+          { type: "image", url: "tkmce-building.jpg", name: "Wind Tunnel Demonstration" }
+        ],
         date: "November 2026",
         likes: 260,
         likedByMe: false,
@@ -321,6 +374,9 @@
         eventTag: "Conferences",
         hashtags: ["#PhaseChangeMaterials", "#EnergyTransition", "#BatteryThermal", "#Sustainability", "#GreenEnergy", "#ISHMT"],
         imageUrl: "ishmt-logo.jpg",
+        mediaItems: [
+          { type: "image", url: "ishmt-logo.jpg", name: "PCM Thermal Runaway Test Rig" }
+        ],
         date: "November 2026",
         likes: 175,
         likedByMe: false,
@@ -488,7 +544,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v23_interactive_suite';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v24_media_interconnect';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -508,7 +564,7 @@
           'ishmt_site_blueprint_v16_photo_cropper_security', 'ishmt_site_blueprint_v17_live_sync',
           'ishmt_site_blueprint_v18_hierarchical_modal', 'ishmt_site_blueprint_v19_hero_about',
           'ishmt_site_blueprint_v20_join_events', 'ishmt_site_blueprint_v21_dynamic_events',
-          'ishmt_site_blueprint_v22_interactive'
+          'ishmt_site_blueprint_v22_interactive', 'ishmt_site_blueprint_v23_interactive_suite'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -519,9 +575,26 @@
           try {
             const parsed = JSON.parse(saved);
             this.blueprint = deepMerge(deepClone(DEFAULT_BLUEPRINT), parsed);
-            // Ensure galleryData exists
+            // Ensure galleryData exists with mediaItems
             if (!this.blueprint.galleryData || !Array.isArray(this.blueprint.galleryData.posts)) {
               this.blueprint.galleryData = deepClone(DEFAULT_GALLERY_DATA);
+            } else {
+              this.blueprint.galleryData.posts.forEach(post => {
+                if (!post.mediaItems || !Array.isArray(post.mediaItems) || post.mediaItems.length === 0) {
+                  post.mediaItems = [{ type: 'image', url: post.imageUrl || 'ishmt-logo.jpg', name: post.title || 'Slide 1' }];
+                }
+              });
+            }
+            // Ensure eventsData exists with new interconnect fields
+            if (!this.blueprint.eventsData || !Array.isArray(this.blueprint.eventsData.events)) {
+              this.blueprint.eventsData = deepClone(DEFAULT_EVENTS_DATA);
+            } else {
+              this.blueprint.eventsData.events.forEach(evt => {
+                if (evt.deadline === undefined) evt.deadline = evt.dateTime || '';
+                if (evt.certificateUrl === undefined) evt.certificateUrl = '';
+                if (!Array.isArray(evt.attachments)) evt.attachments = [];
+                if (evt.linkedGalleryPostId === undefined) evt.linkedGalleryPostId = '';
+              });
             }
             // Ensure gallery route uses academic-gallery
             if (this.blueprint.pages && this.blueprint.pages['/gallery']) {
@@ -833,11 +906,13 @@
       const navEl = document.getElementById('header-nav');
       if (!contentEl || !navEl) return;
 
+      const cleanRoute = currentRoute.split('?')[0] || '/';
+
       // Render Header Navigation Links
-      this.renderNav(blueprint.navigation, currentRoute);
+      this.renderNav(blueprint.navigation, cleanRoute);
 
       // Resolve Page Data
-      const page = blueprint.pages[currentRoute] || blueprint.pages['/'] || { sections: [] };
+      const page = blueprint.pages[cleanRoute] || blueprint.pages['/'] || { sections: [] };
 
       // Render Dynamic Sections
       contentEl.innerHTML = '';
@@ -851,7 +926,7 @@
       // Render Clean Sections
       page.sections.forEach(section => {
         if (section.layout && section.layout.visible === false) return;
-        const sectionHtml = this.generateBlockHtml(section, false, currentRoute);
+        const sectionHtml = this.generateBlockHtml(section, false, cleanRoute);
         contentEl.insertAdjacentHTML('beforeend', sectionHtml);
       });
 
@@ -1114,7 +1189,7 @@
             <div class="gallery-admin-header">
               <div class="gallery-admin-header-left">
                 <span class="gallery-admin-badge">Admin Studio</span>
-                <h3 class="gallery-admin-title">Gallery Batch Upload &amp; Content Moderation</h3>
+                <h3 class="gallery-admin-title">Gallery Single-Post Carousel Uploader (1 to 10 Slides)</h3>
               </div>
               <span style="font-size: 0.82rem; opacity: 0.9;">Direct Master Session</span>
             </div>
@@ -1122,23 +1197,27 @@
             <div class="gallery-admin-body">
               <form id="gallery-batch-upload-form" onsubmit="return false;">
                 <!-- Drag & Drop Upload Zone -->
-                <div class="events-upload-zone" id="gallery-upload-dropzone" style="margin-bottom: 1.5rem;">
+                <div class="events-upload-zone" id="gallery-upload-dropzone" style="margin-bottom: 1rem;">
                   <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                   </svg>
                   <p class="events-upload-prompt" style="margin-top: 0.5rem; font-weight: 600; color: #1F2937;">
-                    Click to select or drag &amp; drop photos for batch upload
+                    Click to select or drag &amp; drop 1 to 10 photos or videos (.jpg, .png, .webp, .mp4, .webm)
                   </p>
                   <p style="font-size: 0.78rem; color: #6B7280; margin-top: 0.25rem;">
-                    EXIF &amp; GPS metadata automatically stripped via HTML5 WebP canvas processing (max 1920px). Supports multiple files.
+                    All uploaded items will be grouped into <strong>ONE single carousel post</strong>. Slide 1 will serve as the Cover Thumbnail.
                   </p>
-                  <input type="file" id="gallery-file-input" accept="image/*" multiple style="display: none;" />
+                  <input type="file" id="gallery-file-input" accept="image/*,video/mp4,video/webm" multiple style="display: none;" />
                 </div>
 
-                <!-- Batch Preview Grid -->
-                <div id="gallery-batch-previews-container" class="gallery-batch-previews-grid" style="display: none; margin-bottom: 1.5rem;"></div>
+                <!-- Carousel Limit & Counter Badge -->
+                <div id="gallery-carousel-limit-badge" style="display: inline-block; background: #FDF2F2; border: 1px solid #FECACA; color: #800000; font-size: 0.82rem; font-weight: 700; padding: 0.35rem 0.85rem; border-radius: 6px; margin-bottom: 1.25rem;">
+                  Media in this Post: [ <span id="gallery-staged-count">0</span> / 10 ] (All uploaded items will be grouped into a single carousel post)
+                </div>
+
+                <!-- Reorderable Carousel Slides Preview Strip -->
+                <div id="gallery-batch-previews-container" class="admin-carousel-strip" style="display: none; margin-bottom: 1.5rem;"></div>
 
                 <div class="events-form-grid" style="margin-bottom: 1.5rem;">
                   <!-- Event Tag / Category -->
@@ -1163,7 +1242,7 @@
 
                 <!-- Caption -->
                 <div class="events-form-group" style="margin-bottom: 1.25rem;">
-                  <label class="events-form-label" for="gallery-new-caption">Photo Caption / Technical Summary *</label>
+                  <label class="events-form-label" for="gallery-new-caption">Photo / Carousel Caption *</label>
                   <textarea id="gallery-new-caption" class="events-form-input" rows="3" placeholder="Describe the chapter activity, participants, key outcomes, or research topics..." required></textarea>
                 </div>
 
@@ -1192,8 +1271,9 @@
                   <table class="events-roster-table" id="gallery-moderation-table">
                     <thead>
                       <tr>
-                        <th style="width: 70px;">Media</th>
+                        <th style="width: 70px;">Cover</th>
                         <th>Tag / Period</th>
+                        <th>Slides / Media</th>
                         <th>Caption Summary</th>
                         <th style="text-align: center;">Likes</th>
                         <th style="text-align: center;">Comments</th>
@@ -1216,46 +1296,58 @@
       if (!posts || !posts.length) {
         return `
           <tr>
-            <td colspan="6" style="text-align: center; color: #6B7280; padding: 2rem;">
+            <td colspan="7" style="text-align: center; color: #6B7280; padding: 2rem;">
               No gallery items in archives yet. Use the upload zone above to publish photos.
             </td>
           </tr>
         `;
       }
 
-      return posts.map(post => `
-        <tr data-post-id="${post.id}">
-          <td>
-            <div style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; background: #000;">
-              <img src="${this.escapeHtml(post.imageUrl)}" alt="thumb" style="width: 100%; height: 100%; object-fit: cover;" draggable="false" />
-            </div>
-          </td>
-          <td>
-            <span class="gallery-feed-tag-badge">${this.escapeHtml(post.eventTag || 'General')}</span>
-            <div style="font-size: 0.75rem; color: #6B7280; margin-top: 2px;">${this.escapeHtml(post.date || '')}</div>
-          </td>
-          <td style="max-width: 280px;">
-            <div style="font-size: 0.85rem; font-weight: 600; color: #1F2937; line-height: 1.3;" class="line-clamp-2">
-              ${this.escapeHtml(post.caption || post.title || 'Untitled Post')}
-            </div>
-            ${post.hashtags && post.hashtags.length ? `
-              <div style="font-size: 0.72rem; color: #800000; margin-top: 3px;">${this.escapeHtml(post.hashtags.join(' '))}</div>
-            ` : ''}
-          </td>
-          <td style="text-align: center; font-weight: 700; color: #111827;">${post.likes || 0}</td>
-          <td style="text-align: center; font-weight: 700; color: #111827;">${(post.comments && post.comments.length) || 0}</td>
-          <td style="text-align: right;">
-            <div style="display: inline-flex; gap: 0.5rem;">
-              <button type="button" class="btn-roster-action gallery-admin-view-btn" data-post-id="${post.id}" title="Preview / Moderate Comments" style="color: #2563EB;">
-                💬 Moderate
-              </button>
-              <button type="button" class="btn-roster-action gallery-admin-del-btn" data-post-id="${post.id}" title="Delete Post" style="color: #DC2626;">
-                🗑 Delete
-              </button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
+      return posts.map(post => {
+        const media = (post.mediaItems && post.mediaItems.length) ? post.mediaItems : [{ type: 'image', url: post.imageUrl }];
+        const coverUrl = media[0].url;
+        const totalSlides = media.length;
+        const videoCount = media.filter(m => m.type === 'video').length;
+
+        return `
+          <tr data-post-id="${post.id}">
+            <td>
+              <div style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; background: #000;">
+                <img src="${this.escapeHtml(coverUrl)}" alt="thumb" style="width: 100%; height: 100%; object-fit: cover;" draggable="false" />
+              </div>
+            </td>
+            <td>
+              <span class="gallery-feed-tag-badge">${this.escapeHtml(post.eventTag || 'General')}</span>
+              <div style="font-size: 0.75rem; color: #6B7280; margin-top: 2px;">${this.escapeHtml(post.date || '')}</div>
+            </td>
+            <td>
+              <span style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 700; color: #1F2937;">
+                ${totalSlides} Slide${totalSlides > 1 ? 's' : ''} ${videoCount > 0 ? `(🎥 ${videoCount})` : ''}
+              </span>
+            </td>
+            <td style="max-width: 260px;">
+              <div style="font-size: 0.85rem; font-weight: 600; color: #1F2937; line-height: 1.3;" class="line-clamp-2">
+                ${this.escapeHtml(post.caption || post.title || 'Untitled Post')}
+              </div>
+              ${post.hashtags && post.hashtags.length ? `
+                <div style="font-size: 0.72rem; color: #800000; margin-top: 3px;">${this.escapeHtml(post.hashtags.join(' '))}</div>
+              ` : ''}
+            </td>
+            <td style="text-align: center; font-weight: 700; color: #111827;">${post.likes || 0}</td>
+            <td style="text-align: center; font-weight: 700; color: #111827;">${(post.comments && post.comments.length) || 0}</td>
+            <td style="text-align: right;">
+              <div style="display: inline-flex; gap: 0.5rem;">
+                <button type="button" class="btn-roster-action gallery-admin-view-btn" data-post-id="${post.id}" title="Preview / Moderate Comments" style="color: #2563EB;">
+                  💬 Moderate
+                </button>
+                <button type="button" class="btn-roster-action gallery-admin-del-btn" data-post-id="${post.id}" title="Delete Post" style="color: #DC2626;">
+                  🗑 Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
     },
 
     generateGalleryExploreGridHtml(posts) {
@@ -1275,27 +1367,47 @@
 
       return `
         <div class="gallery-explore-grid" id="gallery-explore-grid">
-          ${posts.map(post => `
-            <div class="gallery-grid-card select-none" data-post-id="${post.id}" data-category="${this.escapeHtml(post.eventTag || '')}">
-              <div class="image-protection-shield" aria-hidden="true" oncontextmenu="return false;"></div>
-              ${post.eventTag ? `<span class="gallery-grid-tag-chip">${this.escapeHtml(post.eventTag)}</span>` : ''}
-              <img src="${this.escapeHtml(post.imageUrl)}" alt="${this.escapeHtml(post.title || post.caption || 'ISHMT Chapter Moment')}" class="gallery-grid-thumbnail" draggable="false" oncontextmenu="return false;" loading="lazy" />
-              <div class="gallery-grid-overlay">
-                <div class="gallery-overlay-stat">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                  </svg>
-                  <span class="gallery-grid-like-val" id="grid-like-val-${post.id}">${post.likes || 0}</span>
-                </div>
-                <div class="gallery-overlay-stat">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                  <span class="gallery-grid-comment-val" id="grid-comment-val-${post.id}">${(post.comments && post.comments.length) || 0}</span>
+          ${posts.map(post => {
+            const media = (post.mediaItems && post.mediaItems.length) ? post.mediaItems : [{ type: 'image', url: post.imageUrl }];
+            const coverUrl = media[0].url;
+            const isCarousel = media.length > 1;
+            const isVideo = media[0].type === 'video' || media.some(m => m.type === 'video');
+
+            return `
+              <div class="gallery-grid-card select-none" data-post-id="${post.id}" data-category="${this.escapeHtml(post.eventTag || '')}">
+                <div class="image-protection-shield" aria-hidden="true" oncontextmenu="return false;"></div>
+                ${post.eventTag ? `<span class="gallery-grid-tag-chip">${this.escapeHtml(post.eventTag)}</span>` : ''}
+
+                <!-- Carousel Stack Icon / Video Indicator Badge in Top-Right Corner -->
+                ${isCarousel ? `
+                  <span class="gallery-carousel-badge" title="Carousel post with ${media.length} items">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>${media.length}</span>
+                  </span>
+                ` : (isVideo ? `
+                  <span class="gallery-carousel-badge" style="background: rgba(128, 0, 0, 0.9);" title="Video post">
+                    ▶ <span>VIDEO</span>
+                  </span>
+                ` : '')}
+
+                <img src="${this.escapeHtml(coverUrl)}" alt="${this.escapeHtml(post.title || post.caption || 'ISHMT Chapter Moment')}" class="gallery-grid-thumbnail" draggable="false" oncontextmenu="return false;" loading="lazy" />
+                <div class="gallery-grid-overlay">
+                  <div class="gallery-overlay-stat">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span class="gallery-grid-like-val" id="grid-like-val-${post.id}">${post.likes || 0}</span>
+                  </div>
+                  <div class="gallery-overlay-stat">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span class="gallery-grid-comment-val" id="grid-comment-val-${post.id}">${(post.comments && post.comments.length) || 0}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       `;
     },
@@ -1311,101 +1423,164 @@
 
       return `
         <div class="gallery-feed-view" id="gallery-feed-view">
-          ${posts.map(post => `
-            <article class="gallery-feed-card" data-post-id="${post.id}" data-category="${this.escapeHtml(post.eventTag || '')}">
-              <!-- Feed Card Header -->
-              <div class="gallery-feed-header">
-                <div class="gallery-feed-author-wrap">
-                  <img src="ishmt-logo.jpg" alt="ISHMT TKMCE" class="gallery-feed-avatar select-none" draggable="false" oncontextmenu="return false;" />
-                  <div>
-                    <div class="gallery-feed-username">
-                      <span>ishmt_tkmce</span>
-                      <span class="gallery-feed-tag-badge">${this.escapeHtml(post.eventTag || 'Chapter Activity')}</span>
+          ${posts.map(post => {
+            const media = (post.mediaItems && post.mediaItems.length) ? post.mediaItems : [{ type: 'image', url: post.imageUrl }];
+            const totalSlides = media.length;
+
+            return `
+              <article class="gallery-feed-card" data-post-id="${post.id}" data-category="${this.escapeHtml(post.eventTag || '')}">
+                <!-- Feed Card Header -->
+                <div class="gallery-feed-header">
+                  <div class="gallery-feed-author-wrap">
+                    <img src="ishmt-logo.jpg" alt="ISHMT TKMCE" class="gallery-feed-avatar select-none" draggable="false" oncontextmenu="return false;" />
+                    <div>
+                      <div class="gallery-feed-username">
+                        <span>ishmt_tkmce</span>
+                        <span class="gallery-feed-tag-badge">${this.escapeHtml(post.eventTag || 'Chapter Activity')}</span>
+                      </div>
+                      <span class="gallery-feed-time" style="font-size: 0.72rem; color: #9CA3AF;">${this.escapeHtml(post.date || '')}</span>
                     </div>
-                    <span class="gallery-feed-time" style="font-size: 0.72rem; color: #9CA3AF;">${this.escapeHtml(post.date || '')}</span>
                   </div>
                 </div>
-              </div>
 
-              <!-- Feed Card Image Container -->
-              <div class="gallery-feed-image-wrap select-none" data-feed-img-id="${post.id}">
-                <div class="image-protection-shield" aria-hidden="true" oncontextmenu="return false;"></div>
-                <img src="${this.escapeHtml(post.imageUrl)}" alt="${this.escapeHtml(post.title || post.caption || 'ISHMT Moment')}" class="gallery-feed-img" draggable="false" oncontextmenu="return false;" loading="lazy" />
-                <div class="gallery-heart-burst" id="feed-heart-burst-${post.id}">
-                  <svg width="84" height="84" viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" stroke-width="1.5">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                  </svg>
+                <!-- Feed Card Image / Carousel Container -->
+                <div class="gallery-feed-image-wrap select-none" data-feed-img-id="${post.id}" data-feed-slide-index="0" data-total-slides="${totalSlides}">
+                  <div class="image-protection-shield" aria-hidden="true" oncontextmenu="return false;"></div>
+
+                  <!-- Multi-Slide Carousel Container -->
+                  <div class="gallery-carousel-frame feed-carousel-frame" id="feed-slides-frame-${post.id}">
+                    ${media.map((item, idx) => `
+                      <div class="gallery-carousel-slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
+                        ${item.type === 'video' ? `
+                          <video 
+                            class="gallery-protected-video select-none" 
+                            src="${item.url}" 
+                            controls 
+                            controlsList="nodownload" 
+                            disablePictureInPicture 
+                            oncontextmenu="return false;" 
+                            playsinline
+                          ></video>
+                        ` : `
+                          <img 
+                            src="${this.escapeHtml(item.url)}" 
+                            alt="${this.escapeHtml(post.title || post.caption || 'Slide')}" 
+                            class="gallery-feed-img" 
+                            draggable="false" 
+                            oncontextmenu="return false;" 
+                            loading="lazy" 
+                          />
+                        `}
+                      </div>
+                    `).join('')}
+                  </div>
+
+                  <!-- Navigation Arrows (If > 1 slide) -->
+                  ${totalSlides > 1 ? `
+                    <button type="button" class="gallery-carousel-arrow prev feed-arrow-prev" data-post-id="${post.id}" aria-label="Previous slide">&#8249;</button>
+                    <button type="button" class="gallery-carousel-arrow next feed-arrow-next" data-post-id="${post.id}" aria-label="Next slide">&#8250;</button>
+                    <span class="gallery-carousel-counter-pill" id="feed-counter-${post.id}">1 / ${totalSlides}</span>
+                    <div class="gallery-carousel-dots" id="feed-dots-${post.id}">
+                      ${media.map((_, i) => `<span class="gallery-carousel-dot ${i === 0 ? 'active' : ''}" data-post-id="${post.id}" data-slide="${i}"></span>`).join('')}
+                    </div>
+                  ` : ''}
+
+                  <!-- Floating Heart Burst Overlay -->
+                  <div class="gallery-heart-burst" id="feed-heart-burst-${post.id}">
+                    <svg width="84" height="84" viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" stroke-width="1.5">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                  </div>
                 </div>
-              </div>
 
-              <!-- Feed Actions Bar -->
-              <div class="gallery-feed-actions">
-                <button type="button" class="gallery-action-btn feed-like-btn ${post.likedByMe ? 'liked' : ''}" data-post-id="${post.id}" title="Like">
-                  <svg id="feed-like-icon-${post.id}" width="24" height="24" viewBox="0 0 24 24" fill="${post.likedByMe ? '#EF4444' : 'none'}" stroke="${post.likedByMe ? '#EF4444' : 'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                  </svg>
-                </button>
-                <button type="button" class="gallery-action-btn feed-comment-open-btn" data-post-id="${post.id}" title="View all comments">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-                <button type="button" class="gallery-action-btn feed-share-btn" data-post-id="${post.id}" title="Share post link">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                  </svg>
-                </button>
-              </div>
-
-              <!-- Feed Body (Likes, Caption, Comments) -->
-              <div class="gallery-feed-body">
-                <div class="gallery-feed-likes" id="feed-likes-${post.id}">
-                  ${post.likes || 0} likes
+                <!-- Feed Actions Bar -->
+                <div class="gallery-feed-actions">
+                  <button type="button" class="gallery-action-btn feed-like-btn ${post.likedByMe ? 'liked' : ''}" data-post-id="${post.id}" title="Like">
+                    <svg id="feed-like-icon-${post.id}" width="24" height="24" viewBox="0 0 24 24" fill="${post.likedByMe ? '#EF4444' : 'none'}" stroke="${post.likedByMe ? '#EF4444' : 'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                  </button>
+                  <button type="button" class="gallery-action-btn feed-comment-open-btn" data-post-id="${post.id}" title="View all comments">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                  </button>
+                  <button type="button" class="gallery-action-btn feed-share-btn" data-post-id="${post.id}" title="Share post link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                  </button>
                 </div>
 
-                <div class="gallery-feed-caption">
-                  <span class="gallery-comment-author">ishmt_tkmce</span>
-                  <span>${this.escapeHtml(post.caption || post.title || '')}</span>
-                  ${post.hashtags && post.hashtags.length ? `
-                    <div style="margin-top: 0.35rem;">
-                      ${post.hashtags.map(t => `<span class="gallery-hashtag">${this.escapeHtml(t)}</span>`).join(' ')}
+                <!-- Feed Body (Likes, Caption, Comments) -->
+                <div class="gallery-feed-body">
+                  <div class="gallery-feed-likes" id="feed-likes-${post.id}">
+                    ${post.likes || 0} likes
+                  </div>
+
+                  <div class="gallery-feed-caption">
+                    <span class="gallery-comment-author">ishmt_tkmce</span>
+                    <span>${this.escapeHtml(post.caption || post.title || '')}</span>
+                    ${post.hashtags && post.hashtags.length ? `
+                      <div style="margin-top: 0.35rem;">
+                        ${post.hashtags.map(t => `<span class="gallery-hashtag">${this.escapeHtml(t)}</span>`).join(' ')}
+                      </div>
+                    ` : ''}
+                  </div>
+
+                  <!-- Comments preview -->
+                  ${post.comments && post.comments.length ? `
+                    <button type="button" class="gallery-view-comments-btn feed-comment-open-btn" data-post-id="${post.id}">
+                      View all ${post.comments.length} comments
+                    </button>
+                    <div class="gallery-comment-row" style="margin-bottom: 0.5rem;">
+                      <div class="gallery-comment-content">
+                        <span class="gallery-comment-author">${this.escapeHtml(post.comments[post.comments.length - 1].name)}</span>
+                        <span class="gallery-comment-text">${this.escapeHtml(post.comments[post.comments.length - 1].text)}</span>
+                      </div>
                     </div>
                   ` : ''}
                 </div>
 
-                <!-- Comments preview -->
-                ${post.comments && post.comments.length ? `
-                  <button type="button" class="gallery-view-comments-btn feed-comment-open-btn" data-post-id="${post.id}">
-                    View all ${post.comments.length} comments
-                  </button>
-                  <div class="gallery-comment-row" style="margin-bottom: 0.5rem;">
-                    <div class="gallery-comment-content">
-                      <span class="gallery-comment-author">${this.escapeHtml(post.comments[post.comments.length - 1].name)}</span>
-                      <span class="gallery-comment-text">${this.escapeHtml(post.comments[post.comments.length - 1].text)}</span>
-                    </div>
-                  </div>
-                ` : ''}
-              </div>
-
-              <!-- Inline Quick Comment Form -->
-              <form class="gallery-inline-comment-form feed-quick-comment-form" data-post-id="${post.id}">
-                <input type="text" class="gallery-inline-comment-input feed-quick-name" placeholder="Your Name" required maxlength="40" style="max-width: 110px;" />
-                <input type="text" class="gallery-inline-comment-input feed-quick-text" placeholder="Add a comment..." required maxlength="240" />
-                <button type="submit" class="gallery-inline-comment-btn">Post</button>
-              </form>
-            </article>
-          `).join('')}
+                <!-- Inline Quick Comment Form -->
+                <form class="gallery-inline-comment-form feed-quick-comment-form" data-post-id="${post.id}">
+                  <input type="text" class="gallery-inline-comment-input feed-quick-name" placeholder="Your Name" required maxlength="40" style="max-width: 110px;" />
+                  <input type="text" class="gallery-inline-comment-input feed-quick-text" placeholder="Add a comment..." required maxlength="240" />
+                  <button type="submit" class="gallery-inline-comment-btn">Post</button>
+                </form>
+              </article>
+            `;
+          }).join('')}
         </div>
       `;
     },
 
-    processAndSanitizeGalleryImage(file) {
+    processAndSanitizeGalleryMedia(file) {
       return new Promise((resolve, reject) => {
-        if (!file || !file.type.startsWith('image/')) {
-          return reject(new Error('Please select a valid image file.'));
+        if (!file) return reject(new Error('No file provided.'));
+        const isVideo = file.type.startsWith('video/');
+        const isImage = file.type.startsWith('image/');
+
+        if (!isImage && !isVideo) {
+          return reject(new Error('Unsupported file type. Please upload images or MP4/WebM videos.'));
         }
+
         const reader = new FileReader();
+
+        if (isVideo) {
+          reader.onload = (e) => {
+            resolve({
+              type: 'video',
+              url: e.target.result,
+              name: file.name
+            });
+          };
+          reader.onerror = () => reject(new Error('Failed to read video file.'));
+          reader.readAsDataURL(file);
+          return;
+        }
+
         reader.onload = (e) => {
           const img = new Image();
           img.onload = () => {
@@ -1423,7 +1598,11 @@
             ctx.drawImage(img, 0, 0, width, height);
             // Strips EXIF/GPS metadata by converting to clean WebP data URL
             const webpDataUrl = canvas.toDataURL('image/webp', 0.88);
-            resolve(webpDataUrl);
+            resolve({
+              type: 'image',
+              url: webpDataUrl,
+              name: file.name
+            });
           };
           img.onerror = () => reject(new Error('Failed to decode image data.'));
           img.src = e.target.result;
@@ -1431,6 +1610,10 @@
         reader.onerror = () => reject(new Error('Failed to read image file.'));
         reader.readAsDataURL(file);
       });
+    },
+
+    processAndSanitizeGalleryImage(file) {
+      return this.processAndSanitizeGalleryMedia(file);
     },
 
     initAcademicGalleryInteractivity(contentEl) {
@@ -1447,7 +1630,7 @@
       let currentView = 'grid'; // 'grid' | 'feed'
       let activeCategory = 'all';
       let searchQuery = '';
-      let stagedBatchImages = [];
+      let stagedGalleryMedia = []; // 1 to 10 items for a SINGLE carousel post
 
       // Elements
       const searchInput = gallerySec.querySelector('#gallery-search-input');
@@ -1459,7 +1642,11 @@
 
       // Shared Post Modal Elements
       const postModal = document.getElementById('gallery-post-modal');
-      const modalFullImg = document.getElementById('gallery-modal-full-img');
+      const modalSlidesWrap = document.getElementById('gallery-modal-slides-wrap');
+      const modalPrevBtn = document.getElementById('gallery-modal-prev-btn');
+      const modalNextBtn = document.getElementById('gallery-modal-next-btn');
+      const modalCounterPill = document.getElementById('gallery-modal-counter-pill');
+      const modalDots = document.getElementById('gallery-modal-dots');
       const modalTagBadge = document.getElementById('gallery-modal-tag-badge');
       const modalDate = document.getElementById('gallery-modal-date');
       const modalCloseBtn = document.getElementById('gallery-modal-close-btn');
@@ -1474,6 +1661,9 @@
       const modalHeartBurst = document.getElementById('gallery-modal-heart-burst');
       const modalImgCol = document.getElementById('gallery-modal-img-col');
       const modalFocusCommentBtn = document.getElementById('gallery-modal-focus-comment-btn');
+
+      let modalActiveSlideIndex = 0;
+      let modalActiveMediaList = [];
 
       // Helper: Filter Posts
       const getFilteredPosts = () => {
@@ -1510,6 +1700,74 @@
         bindPostEventHandlers();
       };
 
+      // Helper: Render Single Slide inside Modal Carousel
+      const renderModalSlide = (targetIdx) => {
+        if (!modalActiveMediaList.length) return;
+        const total = modalActiveMediaList.length;
+        modalActiveSlideIndex = (targetIdx + total) % total;
+        const currentItem = modalActiveMediaList[modalActiveSlideIndex];
+
+        if (modalSlidesWrap) {
+          if (currentItem.type === 'video') {
+            modalSlidesWrap.innerHTML = `
+              <video 
+                class="gallery-protected-video select-none" 
+                src="${currentItem.url}" 
+                controls 
+                controlsList="nodownload" 
+                disablePictureInPicture 
+                oncontextmenu="return false;" 
+                playsinline
+              ></video>
+            `;
+          } else {
+            modalSlidesWrap.innerHTML = `
+              <img 
+                id="gallery-modal-full-img" 
+                class="gallery-modal-full-img select-none" 
+                src="${currentItem.url}" 
+                alt="ISHMT Gallery Media" 
+                draggable="false" 
+                oncontextmenu="return false;" 
+              />
+            `;
+          }
+        }
+
+        // Counter Pill
+        if (modalCounterPill) {
+          if (total > 1) {
+            modalCounterPill.style.display = 'block';
+            modalCounterPill.textContent = `${modalActiveSlideIndex + 1} / ${total}`;
+          } else {
+            modalCounterPill.style.display = 'none';
+          }
+        }
+
+        // Navigation Arrows
+        if (modalPrevBtn && modalNextBtn) {
+          if (total > 1) {
+            modalPrevBtn.style.display = 'flex';
+            modalNextBtn.style.display = 'flex';
+          } else {
+            modalPrevBtn.style.display = 'none';
+            modalNextBtn.style.display = 'none';
+          }
+        }
+
+        // Dots
+        if (modalDots) {
+          if (total > 1) {
+            modalDots.style.display = 'flex';
+            modalDots.innerHTML = modalActiveMediaList.map((_, i) => `
+              <span class="gallery-carousel-dot ${i === modalActiveSlideIndex ? 'active' : ''}" data-modal-goto="${i}"></span>
+            `).join('');
+          } else {
+            modalDots.style.display = 'none';
+          }
+        }
+      };
+
       // Helper: Open Modal for a Post
       const openModal = (postId) => {
         if (!postModal) return;
@@ -1518,10 +1776,11 @@
         if (!post) return;
 
         postModal.setAttribute('data-current-post-id', postId);
-        if (modalFullImg) {
-          modalFullImg.src = post.imageUrl;
-          modalFullImg.alt = post.title || post.caption || 'ISHMT Gallery Photo';
-        }
+        modalActiveMediaList = (post.mediaItems && post.mediaItems.length) ? post.mediaItems : [{ type: 'image', url: post.imageUrl }];
+        modalActiveSlideIndex = 0;
+
+        renderModalSlide(0);
+
         if (modalTagBadge) modalTagBadge.textContent = post.eventTag || 'Chapter Activity';
         if (modalDate) modalDate.textContent = post.date || '';
 
@@ -1584,6 +1843,29 @@
         } catch (_) {}
       };
 
+      // Modal Carousel Navigation Handlers
+      if (modalPrevBtn) {
+        modalPrevBtn.onclick = (e) => {
+          e.stopPropagation();
+          renderModalSlide(modalActiveSlideIndex - 1);
+        };
+      }
+      if (modalNextBtn) {
+        modalNextBtn.onclick = (e) => {
+          e.stopPropagation();
+          renderModalSlide(modalActiveSlideIndex + 1);
+        };
+      }
+      if (modalDots) {
+        modalDots.onclick = (e) => {
+          const dot = e.target.closest('[data-modal-goto]');
+          if (!dot) return;
+          e.stopPropagation();
+          const targetSlide = parseInt(dot.getAttribute('data-modal-goto'), 10);
+          renderModalSlide(targetSlide);
+        };
+      }
+
       // Helper: Update Modal Like State
       const updateModalLikeState = (post) => {
         if (!post) return;
@@ -1609,6 +1891,7 @@
         postModal.classList.remove('open');
         setTimeout(() => {
           postModal.style.display = 'none';
+          if (modalSlidesWrap) modalSlidesWrap.innerHTML = '';
         }, 200);
 
         // Clear ?post= from URL
@@ -1619,7 +1902,7 @@
         } catch (_) {}
       };
 
-      // Helper: Toggle Like on a Post
+      // Helper: Toggle Like on a Post (applies to carousel as a whole)
       const toggleLike = (postId, forceHeart = false) => {
         const bp = SiteStore.get();
         if (!bp.galleryData) bp.galleryData = deepClone(DEFAULT_GALLERY_DATA);
@@ -1750,6 +2033,49 @@
             lastTap = currentTime;
           });
         });
+
+        // Feed Carousel Navigation (Arrows & Dots)
+        const feedPrevBtns = postsContainer.querySelectorAll('.feed-arrow-prev');
+        feedPrevBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const postId = btn.getAttribute('data-post-id');
+            stepFeedSlide(postId, -1);
+          });
+        });
+
+        const feedNextBtns = postsContainer.querySelectorAll('.feed-arrow-next');
+        feedNextBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const postId = btn.getAttribute('data-post-id');
+            stepFeedSlide(postId, 1);
+          });
+        });
+
+        const stepFeedSlide = (postId, direction) => {
+          const wrap = postsContainer.querySelector(`.gallery-feed-image-wrap[data-feed-img-id="${postId}"]`);
+          if (!wrap) return;
+          const total = parseInt(wrap.getAttribute('data-total-slides') || '1', 10);
+          let current = parseInt(wrap.getAttribute('data-feed-slide-index') || '0', 10);
+          const next = (current + direction + total) % total;
+
+          wrap.setAttribute('data-feed-slide-index', next);
+          const slides = wrap.querySelectorAll('.gallery-carousel-slide');
+          slides.forEach((sl, idx) => {
+            if (idx === next) sl.classList.add('active');
+            else sl.classList.remove('active');
+          });
+
+          const counter = wrap.querySelector(`#feed-counter-${postId}`);
+          if (counter) counter.textContent = `${next + 1} / ${total}`;
+
+          const dots = wrap.querySelectorAll('.gallery-carousel-dot');
+          dots.forEach((d, idx) => {
+            if (idx === next) d.classList.add('active');
+            else d.classList.remove('active');
+          });
+        };
 
         // Feed Action Buttons
         const feedLikeBtns = postsContainer.querySelectorAll('.feed-like-btn');
@@ -1929,6 +2255,30 @@
           });
         }
 
+        // Modal Swipe Gestures on Mobile
+        if (modalImgCol) {
+          let touchStartX = 0;
+          modalImgCol.addEventListener('touchstart', (e) => {
+            if (e.touches && e.touches[0]) {
+              touchStartX = e.touches[0].clientX;
+            }
+          }, { passive: true });
+
+          modalImgCol.addEventListener('touchend', (e) => {
+            if (e.changedTouches && e.changedTouches[0]) {
+              const touchEndX = e.changedTouches[0].clientX;
+              const diffX = touchEndX - touchStartX;
+              if (diffX > 50) {
+                // Swipe Right -> Prev
+                renderModalSlide(modalActiveSlideIndex - 1);
+              } else if (diffX < -50) {
+                // Swipe Left -> Next
+                renderModalSlide(modalActiveSlideIndex + 1);
+              }
+            }
+          }, { passive: true });
+        }
+
         // Modal Like Button
         if (modalLikeBtn) {
           modalLikeBtn.addEventListener('click', () => {
@@ -1978,17 +2328,22 @@
       // Initial binding of event handlers
       bindPostEventHandlers();
 
-      // Deep link support: Check URL for ?post=[id]
+      // Deep link support: Check URL for ?post=[id] (both in window.location.search and hash query)
       try {
         const urlParams = new URLSearchParams(window.location.search);
-        const deepPostId = urlParams.get('post');
+        let deepPostId = urlParams.get('post');
+        if (!deepPostId && window.location.hash.includes('?')) {
+          const hashQuery = window.location.hash.split('?')[1];
+          const hashParams = new URLSearchParams(hashQuery);
+          deepPostId = hashParams.get('post');
+        }
         if (deepPostId) {
           setTimeout(() => openModal(deepPostId), 350);
         }
       } catch (_) {}
 
       // =========================================================================
-      // ADMIN PANEL INTERACTIVITY (Batch Upload Dropzone + Canvas Sanitization)
+      // ADMIN PANEL INTERACTIVITY (Strict Single-Post Carousel Uploader with 1-10 Limit)
       // =========================================================================
       const adminPanel = gallerySec.querySelector('#gallery-admin-panel');
       if (adminPanel) {
@@ -1997,13 +2352,20 @@
         const previewsContainer = adminPanel.querySelector('#gallery-batch-previews-container');
         const submitBatchBtn = adminPanel.querySelector('#gallery-submit-batch-btn');
         const uploadStatus = adminPanel.querySelector('#gallery-upload-status');
+        const stagedCountEl = adminPanel.querySelector('#gallery-staged-count');
         const newTagSelect = adminPanel.querySelector('#gallery-new-tag');
         const newDateInput = adminPanel.querySelector('#gallery-new-date');
         const newCaptionInput = adminPanel.querySelector('#gallery-new-caption');
         const newHashtagsInput = adminPanel.querySelector('#gallery-new-hashtags');
 
         if (dropzone && fileInput) {
-          dropzone.addEventListener('click', () => fileInput.click());
+          dropzone.addEventListener('click', () => {
+            if (stagedGalleryMedia.length >= 10) {
+              alert('Maximum 10 media items reached for this single carousel post.');
+              return;
+            }
+            fileInput.click();
+          });
 
           dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -2018,70 +2380,118 @@
             e.preventDefault();
             dropzone.classList.remove('dragover');
             if (e.dataTransfer.files && e.dataTransfer.files.length) {
-              handleBatchFiles(Array.from(e.dataTransfer.files));
+              handleCarouselFiles(Array.from(e.dataTransfer.files));
             }
           });
 
           fileInput.addEventListener('change', () => {
             if (fileInput.files && fileInput.files.length) {
-              handleBatchFiles(Array.from(fileInput.files));
+              handleCarouselFiles(Array.from(fileInput.files));
             }
           });
         }
 
-        const handleBatchFiles = async (files) => {
+        const handleCarouselFiles = async (files) => {
           if (!uploadStatus) return;
-          uploadStatus.textContent = `Processing and sanitizing ${files.length} images...`;
-          let processedCount = 0;
+          const remainingSlots = 10 - stagedGalleryMedia.length;
+          if (remainingSlots <= 0) {
+            alert('A single post can hold a maximum of 10 photos or videos.');
+            return;
+          }
 
-          for (const file of files) {
+          const filesToProcess = files.slice(0, remainingSlots);
+          if (files.length > remainingSlots) {
+            App.showToast(`Notice: Limited to 10 slides per post (${filesToProcess.length} queued).`);
+          }
+
+          uploadStatus.textContent = `Processing and sanitizing ${filesToProcess.length} slide(s)...`;
+
+          for (const file of filesToProcess) {
             try {
-              const sanitizedWebp = await PublicRenderer.processAndSanitizeGalleryImage(file);
-              stagedBatchImages.push({
-                fileId: 'img-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5),
-                name: file.name,
-                dataUrl: sanitizedWebp
+              const processedItem = await PublicRenderer.processAndSanitizeGalleryMedia(file);
+              stagedGalleryMedia.push({
+                id: 'media-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5),
+                type: processedItem.type,
+                url: processedItem.url,
+                name: processedItem.name
               });
-              processedCount++;
             } catch (err) {
-              console.warn('Image processing error:', err);
+              console.warn('Media upload error:', err);
             }
           }
 
-          uploadStatus.textContent = `${processedCount} image(s) sanitized & ready to publish.`;
-          renderBatchPreviews();
+          uploadStatus.textContent = `${stagedGalleryMedia.length} / 10 slide(s) attached to this single post.`;
+          renderCarouselThumbnails();
         };
 
-        const renderBatchPreviews = () => {
+        const renderCarouselThumbnails = () => {
+          if (stagedCountEl) stagedCountEl.textContent = stagedGalleryMedia.length;
+
           if (!previewsContainer) return;
-          if (!stagedBatchImages.length) {
+          if (!stagedGalleryMedia.length) {
             previewsContainer.style.display = 'none';
             previewsContainer.innerHTML = '';
             return;
           }
 
           previewsContainer.style.display = 'grid';
-          previewsContainer.innerHTML = stagedBatchImages.map((img, idx) => `
-            <div class="gallery-batch-preview-item" data-index="${idx}">
-              <img src="${img.dataUrl}" alt="staged" class="gallery-batch-preview-img" />
-              <button type="button" class="gallery-batch-remove-btn" data-remove-idx="${idx}" title="Remove image">&times;</button>
+          previewsContainer.innerHTML = stagedGalleryMedia.map((item, idx) => `
+            <div class="admin-carousel-item ${idx === 0 ? 'is-cover' : ''}" data-index="${idx}">
+              ${item.type === 'video' ? `
+                <video class="admin-carousel-thumb" src="${item.url}" muted></video>
+                <span class="gallery-carousel-badge" style="position: absolute; top: 4px; left: 4px; font-size: 0.62rem; padding: 0.1rem 0.35rem;">🎥 Video</span>
+              ` : `
+                <img src="${item.url}" alt="slide ${idx + 1}" class="admin-carousel-thumb" />
+              `}
+              <span class="admin-carousel-order-badge">
+                ${idx === 0 ? '★ Slide 1 (Cover)' : `Slide ${idx + 1}`}
+              </span>
+              <div class="admin-carousel-item-actions">
+                ${idx > 0 ? `<button type="button" class="admin-carousel-action-btn action-move-left" data-move-idx="${idx}" title="Move slide left">&#9664;</button>` : ''}
+                ${idx < stagedGalleryMedia.length - 1 ? `<button type="button" class="admin-carousel-action-btn action-move-right" data-move-idx="${idx}" title="Move slide right">&#9654;</button>` : ''}
+                <button type="button" class="admin-carousel-action-btn action-remove" data-remove-idx="${idx}" title="Remove slide">&times;</button>
+              </div>
             </div>
           `).join('');
 
-          // Remove button handlers
-          const removeBtns = previewsContainer.querySelectorAll('.gallery-batch-remove-btn');
-          removeBtns.forEach(btn => {
+          // Bind reorder & remove handlers
+          previewsContainer.querySelectorAll('.action-remove').forEach(btn => {
             btn.addEventListener('click', (e) => {
               e.stopPropagation();
               const idx = parseInt(btn.getAttribute('data-remove-idx'), 10);
-              stagedBatchImages.splice(idx, 1);
-              renderBatchPreviews();
-              if (uploadStatus) uploadStatus.textContent = `${stagedBatchImages.length} image(s) ready.`;
+              stagedGalleryMedia.splice(idx, 1);
+              renderCarouselThumbnails();
+            });
+          });
+
+          previewsContainer.querySelectorAll('.action-move-left').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const idx = parseInt(btn.getAttribute('data-move-idx'), 10);
+              if (idx > 0) {
+                const temp = stagedGalleryMedia[idx - 1];
+                stagedGalleryMedia[idx - 1] = stagedGalleryMedia[idx];
+                stagedGalleryMedia[idx] = temp;
+                renderCarouselThumbnails();
+              }
+            });
+          });
+
+          previewsContainer.querySelectorAll('.action-move-right').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const idx = parseInt(btn.getAttribute('data-move-idx'), 10);
+              if (idx < stagedGalleryMedia.length - 1) {
+                const temp = stagedGalleryMedia[idx + 1];
+                stagedGalleryMedia[idx + 1] = stagedGalleryMedia[idx];
+                stagedGalleryMedia[idx] = temp;
+                renderCarouselThumbnails();
+              }
             });
           });
         };
 
-        // Submit Batch Form
+        // Submit Form: Group ALL staged media into ONE single post
         if (submitBatchBtn) {
           submitBatchBtn.addEventListener('click', () => {
             const caption = (newCaptionInput && newCaptionInput.value.trim()) || '';
@@ -2089,12 +2499,12 @@
             const dateStr = (newDateInput && newDateInput.value.trim()) || 'October 2026';
             const rawHashtags = (newHashtagsInput && newHashtagsInput.value.trim()) || '';
 
-            if (!stagedBatchImages.length) {
-              alert('Please select at least one photo to publish.');
+            if (!stagedGalleryMedia.length) {
+              alert('Please select at least 1 photo or video (up to 10) to create a carousel post.');
               return;
             }
             if (!caption) {
-              alert('Please provide a photo caption or technical summary.');
+              alert('Please provide a photo or carousel caption.');
               if (newCaptionInput) newCaptionInput.focus();
               return;
             }
@@ -2109,29 +2519,32 @@
             if (!bp.galleryData) bp.galleryData = deepClone(DEFAULT_GALLERY_DATA);
             if (!bp.galleryData.posts) bp.galleryData.posts = [];
 
-            // Add each staged image as a new post
-            stagedBatchImages.forEach(img => {
-              const newPost = {
-                id: 'post-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
-                title: caption.slice(0, 80),
-                caption: caption,
-                eventTag: tag,
-                hashtags: hashtags,
-                imageUrl: img.dataUrl,
-                date: dateStr,
-                likes: 0,
-                likedByMe: false,
-                comments: []
-              };
-              bp.galleryData.posts.unshift(newPost);
-            });
+            // Create ONE single gallery post containing all 1 to 10 media slides
+            const newPost = {
+              id: 'post-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+              title: caption.slice(0, 80),
+              caption: caption,
+              eventTag: tag,
+              hashtags: hashtags,
+              imageUrl: stagedGalleryMedia[0].url,
+              mediaItems: stagedGalleryMedia.map(m => ({
+                type: m.type,
+                url: m.url,
+                name: m.name || ''
+              })),
+              date: dateStr,
+              likes: 0,
+              likedByMe: false,
+              comments: []
+            };
 
+            bp.galleryData.posts.unshift(newPost);
             SiteStore.save(bp);
-            App.showToast(`Published ${stagedBatchImages.length} photo(s) to the chapter gallery!`);
+            App.showToast(`Published 1 single carousel post with ${stagedGalleryMedia.length} slide(s)!`);
 
             // Reset form
-            stagedBatchImages = [];
-            renderBatchPreviews();
+            stagedGalleryMedia = [];
+            renderCarouselThumbnails();
             if (newCaptionInput) newCaptionInput.value = '';
             if (uploadStatus) uploadStatus.textContent = '';
             if (fileInput) fileInput.value = '';
@@ -2155,13 +2568,13 @@
           if (delBtn) {
             const postId = delBtn.getAttribute('data-post-id');
             if (!postId) return;
-            if (!confirm('Are you sure you want to permanently delete this photo from the gallery?')) return;
+            if (!confirm('Are you sure you want to permanently delete this photo/carousel from the gallery?')) return;
 
             const bp = SiteStore.get();
             if (bp.galleryData && bp.galleryData.posts) {
               bp.galleryData.posts = bp.galleryData.posts.filter(p => p.id !== postId);
               SiteStore.save(bp);
-              App.showToast('Photo removed from chapter gallery.');
+              App.showToast('Post removed from chapter gallery.');
               PublicRenderer.refreshGallerySection(contentEl);
             }
           }
@@ -2199,8 +2612,34 @@
       this.initAcademicGalleryInteractivity(contentEl);
     },
 
+    generateHomeAnnouncementBarHtml() {
+      return `
+        <!-- AUTOMATED LIVE EVENT ANNOUNCEMENT BAR -->
+        <aside id="home-live-announcement-bar" class="home-announcement-bar" style="display: none;" aria-label="Live Event Registration Announcement">
+          <div class="announcement-inner">
+            <div class="announcement-badge">
+              <span class="announcement-pulse-dot"></span>
+              <span class="announcement-badge-text">LIVE REGISTRATION</span>
+            </div>
+            <div class="announcement-headline" id="announcement-headline">
+              <!-- Populated dynamically from events database -->
+            </div>
+            <div class="announcement-actions">
+              <a href="#/events" id="announcement-cta-btn" class="announcement-cta-pill" title="Register for this event">
+                <span>Register Now</span>
+                <span class="announcement-arrow">&rarr;</span>
+              </a>
+              <button type="button" id="announcement-dismiss-btn" class="announcement-dismiss-btn" aria-label="Dismiss announcement for this session" title="Dismiss announcement">&times;</button>
+            </div>
+          </div>
+        </aside>
+      `;
+    },
+
     initAcademicHomeInteractivity(contentEl) {
       if (!contentEl) return;
+
+      // 1. About Us Button Smooth Scroll
       const aboutBtn = contentEl.querySelector('#academic-about-btn');
       if (aboutBtn) {
         aboutBtn.addEventListener('click', (e) => {
@@ -2214,6 +2653,106 @@
           }
         });
       }
+
+      // 2. Automated Live Event Announcement Bar
+      const announcementBar = contentEl.querySelector('#home-live-announcement-bar');
+      if (announcementBar) {
+        // Clear any prior interval
+        if (window.__ishmt_announcement_timer) {
+          clearInterval(window.__ishmt_announcement_timer);
+          window.__ishmt_announcement_timer = null;
+        }
+
+        const isDismissed = sessionStorage.getItem('ishmt_announcement_dismissed') === 'true';
+        if (isDismissed) {
+          announcementBar.style.display = 'none';
+          return;
+        }
+
+        const blueprint = SiteStore.get();
+        const eventsObj = (blueprint && blueprint.eventsData) || DEFAULT_EVENTS_DATA;
+        const events = (eventsObj && Array.isArray(eventsObj.events)) ? eventsObj.events : (DEFAULT_EVENTS_DATA.events || []);
+
+        const now = Date.now();
+        // Filter active upcoming events where deadline or event date has not passed
+        const activeUpcoming = events.filter(e => {
+          if ((e.status || 'Upcoming') !== 'Upcoming') return false;
+          const targetTime = e.deadline ? new Date(e.deadline).getTime() : (e.dateTime ? new Date(e.dateTime).getTime() : 0);
+          return targetTime > now;
+        });
+
+        // Sort by nearest upcoming deadline
+        activeUpcoming.sort((a, b) => {
+          const tA = a.deadline ? new Date(a.deadline).getTime() : new Date(a.dateTime).getTime();
+          const tB = b.deadline ? new Date(b.deadline).getTime() : new Date(b.dateTime).getTime();
+          return tA - tB;
+        });
+
+        if (activeUpcoming.length === 0) {
+          announcementBar.style.display = 'none';
+          return;
+        }
+
+        const headlineEl = announcementBar.querySelector('#announcement-headline');
+        const ctaBtn = announcementBar.querySelector('#announcement-cta-btn');
+        const dismissBtn = announcementBar.querySelector('#announcement-dismiss-btn');
+
+        let currentIndex = 0;
+
+        const updateAnnouncementDisplay = (idx) => {
+          const evt = activeUpcoming[idx];
+          if (!evt) return;
+
+          const category = evt.category || 'Workshop';
+          const deadlineStr = evt.deadline ? PublicRenderer.formatEventDate(evt.deadline) : PublicRenderer.formatEventDate(evt.dateTime);
+
+          if (headlineEl) {
+            headlineEl.style.opacity = '0';
+            headlineEl.style.transform = 'translateY(-4px)';
+            setTimeout(() => {
+              headlineEl.innerHTML = `Upcoming <strong>${PublicRenderer.escapeHtml(category)}</strong>: <strong>${PublicRenderer.escapeHtml(evt.title)}</strong> &mdash; Last Date to Register: <span class="announcement-deadline-tag">${PublicRenderer.escapeHtml(deadlineStr)}</span>`;
+              headlineEl.style.opacity = '1';
+              headlineEl.style.transform = 'translateY(0)';
+            }, 180);
+          }
+
+          if (ctaBtn) {
+            if (evt.registrationLink) {
+              ctaBtn.href = evt.registrationLink;
+              ctaBtn.target = '_blank';
+              ctaBtn.rel = 'noopener noreferrer';
+            } else {
+              ctaBtn.href = `#/events`;
+              ctaBtn.removeAttribute('target');
+              ctaBtn.removeAttribute('rel');
+            }
+          }
+        };
+
+        // Initial render
+        updateAnnouncementDisplay(0);
+        announcementBar.style.display = 'block';
+
+        // Rotate through events every 5 seconds if multiple upcoming exist
+        if (activeUpcoming.length > 1) {
+          window.__ishmt_announcement_timer = setInterval(() => {
+            currentIndex = (currentIndex + 1) % activeUpcoming.length;
+            updateAnnouncementDisplay(currentIndex);
+          }, 5000);
+        }
+
+        // Dismiss action
+        if (dismissBtn) {
+          dismissBtn.addEventListener('click', () => {
+            announcementBar.style.display = 'none';
+            sessionStorage.setItem('ishmt_announcement_dismissed', 'true');
+            if (window.__ishmt_announcement_timer) {
+              clearInterval(window.__ishmt_announcement_timer);
+              window.__ishmt_announcement_timer = null;
+            }
+          });
+        }
+      }
     },
 
     generateAcademicHomeHtml(isAdminMode = false) {
@@ -2222,6 +2761,9 @@
 
       return `
         <div class="academic-home-wrapper">
+          <!-- TOP LIVE EVENT ANNOUNCEMENT BAR (AUTOMATIC DATA BINDING) -->
+          ${this.generateHomeAnnouncementBarHtml()}
+
           <!-- SECTION A: HERO SECTION (FULL-WIDTH VIEWPORT WITH 40% BUILDING OPACITY) -->
           <section class="academic-hero-section">
             <div class="academic-hero-bg">
@@ -2472,6 +3014,20 @@
       `;
     },
 
+    generateLinkedGalleryPostOptionsHtml(selectedId = '') {
+      const blueprint = SiteStore.get();
+      const galleryObj = (blueprint && blueprint.galleryData) || DEFAULT_GALLERY_DATA;
+      const posts = (galleryObj && Array.isArray(galleryObj.posts)) ? galleryObj.posts : (DEFAULT_GALLERY_DATA.posts || []);
+      return posts.map(p => {
+        const isVid = (p.mediaItems && p.mediaItems.some(m => m.type === 'video')) || p.isVideo;
+        const typeLabel = isVid ? '🎥 Video' : '📷 Photos';
+        const postTitle = p.title || p.caption || ('Post ' + p.id);
+        const shortTitle = postTitle.length > 50 ? postTitle.slice(0, 47) + '...' : postTitle;
+        const isSelected = selectedId && selectedId === p.id ? 'selected' : '';
+        return `<option value="${p.id}" ${isSelected}>[${typeLabel}] ${this.escapeHtml(shortTitle)} (ID: ${p.id})</option>`;
+      }).join('');
+    },
+
     generateEventsAdminPanelHtml(events) {
       return `
         <div class="events-admin-panel" id="events-admin-dashboard">
@@ -2523,6 +3079,24 @@
                     </select>
                   </div>
 
+                  <div class="events-form-field">
+                    <label class="events-form-label" for="admin-event-deadline">Registration Last Date / Deadline</label>
+                    <input type="date" id="admin-event-deadline" class="events-form-input" />
+                  </div>
+
+                  <div class="events-form-field">
+                    <label class="events-form-label" for="admin-event-cert-url">Certificate / Credential Link (URL)</label>
+                    <input type="url" id="admin-event-cert-url" class="events-form-input" placeholder="https://drive.google.com/... or https://certifyme..." />
+                  </div>
+
+                  <div class="events-form-field col-span-2">
+                    <label class="events-form-label" for="admin-event-linked-gallery">Linked Gallery Video / Post (Cross-Link)</label>
+                    <select id="admin-event-linked-gallery" class="events-form-select">
+                      <option value="">-- None (No linked gallery video) --</option>
+                      ${this.generateLinkedGalleryPostOptionsHtml()}
+                    </select>
+                  </div>
+
                   <div class="events-form-field col-span-2">
                     <label class="events-form-label" for="admin-event-reg-link">Registration Link (URL)</label>
                     <input type="url" id="admin-event-reg-link" class="events-form-input" placeholder="https://forms.gle/... or https://meet.google.com/..." />
@@ -2546,6 +3120,19 @@
                         <img id="admin-poster-preview-img" class="events-poster-preview-img" alt="Poster preview" draggable="false" />
                       </div>
                     </div>
+                  </div>
+
+                  <div class="events-form-field col-span-2">
+                    <label class="events-form-label">Multi-Format Media &amp; Document Attachments (PDF Brochures, Schedules, Rulebooks, Extra Media)</label>
+                    <div class="events-poster-dropzone" id="admin-attachments-dropzone" style="cursor: pointer;">
+                      <input type="file" id="admin-event-attachments-file" accept="image/*,video/mp4,video/webm,application/pdf" multiple style="display: none;" />
+                      <div id="admin-attachments-prompt">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 0.4rem;"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                        <p style="margin: 0; font-weight: 600; color: #374151; font-size: 0.88rem;">Click or drag files here to attach PDF Brochures, Schedules, or Extra Media</p>
+                        <p style="margin: 0.3rem 0 0; font-size: 0.78rem; color: #6B7280;">Supports .pdf brochures, .jpg, .png, .webp, .mp4, and .webm files</p>
+                      </div>
+                    </div>
+                    <div class="admin-attachments-list" id="admin-event-attachments-list"></div>
                   </div>
                 </div>
 
@@ -2613,6 +3200,7 @@
             <td>
               <div class="events-table-actions">
                 <button type="button" class="events-action-btn edit" data-action="edit-event" data-event-id="${evt.id}" title="Edit Event">Edit</button>
+                <button type="button" class="events-action-btn complete-cert" data-action="end-program-cert" data-event-id="${evt.id}" title="End Program / Add Certificate Link">🎓 End Program / Certificate</button>
                 <button type="button" class="events-action-btn delete" data-action="delete-event" data-event-id="${evt.id}" title="Delete Event">Delete</button>
               </div>
             </td>
@@ -2699,6 +3287,9 @@
         </div>
       `;
 
+      const hasAttachments = Array.isArray(evt.attachments) && evt.attachments.length > 0;
+      const linkedGalleryPostId = evt.linkedGalleryPostId || '';
+
       return `
         <div class="event-display-card" data-event-id="${evt.id}">
           <!-- Poster Container (16:9 ratio, anti-drag/anti-copy with transparent protective shield) -->
@@ -2706,6 +3297,12 @@
             <span class="event-category-badge ${categoryClass}">
               ${this.escapeHtml(category)}
             </span>
+            ${linkedGalleryPostId ? `
+              <a href="#/gallery?post=${linkedGalleryPostId}" class="event-video-overlay-badge" data-gallery-redirect="${linkedGalleryPostId}" title="Watch event video in Gallery">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span>Watch Video</span>
+              </a>
+            ` : ''}
             ${posterHtml}
             <div class="image-protection-shield select-none" aria-hidden="true" oncontextmenu="return false;"></div>
           </div>
@@ -2742,6 +3339,31 @@
             <!-- Description (2-line clamped) -->
             <p class="event-card-description">${this.escapeHtml(evt.description || 'Join us for this premier technical initiative hosted by the ISHMT Student Chapter.')}</p>
 
+            <!-- Multi-Format Attachments -->
+            ${hasAttachments ? `
+              <div class="event-attachments-wrap">
+                ${evt.attachments.map(att => {
+                  const isPdf = att.type === 'pdf' || (att.name && att.name.toLowerCase().endsWith('.pdf'));
+                  const icon = isPdf ? '📄' : (att.type === 'video' ? '🎬' : '📷');
+                  const label = isPdf ? (att.name || 'Download Brochure (PDF)') : (att.name || 'View Attachment');
+                  return `
+                    <a href="${att.url}" target="_blank" rel="noopener noreferrer" class="event-attachment-pill" download="${this.escapeHtml(att.name || 'document')}">
+                      <span>${icon}</span>
+                      <span>${this.escapeHtml(label)}</span>
+                    </a>
+                  `;
+                }).join('')}
+              </div>
+            ` : ''}
+
+            <!-- Cross-linked Gallery Video Link -->
+            ${linkedGalleryPostId ? `
+              <a href="#/gallery?post=${linkedGalleryPostId}" class="event-btn-gallery-link" data-gallery-redirect="${linkedGalleryPostId}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                <span>🎥 Watch in Gallery</span>
+              </a>
+            ` : ''}
+
             <!-- CTA Row -->
             <div class="event-card-cta-row">
               ${isUpcoming ? `
@@ -2764,9 +3386,16 @@
                   <span>Add to Google Calendar</span>
                 </a>
               ` : `
-                <button type="button" class="event-btn-concluded" disabled>
-                  Registration Closed / Event Concluded
-                </button>
+                ${evt.certificateUrl ? `
+                  <a href="${evt.certificateUrl}" target="_blank" rel="noopener noreferrer" class="event-btn-certificate">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                    <span>🎓 Get Certificate / View Credentials</span>
+                  </a>
+                ` : `
+                  <button type="button" class="event-btn-concluded" disabled>
+                    Registration Closed / Event Concluded
+                  </button>
+                `}
               `}
             </div>
           </div>
@@ -2818,6 +3447,31 @@
 
       // 2. Admin Dashboard Form & Sanitization (Only runs if Admin panel is rendered in DOM)
       const form = contentEl.querySelector('#admin-event-form');
+      let stagedAttachments = [];
+
+      const renderStagedAttachments = () => {
+        const listEl = contentEl.querySelector('#admin-event-attachments-list');
+        if (!listEl) return;
+        if (!stagedAttachments || stagedAttachments.length === 0) {
+          listEl.innerHTML = '';
+          return;
+        }
+        listEl.innerHTML = stagedAttachments.map((att, idx) => {
+          const isPdf = att.type === 'pdf' || (att.name && att.name.toLowerCase().endsWith('.pdf'));
+          const icon = isPdf ? '📄' : (att.type === 'video' ? '🎬' : '📷');
+          return `
+            <div class="admin-attachment-row" data-attachment-index="${idx}">
+              <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
+                <span>${icon}</span>
+                <span style="font-weight: 600; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 320px;">${PublicRenderer.escapeHtml(att.name || 'Attachment')}</span>
+                <span style="color: #6B7280; font-size: 0.72rem; text-transform: uppercase;">(${PublicRenderer.escapeHtml(att.type || 'file')})</span>
+              </div>
+              <button type="button" class="admin-attachment-remove-btn" data-remove-attachment="${idx}" style="background: none; border: none; color: #DC2626; font-size: 0.85rem; font-weight: 700; cursor: pointer; padding: 0.2rem 0.5rem;" title="Remove attachment">✕</button>
+            </div>
+          `;
+        }).join('');
+      };
+
       if (form) {
         const dropzone = contentEl.querySelector('#admin-poster-dropzone');
         const fileInput = contentEl.querySelector('#admin-event-poster-file');
@@ -2825,6 +3479,56 @@
         const previewImg = contentEl.querySelector('#admin-poster-preview-img');
         const posterDataInput = contentEl.querySelector('#admin-event-poster-data');
         const dropPrompt = contentEl.querySelector('#admin-dropzone-prompt');
+
+        const attDropzone = contentEl.querySelector('#admin-attachments-dropzone');
+        const attFileInput = contentEl.querySelector('#admin-event-attachments-file');
+
+        const processIncomingAttachments = (files) => {
+          if (!files || files.length === 0) return;
+          Array.from(files).forEach(file => {
+            const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+            const isVid = file.type.startsWith('video/') || file.name.toLowerCase().endsWith('.mp4') || file.name.toLowerCase().endsWith('.webm');
+            const attType = isPdf ? 'pdf' : (isVid ? 'video' : 'image');
+
+            const reader = new FileReader();
+            reader.onload = (re) => {
+              stagedAttachments.push({
+                id: 'att-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+                type: attType,
+                url: re.target.result,
+                name: file.name
+              });
+              renderStagedAttachments();
+              App.showToast(`Attached: ${file.name}`);
+            };
+            reader.readAsDataURL(file);
+          });
+        };
+
+        if (attDropzone && attFileInput) {
+          attDropzone.addEventListener('click', (e) => {
+            if (e.target !== attFileInput) attFileInput.click();
+          });
+          attDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            attDropzone.style.borderColor = '#800000';
+            attDropzone.style.background = '#FBF5F5';
+          });
+          attDropzone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            attDropzone.style.borderColor = 'rgba(128, 0, 0, 0.3)';
+            attDropzone.style.background = '#FAF9F6';
+          });
+          attDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            attDropzone.style.borderColor = 'rgba(128, 0, 0, 0.3)';
+            attDropzone.style.background = '#FAF9F6';
+            processIncomingAttachments(e.dataTransfer.files);
+          });
+          attFileInput.addEventListener('change', () => {
+            processIncomingAttachments(attFileInput.files);
+          });
+        }
 
         const handlePosterFile = (file) => {
           PublicRenderer.processAndSanitizePoster(file, (sanitizedUrl) => {
@@ -2881,6 +3585,9 @@
           const dateTime = form.querySelector('#admin-event-datetime').value;
           const venue = form.querySelector('#admin-event-venue').value.trim();
           const status = form.querySelector('#admin-event-status').value;
+          const deadline = form.querySelector('#admin-event-deadline') ? form.querySelector('#admin-event-deadline').value : '';
+          const certificateUrl = form.querySelector('#admin-event-cert-url') ? form.querySelector('#admin-event-cert-url').value.trim() : '';
+          const linkedGalleryPostId = form.querySelector('#admin-event-linked-gallery') ? form.querySelector('#admin-event-linked-gallery').value : '';
           const registrationLink = form.querySelector('#admin-event-reg-link').value.trim();
           const description = form.querySelector('#admin-event-desc').value.trim();
           const posterUrl = form.querySelector('#admin-event-poster-data').value;
@@ -2899,7 +3606,9 @@
             if (idx !== -1) {
               blueprint.eventsData.events[idx] = {
                 ...blueprint.eventsData.events[idx],
-                title, category, dateTime, venue, status, registrationLink, description, posterUrl
+                title, category, dateTime, venue, status, registrationLink, description, posterUrl,
+                deadline, certificateUrl, linkedGalleryPostId,
+                attachments: [...stagedAttachments]
               };
               App.showToast('Event updated successfully!');
             }
@@ -2909,11 +3618,15 @@
               title,
               category,
               dateTime,
+              deadline,
               venue,
               status,
               registrationLink,
+              certificateUrl,
               description,
               posterUrl,
+              linkedGalleryPostId,
+              attachments: [...stagedAttachments],
               createdAt: new Date().toISOString()
             };
             blueprint.eventsData.events.unshift(newEvt);
@@ -2926,6 +3639,11 @@
           form.reset();
           form.querySelector('#admin-event-edit-id').value = '';
           form.querySelector('#admin-event-poster-data').value = '';
+          if (form.querySelector('#admin-event-deadline')) form.querySelector('#admin-event-deadline').value = '';
+          if (form.querySelector('#admin-event-cert-url')) form.querySelector('#admin-event-cert-url').value = '';
+          if (form.querySelector('#admin-event-linked-gallery')) form.querySelector('#admin-event-linked-gallery').value = '';
+          stagedAttachments = [];
+          renderStagedAttachments();
           if (previewWrap) previewWrap.style.display = 'none';
           if (dropPrompt) dropPrompt.style.display = 'block';
           const submitBtn = form.querySelector('#admin-event-submit-btn');
@@ -2942,6 +3660,11 @@
             form.reset();
             form.querySelector('#admin-event-edit-id').value = '';
             form.querySelector('#admin-event-poster-data').value = '';
+            if (form.querySelector('#admin-event-deadline')) form.querySelector('#admin-event-deadline').value = '';
+            if (form.querySelector('#admin-event-cert-url')) form.querySelector('#admin-event-cert-url').value = '';
+            if (form.querySelector('#admin-event-linked-gallery')) form.querySelector('#admin-event-linked-gallery').value = '';
+            stagedAttachments = [];
+            renderStagedAttachments();
             if (previewWrap) previewWrap.style.display = 'none';
             if (dropPrompt) dropPrompt.style.display = 'block';
             const submitBtn = form.querySelector('#admin-event-submit-btn');
@@ -2950,8 +3673,30 @@
         }
       }
 
-      // 3. Event Roster Actions (Edit & Delete)
+      // 3. Event Roster Actions (Edit, Delete & End Program / Certificate) & Interactive Links
       contentEl.addEventListener('click', (e) => {
+        // Remove Staged Attachment
+        const removeAttBtn = e.target.closest('[data-remove-attachment]');
+        if (removeAttBtn) {
+          const idx = parseInt(removeAttBtn.getAttribute('data-remove-attachment'), 10);
+          if (!isNaN(idx) && idx >= 0 && idx < stagedAttachments.length) {
+            stagedAttachments.splice(idx, 1);
+            renderStagedAttachments();
+          }
+          return;
+        }
+
+        // Gallery Redirect Links
+        const galleryRedirect = e.target.closest('[data-gallery-redirect]');
+        if (galleryRedirect) {
+          const postId = galleryRedirect.getAttribute('data-gallery-redirect');
+          if (postId) {
+            window.location.hash = `#/gallery?post=${postId}`;
+          }
+          return;
+        }
+
+        // Edit Event
         const editBtn = e.target.closest('[data-action="edit-event"]');
         if (editBtn) {
           const eventId = editBtn.getAttribute('data-event-id');
@@ -2969,9 +3714,19 @@
           form.querySelector('#admin-event-datetime').value = evt.dateTime || '';
           form.querySelector('#admin-event-venue').value = evt.venue || '';
           form.querySelector('#admin-event-status').value = evt.status || 'Upcoming';
+          if (form.querySelector('#admin-event-deadline')) form.querySelector('#admin-event-deadline').value = evt.deadline || '';
+          if (form.querySelector('#admin-event-cert-url')) form.querySelector('#admin-event-cert-url').value = evt.certificateUrl || '';
+          const gallerySelect = form.querySelector('#admin-event-linked-gallery');
+          if (gallerySelect) {
+            gallerySelect.innerHTML = '<option value="">-- None (No linked gallery video) --</option>' + PublicRenderer.generateLinkedGalleryPostOptionsHtml(evt.linkedGalleryPostId || '');
+            gallerySelect.value = evt.linkedGalleryPostId || '';
+          }
           form.querySelector('#admin-event-reg-link').value = evt.registrationLink || '';
           form.querySelector('#admin-event-desc').value = evt.description || '';
           form.querySelector('#admin-event-poster-data').value = evt.posterUrl || '';
+
+          stagedAttachments = Array.isArray(evt.attachments) ? deepClone(evt.attachments) : [];
+          renderStagedAttachments();
 
           const previewWrap = form.querySelector('#admin-poster-preview-wrap');
           const previewImg = form.querySelector('#admin-poster-preview-img');
@@ -2994,6 +3749,33 @@
           return;
         }
 
+        // End Program / Certificate Action in Roster Table
+        const endProgBtn = e.target.closest('[data-action="end-program-cert"]');
+        if (endProgBtn) {
+          const eventId = endProgBtn.getAttribute('data-event-id');
+          const blueprint = SiteStore.get();
+          const events = (blueprint.eventsData && blueprint.eventsData.events) || DEFAULT_EVENTS_DATA.events;
+          const evt = events.find(ev => ev.id === eventId);
+          if (!evt) return;
+
+          const currentCert = evt.certificateUrl || '';
+          const newCert = prompt(
+            `End Program & Issue Certificates for: "${evt.title}"\n\nEnter the certificate / credential URL (e.g. Google Drive folder, CertifyMe link, or portal URL):`,
+            currentCert
+          );
+          if (newCert !== null) {
+            evt.status = 'Completed';
+            if (newCert.trim()) {
+              evt.certificateUrl = newCert.trim();
+            }
+            SiteStore.save(blueprint);
+            App.showToast(`"${evt.title}" marked as Completed with certificates configured!`);
+            PublicRenderer.refreshEventsSection(contentEl);
+          }
+          return;
+        }
+
+        // Delete Event
         const deleteBtn = e.target.closest('[data-action="delete-event"]');
         if (deleteBtn) {
           const eventId = deleteBtn.getAttribute('data-event-id');
@@ -3034,6 +3816,14 @@
       const completedBadge = contentEl.querySelector('#badge-completed-count');
       if (upcomingBadge) upcomingBadge.textContent = upcomingCount;
       if (completedBadge) completedBadge.textContent = completedCount;
+
+      // Update Linked Gallery Dropdown if present
+      const gallerySelect = contentEl.querySelector('#admin-event-linked-gallery');
+      if (gallerySelect) {
+        const curVal = gallerySelect.value;
+        gallerySelect.innerHTML = '<option value="">-- None (No linked gallery video) --</option>' + this.generateLinkedGalleryPostOptionsHtml(curVal);
+        gallerySelect.value = curVal;
+      }
 
       // Update Card Grid
       const activeTabPill = contentEl.querySelector('.events-tab-pill.active');

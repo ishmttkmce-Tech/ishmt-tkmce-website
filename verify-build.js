@@ -168,7 +168,26 @@ assert(cssContent.includes('.contact-btn-spinner'), 'style.css defines .contact-
 assert(jsContent.includes("fetch('/api/contact'"), 'main.js sends inquiries to /api/contact');
 assert(jsContent.includes('ishmt@tkmce.ac.in'), 'main.js references ishmt@tkmce.ac.in secretariat inbox');
 
-// 10. Check .gitignore rules
+// 10. Home Announcement Bar, Multi-Item Carousels & Event Deep Linking Interconnect
+assert(cssContent.includes('.home-announcement-bar'), 'style.css defines .home-announcement-bar sticky notification bar');
+assert(cssContent.includes('.announcement-pulse-dot'), 'style.css defines .announcement-pulse-dot pulsing live indicator');
+assert(cssContent.includes('.event-video-overlay-badge'), 'style.css defines .event-video-overlay-badge');
+assert(cssContent.includes('.event-btn-gallery-link'), 'style.css defines .event-btn-gallery-link');
+assert(cssContent.includes('.event-btn-certificate'), 'style.css defines .event-btn-certificate');
+assert(cssContent.includes('.gallery-carousel-badge'), 'style.css defines .gallery-carousel-badge stack/count indicator');
+assert(cssContent.includes('.gallery-carousel-frame'), 'style.css defines .gallery-carousel-frame');
+assert(cssContent.includes('.gallery-protected-video'), 'style.css defines .gallery-protected-video');
+assert(htmlContent.includes('id="gallery-modal-slides-wrap"'), 'index.html defines #gallery-modal-slides-wrap');
+assert(htmlContent.includes('id="gallery-modal-counter-pill"'), 'index.html defines #gallery-modal-counter-pill');
+
+assert(jsContent.includes('generateHomeAnnouncementBarHtml'), 'main.js defines generateHomeAnnouncementBarHtml');
+assert(jsContent.includes('admin-event-deadline'), 'main.js includes admin-event-deadline registration deadline field');
+assert(jsContent.includes('admin-event-cert-url'), 'main.js includes admin-event-cert-url credential link field');
+assert(jsContent.includes('admin-event-linked-gallery'), 'main.js includes admin-event-linked-gallery cross-link selector');
+assert(jsContent.includes('data-action="end-program-cert"'), 'main.js includes end-program-cert roster action button');
+assert(jsContent.includes('mediaItems'), 'main.js defines multi-item mediaItems arrays on gallery posts');
+
+// 11. Check .gitignore rules
 const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');
 ['node_modules', '.next', 'dist', '.env'].forEach(rule => {
   assert(gitignoreContent.includes(rule), `.gitignore contains rule for: ${rule}`);
