@@ -622,6 +622,9 @@
 
       this.applyThemeVariables();
 
+      // Initiate asynchronous cloud sync from Vercel KV Database (Option 2)
+      this.syncFromCloud();
+
       // Listen for cross-tab updates!
       window.addEventListener('storage', (e) => {
         if (e.key === STORAGE_KEY && e.newValue) {
@@ -637,11 +640,54 @@
       });
     },
 
+    async syncFromCloud() {
+      try {
+        const res = await fetch('/api/site-data');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json && json.connected && json.hasData && json.data) {
+          const cloudData = json.data;
+          this.blueprint = deepMerge(deepClone(this.blueprint || DEFAULT_BLUEPRINT), cloudData);
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(this.blueprint));
+          } catch (_) {}
+          this.applyThemeVariables();
+          App.onBlueprintUpdated();
+          console.log('[SiteStore] Synced latest updates from Vercel Cloud Database.');
+        }
+      } catch (err) {
+        console.warn('[SiteStore] Cloud sync check failed (offline or local dev):', err);
+      }
+    },
+
+    async syncToCloud(blueprint) {
+      try {
+        const res = await fetch('/api/site-data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            blueprint,
+            timestamp: new Date().toISOString()
+          })
+        });
+        const json = await res.json();
+        if (json && json.connected) {
+          App.showToast('✅ Synced Live to Vercel Database!');
+        } else if (json && json.message && json.message.includes('not provisioned')) {
+          console.info('[SiteStore] ' + json.message);
+        }
+      } catch (err) {
+        console.warn('[SiteStore] Cloud save failed:', err);
+      }
+    },
+
     get() {
       return this.blueprint || DEFAULT_BLUEPRINT;
     },
 
-    save(newConfig, notify = true) {
+    save(newConfig, notify = true, syncCloud = true) {
       this.blueprint = newConfig;
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.blueprint));
@@ -651,6 +697,9 @@
       this.applyThemeVariables();
       if (notify) {
         App.onBlueprintUpdated();
+      }
+      if (syncCloud && AuthService.isAuthenticated()) {
+        this.syncToCloud(this.blueprint);
       }
     },
 
@@ -3749,7 +3798,7 @@
           return;
         }
 
-        // End Program / Certificate Action in Roster Table
+        // End Program / Certificate Action in Roster Table (Non-blocking Custom Modal)
         const endProgBtn = e.target.closest('[data-action="end-program-cert"]');
         if (endProgBtn) {
           const eventId = endProgBtn.getAttribute('data-event-id');
@@ -3758,19 +3807,23 @@
           const evt = events.find(ev => ev.id === eventId);
           if (!evt) return;
 
-          const currentCert = evt.certificateUrl || '';
-          const newCert = prompt(
-            `End Program & Issue Certificates for: "${evt.title}"\n\nEnter the certificate / credential URL (e.g. Google Drive folder, CertifyMe link, or portal URL):`,
-            currentCert
-          );
-          if (newCert !== null) {
-            evt.status = 'Completed';
-            if (newCert.trim()) {
-              evt.certificateUrl = newCert.trim();
-            }
-            SiteStore.save(blueprint);
-            App.showToast(`"${evt.title}" marked as Completed with certificates configured!`);
-            PublicRenderer.refreshEventsSection(contentEl);
+          const modal = document.getElementById('end-program-cert-modal');
+          if (modal) {
+            const idInput = modal.querySelector('#end-program-target-event-id');
+            const titleEl = modal.querySelector('#end-program-modal-event-title');
+            const urlInput = modal.querySelector('#end-program-modal-cert-url');
+
+            if (idInput) idInput.value = evt.id;
+            if (titleEl) titleEl.textContent = evt.title;
+            if (urlInput) urlInput.value = evt.certificateUrl || '';
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+              if (urlInput) {
+                urlInput.focus();
+                urlInput.select();
+              }
+            }, 60);
           }
           return;
         }
@@ -3790,6 +3843,42 @@
           return;
         }
       });
+
+      // Bind End Program & Certificate Modal Form Submit Handler
+      const certModal = document.getElementById('end-program-cert-modal');
+      const certForm = document.getElementById('end-program-cert-form');
+      if (certModal && certForm && !certForm.dataset.bound) {
+        certForm.dataset.bound = 'true';
+
+        certForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const idInput = certForm.querySelector('#end-program-target-event-id');
+          const urlInput = certForm.querySelector('#end-program-modal-cert-url');
+          const targetId = idInput ? idInput.value : '';
+          const certUrl = urlInput ? urlInput.value.trim() : '';
+
+          const blueprint = SiteStore.get();
+          const events = (blueprint.eventsData && blueprint.eventsData.events) || DEFAULT_EVENTS_DATA.events;
+          const evt = events.find(ev => ev.id === targetId);
+
+          if (evt) {
+            evt.status = 'Completed';
+            evt.certificateUrl = certUrl;
+            SiteStore.save(blueprint);
+            App.showToast(`"${evt.title}" marked as Completed with certificates enabled!`);
+            PublicRenderer.refreshEventsSection(contentEl);
+          }
+
+          certModal.classList.add('hidden');
+        });
+
+        // Close when clicking modal backdrop
+        certModal.addEventListener('click', (e) => {
+          if (e.target === certModal) {
+            certModal.classList.add('hidden');
+          }
+        });
+      }
     },
 
     refreshEventsSection(contentEl) {

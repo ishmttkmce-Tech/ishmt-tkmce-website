@@ -757,6 +757,68 @@
     </div>
   </div>
 
+  <!-- ======================================================================
+       MODAL: END PROGRAM & ISSUE CERTIFICATES (Non-blocking, Never Hangs)
+       ====================================================================== -->
+  <div id="end-program-cert-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="end-program-modal-title">
+    <div class="modal-card" style="max-width: 560px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(4, 120, 87, 0.2); border: 1px solid rgba(4, 120, 87, 0.4); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+            🎓
+          </div>
+          <div>
+            <h3 class="modal-title" id="end-program-modal-title" style="margin: 0; font-size: 1.25rem;">End Program &amp; Issue Certificates</h3>
+            <p class="modal-desc" style="margin: 0.15rem 0 0; font-size: 0.8rem;">Conclude chapter event and configure attendee credentials</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn" id="end-program-modal-close" data-close="end-program-cert-modal">&times;</button>
+      </div>
+
+      <form id="end-program-cert-form" class="modal-body" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1.15rem;">
+        <input type="hidden" id="end-program-target-event-id" value="" />
+
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--studio-text-muted); margin-bottom: 0.35rem;">
+            Target Chapter Event
+          </label>
+          <div id="end-program-modal-event-title" style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--studio-panel-border); border-radius: 8px; padding: 0.75rem 1rem; color: #FFFFFF; font-weight: 700; font-size: 0.95rem;">
+            Event Title
+          </div>
+        </div>
+
+        <div style="background: rgba(4, 120, 87, 0.1); border-left: 3px solid #047857; padding: 0.75rem 1rem; border-radius: 4px;">
+          <p style="margin: 0; font-size: 0.82rem; color: #D1FAE5; line-height: 1.45;">
+            <strong>Status Update:</strong> This event status will be marked as <span style="background: #047857; color: #FFFFFF; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700;">Completed</span>. The live countdown timer will be replaced with an instant <strong>"🎓 Get Certificate / View Credentials"</strong> button on public cards.
+          </p>
+        </div>
+
+        <div>
+          <label for="end-program-modal-cert-url" style="display: block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #FAF6F0; margin-bottom: 0.4rem;">
+            Certificate / Credential Verification URL
+          </label>
+          <input 
+            type="url" 
+            id="end-program-modal-cert-url" 
+            class="form-input" 
+            placeholder="https://drive.google.com/drive/folders/... or https://certifyme..." 
+            style="width: 100%; box-sizing: border-box;"
+          />
+          <p style="margin: 0.35rem 0 0; font-size: 0.76rem; color: var(--studio-text-muted);">
+            Paste Google Drive folder link, CertifyMe credential link, or college portal URL. (Leave empty if certificates are still being processed).
+          </p>
+        </div>
+
+        <div class="modal-actions" style="padding: 1rem 0 0; margin-top: 0.5rem; border-top: 1px solid var(--studio-panel-border);">
+          <button type="button" class="btn btn-ghost" id="end-program-modal-cancel-btn" data-close="end-program-cert-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="end-program-modal-save-btn" style="background: #047857; border-color: #047857;">
+            Confirm &amp; Complete Event
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Global Floating Toast Notification -->
   <div id="toast-notification" class="toast-notification" role="alert" aria-live="polite"></div>
 

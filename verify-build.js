@@ -187,7 +187,22 @@ assert(jsContent.includes('admin-event-linked-gallery'), 'main.js includes admin
 assert(jsContent.includes('data-action="end-program-cert"'), 'main.js includes end-program-cert roster action button');
 assert(jsContent.includes('mediaItems'), 'main.js defines multi-item mediaItems arrays on gallery posts');
 
-// 11. Check .gitignore rules
+// 11. Vercel Cloud Database Sync & Non-blocking Certificate Modal Verifications
+const siteDataApiPath = path.join(ROOT_DIR, 'api', 'site-data.js');
+assert(fs.existsSync(siteDataApiPath), 'api/site-data.js serverless database endpoint exists');
+try {
+  execSync('node -c api/site-data.js', { cwd: ROOT_DIR });
+  assert(true, 'api/site-data.js passes JavaScript syntax compiler check without errors');
+} catch (e) {
+  assert(false, `api/site-data.js has syntax errors: ${e.message}`);
+}
+assert(htmlContent.includes('id="end-program-cert-modal"'), 'index.html defines #end-program-cert-modal non-blocking modal');
+assert(htmlContent.includes('id="end-program-modal-cert-url"'), 'index.html defines #end-program-modal-cert-url input');
+assert(jsContent.includes('syncFromCloud'), 'main.js defines syncFromCloud Vercel KV fetcher');
+assert(jsContent.includes('syncToCloud'), 'main.js defines syncToCloud Vercel KV persistence');
+assert(jsContent.includes('end-program-cert-modal'), 'main.js binds end-program-cert-modal to roster action');
+
+// 12. Check .gitignore rules
 const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');
 ['node_modules', '.next', 'dist', '.env'].forEach(rule => {
   assert(gitignoreContent.includes(rule), `.gitignore contains rule for: ${rule}`);
