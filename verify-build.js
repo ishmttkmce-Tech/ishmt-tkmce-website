@@ -128,13 +128,47 @@ assert(cssContent.includes('.event-category-badge'), 'style.css defines .event-c
 assert(cssContent.includes('.events-cards-grid'), 'style.css defines .events-cards-grid');
 assert(cssContent.includes('.event-btn-register'), 'style.css defines .event-btn-register');
 assert(cssContent.includes('.event-btn-concluded'), 'style.css defines .event-btn-concluded');
+assert(cssContent.includes('.event-countdown-pill'), 'style.css defines .event-countdown-pill countdown timer');
+assert(cssContent.includes('.event-live-now-badge'), 'style.css defines .event-live-now-badge');
 assert(jsContent.includes('DEFAULT_EVENTS_DATA'), 'main.js defines DEFAULT_EVENTS_DATA');
 assert(jsContent.includes('academic-events'), 'main.js configures academic-events section type');
 assert(jsContent.includes('generateAcademicEventsHtml'), 'main.js defines generateAcademicEventsHtml');
 assert(jsContent.includes('initAcademicEventsInteractivity'), 'main.js defines initAcademicEventsInteractivity');
 assert(jsContent.includes('processAndSanitizePoster'), 'main.js defines processAndSanitizePoster canvas sanitizer');
+assert(jsContent.includes('calculateEventCountdown'), 'main.js defines calculateEventCountdown live timer');
 
-// 8. Check .gitignore rules
+// 8. Instagram-Style Interactive Gallery Verifications
+assert(htmlContent.includes('id="gallery-post-modal"'), 'index.html defines #gallery-post-modal split view');
+assert(htmlContent.includes('id="gallery-modal-heart-burst"'), 'index.html defines #gallery-modal-heart-burst');
+assert(cssContent.includes('.gallery-explore-grid'), 'style.css defines .gallery-explore-grid 3-column explore view');
+assert(cssContent.includes('.gallery-feed-view'), 'style.css defines .gallery-feed-view vertical feed view');
+assert(cssContent.includes('.image-protection-shield'), 'style.css defines .image-protection-shield transparent security overlay');
+assert(cssContent.includes('.gallery-heart-burst'), 'style.css defines .gallery-heart-burst animation');
+assert(jsContent.includes('DEFAULT_GALLERY_DATA'), 'main.js defines DEFAULT_GALLERY_DATA');
+assert(jsContent.includes('generateAcademicGalleryHtml'), 'main.js defines generateAcademicGalleryHtml');
+assert(jsContent.includes('initAcademicGalleryInteractivity'), 'main.js defines initAcademicGalleryInteractivity');
+assert(jsContent.includes('processAndSanitizeGalleryImage'), 'main.js defines processAndSanitizeGalleryImage WebP canvas sanitizer');
+
+// 9. Contact API & Email Routing Verifications
+const contactApiPath = path.join(ROOT_DIR, 'api', 'contact.js');
+assert(fs.existsSync(contactApiPath), 'api/contact.js serverless function exists');
+try {
+  execSync('node -c api/contact.js', { cwd: ROOT_DIR });
+  assert(true, 'api/contact.js passes JavaScript syntax compiler check without errors');
+} catch (e) {
+  assert(false, `api/contact.js has syntax errors: ${e.message}`);
+}
+const envExamplePath = path.join(ROOT_DIR, '.env.example');
+assert(fs.existsSync(envExamplePath), '.env.example exists');
+if (fs.existsSync(envExamplePath)) {
+  const envContent = fs.readFileSync(envExamplePath, 'utf-8');
+  assert(envContent.includes('CONTACT_RECEIVER_EMAIL=ishmt@tkmce.ac.in'), '.env.example specifies receiver ishmt@tkmce.ac.in');
+}
+assert(cssContent.includes('.contact-btn-spinner'), 'style.css defines .contact-btn-spinner');
+assert(jsContent.includes("fetch('/api/contact'"), 'main.js sends inquiries to /api/contact');
+assert(jsContent.includes('ishmt@tkmce.ac.in'), 'main.js references ishmt@tkmce.ac.in secretariat inbox');
+
+// 10. Check .gitignore rules
 const gitignoreContent = fs.readFileSync(path.join(ROOT_DIR, '.gitignore'), 'utf-8');
 ['node_modules', '.next', 'dist', '.env'].forEach(rule => {
   assert(gitignoreContent.includes(rule), `.gitignore contains rule for: ${rule}`);

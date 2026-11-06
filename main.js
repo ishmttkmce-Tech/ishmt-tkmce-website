@@ -205,6 +205,137 @@
     ]
   };
 
+  const DEFAULT_GALLERY_DATA = {
+    posts: [
+      {
+        id: "post-1",
+        title: "Official Inauguration of the ISHMT-TKMCE Student Chapter",
+        caption: "A monumental milestone! The Indian Society for Heat and Mass Transfer (ISHMT) Student Chapter was officially inaugurated at TKM College of Engineering, Kollam, in the presence of distinguished scientists from ISRO-LPSC and Department of Mechanical Engineering faculty mentors.",
+        eventTag: "Inauguration 2026",
+        hashtags: ["#Inauguration2026", "#ISHMT", "#TKMCE", "#HeatTransfer", "#ThermalSciences", "#MechanicalEngineering"],
+        imageUrl: "ishmt-logo.jpg",
+        date: "September 2026",
+        likes: 184,
+        likedByMe: false,
+        comments: [
+          {
+            id: "c-101",
+            name: "Dr. K. E. Reby Roy",
+            text: "Congratulations to all student innovators and faculty coordinators. Let this chapter drive cutting-edge thermal research and industrial liaisons.",
+            timestamp: "1 week ago"
+          },
+          {
+            id: "c-102",
+            name: "Alen Cherian",
+            text: "Proud to be part of the founding executive committee! Excited for all the upcoming national webinars and workshops.",
+            timestamp: "5 days ago"
+          }
+        ]
+      },
+      {
+        id: "post-2",
+        title: "Hands-on CFD & Thermal Finite Volume Simulation Masterclass",
+        caption: "Deep dive into computational fluid mechanics! Students engaged in rigorous boundary layer discretization, grid independence studies, and turbulent heat transfer simulations using OpenFOAM and ANSYS Fluent in the CAD Lab.",
+        eventTag: "Workshops",
+        hashtags: ["#CFD", "#OpenFOAM", "#ANSYSFluent", "#Meshing", "#ThermalFluids", "#TKMCE"],
+        imageUrl: "tkmce-building.jpg",
+        date: "October 2026",
+        likes: 142,
+        likedByMe: false,
+        comments: [
+          {
+            id: "c-201",
+            name: "Naveen V.",
+            text: "The meshing best practices and y-plus boundary layer calculations were explained with crystal clarity. Super valuable session!",
+            timestamp: "3 days ago"
+          },
+          {
+            id: "c-202",
+            name: "Gowri S.",
+            text: "Hands-on OpenFOAM scripting was the highlight. Can we have an advanced two-phase flow session next month?",
+            timestamp: "2 days ago"
+          }
+        ]
+      },
+      {
+        id: "post-3",
+        title: "Distinguished Lecture: Cryogenic Fuel Management in Space Launch Vehicles",
+        caption: "Exploring extraterrestrial thermal engineering! Scientists from ISRO Liquid Propulsion Systems Centre (LPSC) delivered an eye-opening lecture on liquid hydrogen boil-off mitigation and regenerative cooling in semi-cryogenic rocket stages.",
+        eventTag: "Conferences",
+        hashtags: ["#ISRO", "#Cryogenics", "#SpacePropulsion", "#RegenerativeCooling", "#RocketScience", "#ThermalEngineering"],
+        imageUrl: "ishmt-rct-logo.png",
+        date: "October 2026",
+        likes: 215,
+        likedByMe: false,
+        comments: [
+          {
+            id: "c-301",
+            name: "Muhammed R.",
+            text: "Fascinating insights into cryogenic insulation and multi-layer insulation (MLI) blankets used in launch vehicles.",
+            timestamp: "4 days ago"
+          }
+        ]
+      },
+      {
+        id: "post-4",
+        title: "Laboratory Exploration: Heat Exchanger Testing & Pool Boiling Phenomena",
+        caption: "Bridging analytical equations with physical experimentation. Scholars conducted parametric testing on shell-and-tube heat exchangers, measuring critical heat flux (CHF) and nucleate boiling enhancement surfaces in the Heat Transfer Lab.",
+        eventTag: "Lab Sessions",
+        hashtags: ["#ThermalLab", "#HeatExchangers", "#Boiling", "#CriticalHeatFlux", "#ExperimentalThermodynamics", "#TKMCE"],
+        imageUrl: "tkmce-building.jpg",
+        date: "October 2026",
+        likes: 98,
+        likedByMe: false,
+        comments: [
+          {
+            id: "c-401",
+            name: "Sandra M.",
+            text: "Observing nucleate boiling bubble departure frequencies in real time was incredible!",
+            timestamp: "1 day ago"
+          }
+        ]
+      },
+      {
+        id: "post-5",
+        title: "Technical Liaison Tour: Vikram Sarabhai Space Centre (VSSC)",
+        caption: "An inspiring academic expedition to ISRO VSSC Thiruvananthapuram. Student chapter delegates witnessed advanced composite testing, thermal protection tile manufacturing, and aerodynamic wind tunnel facilities.",
+        eventTag: "Industrial Visits",
+        hashtags: ["#IndustrialVisit", "#VSSC", "#ISRO", "#Aerospace", "#ThermalProtection", "#Trivandrum"],
+        imageUrl: "ishmt-rct-logo.png",
+        date: "November 2026",
+        likes: 260,
+        likedByMe: false,
+        comments: [
+          {
+            id: "c-501",
+            name: "Rohit Krishnan",
+            text: "Unforgettable visit! The thermal protection materials used in the atmospheric re-entry capsule were breathtaking.",
+            timestamp: "Just now"
+          }
+        ]
+      },
+      {
+        id: "post-6",
+        title: "Symposium on Phase Change Materials & Sustainable Microclimate Cooling",
+        caption: "Pioneering green energy transitions! Our student delegates presented novel research on organic paraffin wax PCMs for passive building insulation and high-power battery thermal management systems (BTMS).",
+        eventTag: "Conferences",
+        hashtags: ["#PhaseChangeMaterials", "#EnergyTransition", "#BatteryThermal", "#Sustainability", "#GreenEnergy", "#ISHMT"],
+        imageUrl: "ishmt-logo.jpg",
+        date: "November 2026",
+        likes: 175,
+        likedByMe: false,
+        comments: [
+          {
+            id: "c-601",
+            name: "Devika N.",
+            text: "Great presentations! The latent heat thermal storage calculations were top notch.",
+            timestamp: "2 hours ago"
+          }
+        ]
+      }
+    ]
+  };
+
   // Helper Functions for Deep Operations
   function deepClone(obj) {
     if (obj === undefined) return undefined;
@@ -288,6 +419,7 @@
     homeData: DEFAULT_HOME_DATA,
     contactData: DEFAULT_CONTACT_DATA,
     eventsData: DEFAULT_EVENTS_DATA,
+    galleryData: DEFAULT_GALLERY_DATA,
     inlineOverrides: {},
     pages: {
       '/': {
@@ -331,16 +463,10 @@
         slug: '/gallery',
         sections: [
           {
-            id: 'sec-gallery-hero',
-            type: 'hero',
-            layout: { containerWidth: 'boxed', paddingY: 'md', bgType: 'crimson-tint', alignment: 'center', visible: true },
-            content: {
-              eyebrow: 'Visual Documentation & Archives',
-              title: 'Chapter Gallery & Photo Archives',
-              subtitle: 'Visual records of technical workshops, computational bootcamps, laboratory demonstrations, and industrial visits of the ISHMT TKMCE Student Chapter.',
-              button1Text: 'View Events & Programs',
-              button1Url: '#/events'
-            }
+            id: 'sec-academic-gallery',
+            type: 'academic-gallery',
+            layout: { containerWidth: 'full', paddingY: 'none', bgType: 'canvas', visible: true },
+            content: {}
           }
         ]
       },
@@ -362,7 +488,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v21_dynamic_events';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v23_interactive_suite';
   const AUTH_KEY = 'ishmt_admin_session';
 
   const SiteStore = {
@@ -381,7 +507,8 @@
           'ishmt_site_blueprint_v14_footer_cleanup', 'ishmt_site_blueprint_v15_team_update',
           'ishmt_site_blueprint_v16_photo_cropper_security', 'ishmt_site_blueprint_v17_live_sync',
           'ishmt_site_blueprint_v18_hierarchical_modal', 'ishmt_site_blueprint_v19_hero_about',
-          'ishmt_site_blueprint_v20_join_events'
+          'ishmt_site_blueprint_v20_join_events', 'ishmt_site_blueprint_v21_dynamic_events',
+          'ishmt_site_blueprint_v22_interactive'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}
@@ -392,6 +519,21 @@
           try {
             const parsed = JSON.parse(saved);
             this.blueprint = deepMerge(deepClone(DEFAULT_BLUEPRINT), parsed);
+            // Ensure galleryData exists
+            if (!this.blueprint.galleryData || !Array.isArray(this.blueprint.galleryData.posts)) {
+              this.blueprint.galleryData = deepClone(DEFAULT_GALLERY_DATA);
+            }
+            // Ensure gallery route uses academic-gallery
+            if (this.blueprint.pages && this.blueprint.pages['/gallery']) {
+              this.blueprint.pages['/gallery'].sections = [
+                {
+                  id: 'sec-academic-gallery',
+                  type: 'academic-gallery',
+                  layout: { containerWidth: 'full', paddingY: 'none', bgType: 'canvas', visible: true },
+                  content: {}
+                }
+              ];
+            }
           } catch (e) {
             console.warn('Could not parse stored blueprint, resetting to default:', e);
             this.blueprint = deepClone(DEFAULT_BLUEPRINT);
@@ -884,167 +1026,1177 @@
     },
 
     generateAcademicGalleryHtml(section, isAdminMode = false, pageSlug = '/gallery') {
-      const { id, content = {} } = section;
-      const secPath = `pages.${pageSlug}.sections.${id}.content`;
-      const items = content.items || [];
+      const blueprint = SiteStore.get();
+      const galleryData = (blueprint.galleryData && blueprint.galleryData.posts) ? blueprint.galleryData : deepClone(DEFAULT_GALLERY_DATA);
+      const posts = galleryData.posts || [];
+
+      // Extract unique categories for filter pills
+      const rawCategories = posts.map(p => p.eventTag).filter(Boolean);
+      const uniqueCategories = Array.from(new Set(['Workshops', 'Conferences', 'Inauguration 2026', 'Lab Sessions', 'Industrial Visits', ...rawCategories]));
 
       return `
-        <div class="academic-gallery-wrapper">
-          <div style="text-align: center; margin-bottom: 2rem;">
-            ${content.eyebrow || isAdminMode ? `<div class="badge-eyebrow" style="margin-bottom: 0.75rem;" ${isAdminMode ? `data-edit-path="${secPath}.eyebrow" title="Click to edit eyebrow"` : ''}>${this.escapeHtml(content.eyebrow || 'Visual Archives')}</div>` : ''}
-            <h2 class="section-heading" ${isAdminMode ? `data-edit-path="${secPath}.title" title="Click to edit title"` : ''}>${this.escapeHtml(content.title || 'Chapter Visual Archives & Activities')}</h2>
-            <p class="section-desc align-center" ${isAdminMode ? `data-edit-path="${secPath}.subtitle" title="Click to edit description"` : ''}>${this.escapeHtml(content.subtitle || 'Explore chapter workshops, computational masterclasses, and industrial visits.')}</p>
-            <div class="academic-crimson-bar mx-auto" style="margin-top: 1rem;"></div>
+        <div class="gallery-page-wrap" id="academic-gallery-section">
+          <!-- Section Header -->
+          <div style="text-align: center; margin-bottom: 2.5rem;">
+            <div class="badge-eyebrow" style="margin-bottom: 0.75rem;">Visual Archives &amp; Moments</div>
+            <h2 class="section-heading" style="color: #800000; font-family: var(--theme-font-family, 'Oswald', sans-serif); font-size: 2.35rem; font-weight: 700;">
+              ISHMT Chapter Visual Archives
+            </h2>
+            <p class="section-desc align-center" style="max-width: 680px; margin: 0 auto; color: #4B5563; font-size: 1.05rem;">
+              Explore computational workshops, distinguished lectures, cryogenic research interactions, and industrial expeditions captured across our chapter's journey.
+            </p>
+            <div class="academic-crimson-bar mx-auto" style="margin-top: 1.25rem;"></div>
           </div>
 
-          <!-- Category Filter Bar -->
-          <div class="gallery-filter-bar">
-            <button type="button" class="gallery-filter-btn active" data-filter="all">All Archives</button>
-            <button type="button" class="gallery-filter-btn" data-filter="workshops">Workshops &amp; Bootcamps</button>
-            <button type="button" class="gallery-filter-btn" data-filter="lectures">Distinguished Lectures</button>
-            <button type="button" class="gallery-filter-btn" data-filter="visits">Industrial Visits</button>
-            <button type="button" class="gallery-filter-btn" data-filter="labs">Hardware &amp; Labs</button>
+          <!-- PART 1: Admin Gallery Dashboard (Batch Upload & Moderation) -->
+          ${isAdminMode ? this.generateGalleryAdminPanelHtml(posts) : ''}
+
+          <!-- PART 2: Public Controls (Search, Categories & View Switcher) -->
+          <div class="gallery-controls-container">
+            <div class="gallery-top-controls">
+              <!-- Real-time Search -->
+              <div class="gallery-search-wrap">
+                <svg class="gallery-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="gallery-search-input" class="gallery-search-input" placeholder="Search by event name, caption, or #hashtag..." />
+                <button type="button" id="gallery-search-clear" class="gallery-search-clear" style="display: none;" title="Clear search">&times;</button>
+              </div>
+
+              <!-- View Switcher -->
+              <div class="gallery-view-switcher">
+                <button type="button" class="gallery-view-btn active" id="gallery-view-grid-btn" data-view="grid" title="Explore Grid View (3 Columns)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  </svg>
+                  <span>Grid</span>
+                </button>
+                <button type="button" class="gallery-view-btn" id="gallery-view-feed-btn" data-view="feed" title="Instagram Feed View (Single Column)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                    <line x1="9" y1="21" x2="9" y2="9"></line>
+                  </svg>
+                  <span>Feed</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Dynamic Category Filter Pills -->
+            <div class="gallery-category-pills" id="gallery-category-pills-bar">
+              <button type="button" class="gallery-category-pill active" data-category="all">
+                <span>All Moments</span>
+              </button>
+              ${uniqueCategories.map(cat => `
+                <button type="button" class="gallery-category-pill" data-category="${this.escapeHtml(cat)}">
+                  <span>${this.escapeHtml(cat)}</span>
+                </button>
+              `).join('')}
+            </div>
           </div>
 
-          <!-- Academic Gallery Cards Grid -->
-          <div class="academic-gallery-grid">
-            ${items.map((item, idx) => `
-              <div class="academic-gallery-card ${isAdminMode ? 'studio-card-wrapper' : ''}" data-category="${item.category || 'workshops'}" data-item-id="${item.id}">
-                ${isAdminMode ? `
-                  <div class="studio-card-actions">
-                    <button type="button" class="studio-card-btn btn-card-dup" data-card-type="gallery" data-section-id="${id}" data-card-id="${item.id}" title="Duplicate Card">❐ Duplicate</button>
-                    <button type="button" class="studio-card-btn btn-card-delete" data-card-type="gallery" data-section-id="${id}" data-card-id="${item.id}" title="Delete Card">🗑 Delete</button>
-                  </div>
-                ` : ''}
-                
-                <div class="gallery-card-banner">
-                  <div class="gallery-card-icon-halo">
-                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      ${this.getCategoryIconSvg(item.category || 'workshops')}
-                    </svg>
-                  </div>
-                  <span class="gallery-card-tag" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.tag" title="Click to edit tag"` : ''}>${this.escapeHtml(item.tag || 'Chapter Event')}</span>
-                  <span class="gallery-card-date" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.date" title="Click to edit date"` : ''}>${this.escapeHtml(item.date || '2026–27')}</span>
-                </div>
-
-                <div class="gallery-card-body">
-                  <h3 class="gallery-card-title" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.title" title="Click to edit title"` : ''}>${this.escapeHtml(item.title || 'Untitled Event')}</h3>
-                  <p class="gallery-card-desc" ${isAdminMode ? `data-edit-path="${secPath}.items.${idx}.description" title="Click to edit description"` : ''}>${this.escapeHtml(item.description || 'Activity documentation and technical summary.')}</p>
-                  
-                  <div class="gallery-card-footer">
-                    <span>${this.escapeHtml(item.categoryLabel || 'Academic Archive')}</span>
-                    <span style="font-size: 0.88rem; color: #8B0D1A;">🔍 View Details</span>
-                  </div>
-                </div>
-              </div>
-            `).join('')}
-
-            ${isAdminMode ? `
-              <div class="studio-add-card-placeholder" data-action="add-gallery-card" data-section-id="${id}">
-                <span style="font-size: 1.4rem; font-weight: 700; color: #8B1014;">+ Add New Gallery Card</span>
-                <span style="font-size: 0.85rem; color: #6B7280; margin-top: 4px;">Click to append a workshop, seminar, visit, or lab archive card</span>
-              </div>
-            ` : ''}
+          <!-- Dynamic Posts Container (Explore Grid or Feed View) -->
+          <div id="gallery-posts-container">
+            ${this.generateGalleryExploreGridHtml(posts)}
           </div>
         </div>
       `;
     },
 
-    getCategoryIconSvg(category) {
-      switch (category) {
-        case 'workshops':
-          return '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>';
-        case 'lectures':
-          return '<path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path>';
-        case 'visits':
-          return '<path d="M2 20h20"></path><path d="M5 20V8l7-5 7 5v12"></path><path d="M9 12h6"></path><path d="M9 16h6"></path>';
-        case 'labs':
-          return '<path d="M8.5 2h7l.5 4h-8z"></path><path d="M6 14a6 6 0 1 0 12 0"></path><path d="M12 2v10"></path>';
-        default:
-          return '<circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon>';
+    generateGalleryAdminPanelHtml(posts) {
+      return `
+        <div class="gallery-admin-panel" id="gallery-admin-panel">
+          <div class="gallery-admin-card">
+            <div class="gallery-admin-header">
+              <div class="gallery-admin-header-left">
+                <span class="gallery-admin-badge">Admin Studio</span>
+                <h3 class="gallery-admin-title">Gallery Batch Upload &amp; Content Moderation</h3>
+              </div>
+              <span style="font-size: 0.82rem; opacity: 0.9;">Direct Master Session</span>
+            </div>
+
+            <div class="gallery-admin-body">
+              <form id="gallery-batch-upload-form" onsubmit="return false;">
+                <!-- Drag & Drop Upload Zone -->
+                <div class="events-upload-zone" id="gallery-upload-dropzone" style="margin-bottom: 1.5rem;">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                  <p class="events-upload-prompt" style="margin-top: 0.5rem; font-weight: 600; color: #1F2937;">
+                    Click to select or drag &amp; drop photos for batch upload
+                  </p>
+                  <p style="font-size: 0.78rem; color: #6B7280; margin-top: 0.25rem;">
+                    EXIF &amp; GPS metadata automatically stripped via HTML5 WebP canvas processing (max 1920px). Supports multiple files.
+                  </p>
+                  <input type="file" id="gallery-file-input" accept="image/*" multiple style="display: none;" />
+                </div>
+
+                <!-- Batch Preview Grid -->
+                <div id="gallery-batch-previews-container" class="gallery-batch-previews-grid" style="display: none; margin-bottom: 1.5rem;"></div>
+
+                <div class="events-form-grid" style="margin-bottom: 1.5rem;">
+                  <!-- Event Tag / Category -->
+                  <div class="events-form-group">
+                    <label class="events-form-label" for="gallery-new-tag">Event Category / Tag *</label>
+                    <select id="gallery-new-tag" class="events-form-input">
+                      <option value="Workshops">Workshops &amp; Bootcamps</option>
+                      <option value="Conferences">Conferences &amp; Lectures</option>
+                      <option value="Inauguration 2026">Inauguration 2026</option>
+                      <option value="Lab Sessions">Lab Sessions &amp; Testing</option>
+                      <option value="Industrial Visits">Industrial Visits &amp; Tours</option>
+                      <option value="Student Achievements">Student Achievements</option>
+                    </select>
+                  </div>
+
+                  <!-- Date / Month -->
+                  <div class="events-form-group">
+                    <label class="events-form-label" for="gallery-new-date">Date / Period *</label>
+                    <input type="text" id="gallery-new-date" class="events-form-input" placeholder="e.g. October 2026" value="Academic Year 2026–27" required />
+                  </div>
+                </div>
+
+                <!-- Caption -->
+                <div class="events-form-group" style="margin-bottom: 1.25rem;">
+                  <label class="events-form-label" for="gallery-new-caption">Photo Caption / Technical Summary *</label>
+                  <textarea id="gallery-new-caption" class="events-form-input" rows="3" placeholder="Describe the chapter activity, participants, key outcomes, or research topics..." required></textarea>
+                </div>
+
+                <!-- Hashtags -->
+                <div class="events-form-group" style="margin-bottom: 1.5rem;">
+                  <label class="events-form-label" for="gallery-new-hashtags">Searchable Hashtags</label>
+                  <input type="text" id="gallery-new-hashtags" class="events-form-input" placeholder="#CFD #Thermal #HeatTransfer #TKMCE #ISHMT" value="#ISHMT #TKMCE #ThermalEngineering" />
+                  <span style="font-size: 0.75rem; color: #6B7280; margin-top: 0.25rem; display: block;">Separate with spaces or commas</span>
+                </div>
+
+                <!-- Submit Button -->
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                  <button type="button" id="gallery-submit-batch-btn" class="events-btn-save" style="background: #800000; color: #fff; padding: 0.65rem 1.75rem; border-radius: 8px; font-weight: 700; border: none; cursor: pointer;">
+                    Publish to Chapter Gallery
+                  </button>
+                  <span id="gallery-upload-status" style="font-size: 0.85rem; color: #4B5563;"></span>
+                </div>
+              </form>
+
+              <!-- Gallery Moderation Roster -->
+              <div style="margin-top: 2.5rem; border-top: 1px solid #E5E7EB; padding-top: 2rem;">
+                <h4 style="font-size: 1.1rem; font-weight: 700; color: #111827; margin-bottom: 1rem;">
+                  Active Posts &amp; Comment Moderation (<span id="gallery-admin-count">${posts.length}</span>)
+                </h4>
+                <div class="events-roster-wrap">
+                  <table class="events-roster-table" id="gallery-moderation-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 70px;">Media</th>
+                        <th>Tag / Period</th>
+                        <th>Caption Summary</th>
+                        <th style="text-align: center;">Likes</th>
+                        <th style="text-align: center;">Comments</th>
+                        <th style="text-align: right;">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="gallery-moderation-tbody">
+                      ${this.generateGalleryModerationRowsHtml(posts)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    },
+
+    generateGalleryModerationRowsHtml(posts) {
+      if (!posts || !posts.length) {
+        return `
+          <tr>
+            <td colspan="6" style="text-align: center; color: #6B7280; padding: 2rem;">
+              No gallery items in archives yet. Use the upload zone above to publish photos.
+            </td>
+          </tr>
+        `;
       }
+
+      return posts.map(post => `
+        <tr data-post-id="${post.id}">
+          <td>
+            <div style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; background: #000;">
+              <img src="${this.escapeHtml(post.imageUrl)}" alt="thumb" style="width: 100%; height: 100%; object-fit: cover;" draggable="false" />
+            </div>
+          </td>
+          <td>
+            <span class="gallery-feed-tag-badge">${this.escapeHtml(post.eventTag || 'General')}</span>
+            <div style="font-size: 0.75rem; color: #6B7280; margin-top: 2px;">${this.escapeHtml(post.date || '')}</div>
+          </td>
+          <td style="max-width: 280px;">
+            <div style="font-size: 0.85rem; font-weight: 600; color: #1F2937; line-height: 1.3;" class="line-clamp-2">
+              ${this.escapeHtml(post.caption || post.title || 'Untitled Post')}
+            </div>
+            ${post.hashtags && post.hashtags.length ? `
+              <div style="font-size: 0.72rem; color: #800000; margin-top: 3px;">${this.escapeHtml(post.hashtags.join(' '))}</div>
+            ` : ''}
+          </td>
+          <td style="text-align: center; font-weight: 700; color: #111827;">${post.likes || 0}</td>
+          <td style="text-align: center; font-weight: 700; color: #111827;">${(post.comments && post.comments.length) || 0}</td>
+          <td style="text-align: right;">
+            <div style="display: inline-flex; gap: 0.5rem;">
+              <button type="button" class="btn-roster-action gallery-admin-view-btn" data-post-id="${post.id}" title="Preview / Moderate Comments" style="color: #2563EB;">
+                💬 Moderate
+              </button>
+              <button type="button" class="btn-roster-action gallery-admin-del-btn" data-post-id="${post.id}" title="Delete Post" style="color: #DC2626;">
+                🗑 Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    },
+
+    generateGalleryExploreGridHtml(posts) {
+      if (!posts || !posts.length) {
+        return `
+          <div style="text-align: center; padding: 4rem 1.5rem; background: #F9FAFB; border-radius: 12px; border: 1px dashed #D1D5DB;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5" style="margin: 0 auto 0.75rem;">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: #374151;">No Moments Found</h4>
+            <p style="font-size: 0.9rem; color: #6B7280; margin-top: 0.25rem;">Try adjusting your search criteria or category filter.</p>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="gallery-explore-grid" id="gallery-explore-grid">
+          ${posts.map(post => `
+            <div class="gallery-grid-card select-none" data-post-id="${post.id}" data-category="${this.escapeHtml(post.eventTag || '')}">
+              <div class="image-protection-shield" aria-hidden="true" oncontextmenu="return false;"></div>
+              ${post.eventTag ? `<span class="gallery-grid-tag-chip">${this.escapeHtml(post.eventTag)}</span>` : ''}
+              <img src="${this.escapeHtml(post.imageUrl)}" alt="${this.escapeHtml(post.title || post.caption || 'ISHMT Chapter Moment')}" class="gallery-grid-thumbnail" draggable="false" oncontextmenu="return false;" loading="lazy" />
+              <div class="gallery-grid-overlay">
+                <div class="gallery-overlay-stat">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                  <span class="gallery-grid-like-val" id="grid-like-val-${post.id}">${post.likes || 0}</span>
+                </div>
+                <div class="gallery-overlay-stat">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  <span class="gallery-grid-comment-val" id="grid-comment-val-${post.id}">${(post.comments && post.comments.length) || 0}</span>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    },
+
+    generateGalleryFeedHtml(posts) {
+      if (!posts || !posts.length) {
+        return `
+          <div style="text-align: center; padding: 4rem 1.5rem; background: #F9FAFB; border-radius: 12px; border: 1px dashed #D1D5DB; max-width: 620px; margin: 0 auto;">
+            <p style="color: #6B7280; font-size: 0.95rem;">No posts found matching the selected filter.</p>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="gallery-feed-view" id="gallery-feed-view">
+          ${posts.map(post => `
+            <article class="gallery-feed-card" data-post-id="${post.id}" data-category="${this.escapeHtml(post.eventTag || '')}">
+              <!-- Feed Card Header -->
+              <div class="gallery-feed-header">
+                <div class="gallery-feed-author-wrap">
+                  <img src="ishmt-logo.jpg" alt="ISHMT TKMCE" class="gallery-feed-avatar select-none" draggable="false" oncontextmenu="return false;" />
+                  <div>
+                    <div class="gallery-feed-username">
+                      <span>ishmt_tkmce</span>
+                      <span class="gallery-feed-tag-badge">${this.escapeHtml(post.eventTag || 'Chapter Activity')}</span>
+                    </div>
+                    <span class="gallery-feed-time" style="font-size: 0.72rem; color: #9CA3AF;">${this.escapeHtml(post.date || '')}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Feed Card Image Container -->
+              <div class="gallery-feed-image-wrap select-none" data-feed-img-id="${post.id}">
+                <div class="image-protection-shield" aria-hidden="true" oncontextmenu="return false;"></div>
+                <img src="${this.escapeHtml(post.imageUrl)}" alt="${this.escapeHtml(post.title || post.caption || 'ISHMT Moment')}" class="gallery-feed-img" draggable="false" oncontextmenu="return false;" loading="lazy" />
+                <div class="gallery-heart-burst" id="feed-heart-burst-${post.id}">
+                  <svg width="84" height="84" viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" stroke-width="1.5">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Feed Actions Bar -->
+              <div class="gallery-feed-actions">
+                <button type="button" class="gallery-action-btn feed-like-btn ${post.likedByMe ? 'liked' : ''}" data-post-id="${post.id}" title="Like">
+                  <svg id="feed-like-icon-${post.id}" width="24" height="24" viewBox="0 0 24 24" fill="${post.likedByMe ? '#EF4444' : 'none'}" stroke="${post.likedByMe ? '#EF4444' : 'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                </button>
+                <button type="button" class="gallery-action-btn feed-comment-open-btn" data-post-id="${post.id}" title="View all comments">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </button>
+                <button type="button" class="gallery-action-btn feed-share-btn" data-post-id="${post.id}" title="Share post link">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Feed Body (Likes, Caption, Comments) -->
+              <div class="gallery-feed-body">
+                <div class="gallery-feed-likes" id="feed-likes-${post.id}">
+                  ${post.likes || 0} likes
+                </div>
+
+                <div class="gallery-feed-caption">
+                  <span class="gallery-comment-author">ishmt_tkmce</span>
+                  <span>${this.escapeHtml(post.caption || post.title || '')}</span>
+                  ${post.hashtags && post.hashtags.length ? `
+                    <div style="margin-top: 0.35rem;">
+                      ${post.hashtags.map(t => `<span class="gallery-hashtag">${this.escapeHtml(t)}</span>`).join(' ')}
+                    </div>
+                  ` : ''}
+                </div>
+
+                <!-- Comments preview -->
+                ${post.comments && post.comments.length ? `
+                  <button type="button" class="gallery-view-comments-btn feed-comment-open-btn" data-post-id="${post.id}">
+                    View all ${post.comments.length} comments
+                  </button>
+                  <div class="gallery-comment-row" style="margin-bottom: 0.5rem;">
+                    <div class="gallery-comment-content">
+                      <span class="gallery-comment-author">${this.escapeHtml(post.comments[post.comments.length - 1].name)}</span>
+                      <span class="gallery-comment-text">${this.escapeHtml(post.comments[post.comments.length - 1].text)}</span>
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Inline Quick Comment Form -->
+              <form class="gallery-inline-comment-form feed-quick-comment-form" data-post-id="${post.id}">
+                <input type="text" class="gallery-inline-comment-input feed-quick-name" placeholder="Your Name" required maxlength="40" style="max-width: 110px;" />
+                <input type="text" class="gallery-inline-comment-input feed-quick-text" placeholder="Add a comment..." required maxlength="240" />
+                <button type="submit" class="gallery-inline-comment-btn">Post</button>
+              </form>
+            </article>
+          `).join('')}
+        </div>
+      `;
+    },
+
+    processAndSanitizeGalleryImage(file) {
+      return new Promise((resolve, reject) => {
+        if (!file || !file.type.startsWith('image/')) {
+          return reject(new Error('Please select a valid image file.'));
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const maxWidth = 1920;
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            // Strips EXIF/GPS metadata by converting to clean WebP data URL
+            const webpDataUrl = canvas.toDataURL('image/webp', 0.88);
+            resolve(webpDataUrl);
+          };
+          img.onerror = () => reject(new Error('Failed to decode image data.'));
+          img.src = e.target.result;
+        };
+        reader.onerror = () => reject(new Error('Failed to read image file.'));
+        reader.readAsDataURL(file);
+      });
     },
 
     initAcademicGalleryInteractivity(contentEl) {
       if (!contentEl) return;
+      const gallerySec = contentEl.querySelector('#academic-gallery-section');
+      if (!gallerySec) return;
 
-      // Filter tabs switching
-      const filterBtns = contentEl.querySelectorAll('.gallery-filter-btn');
-      const cards = contentEl.querySelectorAll('.academic-gallery-card');
+      const blueprint = SiteStore.get();
+      if (!blueprint.galleryData) {
+        blueprint.galleryData = deepClone(DEFAULT_GALLERY_DATA);
+        SiteStore.save(blueprint);
+      }
 
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+      let currentView = 'grid'; // 'grid' | 'feed'
+      let activeCategory = 'all';
+      let searchQuery = '';
+      let stagedBatchImages = [];
 
-          const filter = btn.getAttribute('data-filter');
-          cards.forEach(card => {
-            const cat = card.getAttribute('data-category');
-            if (filter === 'all' || cat === filter) {
-              card.style.display = 'flex';
-              card.style.opacity = '1';
-            } else {
-              card.style.display = 'none';
+      // Elements
+      const searchInput = gallerySec.querySelector('#gallery-search-input');
+      const searchClear = gallerySec.querySelector('#gallery-search-clear');
+      const gridBtn = gallerySec.querySelector('#gallery-view-grid-btn');
+      const feedBtn = gallerySec.querySelector('#gallery-view-feed-btn');
+      const categoryPills = gallerySec.querySelectorAll('.gallery-category-pill');
+      const postsContainer = gallerySec.querySelector('#gallery-posts-container');
+
+      // Shared Post Modal Elements
+      const postModal = document.getElementById('gallery-post-modal');
+      const modalFullImg = document.getElementById('gallery-modal-full-img');
+      const modalTagBadge = document.getElementById('gallery-modal-tag-badge');
+      const modalDate = document.getElementById('gallery-modal-date');
+      const modalCloseBtn = document.getElementById('gallery-modal-close-btn');
+      const modalCommentsList = document.getElementById('gallery-modal-comments-list');
+      const modalLikeBtn = document.getElementById('gallery-modal-like-btn');
+      const modalLikeIcon = document.getElementById('gallery-modal-like-icon');
+      const modalLikesCount = document.getElementById('gallery-modal-likes-count');
+      const modalShareBtn = document.getElementById('gallery-modal-share-btn');
+      const modalCommentForm = document.getElementById('gallery-modal-comment-form');
+      const modalNameInput = document.getElementById('gallery-modal-name-input');
+      const modalTextInput = document.getElementById('gallery-modal-text-input');
+      const modalHeartBurst = document.getElementById('gallery-modal-heart-burst');
+      const modalImgCol = document.getElementById('gallery-modal-img-col');
+      const modalFocusCommentBtn = document.getElementById('gallery-modal-focus-comment-btn');
+
+      // Helper: Filter Posts
+      const getFilteredPosts = () => {
+        const bp = SiteStore.get();
+        const allPosts = (bp.galleryData && bp.galleryData.posts) || DEFAULT_GALLERY_DATA.posts;
+        return allPosts.filter(post => {
+          // Category filter
+          if (activeCategory !== 'all' && post.eventTag !== activeCategory) {
+            return false;
+          }
+          // Search query
+          if (searchQuery.trim()) {
+            const q = searchQuery.toLowerCase().trim();
+            const titleMatch = (post.title || '').toLowerCase().includes(q);
+            const captionMatch = (post.caption || '').toLowerCase().includes(q);
+            const tagMatch = (post.eventTag || '').toLowerCase().includes(q);
+            const hashtagMatch = (post.hashtags || []).some(h => h.toLowerCase().includes(q));
+            if (!titleMatch && !captionMatch && !tagMatch && !hashtagMatch) {
+              return false;
             }
-          });
+          }
+          return true;
         });
-      });
+      };
 
-      // Lightbox modal setup
-      let modalOverlay = document.getElementById('gallery-lightbox-modal');
-      if (!modalOverlay) {
-        modalOverlay = document.createElement('div');
-        modalOverlay.id = 'gallery-lightbox-modal';
-        modalOverlay.className = 'gallery-modal-overlay';
-        modalOverlay.innerHTML = `
-          <div class="gallery-modal-card">
-            <button type="button" class="gallery-modal-close-btn" id="gallery-modal-close" aria-label="Close modal">&times;</button>
-            <div class="gallery-modal-header">
-              <span id="gallery-modal-tag" class="gallery-card-tag" style="position: static; display: inline-block; margin-bottom: 0.5rem;">Event</span>
-              <h3 id="gallery-modal-title" style="font-family: var(--theme-font-family); font-size: 1.5rem; font-weight: 700; color: #0B0B0B; margin: 0;"></h3>
-              <p id="gallery-modal-date" style="font-size: 0.85rem; color: #8B1014; font-weight: 600; margin-top: 0.35rem;"></p>
-            </div>
-            <div class="gallery-modal-body">
-              <p id="gallery-modal-desc" style="font-size: 1rem; color: #4B5563; line-height: 1.7; margin-bottom: 1.5rem;"></p>
-              <div style="background: #F9FAFB; border-radius: 8px; padding: 1rem 1.25rem; border-left: 4px solid #8B1014; font-size: 0.88rem; color: #374151;">
-                <strong>Archival Reference:</strong> Indian Society for Heat and Mass Transfer (ISHMT-RCT) Students Chapter, Department of Mechanical Engineering, TKM College of Engineering.
+      // Helper: Render Active View
+      const renderPosts = () => {
+        const filtered = getFilteredPosts();
+        if (currentView === 'grid') {
+          postsContainer.innerHTML = PublicRenderer.generateGalleryExploreGridHtml(filtered);
+        } else {
+          postsContainer.innerHTML = PublicRenderer.generateGalleryFeedHtml(filtered);
+        }
+        bindPostEventHandlers();
+      };
+
+      // Helper: Open Modal for a Post
+      const openModal = (postId) => {
+        if (!postModal) return;
+        const bp = SiteStore.get();
+        const post = (bp.galleryData && bp.galleryData.posts || []).find(p => p.id === postId);
+        if (!post) return;
+
+        postModal.setAttribute('data-current-post-id', postId);
+        if (modalFullImg) {
+          modalFullImg.src = post.imageUrl;
+          modalFullImg.alt = post.title || post.caption || 'ISHMT Gallery Photo';
+        }
+        if (modalTagBadge) modalTagBadge.textContent = post.eventTag || 'Chapter Activity';
+        if (modalDate) modalDate.textContent = post.date || '';
+
+        // Render Comments List
+        if (modalCommentsList) {
+          let commentsHtml = `
+            <!-- Admin Caption & Tags at Top -->
+            <div class="gallery-comment-row" style="border-bottom: 1px solid #F3F4F6; padding-bottom: 0.85rem;">
+              <div class="gallery-comment-avatar">IS</div>
+              <div class="gallery-comment-content">
+                <span class="gallery-comment-author">ishmt_tkmce</span>
+                <span class="gallery-comment-text">${PublicRenderer.escapeHtml(post.caption || post.title || '')}</span>
+                ${post.hashtags && post.hashtags.length ? `
+                  <div style="margin-top: 0.35rem;">
+                    ${post.hashtags.map(t => `<span class="gallery-hashtag">${PublicRenderer.escapeHtml(t)}</span>`).join(' ')}
+                  </div>
+                ` : ''}
+                <div class="gallery-comment-time">${PublicRenderer.escapeHtml(post.date || 'Chapter Archive')}</div>
               </div>
             </div>
-          </div>
-        `;
-        document.body.appendChild(modalOverlay);
+          `;
 
-        const closeBtn = modalOverlay.querySelector('#gallery-modal-close');
-        if (closeBtn) {
-          closeBtn.addEventListener('click', () => modalOverlay.classList.remove('open'));
+          if (post.comments && post.comments.length) {
+            commentsHtml += post.comments.map(c => `
+              <div class="gallery-comment-row" data-comment-id="${c.id}">
+                <div class="gallery-comment-avatar" style="background: #4B5563;">
+                  ${PublicRenderer.escapeHtml((c.name || 'U').charAt(0).toUpperCase())}
+                </div>
+                <div class="gallery-comment-content">
+                  <span class="gallery-comment-author">${PublicRenderer.escapeHtml(c.name)}</span>
+                  <span class="gallery-comment-text">${PublicRenderer.escapeHtml(c.text)}</span>
+                  <div class="gallery-comment-time">${PublicRenderer.escapeHtml(c.timestamp || 'Recently')}</div>
+                </div>
+              </div>
+            `).join('');
+          } else {
+            commentsHtml += `
+              <div id="gallery-no-comments-msg" style="text-align: center; color: #9CA3AF; font-size: 0.85rem; padding: 2rem 0;">
+                No comments yet. Be the first to share your thoughts!
+              </div>
+            `;
+          }
+
+          modalCommentsList.innerHTML = commentsHtml;
+          modalCommentsList.scrollTop = 0;
         }
-        modalOverlay.addEventListener('click', (e) => {
-          if (e.target === modalOverlay) modalOverlay.classList.remove('open');
+
+        // Like Button State
+        updateModalLikeState(post);
+
+        // Show Modal
+        postModal.style.display = 'flex';
+        requestAnimationFrame(() => postModal.classList.add('open'));
+
+        // Update URL deep link (?post=id)
+        try {
+          const url = new URL(window.location);
+          url.searchParams.set('post', postId);
+          window.history.replaceState(null, '', url);
+        } catch (_) {}
+      };
+
+      // Helper: Update Modal Like State
+      const updateModalLikeState = (post) => {
+        if (!post) return;
+        if (modalLikesCount) {
+          modalLikesCount.textContent = `${post.likes || 0} likes`;
+        }
+        if (modalLikeBtn && modalLikeIcon) {
+          if (post.likedByMe) {
+            modalLikeBtn.classList.add('liked');
+            modalLikeIcon.setAttribute('fill', '#EF4444');
+            modalLikeIcon.setAttribute('stroke', '#EF4444');
+          } else {
+            modalLikeBtn.classList.remove('liked');
+            modalLikeIcon.setAttribute('fill', 'none');
+            modalLikeIcon.setAttribute('stroke', 'currentColor');
+          }
+        }
+      };
+
+      // Helper: Close Modal
+      const closeModal = () => {
+        if (!postModal) return;
+        postModal.classList.remove('open');
+        setTimeout(() => {
+          postModal.style.display = 'none';
+        }, 200);
+
+        // Clear ?post= from URL
+        try {
+          const url = new URL(window.location);
+          url.searchParams.delete('post');
+          window.history.replaceState(null, '', url);
+        } catch (_) {}
+      };
+
+      // Helper: Toggle Like on a Post
+      const toggleLike = (postId, forceHeart = false) => {
+        const bp = SiteStore.get();
+        if (!bp.galleryData) bp.galleryData = deepClone(DEFAULT_GALLERY_DATA);
+        const post = (bp.galleryData.posts || []).find(p => p.id === postId);
+        if (!post) return;
+
+        if (forceHeart) {
+          if (!post.likedByMe) {
+            post.likedByMe = true;
+            post.likes = (post.likes || 0) + 1;
+          }
+        } else {
+          if (post.likedByMe) {
+            post.likedByMe = false;
+            post.likes = Math.max(0, (post.likes || 1) - 1);
+          } else {
+            post.likedByMe = true;
+            post.likes = (post.likes || 0) + 1;
+          }
+        }
+
+        SiteStore.save(bp);
+
+        // Update Modal if open
+        if (postModal && postModal.getAttribute('data-current-post-id') === postId) {
+          updateModalLikeState(post);
+        }
+
+        // Update Grid Item if exists
+        const gridLikeVal = document.getElementById(`grid-like-val-${postId}`);
+        if (gridLikeVal) gridLikeVal.textContent = post.likes || 0;
+
+        // Update Feed Item if exists
+        const feedLikes = document.getElementById(`feed-likes-${postId}`);
+        if (feedLikes) feedLikes.textContent = `${post.likes || 0} likes`;
+        const feedLikeIcon = document.getElementById(`feed-like-icon-${postId}`);
+        const feedLikeBtn = gallerySec.querySelector(`.feed-like-btn[data-post-id="${postId}"]`);
+        if (feedLikeBtn && feedLikeIcon) {
+          if (post.likedByMe) {
+            feedLikeBtn.classList.add('liked');
+            feedLikeIcon.setAttribute('fill', '#EF4444');
+            feedLikeIcon.setAttribute('stroke', '#EF4444');
+          } else {
+            feedLikeBtn.classList.remove('liked');
+            feedLikeIcon.setAttribute('fill', 'none');
+            feedLikeIcon.setAttribute('stroke', 'currentColor');
+          }
+        }
+      };
+
+      // Helper: Trigger Floating Heart Burst
+      const triggerHeartBurst = (containerEl, burstEl) => {
+        if (!burstEl) return;
+        burstEl.classList.remove('animate');
+        void burstEl.offsetWidth; // force reflow
+        burstEl.classList.add('animate');
+        setTimeout(() => burstEl.classList.remove('animate'), 900);
+      };
+
+      // Helper: Share Post
+      const sharePost = (postId) => {
+        const bp = SiteStore.get();
+        const post = (bp.galleryData && bp.galleryData.posts || []).find(p => p.id === postId);
+        const title = (post && post.title) || 'ISHMT Chapter Moment';
+        const urlObj = new URL(window.location);
+        urlObj.searchParams.set('post', postId);
+        const shareUrl = urlObj.toString();
+
+        if (navigator.share) {
+          navigator.share({
+            title: `ISHMT TKMCE - ${title}`,
+            text: (post && post.caption) || 'Check out this moment from ISHMT TKMCE Student Chapter!',
+            url: shareUrl
+          }).catch(() => {
+            copyShareUrl(shareUrl);
+          });
+        } else {
+          copyShareUrl(shareUrl);
+        }
+      };
+
+      const copyShareUrl = (url) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(() => {
+            App.showToast('Post link copied to clipboard!');
+          }).catch(() => {
+            App.showToast('Share Link: ' + url);
+          });
+        } else {
+          App.showToast('Share Link: ' + url);
+        }
+      };
+
+      // Helper: Bind Dynamic Event Handlers in Posts Container
+      const bindPostEventHandlers = () => {
+        // Grid Card Clicks
+        const gridCards = postsContainer.querySelectorAll('.gallery-grid-card');
+        gridCards.forEach(card => {
+          card.addEventListener('click', (e) => {
+            const postId = card.getAttribute('data-post-id');
+            if (postId) openModal(postId);
+          });
+        });
+
+        // Feed Double-Click Heart
+        const feedImgWraps = postsContainer.querySelectorAll('.gallery-feed-image-wrap');
+        feedImgWraps.forEach(wrap => {
+          let lastTap = 0;
+          const postId = wrap.getAttribute('data-feed-img-id');
+          const heartBurst = wrap.querySelector('.gallery-heart-burst');
+
+          // Double Click on Desktop
+          wrap.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            triggerHeartBurst(wrap, heartBurst);
+            toggleLike(postId, true);
+          });
+
+          // Double Tap on Mobile Touch
+          wrap.addEventListener('touchend', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 300 && tapLength > 0) {
+              e.preventDefault();
+              triggerHeartBurst(wrap, heartBurst);
+              toggleLike(postId, true);
+            }
+            lastTap = currentTime;
+          });
+        });
+
+        // Feed Action Buttons
+        const feedLikeBtns = postsContainer.querySelectorAll('.feed-like-btn');
+        feedLikeBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const postId = btn.getAttribute('data-post-id');
+            if (postId) toggleLike(postId);
+          });
+        });
+
+        const feedCommentOpenBtns = postsContainer.querySelectorAll('.feed-comment-open-btn');
+        feedCommentOpenBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const postId = btn.getAttribute('data-post-id');
+            if (postId) openModal(postId);
+          });
+        });
+
+        const feedShareBtns = postsContainer.querySelectorAll('.feed-share-btn');
+        feedShareBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const postId = btn.getAttribute('data-post-id');
+            if (postId) sharePost(postId);
+          });
+        });
+
+        // Feed Inline Quick Comment Forms
+        const feedCommentForms = postsContainer.querySelectorAll('.feed-quick-comment-form');
+        feedCommentForms.forEach(form => {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const postId = form.getAttribute('data-post-id');
+            const nameInput = form.querySelector('.feed-quick-name');
+            const textInput = form.querySelector('.feed-quick-text');
+            const name = (nameInput && nameInput.value.trim()) || 'Visitor';
+            const text = (textInput && textInput.value.trim()) || '';
+
+            if (!text) return;
+            addCommentToPost(postId, name, text);
+            form.reset();
+            App.showToast('Comment posted!');
+          });
+        });
+      };
+
+      // Helper: Append Comment to Store
+      const addCommentToPost = (postId, name, text) => {
+        const bp = SiteStore.get();
+        if (!bp.galleryData) bp.galleryData = deepClone(DEFAULT_GALLERY_DATA);
+        const post = (bp.galleryData.posts || []).find(p => p.id === postId);
+        if (!post) return;
+
+        if (!post.comments) post.comments = [];
+        const newComment = {
+          id: 'c-' + Date.now(),
+          name: name.slice(0, 40),
+          text: text.slice(0, 240),
+          timestamp: 'Just now'
+        };
+        post.comments.push(newComment);
+        SiteStore.save(bp);
+
+        // Update Modal if open
+        if (postModal && postModal.getAttribute('data-current-post-id') === postId && modalCommentsList) {
+          const noMsg = modalCommentsList.querySelector('#gallery-no-comments-msg');
+          if (noMsg) noMsg.remove();
+
+          const commentEl = document.createElement('div');
+          commentEl.className = 'gallery-comment-row';
+          commentEl.setAttribute('data-comment-id', newComment.id);
+          commentEl.innerHTML = `
+            <div class="gallery-comment-avatar" style="background: #4B5563;">
+              ${PublicRenderer.escapeHtml((newComment.name || 'U').charAt(0).toUpperCase())}
+            </div>
+            <div class="gallery-comment-content">
+              <span class="gallery-comment-author">${PublicRenderer.escapeHtml(newComment.name)}</span>
+              <span class="gallery-comment-text">${PublicRenderer.escapeHtml(newComment.text)}</span>
+              <div class="gallery-comment-time">Just now</div>
+            </div>
+          `;
+          modalCommentsList.appendChild(commentEl);
+          modalCommentsList.scrollTop = modalCommentsList.scrollHeight;
+        }
+
+        // Update comment counter in grid
+        const gridCommentVal = document.getElementById(`grid-comment-val-${postId}`);
+        if (gridCommentVal) gridCommentVal.textContent = post.comments.length;
+      };
+
+      // View Switcher Handlers
+      if (gridBtn && feedBtn) {
+        gridBtn.addEventListener('click', () => {
+          currentView = 'grid';
+          gridBtn.classList.add('active');
+          feedBtn.classList.remove('active');
+          renderPosts();
+        });
+
+        feedBtn.addEventListener('click', () => {
+          currentView = 'feed';
+          feedBtn.classList.add('active');
+          gridBtn.classList.remove('active');
+          renderPosts();
         });
       }
 
-      cards.forEach(card => {
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('.studio-card-actions') || e.target.closest('.studio-add-card-placeholder')) return;
+      // Search Handlers
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          searchQuery = searchInput.value;
+          if (searchClear) {
+            searchClear.style.display = searchQuery ? 'flex' : 'none';
+          }
+          renderPosts();
+        });
+      }
 
-          const titleEl = card.querySelector('.gallery-card-title');
-          const descEl = card.querySelector('.gallery-card-desc');
-          const tagEl = card.querySelector('.gallery-card-tag');
-          const dateEl = card.querySelector('.gallery-card-date');
+      if (searchClear && searchInput) {
+        searchClear.addEventListener('click', () => {
+          searchInput.value = '';
+          searchQuery = '';
+          searchClear.style.display = 'none';
+          searchInput.focus();
+          renderPosts();
+        });
+      }
 
-          const modalTitle = document.getElementById('gallery-modal-title');
-          const modalDesc = document.getElementById('gallery-modal-desc');
-          const modalTag = document.getElementById('gallery-modal-tag');
-          const modalDate = document.getElementById('gallery-modal-date');
-
-          if (modalTitle && titleEl) modalTitle.textContent = titleEl.textContent;
-          if (modalDesc && descEl) modalDesc.textContent = descEl.textContent;
-          if (modalTag && tagEl) modalTag.textContent = tagEl.textContent;
-          if (modalDate && dateEl) modalDate.textContent = dateEl.textContent;
-
-          if (modalOverlay) modalOverlay.classList.add('open');
+      // Category Pill Handlers
+      categoryPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          categoryPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          activeCategory = pill.getAttribute('data-category') || 'all';
+          renderPosts();
         });
       });
+
+      // Modal Global Handlers
+      if (postModal) {
+        // Close Button
+        if (modalCloseBtn) {
+          modalCloseBtn.addEventListener('click', closeModal);
+        }
+
+        // Backdrop Click Closes Modal
+        postModal.addEventListener('click', (e) => {
+          if (e.target === postModal) closeModal();
+        });
+
+        // Double-Click Heart on Left Modal Image Column
+        if (modalImgCol && modalHeartBurst) {
+          let lastModalTap = 0;
+          modalImgCol.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            const postId = postModal.getAttribute('data-current-post-id');
+            if (postId) {
+              triggerHeartBurst(modalImgCol, modalHeartBurst);
+              toggleLike(postId, true);
+            }
+          });
+
+          modalImgCol.addEventListener('touchend', (e) => {
+            const curTime = new Date().getTime();
+            const tapGap = curTime - lastModalTap;
+            if (tapGap < 300 && tapGap > 0) {
+              e.preventDefault();
+              const postId = postModal.getAttribute('data-current-post-id');
+              if (postId) {
+                triggerHeartBurst(modalImgCol, modalHeartBurst);
+                toggleLike(postId, true);
+              }
+            }
+            lastModalTap = curTime;
+          });
+        }
+
+        // Modal Like Button
+        if (modalLikeBtn) {
+          modalLikeBtn.addEventListener('click', () => {
+            const postId = postModal.getAttribute('data-current-post-id');
+            if (postId) toggleLike(postId);
+          });
+        }
+
+        // Modal Focus Comment Button
+        if (modalFocusCommentBtn && modalTextInput) {
+          modalFocusCommentBtn.addEventListener('click', () => {
+            modalTextInput.focus();
+          });
+        }
+
+        // Modal Share Button
+        if (modalShareBtn) {
+          modalShareBtn.addEventListener('click', () => {
+            const postId = postModal.getAttribute('data-current-post-id');
+            if (postId) sharePost(postId);
+          });
+        }
+
+        // Modal Comment Form Submit
+        if (modalCommentForm) {
+          modalCommentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const postId = postModal.getAttribute('data-current-post-id');
+            const name = (modalNameInput && modalNameInput.value.trim()) || 'Visitor';
+            const text = (modalTextInput && modalTextInput.value.trim()) || '';
+
+            if (!text || !postId) return;
+            addCommentToPost(postId, name, text);
+            if (modalTextInput) modalTextInput.value = '';
+            App.showToast('Comment posted!');
+          });
+        }
+
+        // Escape Key Closes Modal
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && postModal.classList.contains('open')) {
+            closeModal();
+          }
+        });
+      }
+
+      // Initial binding of event handlers
+      bindPostEventHandlers();
+
+      // Deep link support: Check URL for ?post=[id]
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const deepPostId = urlParams.get('post');
+        if (deepPostId) {
+          setTimeout(() => openModal(deepPostId), 350);
+        }
+      } catch (_) {}
+
+      // =========================================================================
+      // ADMIN PANEL INTERACTIVITY (Batch Upload Dropzone + Canvas Sanitization)
+      // =========================================================================
+      const adminPanel = gallerySec.querySelector('#gallery-admin-panel');
+      if (adminPanel) {
+        const dropzone = adminPanel.querySelector('#gallery-upload-dropzone');
+        const fileInput = adminPanel.querySelector('#gallery-file-input');
+        const previewsContainer = adminPanel.querySelector('#gallery-batch-previews-container');
+        const submitBatchBtn = adminPanel.querySelector('#gallery-submit-batch-btn');
+        const uploadStatus = adminPanel.querySelector('#gallery-upload-status');
+        const newTagSelect = adminPanel.querySelector('#gallery-new-tag');
+        const newDateInput = adminPanel.querySelector('#gallery-new-date');
+        const newCaptionInput = adminPanel.querySelector('#gallery-new-caption');
+        const newHashtagsInput = adminPanel.querySelector('#gallery-new-hashtags');
+
+        if (dropzone && fileInput) {
+          dropzone.addEventListener('click', () => fileInput.click());
+
+          dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('dragover');
+          });
+
+          dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('dragover');
+          });
+
+          dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            if (e.dataTransfer.files && e.dataTransfer.files.length) {
+              handleBatchFiles(Array.from(e.dataTransfer.files));
+            }
+          });
+
+          fileInput.addEventListener('change', () => {
+            if (fileInput.files && fileInput.files.length) {
+              handleBatchFiles(Array.from(fileInput.files));
+            }
+          });
+        }
+
+        const handleBatchFiles = async (files) => {
+          if (!uploadStatus) return;
+          uploadStatus.textContent = `Processing and sanitizing ${files.length} images...`;
+          let processedCount = 0;
+
+          for (const file of files) {
+            try {
+              const sanitizedWebp = await PublicRenderer.processAndSanitizeGalleryImage(file);
+              stagedBatchImages.push({
+                fileId: 'img-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5),
+                name: file.name,
+                dataUrl: sanitizedWebp
+              });
+              processedCount++;
+            } catch (err) {
+              console.warn('Image processing error:', err);
+            }
+          }
+
+          uploadStatus.textContent = `${processedCount} image(s) sanitized & ready to publish.`;
+          renderBatchPreviews();
+        };
+
+        const renderBatchPreviews = () => {
+          if (!previewsContainer) return;
+          if (!stagedBatchImages.length) {
+            previewsContainer.style.display = 'none';
+            previewsContainer.innerHTML = '';
+            return;
+          }
+
+          previewsContainer.style.display = 'grid';
+          previewsContainer.innerHTML = stagedBatchImages.map((img, idx) => `
+            <div class="gallery-batch-preview-item" data-index="${idx}">
+              <img src="${img.dataUrl}" alt="staged" class="gallery-batch-preview-img" />
+              <button type="button" class="gallery-batch-remove-btn" data-remove-idx="${idx}" title="Remove image">&times;</button>
+            </div>
+          `).join('');
+
+          // Remove button handlers
+          const removeBtns = previewsContainer.querySelectorAll('.gallery-batch-remove-btn');
+          removeBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const idx = parseInt(btn.getAttribute('data-remove-idx'), 10);
+              stagedBatchImages.splice(idx, 1);
+              renderBatchPreviews();
+              if (uploadStatus) uploadStatus.textContent = `${stagedBatchImages.length} image(s) ready.`;
+            });
+          });
+        };
+
+        // Submit Batch Form
+        if (submitBatchBtn) {
+          submitBatchBtn.addEventListener('click', () => {
+            const caption = (newCaptionInput && newCaptionInput.value.trim()) || '';
+            const tag = (newTagSelect && newTagSelect.value) || 'Workshops';
+            const dateStr = (newDateInput && newDateInput.value.trim()) || 'October 2026';
+            const rawHashtags = (newHashtagsInput && newHashtagsInput.value.trim()) || '';
+
+            if (!stagedBatchImages.length) {
+              alert('Please select at least one photo to publish.');
+              return;
+            }
+            if (!caption) {
+              alert('Please provide a photo caption or technical summary.');
+              if (newCaptionInput) newCaptionInput.focus();
+              return;
+            }
+
+            // Parse hashtags
+            const hashtags = rawHashtags
+              .split(/[\s,]+/)
+              .filter(Boolean)
+              .map(t => t.startsWith('#') ? t : `#${t}`);
+
+            const bp = SiteStore.get();
+            if (!bp.galleryData) bp.galleryData = deepClone(DEFAULT_GALLERY_DATA);
+            if (!bp.galleryData.posts) bp.galleryData.posts = [];
+
+            // Add each staged image as a new post
+            stagedBatchImages.forEach(img => {
+              const newPost = {
+                id: 'post-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+                title: caption.slice(0, 80),
+                caption: caption,
+                eventTag: tag,
+                hashtags: hashtags,
+                imageUrl: img.dataUrl,
+                date: dateStr,
+                likes: 0,
+                likedByMe: false,
+                comments: []
+              };
+              bp.galleryData.posts.unshift(newPost);
+            });
+
+            SiteStore.save(bp);
+            App.showToast(`Published ${stagedBatchImages.length} photo(s) to the chapter gallery!`);
+
+            // Reset form
+            stagedBatchImages = [];
+            renderBatchPreviews();
+            if (newCaptionInput) newCaptionInput.value = '';
+            if (uploadStatus) uploadStatus.textContent = '';
+            if (fileInput) fileInput.value = '';
+
+            // Refresh UI
+            PublicRenderer.refreshGallerySection(contentEl);
+          });
+        }
+
+        // Moderation Table Delegated Actions (Moderate / Delete)
+        adminPanel.addEventListener('click', (e) => {
+          const viewBtn = e.target.closest('.gallery-admin-view-btn');
+          const delBtn = e.target.closest('.gallery-admin-del-btn');
+
+          if (viewBtn) {
+            const postId = viewBtn.getAttribute('data-post-id');
+            if (postId) openModal(postId);
+            return;
+          }
+
+          if (delBtn) {
+            const postId = delBtn.getAttribute('data-post-id');
+            if (!postId) return;
+            if (!confirm('Are you sure you want to permanently delete this photo from the gallery?')) return;
+
+            const bp = SiteStore.get();
+            if (bp.galleryData && bp.galleryData.posts) {
+              bp.galleryData.posts = bp.galleryData.posts.filter(p => p.id !== postId);
+              SiteStore.save(bp);
+              App.showToast('Photo removed from chapter gallery.');
+              PublicRenderer.refreshGallerySection(contentEl);
+            }
+          }
+        });
+      }
+    },
+
+    refreshGallerySection(contentEl) {
+      if (!contentEl) return;
+      const bp = SiteStore.get();
+      const posts = (bp.galleryData && bp.galleryData.posts) || DEFAULT_GALLERY_DATA.posts;
+
+      // Update Moderation Table
+      const tbody = contentEl.querySelector('#gallery-moderation-tbody');
+      if (tbody) {
+        tbody.innerHTML = this.generateGalleryModerationRowsHtml(posts);
+      }
+      const countEl = contentEl.querySelector('#gallery-admin-count');
+      if (countEl) countEl.textContent = posts.length;
+
+      // Update Posts Container
+      const postsContainer = contentEl.querySelector('#gallery-posts-container');
+      const activeViewBtn = contentEl.querySelector('.gallery-view-btn.active');
+      const currentView = (activeViewBtn && activeViewBtn.getAttribute('data-view')) || 'grid';
+
+      if (postsContainer) {
+        if (currentView === 'grid') {
+          postsContainer.innerHTML = this.generateGalleryExploreGridHtml(posts);
+        } else {
+          postsContainer.innerHTML = this.generateGalleryFeedHtml(posts);
+        }
+      }
+
+      // Re-init interactivity
+      this.initAcademicGalleryInteractivity(contentEl);
     },
 
     initAcademicHomeInteractivity(contentEl) {
@@ -1491,23 +2643,54 @@
       return filtered.map(evt => this.generateSingleEventCardHtml(evt)).join('');
     },
 
+    calculateEventCountdown(dateTimeStr) {
+      if (!dateTimeStr) return { isLive: false, isEnded: true, text: '' };
+      const target = new Date(dateTimeStr).getTime();
+      const now = Date.now();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        const hoursPast = (now - target) / (1000 * 60 * 60);
+        if (hoursPast < 5) {
+          return { isLive: true, isEnded: false, text: 'Live Now' };
+        }
+        return { isLive: false, isEnded: true, text: 'Concluded' };
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const pad = (n) => String(n).padStart(2, '0');
+
+      return {
+        isLive: false,
+        isEnded: false,
+        text: `[${pad(days)} Days] : [${pad(hours)} Hrs] : [${pad(minutes)} Mins]`,
+        days,
+        hours,
+        minutes
+      };
+    },
+
     generateSingleEventCardHtml(evt) {
       const isUpcoming = (evt.status || 'Upcoming') === 'Upcoming';
       const category = evt.category || 'Workshop';
       const categoryClass = `category-${category.toLowerCase()}`;
       const formattedDate = this.formatEventDate(evt.dateTime);
       const calendarUrl = this.buildGoogleCalendarUrl(evt);
+      const countdown = this.calculateEventCountdown(evt.dateTime);
 
       const posterHtml = evt.posterUrl ? `
         <img 
           src="${evt.posterUrl}" 
           alt="${this.escapeHtml(evt.title)}" 
-          class="event-poster-img"
+          class="event-poster-img select-none"
           draggable="false"
           oncontextmenu="return false;"
+          oncopy="return false;"
         />
       ` : `
-        <div class="event-poster-fallback" draggable="false" oncontextmenu="return false;">
+        <div class="event-poster-fallback select-none" draggable="false" oncontextmenu="return false;" oncopy="return false;">
           <div class="event-poster-fallback-emblem">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
           </div>
@@ -1518,17 +2701,31 @@
 
       return `
         <div class="event-display-card" data-event-id="${evt.id}">
-          <!-- Poster Container (16:9 ratio, anti-drag/anti-copy) -->
-          <div class="event-poster-container" draggable="false" oncontextmenu="return false;">
+          <!-- Poster Container (16:9 ratio, anti-drag/anti-copy with transparent protective shield) -->
+          <div class="event-poster-container select-none" draggable="false" oncontextmenu="return false;" oncopy="return false;">
             <span class="event-category-badge ${categoryClass}">
               ${this.escapeHtml(category)}
             </span>
             ${posterHtml}
+            <div class="image-protection-shield select-none" aria-hidden="true" oncontextmenu="return false;"></div>
           </div>
 
           <!-- Card Body -->
           <div class="event-card-body">
             <h3 class="event-card-title">${this.escapeHtml(evt.title)}</h3>
+
+            ${isUpcoming ? `
+              <div class="event-countdown-bar" data-countdown-target="${evt.dateTime}">
+                ${countdown.isLive ? `
+                  <span class="event-live-now-badge">🔴 Live Now</span>
+                ` : `
+                  <div class="event-countdown-pill">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span class="event-countdown-val">${countdown.text}</span>
+                  </div>
+                `}
+              </div>
+            ` : ''}
 
             <!-- Logistics Ribbon -->
             <div class="event-logistics-ribbon">
@@ -1568,7 +2765,7 @@
                 </a>
               ` : `
                 <button type="button" class="event-btn-concluded" disabled>
-                  Registration Closed • Event Concluded
+                  Registration Closed / Event Concluded
                 </button>
               `}
             </div>
@@ -1579,6 +2776,25 @@
 
     initAcademicEventsInteractivity(contentEl) {
       if (!contentEl) return;
+
+      // 0. Live Countdown Timer Refresh (updates live every 10 seconds)
+      if (window.__ishmt_event_countdown_timer) {
+        clearInterval(window.__ishmt_event_countdown_timer);
+      }
+      window.__ishmt_event_countdown_timer = setInterval(() => {
+        const countdownBars = contentEl.querySelectorAll('.event-countdown-bar[data-countdown-target]');
+        countdownBars.forEach(bar => {
+          const target = bar.getAttribute('data-countdown-target');
+          if (!target) return;
+          const cd = PublicRenderer.calculateEventCountdown(target);
+          if (cd.isLive) {
+            bar.innerHTML = '<span class="event-live-now-badge">🔴 Live Now</span>';
+          } else if (!cd.isEnded) {
+            const valEl = bar.querySelector('.event-countdown-val');
+            if (valEl) valEl.textContent = cd.text;
+          }
+        });
+      }, 10000);
 
       // 1. Tabbed Navigation Interaction
       const tabsContainer = contentEl.querySelector('.events-tabs-container');
@@ -1832,20 +3048,115 @@
       if (!contentEl) return;
       const form = contentEl.querySelector('#academic-contact-form');
       const feedback = contentEl.querySelector('#contact-form-feedback');
+      const feedbackText = contentEl.querySelector('#contact-feedback-text');
+      const errorBox = contentEl.querySelector('#contact-form-error');
+      const errorContent = contentEl.querySelector('#contact-error-content');
       const submitBtn = contentEl.querySelector('#contact-form-submit-btn');
 
       if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
           e.preventDefault();
-          if (submitBtn) submitBtn.disabled = true;
-          if (feedback) feedback.style.display = 'flex';
-          form.reset();
-          setTimeout(() => {
-            if (submitBtn) submitBtn.disabled = false;
-          }, 1500);
-          setTimeout(() => {
-            if (feedback) feedback.style.display = 'none';
-          }, 7000);
+
+          const nameInput = form.querySelector('#form-name');
+          const emailInput = form.querySelector('#form-email');
+          const phoneInput = form.querySelector('#form-telephone');
+          const subjectInput = form.querySelector('#form-subject');
+          const messageInput = form.querySelector('#form-message');
+
+          const name = (nameInput && nameInput.value.trim()) || '';
+          const email = (emailInput && emailInput.value.trim()) || '';
+          const telephone = (phoneInput && phoneInput.value.trim()) || '';
+          const subject = (subjectInput && subjectInput.value.trim()) || '';
+          const message = (messageInput && messageInput.value.trim()) || '';
+
+          // Client Validation
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!name || name.length < 2) {
+            alert('Please enter your full name.');
+            if (nameInput) nameInput.focus();
+            return;
+          }
+          if (!email || !emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            if (emailInput) emailInput.focus();
+            return;
+          }
+          if (!subject || subject.length < 3) {
+            alert('Please enter a subject line.');
+            if (subjectInput) subjectInput.focus();
+            return;
+          }
+          if (!message || message.length < 5) {
+            alert('Please enter your message (at least 5 characters).');
+            if (messageInput) messageInput.focus();
+            return;
+          }
+
+          // Reset previous notifications
+          if (feedback) feedback.style.display = 'none';
+          if (errorBox) errorBox.style.display = 'none';
+
+          // Set sending state
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+              <span class="contact-btn-spinner"></span>
+              <span>Sending...</span>
+            `;
+          }
+
+          try {
+            const response = await fetch('/api/contact', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({ name, email, telephone, subject, message })
+            });
+
+            const data = await response.json().catch(() => ({}));
+
+            if (response.ok && data.success) {
+              // Success feedback
+              if (feedbackText) {
+                feedbackText.innerHTML = `Thank you, <strong>${PublicRenderer.escapeHtml(name)}</strong>! Your inquiry has been routed to the ISHMT Student Chapter Secretariat (<a href="mailto:ishmt@tkmce.ac.in" style="text-decoration: underline; color: inherit;">ishmt@tkmce.ac.in</a>). We will respond to your email promptly.`;
+              }
+              if (feedback) feedback.style.display = 'flex';
+              form.reset();
+              App.showToast('Inquiry delivered to ishmt@tkmce.ac.in');
+            } else {
+              throw new Error(data.message || 'Server returned an error status.');
+            }
+          } catch (err) {
+            console.warn('Direct API submission notice:', err);
+            // Fallback for static preview or serverless offline
+            const mailtoUrl = `mailto:ishmt@tkmce.ac.in?subject=${encodeURIComponent('[ISHMT Inquiry] ' + subject)}&body=${encodeURIComponent('From: ' + name + ' (' + email + ')\nPhone: ' + (telephone || 'N/A') + '\n\n' + message)}`;
+
+            if (errorContent) {
+              errorContent.innerHTML = `
+                <div><strong>Notice:</strong> Automated backend mailer is currently unreachable.</div>
+                <div style="margin-top: 0.35rem;">
+                  Click here to send directly via your email app:
+                  <a href="${mailtoUrl}" style="color: #800000; font-weight: 700; text-decoration: underline; margin-left: 0.25rem;">
+                    Launch Email to ishmt@tkmce.ac.in &rarr;
+                  </a>
+                </div>
+              `;
+            }
+            if (errorBox) errorBox.style.display = 'flex';
+          } finally {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = `
+                <span>Submit</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              `;
+            }
+          }
         });
       }
 
@@ -1911,7 +3222,16 @@
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
-                <span>Thank you! Your inquiry has been sent to the ISHMT team. We will respond shortly.</span>
+                <span id="contact-feedback-text">Thank you! Your inquiry has been sent to the ISHMT team. We will respond shortly.</span>
+              </div>
+
+              <div id="contact-form-error" class="contact-error-msg" style="display: none; align-items: flex-start; gap: 0.75rem;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <div id="contact-error-content" style="font-size: 0.9rem; color: #991b1b; line-height: 1.5;"></div>
               </div>
 
               <form id="academic-contact-form">

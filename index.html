@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=20261024_logo_smooth">
+  <link rel="stylesheet" href="style.css?v=20261106_interactive_suite">
   <script>
     (function() {
       // 1. Pre-paint instant centering metrics: calculate exact viewport center
@@ -674,9 +674,80 @@
     </div>
   </div>
 
+  <!-- ======================================================================
+       MODAL: INSTAGRAM-STYLE SPLIT GALLERY POST MODAL
+       ====================================================================== -->
+  <div id="gallery-post-modal" class="gallery-modal-backdrop" role="dialog" aria-modal="true" aria-label="Instagram Post View" style="display: none;">
+    <div class="gallery-split-modal-card" onclick="event.stopPropagation()">
+      <!-- Left Column: Full Image Display with Double-Click Heart Burst (md:col-span-7) -->
+      <div class="gallery-modal-left-col" id="gallery-modal-img-col">
+        <div class="image-protection-shield select-none" id="gallery-modal-shield" aria-hidden="true" oncontextmenu="return false;"></div>
+        <img id="gallery-modal-full-img" class="gallery-modal-full-img select-none" alt="ISHMT Gallery Photo" draggable="false" oncontextmenu="return false;" />
+        <div id="gallery-modal-heart-burst" class="gallery-heart-burst">
+          <svg width="90" height="90" viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right Column: Meta, Comments & Actions (md:col-span-5) -->
+      <div class="gallery-modal-right-col">
+        <div class="gallery-modal-header-bar">
+          <div class="gallery-feed-author-wrap">
+            <img src="ishmt-logo.jpg" alt="ISHMT TKMCE" class="gallery-feed-avatar" draggable="false" />
+            <div>
+              <div class="gallery-feed-username">
+                <span>ishmt_tkmce</span>
+                <span class="gallery-feed-tag-badge" id="gallery-modal-tag-badge">Workshops</span>
+              </div>
+              <span id="gallery-modal-date" style="font-size: 0.72rem; color: #9CA3AF;">October 2026</span>
+            </div>
+          </div>
+          <button type="button" class="gallery-modal-close-icon" id="gallery-modal-close-btn" aria-label="Close modal">&times;</button>
+        </div>
+
+        <div class="gallery-modal-comments-scroll" id="gallery-modal-comments-list">
+          <!-- Populated dynamically: Admin caption & hashtags + user comments -->
+        </div>
+
+        <div class="gallery-modal-action-bar">
+          <div class="gallery-modal-actions-row">
+            <button type="button" class="gallery-action-btn" id="gallery-modal-like-btn" title="Like photo">
+              <svg id="gallery-modal-like-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+            <button type="button" class="gallery-action-btn" id="gallery-modal-focus-comment-btn" title="Comment">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </button>
+            <button type="button" class="gallery-action-btn" id="gallery-modal-share-btn" title="Share link">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <div class="gallery-modal-likes-count" id="gallery-modal-likes-count">0 likes</div>
+        </div>
+
+        <div class="gallery-modal-input-area">
+          <form id="gallery-modal-comment-form" class="gallery-modal-comment-form">
+            <input type="text" id="gallery-modal-name-input" class="gallery-modal-name-input" placeholder="Your Name" required maxlength="40" />
+            <div class="gallery-modal-input-row">
+              <input type="text" id="gallery-modal-text-input" class="gallery-modal-text-input" placeholder="Add a comment..." required maxlength="240" />
+              <button type="submit" class="gallery-modal-post-btn" id="gallery-modal-post-btn">Post</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Global Floating Toast Notification -->
   <div id="toast-notification" class="toast-notification" role="alert" aria-live="polite"></div>
 
-  <script src="main.js?v=20261024_logo_smooth"></script>
+  <script src="main.js?v=20261106_interactive_suite"></script>
 </body>
 </html>
