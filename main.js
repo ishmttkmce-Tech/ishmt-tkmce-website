@@ -686,10 +686,37 @@
 
           // Set up real-time listener: instantly updates whenever admin publishes
           this.listenToRealtimeCloudUpdates();
+          this.updateCloudStatusBadge(true, 'Firebase Connected (Live)');
+        } else {
+          this.updateCloudStatusBadge(false, 'Local Storage Only');
         }
       } catch (err) {
         console.warn('[SiteStore] Firebase setup warning:', err);
+        this.updateCloudStatusBadge(false, 'Firebase Init Failed');
       }
+    },
+
+    updateCloudStatusBadge(isConnected, message) {
+      try {
+        const badge = document.getElementById('cloud-sync-status-badge');
+        const dot = document.getElementById('cloud-sync-dot');
+        const text = document.getElementById('cloud-sync-text');
+        if (!badge || !dot || !text) return;
+
+        if (isConnected) {
+          badge.style.background = 'rgba(16, 185, 129, 0.15)';
+          badge.style.color = '#6EE7B7';
+          badge.style.borderColor = 'rgba(16, 185, 129, 0.35)';
+          dot.style.background = '#10B981';
+          text.textContent = message || 'Cloud Connected';
+        } else {
+          badge.style.background = 'rgba(239, 68, 68, 0.15)';
+          badge.style.color = '#FCA5A5';
+          badge.style.borderColor = 'rgba(239, 68, 68, 0.35)';
+          dot.style.background = '#EF4444';
+          text.textContent = message || 'Permission Denied / Local Only';
+        }
+      } catch (_) {}
     },
 
     listenToRealtimeCloudUpdates() {
