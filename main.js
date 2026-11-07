@@ -547,10 +547,28 @@
   const STORAGE_KEY = 'ishmt_site_blueprint_v24_media_interconnect';
   const AUTH_KEY = 'ishmt_admin_session';
 
+  // 100% Free Firebase Cloud Configuration for Real-time Multi-Device Sync
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyAxbVq6P1oelzyTkcePm980wHFPImTUaGY",
+    authDomain: "ishmt-tkmce.firebaseapp.com",
+    databaseURL: "https://ishmt-tkmce-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "ishmt-tkmce",
+    storageBucket: "ishmt-tkmce.firebasestorage.app",
+    messagingSenderId: "765540498580",
+    appId: "1:765540498580:web:0e2b6ebc079d6270de8881"
+  };
+
   const SiteStore = {
     blueprint: null,
+    firebaseApp: null,
+    firestoreDb: null,
+    rtdb: null,
+    isFirebaseReady: false,
 
     init() {
+      // Initialize Firebase (supports both Firestore and RTDB)
+      this.initFirebase();
+
       try {
         // Complete purge of older stale cache keys
         const staleKeys = [
@@ -640,20 +658,119 @@
       });
     },
 
+    initFirebase() {
+      try {
+        if (typeof window !== 'undefined' && window.firebase) {
+          if (!window.firebase.apps || window.firebase.apps.length === 0) {
+            this.firebaseApp = window.firebase.initializeApp(FIREBASE_CONFIG);
+          } else {
+            this.firebaseApp = window.firebase.app();
+          }
+
+          // Initialize Firestore
+          try {
+            this.firestoreDb = window.firebase.firestore();
+          } catch (fsErr) {
+            console.warn('[SiteStore] Firestore init warning:', fsErr);
+          }
+
+          // Also initialize Realtime Database as high-performance backup
+          try {
+            this.rtdb = window.firebase.database();
+          } catch (rtErr) {
+            console.warn('[SiteStore] Realtime Database init warning:', rtErr);
+          }
+
+          this.isFirebaseReady = Boolean(this.firestoreDb || this.rtdb);
+          console.log('[SiteStore] Firebase connected for live real-time sync.');
+
+          // Set up real-time listener: instantly updates whenever admin publishes
+          this.listenToRealtimeCloudUpdates();
+        }
+      } catch (err) {
+        console.warn('[SiteStore] Firebase setup warning:', err);
+      }
+    },
+
+    listenToRealtimeCloudUpdates() {
+      // 1. Try Firestore real-time onSnapshot listener
+      if (this.firestoreDb) {
+        try {
+          this.firestoreDb.collection('ishmt_site').doc('master_blueprint')
+            .onSnapshot((doc) => {
+              if (doc.exists) {
+                const cloudData = doc.data();
+                if (cloudData && cloudData.blueprint) {
+                  this.applyIncomingCloudBlueprint(cloudData.blueprint, 'Firestore');
+                }
+              }
+            }, (err) => {
+              console.warn('[SiteStore] Firestore listener warning:', err.message);
+            });
+        } catch (_) {}
+      }
+
+      // 2. Also attach Realtime Database listener
+      if (this.rtdb) {
+        try {
+          this.rtdb.ref('ishmt_master_blueprint').on('value', (snapshot) => {
+            const val = snapshot.val();
+            if (val) {
+              const cloudBlueprint = typeof val === 'string' ? JSON.parse(val) : val;
+              this.applyIncomingCloudBlueprint(cloudBlueprint, 'RealtimeDB');
+            }
+          });
+        } catch (_) {}
+      }
+    },
+
+    applyIncomingCloudBlueprint(cloudBlueprint, source = 'Cloud') {
+      if (!cloudBlueprint) return;
+      this.blueprint = deepMerge(deepClone(this.blueprint || DEFAULT_BLUEPRINT), cloudBlueprint);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.blueprint));
+      } catch (_) {}
+      this.applyThemeVariables();
+      App.onBlueprintUpdated();
+      console.log(`[SiteStore] Real-time live update received from ${source}.`);
+    },
+
     async syncFromCloud() {
+      // 1. If Firebase is active, read the latest snapshot directly
+      if (this.firestoreDb) {
+        try {
+          const doc = await this.firestoreDb.collection('ishmt_site').doc('master_blueprint').get();
+          if (doc.exists) {
+            const cloudData = doc.data();
+            if (cloudData && cloudData.blueprint) {
+              this.applyIncomingCloudBlueprint(cloudData.blueprint, 'Firestore Fetch');
+              return;
+            }
+          }
+        } catch (fsErr) {
+          console.warn('[SiteStore] Direct Firestore get failed, trying RTDB/fallback:', fsErr.message);
+        }
+      }
+
+      if (this.rtdb) {
+        try {
+          const snapshot = await this.rtdb.ref('ishmt_master_blueprint').once('value');
+          const val = snapshot.val();
+          if (val) {
+            const cloudBlueprint = typeof val === 'string' ? JSON.parse(val) : val;
+            this.applyIncomingCloudBlueprint(cloudBlueprint, 'RTDB Fetch');
+            return;
+          }
+        } catch (_) {}
+      }
+
+      // 2. Secondary fallback: check /api/site-data
       try {
         const res = await fetch('/api/site-data');
         if (!res.ok) return;
         const json = await res.json();
         if (json && json.connected && json.hasData && json.data) {
-          const cloudData = json.data;
-          this.blueprint = deepMerge(deepClone(this.blueprint || DEFAULT_BLUEPRINT), cloudData);
-          try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(this.blueprint));
-          } catch (_) {}
-          this.applyThemeVariables();
-          App.onBlueprintUpdated();
-          console.log('[SiteStore] Synced latest updates from Vercel Cloud Database.');
+          this.applyIncomingCloudBlueprint(json.data, 'Vercel API');
         }
       } catch (err) {
         console.warn('[SiteStore] Cloud sync check failed (offline or local dev):', err);
@@ -661,26 +778,49 @@
     },
 
     async syncToCloud(blueprint) {
+      let savedToFirebase = false;
+
+      // 1. Save directly to Firestore (100% Free, zero config on Vercel needed)
+      if (this.firestoreDb) {
+        try {
+          await this.firestoreDb.collection('ishmt_site').doc('master_blueprint').set({
+            blueprint,
+            updatedAt: new Date().toISOString(),
+            author: 'ISHMT Admin'
+          });
+          savedToFirebase = true;
+          console.log('[SiteStore] Saved blueprint to Firebase Firestore.');
+        } catch (fsErr) {
+          console.warn('[SiteStore] Firestore write error:', fsErr.message);
+        }
+      }
+
+      // 2. Also save to Realtime Database as backup
+      if (this.rtdb) {
+        try {
+          await this.rtdb.ref('ishmt_master_blueprint').set(blueprint);
+          savedToFirebase = true;
+          console.log('[SiteStore] Saved blueprint to Firebase Realtime Database.');
+        } catch (rtErr) {
+          console.warn('[SiteStore] RTDB write error:', rtErr.message);
+        }
+      }
+
+      if (savedToFirebase) {
+        App.showToast('✅ Saved & Synced Live to All Devices via Firebase!');
+      }
+
+      // 3. Also push to /api/site-data as secondary store
       try {
-        const res = await fetch('/api/site-data', {
+        await fetch('/api/site-data', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             blueprint,
             timestamp: new Date().toISOString()
           })
         });
-        const json = await res.json();
-        if (json && json.connected) {
-          App.showToast('✅ Synced Live to Vercel Database!');
-        } else if (json && json.message && json.message.includes('not provisioned')) {
-          console.info('[SiteStore] ' + json.message);
-        }
-      } catch (err) {
-        console.warn('[SiteStore] Cloud save failed:', err);
-      }
+      } catch (_) {}
     },
 
     get() {
