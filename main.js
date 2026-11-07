@@ -640,8 +640,22 @@
 
       this.applyThemeVariables();
 
-      // Initiate asynchronous cloud sync from Vercel KV Database (Option 2)
+      // Initiate asynchronous cloud sync
       this.syncFromCloud();
+
+      // If this session is an authenticated Admin, verify if cloud is empty and auto-seed if needed
+      if (typeof AuthService !== 'undefined' && AuthService.isAuthenticated && AuthService.isAuthenticated()) {
+        setTimeout(async () => {
+          try {
+            const checkRes = await fetch('https://ishmt-tkmce-default-rtdb.asia-southeast1.firebasedatabase.app/ishmt_master_blueprint.json');
+            const data = await checkRes.json();
+            if (!data && this.blueprint) {
+              console.log('[SiteStore] Cloud is currently empty. Auto-seeding from admin session...');
+              await this.syncToCloud(this.blueprint);
+            }
+          } catch (_) {}
+        }, 1500);
+      }
 
       // Listen for cross-tab updates!
       window.addEventListener('storage', (e) => {
@@ -753,32 +767,33 @@
 
     applyIncomingCloudBlueprint(cloudBlueprint, source = 'Cloud') {
       if (!cloudBlueprint) return;
-      this.blueprint = deepMerge(deepClone(this.blueprint || DEFAULT_BLUEPRINT), cloudBlueprint);
+      // Overwrite local blueprint with authoritative cloud blueprint
+      this.blueprint = cloudBlueprint;
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.blueprint));
       } catch (_) {}
       this.applyThemeVariables();
       App.onBlueprintUpdated();
-      console.log(`[SiteStore] Real-time live update received from ${source}.`);
+      console.log(`[SiteStore] Real-time live update received and applied from ${source}.`);
     },
 
     async syncFromCloud() {
-      // 1. If Firebase is active, read the latest snapshot directly
-      if (this.firestoreDb) {
-        try {
-          const doc = await this.firestoreDb.collection('ishmt_site').doc('master_blueprint').get();
-          if (doc.exists) {
-            const cloudData = doc.data();
-            if (cloudData && cloudData.blueprint) {
-              this.applyIncomingCloudBlueprint(cloudData.blueprint, 'Firestore Fetch');
-              return;
-            }
+      // 1. Direct fetch from Firebase RTDB REST endpoint (instant, zero delay, works on every mobile browser)
+      try {
+        const rtdbRes = await fetch('https://ishmt-tkmce-default-rtdb.asia-southeast1.firebasedatabase.app/ishmt_master_blueprint.json');
+        if (rtdbRes.ok) {
+          const val = await rtdbRes.json();
+          if (val) {
+            const cloudBlueprint = typeof val === 'string' ? JSON.parse(val) : val;
+            this.applyIncomingCloudBlueprint(cloudBlueprint, 'RTDB Direct REST');
+            return;
           }
-        } catch (fsErr) {
-          console.warn('[SiteStore] Direct Firestore get failed, trying RTDB/fallback:', fsErr.message);
         }
+      } catch (err) {
+        console.warn('[SiteStore] RTDB REST fetch notice:', err.message);
       }
 
+      // 2. If Firebase SDK is active, read the snapshot directly
       if (this.rtdb) {
         try {
           const snapshot = await this.rtdb.ref('ishmt_master_blueprint').once('value');
@@ -791,7 +806,23 @@
         } catch (_) {}
       }
 
-      // 2. Secondary fallback: check /api/site-data
+      // 3. Fallback: check Firestore
+      if (this.firestoreDb) {
+        try {
+          const doc = await this.firestoreDb.collection('ishmt_site').doc('master_blueprint').get();
+          if (doc.exists) {
+            const cloudData = doc.data();
+            if (cloudData && cloudData.blueprint) {
+              this.applyIncomingCloudBlueprint(cloudData.blueprint, 'Firestore Fetch');
+              return;
+            }
+          }
+        } catch (fsErr) {
+          console.warn('[SiteStore] Firestore get notice:', fsErr.message);
+        }
+      }
+
+      // 4. Secondary fallback: check /api/site-data
       try {
         const res = await fetch('/api/site-data');
         if (!res.ok) return;
@@ -805,9 +836,38 @@
     },
 
     async syncToCloud(blueprint) {
+      if (!blueprint) return;
       let savedToFirebase = false;
+      // Serialize blueprint to JSON string: prevents Firebase key path errors with forward slashes (e.g. '/events', '/team')
+      const serialized = JSON.stringify(blueprint);
 
-      // 1. Save directly to Firestore (100% Free, zero config on Vercel needed)
+      // 1. Direct REST PUT to Firebase Realtime Database (100% reliable, immune to SDK errors & key path constraints)
+      try {
+        const restRes = await fetch('https://ishmt-tkmce-default-rtdb.asia-southeast1.firebasedatabase.app/ishmt_master_blueprint.json', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(serialized)
+        });
+        if (restRes.ok) {
+          savedToFirebase = true;
+          console.log('[SiteStore] Saved blueprint to Firebase RTDB via REST.');
+        }
+      } catch (restErr) {
+        console.warn('[SiteStore] REST RTDB sync notice:', restErr.message);
+      }
+
+      // 2. Also save to Realtime Database SDK as string
+      if (this.rtdb) {
+        try {
+          await this.rtdb.ref('ishmt_master_blueprint').set(serialized);
+          savedToFirebase = true;
+          console.log('[SiteStore] Saved blueprint to Firebase Realtime Database SDK.');
+        } catch (rtErr) {
+          console.warn('[SiteStore] RTDB write error:', rtErr.message);
+        }
+      }
+
+      // 3. Save directly to Firestore if active
       if (this.firestoreDb) {
         try {
           await this.firestoreDb.collection('ishmt_site').doc('master_blueprint').set({
@@ -822,22 +882,11 @@
         }
       }
 
-      // 2. Also save to Realtime Database as backup
-      if (this.rtdb) {
-        try {
-          await this.rtdb.ref('ishmt_master_blueprint').set(blueprint);
-          savedToFirebase = true;
-          console.log('[SiteStore] Saved blueprint to Firebase Realtime Database.');
-        } catch (rtErr) {
-          console.warn('[SiteStore] RTDB write error:', rtErr.message);
-        }
-      }
-
       if (savedToFirebase) {
         App.showToast('✅ Saved & Synced Live to All Devices via Firebase!');
       }
 
-      // 3. Also push to /api/site-data as secondary store
+      // 4. Also push to /api/site-data as secondary store
       try {
         await fetch('/api/site-data', {
           method: 'POST',
@@ -6771,9 +6820,11 @@
       // Publish Live Changes Button
       const publishBtn = document.getElementById('btn-publish-live');
       if (publishBtn) {
-        publishBtn.addEventListener('click', () => {
-          SiteStore.save(SiteStore.get(), true);
-          App.showToast('🚀 Changes published live! All open tabs are now updated.');
+        publishBtn.addEventListener('click', async () => {
+          const bp = SiteStore.get();
+          SiteStore.save(bp, true, true);
+          await SiteStore.syncToCloud(bp);
+          App.showToast('🚀 Changes published live to all devices via Firebase!');
         });
       }
 
