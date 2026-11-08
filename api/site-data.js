@@ -89,6 +89,16 @@ module.exports = async function handler(req, res) {
 
   // POST: Admin publishes update to Vercel Cloud Database
   if (req.method === 'POST') {
+    // 1. Strict Endpoint Protection: Require Admin Authorization Token
+    const authHeader = req.headers['authorization'] || req.headers['x-admin-auth'];
+    if (!authHeader) {
+      return res.status(401).json({
+        success: false,
+        connected: false,
+        error: 'Unauthorized: Verified Admin session token required to publish updates.'
+      });
+    }
+
     if (!isConfigured) {
       return res.status(200).json({
         success: false,

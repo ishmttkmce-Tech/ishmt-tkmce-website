@@ -795,43 +795,49 @@
       let savedToFirebase = false;
       // Serialize blueprint to JSON string: prevents Firebase key path errors with forward slashes (e.g. '/events', '/team')
       const serialized = JSON.stringify(blueprint);
+      const idToken = await AuthService.getIdToken();
 
-      // 1. Direct REST PUT to Firebase Realtime Database (100% reliable, immune to SDK errors & key path constraints)
+      // 1. Save via Realtime Database SDK (SDK automatically carries verified Firebase Auth user credentials)
+      if (this.rtdb) {
+        try {
+          await this.rtdb.ref('ishmt_master_blueprint').set(serialized);
+          savedToFirebase = true;
+          console.log('[SiteStore] Saved blueprint to Firebase Realtime Database SDK with authenticated token.');
+        } catch (rtErr) {
+          console.warn('[SiteStore] RTDB SDK write notice:', rtErr.message);
+        }
+      }
+
+      // 2. Direct REST PUT to Firebase Realtime Database with ?auth=idToken parameter
       try {
-        const restRes = await fetch('https://ishmt-tkmce-default-rtdb.asia-southeast1.firebasedatabase.app/ishmt_master_blueprint.json', {
+        const restUrl = idToken
+          ? `https://ishmt-tkmce-default-rtdb.asia-southeast1.firebasedatabase.app/ishmt_master_blueprint.json?auth=${encodeURIComponent(idToken)}`
+          : 'https://ishmt-tkmce-default-rtdb.asia-southeast1.firebasedatabase.app/ishmt_master_blueprint.json';
+        const restRes = await fetch(restUrl, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(serialized)
         });
         if (restRes.ok) {
           savedToFirebase = true;
-          console.log('[SiteStore] Saved blueprint to Firebase RTDB via REST.');
+          console.log('[SiteStore] Saved blueprint to Firebase RTDB via authenticated REST.');
+        } else if (restRes.status === 401 || restRes.status === 403) {
+          console.warn('[SiteStore] Firebase RTDB rejected write: Authenticated Admin session token required.');
         }
       } catch (restErr) {
         console.warn('[SiteStore] REST RTDB sync notice:', restErr.message);
       }
 
-      // 2. Also save to Realtime Database SDK as string
-      if (this.rtdb) {
-        try {
-          await this.rtdb.ref('ishmt_master_blueprint').set(serialized);
-          savedToFirebase = true;
-          console.log('[SiteStore] Saved blueprint to Firebase Realtime Database SDK.');
-        } catch (rtErr) {
-          console.warn('[SiteStore] RTDB write error:', rtErr.message);
-        }
-      }
-
       // 3. Save directly to Firestore if active
-      if (this.firestoreDb) {
+      if (this.firestoreDb && AuthService.isAuthenticated()) {
         try {
           await this.firestoreDb.collection('ishmt_site').doc('master_blueprint').set({
             blueprint,
             updatedAt: new Date().toISOString(),
-            author: 'ISHMT Admin'
+            author: AuthService.getUserEmail() || 'ISHMT Admin'
           });
           savedToFirebase = true;
-          console.log('[SiteStore] Saved blueprint to Firebase Firestore.');
+          console.log('[SiteStore] Saved blueprint to Firebase Firestore with verified admin auth.');
         } catch (fsErr) {
           console.warn('[SiteStore] Firestore write error:', fsErr.message);
         }
@@ -841,11 +847,13 @@
         App.showToast('✅ Saved & Synced Live to All Devices via Firebase!');
       }
 
-      // 4. Also push to /api/site-data as secondary store
+      // 4. Also push to /api/site-data with Authorization Bearer header
       try {
+        const headers = { 'Content-Type': 'application/json' };
+        if (idToken) headers['Authorization'] = `Bearer ${idToken}`;
         await fetch('/api/site-data', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify({
             blueprint,
             timestamp: new Date().toISOString()
@@ -934,24 +942,116 @@
   };
 
   // ==========================================================================
-  // 4. AUTHENTICATION SERVICE (#/login)
+  // 4. ENTERPRISE AUTHENTICATION SERVICE (#/login)
+  // Powered by Firebase Native Auth & Verified JWT Session Tokens
   // ==========================================================================
   const AuthService = {
-    isAuthenticated() {
-      return sessionStorage.getItem(AUTH_KEY) === 'true';
-    },
+    authInstance: null,
+    currentUser: null,
+    currentIdToken: null,
+    isAuthReady: false,
+    _authReadyResolvers: [],
 
-    login(username, password) {
-      // Demo credentials
-      if (username.trim().toLowerCase() === 'admin' && password === 'ishmt2026') {
-        sessionStorage.setItem(AUTH_KEY, 'true');
-        return true;
+    init() {
+      if (typeof window !== 'undefined' && window.firebase && window.firebase.auth) {
+        try {
+          this.authInstance = window.firebase.auth();
+
+          // Set local persistence so admin session persists securely across reloads/tabs
+          this.authInstance.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+
+          // Real-time listener for authentication state changes
+          this.authInstance.onAuthStateChanged(async (user) => {
+            this.currentUser = user;
+            if (user) {
+              try {
+                this.currentIdToken = await user.getIdToken();
+              } catch (_) {
+                this.currentIdToken = null;
+              }
+            } else {
+              this.currentIdToken = null;
+            }
+
+            this.isAuthReady = true;
+            this._resolveAuthReady();
+
+            // Notify application router and renderer
+            if (typeof App !== 'undefined' && App.onAuthChanged) {
+              App.onAuthChanged(Boolean(user));
+            }
+          });
+        } catch (e) {
+          console.warn('[AuthService] Firebase Auth init error:', e);
+          this.isAuthReady = true;
+          this._resolveAuthReady();
+        }
+      } else {
+        this.isAuthReady = true;
+        this._resolveAuthReady();
       }
-      return false;
     },
 
-    logout() {
-      sessionStorage.removeItem(AUTH_KEY);
+    waitForAuthReady() {
+      if (this.isAuthReady) return Promise.resolve(this.currentUser);
+      return new Promise((resolve) => {
+        this._authReadyResolvers.push(resolve);
+      });
+    },
+
+    _resolveAuthReady() {
+      while (this._authReadyResolvers.length > 0) {
+        const resolve = this._authReadyResolvers.shift();
+        try { resolve(this.currentUser); } catch (_) {}
+      }
+    },
+
+    isAuthenticated() {
+      return Boolean(this.currentUser);
+    },
+
+    getUser() {
+      return this.currentUser;
+    },
+
+    getUserEmail() {
+      return this.currentUser ? this.currentUser.email : null;
+    },
+
+    async getIdToken(forceRefresh = false) {
+      if (!this.currentUser) return null;
+      try {
+        this.currentIdToken = await this.currentUser.getIdToken(forceRefresh);
+        return this.currentIdToken;
+      } catch (e) {
+        console.error('[AuthService] Failed to retrieve ID token:', e);
+        return null;
+      }
+    },
+
+    async login(email, password) {
+      if (!this.authInstance) {
+        // Fallback initialization if auth was loaded dynamically
+        if (typeof window !== 'undefined' && window.firebase && window.firebase.auth) {
+          this.authInstance = window.firebase.auth();
+        } else {
+          throw new Error('Firebase Authentication service is unavailable.');
+        }
+      }
+      const cred = await this.authInstance.signInWithEmailAndPassword(email.trim(), password);
+      this.currentUser = cred.user;
+      this.currentIdToken = await cred.user.getIdToken();
+      return this.currentUser;
+    },
+
+    async logout() {
+      if (this.authInstance) {
+        try {
+          await this.authInstance.signOut();
+        } catch (_) {}
+      }
+      this.currentUser = null;
+      this.currentIdToken = null;
     }
   };
 
@@ -5690,6 +5790,12 @@
         this.activePageSlug = Object.keys(blueprint.pages)[0] || '/';
       }
 
+      // Display authenticated admin email in header
+      const adminEmailEl = document.getElementById('studio-admin-email-text');
+      if (adminEmailEl) {
+        adminEmailEl.textContent = AuthService.getUserEmail() || 'Authenticated Admin';
+      }
+
       this.populatePageSelect();
       this.renderSectionsOutline();
       this.renderPagesManager();
@@ -6794,10 +6900,10 @@
       // Admin Logout Button
       const logoutBtn = document.getElementById('btn-admin-logout');
       if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-          AuthService.logout();
+        logoutBtn.addEventListener('click', async () => {
+          await AuthService.logout();
           window.location.hash = '#/';
-          App.showToast('Logged out of Admin Studio.');
+          App.showToast('You have been securely logged out of the Admin Studio.');
         });
       }
 
@@ -7087,6 +7193,7 @@
     currentRoute: '/',
 
     init() {
+      AuthService.init();
       SiteStore.init();
       AdminStudio.init();
       PhotoCropper.init();
@@ -7214,7 +7321,7 @@
       this.handleRoute(true);
     },
 
-    handleRoute(isInitial = false) {
+    async handleRoute(isInitial = false) {
       let hash = window.location.hash || '#/';
       let route = hash.replace(/^#/, '');
       if (!route.startsWith('/')) route = '/' + route;
@@ -7231,9 +7338,11 @@
       if (adminStudio) adminStudio.classList.add('hidden');
 
       if (route === '/admin') {
-        // Protected Admin Route
+        // Strict Route Guard: wait for verified Firebase authentication
+        await AuthService.waitForAuthReady();
         if (!AuthService.isAuthenticated()) {
           window.location.hash = '#/login';
+          this.showToast('🔒 Access Restricted: Please sign in with an Administrator account.');
           return;
         }
 
@@ -7244,7 +7353,8 @@
       }
 
       if (route === '/login') {
-        // Admin Login Route
+        // Admin Login Route Guard: If already authenticated, proceed directly to Studio
+        await AuthService.waitForAuthReady();
         if (AuthService.isAuthenticated()) {
           window.location.hash = '#/admin';
           return;
@@ -7281,22 +7391,73 @@
     bindLogin() {
       const loginForm = document.getElementById('admin-login-form');
       const errorMsg = document.getElementById('login-error-msg');
+      const submitBtn = loginForm ? loginForm.querySelector('button[type="submit"]') : null;
 
       if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          const user = document.getElementById('admin-username').value;
-          const pass = document.getElementById('admin-password').value;
+          const emailInput = document.getElementById('admin-email');
+          const passInput = document.getElementById('admin-password');
+          const email = emailInput ? emailInput.value.trim() : '';
+          const pass = passInput ? passInput.value : '';
 
-          if (AuthService.login(user, pass)) {
-            if (errorMsg) errorMsg.classList.add('hidden');
+          if (!email || !pass) {
+            if (errorMsg) {
+              errorMsg.textContent = 'Please provide both your administrator email and password.';
+              errorMsg.classList.remove('hidden');
+            }
+            return;
+          }
+
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="contact-btn-spinner" style="display:inline-block;width:15px;height:15px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px;vertical-align:middle;"></span> Verifying Credentials...';
+          }
+          if (errorMsg) errorMsg.classList.add('hidden');
+
+          try {
+            await AuthService.login(email, pass);
             loginForm.reset();
             window.location.hash = '#/admin';
-            this.showToast('Welcome back, Admin!');
-          } else {
-            if (errorMsg) errorMsg.classList.remove('hidden');
+            this.showToast(`Welcome back, ${AuthService.getUserEmail()}!`);
+          } catch (err) {
+            console.error('[Admin Login Auth Error]:', err);
+            let displayErr = 'Invalid administrator credentials. Access denied.';
+            if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+              displayErr = 'Incorrect email address or password. Please verify and try again.';
+            } else if (err.code === 'auth/invalid-email') {
+              displayErr = 'Please enter a valid administrator email address.';
+            } else if (err.code === 'auth/too-many-requests') {
+              displayErr = 'Access temporarily restricted due to multiple failed login attempts. Please try again later.';
+            } else if (err.code === 'auth/user-disabled') {
+              displayErr = 'This administrator account has been disabled by security policy.';
+            } else if (err.code === 'auth/network-request-failed') {
+              displayErr = 'Network connectivity error. Please check your internet connection.';
+            } else if (err.message) {
+              displayErr = err.message;
+            }
+
+            if (errorMsg) {
+              errorMsg.textContent = displayErr;
+              errorMsg.classList.remove('hidden');
+            }
+          } finally {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Authenticate & Enter Studio';
+            }
           }
         });
+      }
+    },
+
+    onAuthChanged(isLoggedIn) {
+      if (this.currentRoute === '/admin' && !isLoggedIn) {
+        window.location.hash = '#/login';
+      } else if (this.currentRoute === '/login' && isLoggedIn) {
+        window.location.hash = '#/admin';
+      } else if (this.currentRoute !== '/login' && this.currentRoute !== '/admin') {
+        PublicRenderer.render(this.currentRoute);
       }
     },
 

@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "ishmt_master_blueprint": {
+      ".read": true,
+      ".write": "auth != null"
+    }
+  }
+}
