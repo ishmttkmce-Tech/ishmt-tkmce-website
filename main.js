@@ -167,52 +167,6 @@
   const DEFAULT_EVENTS_DATA = {
     events: [
       {
-        id: "evt-1",
-        title: "Masterclass on Computational Heat & Fluid Mechanics (CFD 2026)",
-        category: "Workshop",
-        dateTime: "2026-11-12T10:00",
-        deadline: "2026-11-10T23:59",
-        venue: "Mechanical CAD Lab, TKMCE",
-        registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform",
-        certificateUrl: "",
-        description: "Hands-on computational workshop covering boundary layer discretization, meshing strategies, and finite volume thermal simulations using OpenFOAM and ANSYS Fluent.",
-        status: "Upcoming",
-        posterUrl: "",
-        linkedGalleryPostId: "post-2",
-        attachments: [
-          {
-            id: "att-101",
-            type: "pdf",
-            url: "#",
-            name: "Masterclass Syllabus & CFD Rulebook (PDF)"
-          }
-        ],
-        createdAt: "2026-10-23T10:00:00.000Z"
-      },
-      {
-        id: "evt-2",
-        title: "Cryogenic Cooling & Space Propulsion Thermal Management",
-        category: "Webinar",
-        dateTime: "2026-11-28T18:30",
-        deadline: "2026-11-26T18:00",
-        venue: "Google Meet (Hybrid Stream)",
-        registrationLink: "https://meet.google.com/ishmt-tkmce-webinar",
-        certificateUrl: "",
-        description: "Distinguished guest lecture by scientists from ISRO LPSC covering thermal protection systems, liquid hydrogen boil-off mitigation, and regenerative rocket engine cooling.",
-        status: "Upcoming",
-        posterUrl: "",
-        linkedGalleryPostId: "post-3",
-        attachments: [
-          {
-            id: "att-201",
-            type: "pdf",
-            url: "#",
-            name: "Webinar Schedule & Speaker Profile (PDF)"
-          }
-        ],
-        createdAt: "2026-10-23T11:00:00.000Z"
-      },
-      {
         id: "evt-3",
         title: "Official Inauguration of ISHMT TKMCE Chapter 2026–27",
         category: "Inauguration",
@@ -220,7 +174,7 @@
         deadline: "2026-09-21T18:00",
         venue: "APJ Abdul Kalam Auditorium, TKMCE",
         registrationLink: "",
-        certificateUrl: "https://drive.google.com/drive/folders/ishmt-tkmce-inauguration-credentials",
+        certificateUrl: "https://drive.google.com/drive/folders/19-i2WabnRjAY6PwTA2_-YkG-TP1xTNKR",
         description: "Grand inaugural ceremony of the ISHMT Student Chapter at TKMCE, presided over by Regional Chapter dignitaries, faculty mentors, and mechanical engineering scholars.",
         status: "Completed",
         posterUrl: "",
@@ -544,7 +498,7 @@
   // ==========================================================================
   // 3. CENTRAL DATA STORE (localStorage + Real-time Cross-tab Sync)
   // ==========================================================================
-  const STORAGE_KEY = 'ishmt_site_blueprint_v24_media_interconnect';
+  const STORAGE_KEY = 'ishmt_site_blueprint_v25_events_synced';
   const AUTH_KEY = 'ishmt_admin_session';
 
   // 100% Free Firebase Cloud Configuration for Real-time Multi-Device Sync
@@ -582,7 +536,8 @@
           'ishmt_site_blueprint_v16_photo_cropper_security', 'ishmt_site_blueprint_v17_live_sync',
           'ishmt_site_blueprint_v18_hierarchical_modal', 'ishmt_site_blueprint_v19_hero_about',
           'ishmt_site_blueprint_v20_join_events', 'ishmt_site_blueprint_v21_dynamic_events',
-          'ishmt_site_blueprint_v22_interactive', 'ishmt_site_blueprint_v23_interactive_suite'
+          'ishmt_site_blueprint_v22_interactive', 'ishmt_site_blueprint_v23_interactive_suite',
+          'ishmt_site_blueprint_v24_media_interconnect'
         ];
         staleKeys.forEach(k => {
           try { localStorage.removeItem(k); } catch (e) {}

@@ -21,36 +21,14 @@ import {
  */
 export const DEFAULT_EVENTS = [
   {
-    id: 'evt-1',
-    title: 'Masterclass on Computational Heat & Fluid Mechanics (CFD 2026)',
-    category: 'Workshop',
-    dateTime: '2026-11-12T10:00',
-    venue: 'Mechanical CAD Lab, TKMCE',
-    registrationLink: 'https://docs.google.com/forms/d/e/1FAIpQLSfH3luLyhH3tMrCvowuO3lTbTFaGgqscCxyy5SW82zbJjgJAA/viewform',
-    description: 'Hands-on computational workshop covering boundary layer discretization, meshing strategies, and finite volume thermal simulations using OpenFOAM and ANSYS Fluent.',
-    status: 'Upcoming',
-    posterUrl: '',
-    createdAt: '2026-10-23T10:00:00.000Z'
-  },
-  {
-    id: 'evt-2',
-    title: 'Cryogenic Cooling & Space Propulsion Thermal Management',
-    category: 'Webinar',
-    dateTime: '2026-11-28T18:30',
-    venue: 'Google Meet (Hybrid Stream)',
-    registrationLink: 'https://meet.google.com/ishmt-tkmce-webinar',
-    description: 'Distinguished guest lecture by scientists from ISRO LPSC covering thermal protection systems, liquid hydrogen boil-off mitigation, and regenerative rocket engine cooling.',
-    status: 'Upcoming',
-    posterUrl: '',
-    createdAt: '2026-10-23T11:00:00.000Z'
-  },
-  {
     id: 'evt-3',
     title: 'Official Inauguration of ISHMT TKMCE Chapter 2026–27',
     category: 'Inauguration',
     dateTime: '2026-09-23T14:30',
+    deadline: '2026-09-21T18:00',
     venue: 'APJ Abdul Kalam Auditorium, TKMCE',
     registrationLink: '',
+    certificateUrl: 'https://drive.google.com/drive/folders/19-i2WabnRjAY6PwTA2_-YkG-TP1xTNKR',
     description: 'Grand inaugural ceremony of the ISHMT Student Chapter at TKMCE, presided over by Regional Chapter dignitaries, faculty mentors, and mechanical engineering scholars.',
     status: 'Completed',
     posterUrl: '',
